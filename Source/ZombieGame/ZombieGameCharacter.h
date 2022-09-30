@@ -1,5 +1,5 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
-// september
+
 #pragma once
 
 #include "CoreMinimal.h"

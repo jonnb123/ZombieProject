@@ -1,5 +1,5 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
-// October
+// setting up character functionality
 #pragma once
 
 #include "CoreMinimal.h"

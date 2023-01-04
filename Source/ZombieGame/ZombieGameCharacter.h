@@ -1,5 +1,5 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
-
+// added gamemode functionality in January 2023
 #pragma once
 
 #include "CoreMinimal.h"

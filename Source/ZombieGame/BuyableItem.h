@@ -1,5 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-// added the perk system in February 2023
+
 #pragma once
 
 #include "CoreMinimal.h"

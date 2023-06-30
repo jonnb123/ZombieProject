@@ -1,5 +1,5 @@
 /FI "E:\Epic Games\UE_5.2\Engine\Plugins\Enterprise\GLTFExporter\Intermediate\Build\Win64\x64\UnrealEditor\Development\GLTFExporter\Definitions.GLTFExporter.h" 
-/FI "C:\Users\Jon10\OneDrive\Documents\GitHub\Unreal Projects\ZombieGame 5.2\Intermediate\Build\Win64\x64\ZombieGameEditor\Development\UnrealEd\SharedPCH.UnrealEd.ShadowErrors.h" 
+/FI "C:\Users\Jon10\OneDrive\Documents\GitHub\Unreal Projects\ZombieGame 5.2\ZombieProject\Intermediate\Build\Win64\x64\ZombieGameEditor\Development\UnrealEd\SharedPCH.UnrealEd.ShadowErrors.h" 
 /I "E:\Epic Games\UE_5.2\Engine\Source" 
 /I "E:\Epic Games\UE_5.2\Engine\Plugins\Enterprise\GLTFExporter\Source\GLTFExporter\Private" 
 /I "E:\Epic Games\UE_5.2\Engine\Intermediate\Build\Win64\UnrealEditor\Inc\Json\UHT" 

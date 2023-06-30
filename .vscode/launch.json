@@ -1,0 +1,152 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Launch ZombieGame (Debug)",
+			"request": "launch",
+			"program": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\Binaries\\Win64\\UnrealGame-Win64-Debug.exe",
+			"preLaunchTask": "ZombieGame Win64 Debug Build",
+			"args": [
+			],
+			"cwd": "E:\\Epic Games\\UE_5.2",
+			"stopAtEntry": false,
+			"console": "externalTerminal",
+			"type": "cppvsdbg",
+			"visualizerFile": "E:\\Epic Games\\UE_5.2\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+			"sourceFileMap": {
+				"D:\\build\\++UE5\\Sync": "E:\\Epic Games\\UE_5.2"
+			}
+		},
+		{
+			"name": "Launch ZombieGame (DebugGame)",
+			"request": "launch",
+			"program": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\Binaries\\Win64\\UnrealGame-Win64-DebugGame.exe",
+			"preLaunchTask": "ZombieGame Win64 DebugGame Build",
+			"args": [
+			],
+			"cwd": "E:\\Epic Games\\UE_5.2",
+			"stopAtEntry": false,
+			"console": "externalTerminal",
+			"type": "cppvsdbg",
+			"visualizerFile": "E:\\Epic Games\\UE_5.2\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+			"sourceFileMap": {
+				"D:\\build\\++UE5\\Sync": "E:\\Epic Games\\UE_5.2"
+			}
+		},
+		{
+			"name": "Launch ZombieGame (Development)",
+			"request": "launch",
+			"program": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\Binaries\\Win64\\UnrealGame.exe",
+			"preLaunchTask": "ZombieGame Win64 Development Build",
+			"args": [
+			],
+			"cwd": "E:\\Epic Games\\UE_5.2",
+			"stopAtEntry": false,
+			"console": "externalTerminal",
+			"type": "cppvsdbg",
+			"visualizerFile": "E:\\Epic Games\\UE_5.2\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+			"sourceFileMap": {
+				"D:\\build\\++UE5\\Sync": "E:\\Epic Games\\UE_5.2"
+			}
+		},
+		{
+			"name": "Launch ZombieGame (Test)",
+			"request": "launch",
+			"program": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\Binaries\\Win64\\UnrealGame-Win64-Test.exe",
+			"preLaunchTask": "ZombieGame Win64 Test Build",
+			"args": [
+			],
+			"cwd": "E:\\Epic Games\\UE_5.2",
+			"stopAtEntry": false,
+			"console": "externalTerminal",
+			"type": "cppvsdbg",
+			"visualizerFile": "E:\\Epic Games\\UE_5.2\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+			"sourceFileMap": {
+				"D:\\build\\++UE5\\Sync": "E:\\Epic Games\\UE_5.2"
+			}
+		},
+		{
+			"name": "Launch ZombieGame (Shipping)",
+			"request": "launch",
+			"program": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\Binaries\\Win64\\UnrealGame-Win64-Shipping.exe",
+			"preLaunchTask": "ZombieGame Win64 Shipping Build",
+			"args": [
+			],
+			"cwd": "E:\\Epic Games\\UE_5.2",
+			"stopAtEntry": false,
+			"console": "externalTerminal",
+			"type": "cppvsdbg",
+			"visualizerFile": "E:\\Epic Games\\UE_5.2\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+			"sourceFileMap": {
+				"D:\\build\\++UE5\\Sync": "E:\\Epic Games\\UE_5.2"
+			}
+		},
+		{
+			"name": "Launch ZombieGameEditor (Debug)",
+			"request": "launch",
+			"program": "E:\\Epic Games\\UE_5.2\\Engine\\Binaries\\Win64\\UnrealEditor-Win64-Debug.exe",
+			"preLaunchTask": "ZombieGameEditor Win64 Debug Build",
+			"args": [
+				"C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieGame.uproject"
+			],
+			"cwd": "E:\\Epic Games\\UE_5.2",
+			"stopAtEntry": false,
+			"console": "externalTerminal",
+			"type": "cppvsdbg",
+			"visualizerFile": "E:\\Epic Games\\UE_5.2\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+			"sourceFileMap": {
+				"D:\\build\\++UE5\\Sync": "E:\\Epic Games\\UE_5.2"
+			}
+		},
+		{
+			"name": "Launch ZombieGameEditor (DebugGame)",
+			"request": "launch",
+			"program": "E:\\Epic Games\\UE_5.2\\Engine\\Binaries\\Win64\\UnrealEditor-Win64-DebugGame.exe",
+			"preLaunchTask": "ZombieGameEditor Win64 DebugGame Build",
+			"args": [
+				"C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieGame.uproject"
+			],
+			"cwd": "E:\\Epic Games\\UE_5.2",
+			"stopAtEntry": false,
+			"console": "externalTerminal",
+			"type": "cppvsdbg",
+			"visualizerFile": "E:\\Epic Games\\UE_5.2\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+			"sourceFileMap": {
+				"D:\\build\\++UE5\\Sync": "E:\\Epic Games\\UE_5.2"
+			}
+		},
+		{
+			"name": "Launch ZombieGameEditor (Development)",
+			"request": "launch",
+			"program": "E:\\Epic Games\\UE_5.2\\Engine\\Binaries\\Win64\\UnrealEditor.exe",
+			"preLaunchTask": "ZombieGameEditor Win64 Development Build",
+			"args": [
+				"C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieGame.uproject"
+			],
+			"cwd": "E:\\Epic Games\\UE_5.2",
+			"stopAtEntry": false,
+			"console": "externalTerminal",
+			"type": "cppvsdbg",
+			"visualizerFile": "E:\\Epic Games\\UE_5.2\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+			"sourceFileMap": {
+				"D:\\build\\++UE5\\Sync": "E:\\Epic Games\\UE_5.2"
+			}
+		},
+		{
+			"name": "Generate Project Files",
+			"type": "coreclr",
+			"request": "launch",
+			"program": "E:\\Epic Games\\UE_5.2\\Engine\\Build\\BatchFiles\\RunUBT.bat",
+			"args": [
+				"-projectfiles",
+				"-vscode",
+				"-project=C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieGame.uproject",
+				"-game",
+				"-engine"
+			],
+			"console": "externalTerminal",
+			"stopAtEntry": false,
+			"cwd": "E:\\Epic Games\\UE_5.2"
+		}
+	]
+}

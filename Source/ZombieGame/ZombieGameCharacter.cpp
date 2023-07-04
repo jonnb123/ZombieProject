@@ -54,7 +54,7 @@ AZombieGameCharacter::AZombieGameCharacter()
 
 float AZombieGameCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) // this is called in BTTask_Attack.cpp
 {
-	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser); // takes the damage values from the zombie in BTTask_Attack
+	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser); // takes the damage values from the zombie in BTTask_Attack and plugs them into the base implementation of TakeDamage
 	if (IsDead == false)
 	{
 		// removing health regen and blood overlay for test

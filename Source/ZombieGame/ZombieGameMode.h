@@ -55,6 +55,9 @@ public:
 	UPROPERTY( EditAnywhere, BlueprintReadWrite )
 	TSubclassOf<APawn> ZombiePawn;
 
+	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+	TSubclassOf<APawn> FireZombiePawn;
+
 	FTimerHandle TimerHandle;
 
 	

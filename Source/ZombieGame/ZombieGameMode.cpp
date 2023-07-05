@@ -6,6 +6,7 @@
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "ZombieGameCharacter.h"
+#include "FireZombieBoss.h"
 #include "EngineUtils.h" // Include the appropriate header for TActorIterator
 
 void AZombieGameMode::StartGame()
@@ -62,7 +63,6 @@ void AZombieGameMode::ZombiesKilled()
     ZombiesLeft--; // zombies left -1
     if (ZombiesLeft == 0)
     {
-
         WaveIncrement();
     }
 }
@@ -71,36 +71,54 @@ void AZombieGameMode::WaveIncrement()
 {
     if (CurrentWave == MaxWaves)
     {
-        UE_LOG(LogTemp, Warning, TEXT("Player has won game!"));
+        UE_LOG(LogTemp, Warning, TEXT("Player has won the game!"));
         PlayerWins();
     }
     else
     {
-        // once all zombies are killed in the round, a 5 second timer will start.
-        FTimerHandle ZombieDestructionTimerHandle;
-        GetWorld()->GetTimerManager().SetTimer(
-            ZombieDestructionTimerHandle, [this]()
-            {
-            for (TActorIterator<AZombie> ActorItr(GetWorld()); ActorItr; ++ActorItr)
-            {
-                AZombie* Zombie = *ActorItr;
-                if (Zombie && !Zombie->IsPendingKill())
-                {
-                    Zombie->Destroy();
-                }
-            } },
-            5.0f, false); //
-
-        // sets a timer of 10 seconds for both wave start and spawn zombies funcitons.
-        FTimerDelegate TimerCallback;
-        TimerCallback.BindLambda([this]()
+        // Check if the current wave is a multiple of 5
+        if (CurrentWave % 2 == 0)
         {
-            WaveStart();
-            SpawnZombies(); 
-        });
-        GetWorld()->GetTimerManager().SetTimer(TimerHandle, TimerCallback, 10.f, false);
+            // Spawn the Fire Boss Zombies, need to collapse this to a function 
+            FVector SpawnLocation = FVector(-51641.040473,392718.949425,-379930.896141); // Replace this with your desired spawn location
+
+            UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), FireZombiePawn, BehaviorTree, SpawnLocation); // Spawn a zombie at the random location
+
+            // AFireZombieBoss* FireBossZombie = GetWorld()->SpawnActor<AFireZombieBoss>(AFireZombieBoss::StaticClass(), SpawnLocation, FRotator::ZeroRotator);
+
+        }
+        else
+        {
+            // Spawn regular zombies
+            // ...
+
+            // Once all zombies are killed in the round, a 5-second timer will start.
+            FTimerHandle ZombieDestructionTimerHandle;
+            GetWorld()->GetTimerManager().SetTimer(ZombieDestructionTimerHandle, [this]()
+            {
+                for (TActorIterator<AZombie> ZombieItr(GetWorld()); ZombieItr; ++ZombieItr)
+                {
+                    AZombie* Zombie = *ZombieItr;
+                    if (Zombie && !Zombie->IsPendingKill())
+                    {
+                        Zombie->Destroy();
+                    }
+                }
+            }, 5.0f, false);
+
+            // Sets a timer of 10 seconds for both WaveStart and SpawnZombies functions.
+            FTimerDelegate TimerCallback;
+            TimerCallback.BindLambda([this]()
+            {
+                WaveStart();
+                SpawnZombies();
+            });
+
+            GetWorld()->GetTimerManager().SetTimer(TimerHandle, TimerCallback, 10.f, false);
+        }
     }
 }
+
 
 void AZombieGameMode::BeginPlay()
 {

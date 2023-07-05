@@ -322,7 +322,7 @@ void AZombieGameCharacter::Fire()
 							UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), BodyShotFX, Hit.Location, ShotDirection.Rotation());
 							Points+=10;
 						}
-						else if (TempSurface == SurfaceType3) // for the fire bosee
+						else if (TempSurface == SurfaceType3) // for the fire boss
 						{
 							UE_LOG(LogTemp, Log, TEXT("Entered Fireboss loop"));
 							FPointDamageEvent DamageEvent(BodyDamage, Hit, ShotDirection, nullptr);

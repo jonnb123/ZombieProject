@@ -13,6 +13,9 @@ AZombie::AZombie()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	// Create and attach the audio component
+    AudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioComponent"));
+    AudioComponent->SetupAttachment(RootComponent);
 }
 
 float AZombie::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) 
@@ -70,6 +73,9 @@ void AZombie::Death()
 	IsDead = true;
 
 	this->GetCharacterMovement()->StopMovementImmediately();
+
+	AudioComponent->SetComponentTickEnabled(false);
+	AudioComponent->Stop();
 
 	this->PlayAnimMontage(AnimMontage);
 

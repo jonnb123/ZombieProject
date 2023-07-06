@@ -66,7 +66,6 @@ EBTNodeResult::Type UBTTask_Attack::ExecuteTask(UBehaviorTreeComponent &OwnerCom
         {
             UGameplayStatics::PlaySoundAtLocation(GetWorld(), FireZombieAttackSound, AICharacter->GetActorLocation());
             Player->TakeDamage(FireMeleeDamage, DamageEvent, AIController, AICharacter);  
-
         }
         else
         {

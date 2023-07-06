@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Components/AudioComponent.h"
 #include "Zombie.generated.h"
 
 UCLASS()
@@ -41,6 +42,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere)
 	bool IsDead;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Audio")
+    UAudioComponent* AudioComponent;
 
 	UFUNCTION()
 	void OnTimerEnd();

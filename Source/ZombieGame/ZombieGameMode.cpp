@@ -18,56 +18,57 @@ void AZombieGameMode::SpawnZombies()
 {
     SpawnAmmo();
 
-    // Check if the current wave is a multiple of 5
+    const FRotator Rotation;
+
+    // opposite corners of the box i want the zombie to spawn in
+    FVector CornerPoint1 = FVector(-40870.0, 409560.0, -378590.0);
+    FVector CornerPoint2 = FVector(-63790.000000, 392000.0, -379670.0);
+
+    // X center point: -53220 (use x1 + x2 corner points / 2)
+    // Y center point: 400780 (use y1 + y2 corner points / 2)
+    // Z center point: -379670 (use either z1 or z2 corner points)
+    // Overall center point (-53220.0, 400780.0, -378590.0)
+    FVector CenterPoint = FVector(-53220.0, 400780.0, -378590.0);
+    // float CenterPointZMin = -379930.0;
+    // float CenterPointZMax = -379170.0;
+    float CenterPointZ = -377330.0;
+
+    // HalfLength: the distance from the centerpoint to cornerpoint1
+
+    float HalfLength = FVector::Dist(CenterPoint, CornerPoint1);
+
+    // Calculating the bounds for the box
+    // FVector MinBounds = FVector(CenterPoint.X - HalfLength, CenterPoint.Y - HalfLength, CenterPoint.Z);
+    // FVector MaxBounds = FVector(CenterPoint.X + HalfLength, CenterPoint.Y + HalfLength, CenterPoint.Z);
+
+    FVector MinBounds = FVector(CenterPoint.X - HalfLength, CenterPoint.Y - HalfLength, CenterPointZ);
+    FVector MaxBounds = FVector(CenterPoint.X + HalfLength, CenterPoint.Y + HalfLength, CenterPointZ);
+
+    TArray<FVector> SpawnLocations;                                            // Array to store the spawn locations
+    
+    // for boss rounds
     if (CurrentWave % 5 == 0)
     {
-        ZombieTotal = 1;
+        ZombieTotal = CurrentWave / 5; // Calculate the number of additional zombies to add
         ZombiesLeft = ZombieTotal;
-        // Spawn the Fire Boss Zombies, need to collapse this to a function
-        FVector SpawnLocation = FVector(-51641.040473, 392718.949425, -379930.896141); // Replace this with your desired spawn location
 
-        UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), FireZombiePawn, BehaviorTree, SpawnLocation); // Spawn a zombie at the random location
+        for (int i = 0; i < ZombieTotal; i++)
+        {
+            FVector SpawnLocation = FMath::RandPointInBox(FBox(MinBounds, MaxBounds)); // Generate a random point within the defined bounds
+            UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), FireZombiePawn, BehaviorTree, SpawnLocation); // Spawn additional zombies at the same location
+        }
     }
 
-    else
+    else // for normal zombie rounds
     {
         ZombieTotal = CurrentWave * 4;
         // ZombieTotal = 0;
 
         ZombiesLeft = ZombieTotal;
 
-        const FRotator Rotation;
-
-        // opposite corners of the box i want the zombie to spawn in
-        FVector CornerPoint1 = FVector(-40870.0, 409560.0, -378590.0);
-        FVector CornerPoint2 = FVector(-63790.000000, 392000.0, -379670.0);
-
-        // X center point: -53220 (use x1 + x2 corner points / 2)
-        // Y center point: 400780 (use y1 + y2 corner points / 2)
-        // Z center point: -379670 (use either z1 or z2 corner points)
-        // Overall center point (-53220.0, 400780.0, -378590.0)
-        FVector CenterPoint = FVector(-53220.0, 400780.0, -378590.0);
-        // float CenterPointZMin = -379930.0;
-        // float CenterPointZMax = -379170.0;
-        float CenterPointZ = -377330.0;
-
-        // HalfLength: the distance from the centerpoint to cornerpoint1
-
-        float HalfLength = FVector::Dist(CenterPoint, CornerPoint1);
-
-        // Calculating the bounds for the box
-        // FVector MinBounds = FVector(CenterPoint.X - HalfLength, CenterPoint.Y - HalfLength, CenterPoint.Z);
-        // FVector MaxBounds = FVector(CenterPoint.X + HalfLength, CenterPoint.Y + HalfLength, CenterPoint.Z);
-
-        FVector MinBounds = FVector(CenterPoint.X - HalfLength, CenterPoint.Y - HalfLength, CenterPointZ);
-        FVector MaxBounds = FVector(CenterPoint.X + HalfLength, CenterPoint.Y + HalfLength, CenterPointZ);
-
-        TArray<FVector> SpawnLocations; // Array to store the spawn locations
-
         for (int i = 0; i < ZombieTotal; i++)
         {
             FVector SpawnLocation = FMath::RandPointInBox(FBox(MinBounds, MaxBounds)); // Generate a random point within the defined bounds
-
             UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), ZombiePawn, BehaviorTree, SpawnLocation); // Spawn a zombie at the random location
         }
     }

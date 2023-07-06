@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "BehaviorTree/Tasks/BTTask_PlayAnimation.h"
+#include "Sound/SoundCue.h"
 #include "BTTask_Attack.generated.h"
 
 /**
@@ -22,6 +23,15 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	float MeleeDamage = 10;
+
+	UPROPERTY(EditAnywhere)
+	float FireMeleeDamage = 20;
+
+	UPROPERTY(EditAnywhere, Category = "Audio")
+    USoundCue* ZombieAttackSound;
+
+	UPROPERTY(EditAnywhere, Category = "Audio")
+    USoundCue* FireZombieAttackSound;
 
 protected:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory) override;

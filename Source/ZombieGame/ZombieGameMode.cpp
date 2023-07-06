@@ -102,10 +102,7 @@ void AZombieGameMode::WaveIncrement()
                 for (TActorIterator<AZombie> ZombieItr(GetWorld()); ZombieItr; ++ZombieItr)
                 {
                     AZombie* Zombie = *ZombieItr;
-                    if (Zombie && !Zombie->IsPendingKill())
-                    {
-                        Zombie->Destroy();
-                    }
+                    Zombie->Destroy();
                 } },
             5.0f, false);
 

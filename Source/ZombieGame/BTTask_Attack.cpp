@@ -58,9 +58,22 @@ EBTNodeResult::Type UBTTask_Attack::ExecuteTask(UBehaviorTreeComponent &OwnerCom
     if (bSuccess)
     {
         UE_LOG(LogTemp, Warning, TEXT("Damaging..."));
+        UE_LOG(LogTemp, Log, TEXT("Name of actor: %s"), *AICharacter->GetName());
         AICharacter->PlayAnimMontage(AttackMontage);
 		FDamageEvent DamageEvent;
-		Player->TakeDamage(MeleeDamage, DamageEvent, AIController, AICharacter);  // this is where the TakeDamage function from the ZombieGameCharacter is called.
+		
+        if (AICharacter->GetName().StartsWith("BP_FireZombie"))
+        {
+            UGameplayStatics::PlaySoundAtLocation(GetWorld(), FireZombieAttackSound, AICharacter->GetActorLocation());
+            Player->TakeDamage(FireMeleeDamage, DamageEvent, AIController, AICharacter);  
+
+        }
+        else
+        {
+            UGameplayStatics::PlaySoundAtLocation(GetWorld(), ZombieAttackSound, AICharacter->GetActorLocation());
+            Player->TakeDamage(MeleeDamage, DamageEvent, AIController, AICharacter);  // this is where the TakeDamage function from the ZombieGameCharacter is called.
+        }
+       
     }
 
     

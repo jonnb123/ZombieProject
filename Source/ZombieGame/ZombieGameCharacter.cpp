@@ -12,7 +12,6 @@
 #include "Zombie.h"
 #include "NiagaraFunctionLibrary.h"
 
-
 //////////////////////////////////////////////////////////////////////////
 // AZombieGameCharacter
 
@@ -24,7 +23,7 @@ AZombieGameCharacter::AZombieGameCharacter()
 	// set our turn rates for input
 	TurnRateGamepad = 45.f;
 
-	// Create a CameraComponent	
+	// Create a CameraComponent
 	FirstPersonCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
 	FirstPersonCameraComponent->SetupAttachment(GetCapsuleComponent());
 	FirstPersonCameraComponent->SetRelativeLocation(FVector(-39.56f, 1.75f, 64.f)); // Position the camera
@@ -39,7 +38,6 @@ AZombieGameCharacter::AZombieGameCharacter()
 	Mesh1P->SetRelativeRotation(FRotator(1.9f, -19.19f, 5.2f));
 	Mesh1P->SetRelativeLocation(FVector(-0.5f, -4.4f, -155.7f));
 
-
 	IsAiming = false;
 
 	WeaponIndex = 0;
@@ -49,10 +47,9 @@ AZombieGameCharacter::AZombieGameCharacter()
 	ShotgunAmmo = 16;
 
 	IsShooting = false;
-
 }
 
-float AZombieGameCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) // this is called in BTTask_Attack.cpp
+float AZombieGameCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) // this is called in BTTask_Attack.cpp
 {
 	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser); // takes the damage values from the zombie in BTTask_Attack and plugs them into the base implementation of TakeDamage
 	if (IsDead == false)
@@ -60,7 +57,7 @@ float AZombieGameCharacter::TakeDamage(float DamageAmount, struct FDamageEvent c
 		// removing health regen and blood overlay for test
 		if (Health <= 90)
 		{
-			HealthRegenTimer(); 
+			HealthRegenTimer();
 		}
 		if (Health <= 50)
 		{
@@ -70,7 +67,7 @@ float AZombieGameCharacter::TakeDamage(float DamageAmount, struct FDamageEvent c
 		{
 			HideBlood();
 		}
-		DamageToApply  = FMath::Min(Health, DamageToApply);
+		DamageToApply = FMath::Min(Health, DamageToApply);
 		Health -= DamageToApply; // deducts damage from health
 		// if alive
 		if (Health > 0)
@@ -87,14 +84,13 @@ float AZombieGameCharacter::TakeDamage(float DamageAmount, struct FDamageEvent c
 	return DamageToApply; // DamageToApply just needs to be in function, not sure why
 }
 
-
 void AZombieGameCharacter::BeginPlay()
 {
-	// Call the base class  
+	// Call the base class
 	Super::BeginPlay();
 }
 
-void AZombieGameCharacter::SwitchToNextPrimaryWeapon() 
+void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
 {
 	bool Success = false;
 	for (int i = 0; i < Weapons.Num(); i++)
@@ -116,13 +112,12 @@ void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
 		WeaponIndex = 0;
 		SwitchWeaponMesh(WeaponIndex);
 	}
-
 }
 
 // Add ammo for a specific weapon
-void AZombieGameCharacter::AddAmmo(EAmmoType _AmmoType, int _AmmoAmount) 
+void AZombieGameCharacter::AddAmmo(EAmmoType _AmmoType, int _AmmoAmount)
 {
-	switch(_AmmoType)
+	switch (_AmmoType)
 	{
 	case EAmmoType::E_AssaultRifle:
 		AssaultRifleAmmo += _AmmoAmount;
@@ -131,12 +126,12 @@ void AZombieGameCharacter::AddAmmo(EAmmoType _AmmoType, int _AmmoAmount)
 	case EAmmoType::E_Pistol:
 		PistolAmmo += _AmmoAmount;
 		break;
-	
+
 	case EAmmoType::E_Shotgun:
 		ShotgunAmmo += _AmmoAmount;
 		break;
 
-	default: 
+	default:
 		break;
 	}
 }
@@ -150,7 +145,7 @@ void AZombieGameCharacter::MaxAmmo()
 
 //////////////////////////////////////////////////////////////////////////// Input
 
-void AZombieGameCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
+void AZombieGameCharacter::SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent)
 {
 	// Set up gameplay key bindings
 	check(PlayerInputComponent);
@@ -164,13 +159,9 @@ void AZombieGameCharacter::SetupPlayerInputComponent(class UInputComponent* Play
 
 	PlayerInputComponent->BindAction("Interacting", IE_Pressed, this, &AZombieGameCharacter::Interacting);
 
-
-
-
 	// Bind fire event
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AZombieGameCharacter::StartFiring);
 	PlayerInputComponent->BindAction("Fire", IE_Released, this, &AZombieGameCharacter::StopFiring);
-
 
 	// Bind fire event
 	PlayerInputComponent->BindAction("Reload", IE_Pressed, this, &AZombieGameCharacter::ManualReload);
@@ -200,8 +191,6 @@ void AZombieGameCharacter::SetupPlayerInputComponent(class UInputComponent* Play
 // 	// Trigger the OnItemUsed Event
 // 	OnUseItem.Broadcast();
 // }
-
-
 
 void AZombieGameCharacter::MoveForward(float Value)
 {
@@ -233,7 +222,7 @@ void AZombieGameCharacter::LookUpAtRate(float Rate)
 	AddControllerPitchInput(Rate * TurnRateGamepad * GetWorld()->GetDeltaSeconds());
 }
 
-void AZombieGameCharacter::ZoomIn() 
+void AZombieGameCharacter::ZoomIn()
 {
 	// uses UCharacterMovementComponent
 	if (this->GetCharacterMovement()->MaxWalkSpeed == 1200.0f)
@@ -242,31 +231,29 @@ void AZombieGameCharacter::ZoomIn()
 		this->GetCharacterMovement()->MaxWalkSpeed = 200.0f;
 		IsAiming = true;
 	}
-	
+
 	else
 	{
 		this->GetCharacterMovement()->MaxWalkSpeed = 200.0f;
 		IsAiming = true;
 	}
-	
 }
 
-void AZombieGameCharacter::ZoomOut() 
+void AZombieGameCharacter::ZoomOut()
 {
 	if (FastWalking == true)
 	{
 		this->GetCharacterMovement()->MaxWalkSpeed = 1200.0f;
 		IsAiming = false;
 	}
-	else 
+	else
 	{
 		this->GetCharacterMovement()->MaxWalkSpeed = 600.0f;
 		IsAiming = false;
 	}
-	
 }
 
-void AZombieGameCharacter::Fire() 
+void AZombieGameCharacter::Fire()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Current ammo: %d"), Weapons[WeaponIndex]->CurrentAmmo);
 
@@ -280,7 +267,7 @@ void AZombieGameCharacter::Fire()
 				Weapons[WeaponIndex]->CurrentAmmo--;
 				PlayFireAnimations(); // Blueprint logic for firing weapon
 				FVector Location;
-				FRotator Rotation; 
+				FRotator Rotation;
 
 				// FHitResult Hit;
 
@@ -292,47 +279,51 @@ void AZombieGameCharacter::Fire()
 				FCollisionQueryParams TraceParams = FCollisionQueryParams::DefaultQueryParam;
 				TraceParams.bReturnPhysicalMaterial = true;
 				TraceParams.AddIgnoredActor(this);
-				
-				bool bSuccess = GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_WorldDynamic, TraceParams);	
+
+				bool bSuccess = GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_WorldDynamic, TraceParams);
 
 				if (bSuccess)
 				{
 					FVector ShotDirection = -Rotation.Vector();
 
-					AActor* HitActor = Hit.GetActor();
-					UE_LOG(LogTemp, Log, TEXT("actor is %s"), *HitActor->GetName());
-					// Get hit surface type		
-					TempSurface = UGameplayStatics::GetSurfaceType(Hit);
-					
-					UE_LOG(LogTemp, Log, TEXT("The surface is %s"), *UEnum::GetValueAsString(TempSurface));
-					if (HitActor != nullptr)
+					AActor *HitActor = Hit.GetActor();
+					if (HitActor != nullptr) // very important nullptr check, was breaking randomly without this. 
 					{
-						if (TempSurface == SurfaceType1) // for headshots on zombie
+						UE_LOG(LogTemp, Log, TEXT("actor is %s"), *HitActor->GetName());
+						// Get hit surface type
+						TempSurface = UGameplayStatics::GetSurfaceType(Hit);
+
+						UE_LOG(LogTemp, Log, TEXT("The surface is %s"), *UEnum::GetValueAsString(TempSurface));
+						if (HitActor != nullptr)
 						{
-							FPointDamageEvent DamageEvent(HeadDamage, Hit, ShotDirection, nullptr);
-							HitActor->TakeDamage(HeadDamage, DamageEvent, GetInstigatorController(), this); // this calls the takedamage function in zombie.cpp when the zombie is hit
-							UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), HeadshotFX, Hit.Location, ShotDirection.Rotation());
-							Points+=50;
-						}
-						else if (TempSurface == SurfaceType2) // for body shots on zombie
-						{
-							UE_LOG(LogTemp, Log, TEXT("Surface 2"));
-							FPointDamageEvent DamageEvent(BodyDamage, Hit, ShotDirection, nullptr);
-							HitActor->TakeDamage(BodyDamage, DamageEvent, GetInstigatorController(), this);
-							UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), BodyShotFX, Hit.Location, ShotDirection.Rotation());
-							Points+=10;
-						}
-						else if (TempSurface == SurfaceType3) // for the fire boss
-						{
-							UE_LOG(LogTemp, Log, TEXT("Entered Fireboss loop"));
-							FPointDamageEvent DamageEvent(BodyDamage, Hit, ShotDirection, nullptr);
-							HitActor->TakeDamage(BodyDamage, DamageEvent, GetInstigatorController(), this);
-							Points+=10;
-						}
-						else
-						{
-							UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.Location, ShotDirection.Rotation());
-							UGameplayStatics::SpawnDecalAtLocation(GetWorld(),BulletHole, FVector(15,15,15), Hit.Location, ShotDirection.Rotation());
+							if (TempSurface == SurfaceType1) // for headshots on zombie
+							{
+								FPointDamageEvent DamageEvent(HeadDamage, Hit, ShotDirection, nullptr);
+								HitActor->TakeDamage(HeadDamage, DamageEvent, GetInstigatorController(), this); // this calls the takedamage function in zombie.cpp when the zombie is hit
+								UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), HeadshotFX, Hit.Location, ShotDirection.Rotation());
+								Points += 50;
+							}
+							else if (TempSurface == SurfaceType2) // for body shots on zombie
+							{
+								UE_LOG(LogTemp, Log, TEXT("Surface 2"));
+								FPointDamageEvent DamageEvent(BodyDamage, Hit, ShotDirection, nullptr);
+								HitActor->TakeDamage(BodyDamage, DamageEvent, GetInstigatorController(), this);
+								UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), BodyShotFX, Hit.Location, ShotDirection.Rotation());
+								Points += 10;
+							}
+							else if (TempSurface == SurfaceType3) // for the fire boss
+							{
+								UE_LOG(LogTemp, Log, TEXT("Entered Fireboss loop"));
+								FPointDamageEvent DamageEvent(BodyDamage, Hit, ShotDirection, nullptr);
+								HitActor->TakeDamage(BodyDamage, DamageEvent, GetInstigatorController(), this);
+								UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), FireImpactEffect, Hit.Location, ShotDirection.Rotation());
+								Points += 10;
+							}
+							else
+							{
+								UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.Location, ShotDirection.Rotation());
+								UGameplayStatics::SpawnDecalAtLocation(GetWorld(), BulletHole, FVector(15, 15, 15), Hit.Location, ShotDirection.Rotation());
+							}
 						}
 					}
 				}
@@ -351,19 +342,19 @@ void AZombieGameCharacter::Fire()
 	}
 }
 
-void AZombieGameCharacter::StartFiring() 
+void AZombieGameCharacter::StartFiring()
 {
 	IsShooting = true;
 	Fire();
 }
 
-void AZombieGameCharacter::StopFiring() 
+void AZombieGameCharacter::StopFiring()
 {
 	IsShooting = false;
 	FireTimerHandle.Invalidate();
 }
 
-void AZombieGameCharacter::ManualReload() 
+void AZombieGameCharacter::ManualReload()
 {
 	if (Weapons[WeaponIndex])
 	{
@@ -371,7 +362,7 @@ void AZombieGameCharacter::ManualReload()
 	}
 }
 
-void AZombieGameCharacter::ReloadWeapon(EWeaponType _WeaponType) 
+void AZombieGameCharacter::ReloadWeapon(EWeaponType _WeaponType)
 {
 	if (Weapons[WeaponIndex])
 	{
@@ -393,11 +384,10 @@ void AZombieGameCharacter::ReloadWeapon(EWeaponType _WeaponType)
 	}
 }
 
-int AZombieGameCharacter::CalculateAmmo(int _AmmoAmount) 
+int AZombieGameCharacter::CalculateAmmo(int _AmmoAmount)
 {
 	if (Weapons[WeaponIndex]->CurrentAmmo == Weapons[WeaponIndex]->MaxClipSize || _AmmoAmount <= 0)
 	{
-
 	}
 	else
 	{
@@ -410,13 +400,13 @@ int AZombieGameCharacter::CalculateAmmo(int _AmmoAmount)
 		}
 		else
 		{
-			if(_AmmoAmount > 0)
+			if (_AmmoAmount > 0)
 			{
 				Weapons[WeaponIndex]->CurrentAmmo = Weapons[WeaponIndex]->CurrentAmmo + _AmmoAmount;
 				_AmmoAmount = 0;
 			}
 		}
-		
+
 		PlayReloadAnimations();
 
 		IsReloading = false;
@@ -425,12 +415,12 @@ int AZombieGameCharacter::CalculateAmmo(int _AmmoAmount)
 	return _AmmoAmount;
 }
 
-void AZombieGameCharacter::Interacting() 
+void AZombieGameCharacter::Interacting()
 {
 	UE_LOG(LogTemp, Warning, TEXT("boop bop"));
 
 	FVector Location;
-	FRotator Rotation; 
+	FRotator Rotation;
 
 	FHitResult InteractHit;
 
@@ -440,23 +430,22 @@ void AZombieGameCharacter::Interacting()
 	// FVector End = Location + Rotation.Vector() * MaxRange;
 	FVector End = Location + Rotation.Vector() * 150;
 
-			
 	FCollisionQueryParams TraceParams = FCollisionQueryParams::DefaultQueryParam;
 	TraceParams.bReturnPhysicalMaterial = true;
 	TraceParams.AddIgnoredActor(this);
-			
+
 	bool bSuccess = GetWorld()->LineTraceSingleByChannel(InteractHit, Start, End, ECC_WorldDynamic, TraceParams);
 
 	if (bSuccess)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Hit Actor!"));
 
-		if(InteractHit.GetActor())
+		if (InteractHit.GetActor())
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Hit Actor: %s"), *InteractHit.GetActor()->GetName());
-			// play consume animation 
+			// play consume animation
 			// PlayConsumeAnimation();
-			// for health juice 
+			// for health juice
 			if (InteractHit.GetActor()->GetName() == "BP_PerkMachine_C_1")
 			{
 				UE_LOG(LogTemp, Warning, TEXT("Hit Actor: %s"), *InteractHit.GetActor()->GetName());
@@ -505,15 +494,6 @@ void AZombieGameCharacter::Interacting()
 					Interface->AddTurret();
 				}
 			}
-			
 		}
 	}
-
 }
-
-
-
-
-
-
-

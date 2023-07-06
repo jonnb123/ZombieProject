@@ -114,8 +114,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool FastWalking = false;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Impact Effect")
 	UParticleSystem* ImpactEffect;
+
+	UPROPERTY(EditAnywhere, Category = "Impact Effect")
+	UParticleSystem* FireImpactEffect;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FX")
 	class UNiagaraSystem* HeadshotFX;

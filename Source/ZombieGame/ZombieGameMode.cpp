@@ -11,7 +11,7 @@
 
 void AZombieGameMode::StartGame()
 {
-    SpawnZombies();
+    // SpawnZombies();
 }
 
 void AZombieGameMode::SpawnZombies()

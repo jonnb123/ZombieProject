@@ -16,4 +16,5 @@ class ZOMBIEGAME_API ABuyDoor : public ABuyableItem
 
 public:
 	virtual void BuyDoor();
+	bool bDoorRotated = false;
 };

@@ -11,7 +11,7 @@
 
 void AZombieGameMode::StartGame()
 {
-    // SpawnZombies();
+    SpawnZombies();
 }
 
 void AZombieGameMode::SpawnZombies()
@@ -44,18 +44,40 @@ void AZombieGameMode::SpawnZombies()
     FVector MinBounds = FVector(CenterPoint.X - HalfLength, CenterPoint.Y - HalfLength, CenterPointZ);
     FVector MaxBounds = FVector(CenterPoint.X + HalfLength, CenterPoint.Y + HalfLength, CenterPointZ);
 
-    TArray<FVector> SpawnLocations;                                            // Array to store the spawn locations
-    
+    TArray<FVector> SpawnLocations; // Array to store the spawn locations
+
     // for boss rounds
     if (CurrentWave % 5 == 0)
     {
         ZombieTotal = CurrentWave / 5; // Calculate the number of additional zombies to add
         ZombiesLeft = ZombieTotal;
 
-        for (int i = 0; i < ZombieTotal; i++)
+          for (int i = 0; i < ZombieTotal; i++)
         {
             FVector SpawnLocation = FMath::RandPointInBox(FBox(MinBounds, MaxBounds)); // Generate a random point within the defined bounds
-            UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), FireZombiePawn, BehaviorTree, SpawnLocation); // Spawn additional zombies at the same location
+
+            // Snap the zombie to the ground by tracing downward from the spawn location
+            FVector TraceStart = SpawnLocation + FVector(0.0f, 0.0f, 10000.0f); // Start the trace slightly above the spawn location
+            FVector TraceEnd = SpawnLocation - FVector(0.0f, 0.0f, 10000.0f);   // Trace downward to find the ground
+
+            FHitResult HitResult;
+            FCollisionQueryParams QueryParams;
+            QueryParams.AddIgnoredActor(this); // Ignore the spawner actor during the trace
+
+            if (GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECC_WorldStatic, QueryParams))
+            {
+                // Adjust the zombie's Z-coordinate to the ground level
+                FVector GroundLocation = HitResult.Location;
+                SpawnLocation.Z = GroundLocation.Z;
+
+                // Spawn the zombie at the adjusted location
+                UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), FireZombiePawn, BehaviorTree, SpawnLocation);
+            }
+            else
+            {
+                // If the trace fails, spawn the zombie at the original location without snapping to the ground
+                UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), FireZombiePawn, BehaviorTree, SpawnLocation);
+            }
         }
     }
 
@@ -69,7 +91,29 @@ void AZombieGameMode::SpawnZombies()
         for (int i = 0; i < ZombieTotal; i++)
         {
             FVector SpawnLocation = FMath::RandPointInBox(FBox(MinBounds, MaxBounds)); // Generate a random point within the defined bounds
-            UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), ZombiePawn, BehaviorTree, SpawnLocation); // Spawn a zombie at the random location
+
+            // Snap the zombie to the ground by tracing downward from the spawn location
+            FVector TraceStart = SpawnLocation + FVector(0.0f, 0.0f, 10000.0f); // Start the trace slightly above the spawn location
+            FVector TraceEnd = SpawnLocation - FVector(0.0f, 0.0f, 10000.0f);   // Trace downward to find the ground
+
+            FHitResult HitResult;
+            FCollisionQueryParams QueryParams;
+            QueryParams.AddIgnoredActor(this); // Ignore the spawner actor during the trace
+
+            if (GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECC_WorldStatic, QueryParams))
+            {
+                // Adjust the zombie's Z-coordinate to the ground level
+                FVector GroundLocation = HitResult.Location;
+                SpawnLocation.Z = GroundLocation.Z;
+
+                // Spawn the zombie at the adjusted location
+                UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), ZombiePawn, BehaviorTree, SpawnLocation);
+            }
+            else
+            {
+                // If the trace fails, spawn the zombie at the original location without snapping to the ground
+                UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), ZombiePawn, BehaviorTree, SpawnLocation);
+            }
         }
     }
 }

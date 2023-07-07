@@ -38,7 +38,7 @@ public:
 	void SpawnAmmo();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int CurrentWave = 1;
+	int CurrentWave = 31;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int ZombieTotal = 1;

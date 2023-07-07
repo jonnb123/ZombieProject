@@ -494,6 +494,15 @@ void AZombieGameCharacter::Interacting()
 					Interface->AddTurret();
 				}
 			}
+			else if (InteractHit.GetActor()->GetName().StartsWith("BP_BuyDoor"))
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Hit Actor: %s"), *InteractHit.GetActor()->GetName());
+				Interface = Cast<IInteractionInterface>(InteractHit.GetActor());
+				if (Interface)
+				{
+					Interface->BuyDoor();
+				}
+			}
 		}
 	}
 }

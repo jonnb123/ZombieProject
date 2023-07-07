@@ -76,6 +76,7 @@ void ABuyableItem::ExtendedMag()
 	}
 }
 
+
 void ABuyableItem::AddTurret() 
 {
 	UE_LOG(LogTemp, Warning, TEXT("You have interacted with turret"));

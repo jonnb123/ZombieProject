@@ -31,4 +31,6 @@ public:
 	virtual void ExtendedMag();
 
 	virtual void AddTurret();
+
+	virtual void BuyDoor();
 };

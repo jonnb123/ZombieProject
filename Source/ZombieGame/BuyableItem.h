@@ -44,7 +44,6 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 	void ExtendMagazine();
 
-
 	UFUNCTION(BlueprintImplementableEvent)
 	void PlayConsumeAnimation();
 
@@ -70,12 +69,14 @@ public:
     UPROPERTY(EditAnywhere)
     TSubclassOf<ATurret> TurretClass;
 
+	UPROPERTY(EditAnywhere)
+	UStaticMeshComponent* PerkMachineMesh;
+
 private:
 	UPROPERTY(EditAnywhere)
 	USceneComponent* _RootComponent;
 
-	UPROPERTY(EditAnywhere)
-	UStaticMeshComponent* PerkMachineMesh;
+	
 
     // // The location at which the turret will be spawned
     UPROPERTY(EditAnywhere, Category = "Turret")

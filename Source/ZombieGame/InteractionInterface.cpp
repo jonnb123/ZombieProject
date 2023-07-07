@@ -29,3 +29,8 @@ void IInteractionInterface::AddTurret()
 {
     
 }
+
+void IInteractionInterface::BuyDoor() 
+{
+    
+}

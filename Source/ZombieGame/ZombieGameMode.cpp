@@ -68,7 +68,7 @@ void AZombieGameMode::SpawnZombies()
                 FHitResult SweepResult;
                 FCollisionQueryParams QueryParams;
                 QueryParams.AddIgnoredActor(this); // Ignore the spawner actor during the sweep
-
+                // Used a sweep instead of a line as it's more forgiving, this stopped the zombies spawning under the floor. I found a Sphere of 75.0f to work best. 
                 if (GetWorld()->SweepSingleByChannel(SweepResult, SweepStart, SweepEnd, FQuat::Identity, ECC_WorldStatic, FCollisionShape::MakeSphere(75.0f), QueryParams))
                 {
                     // Check if the hit component is a static mesh

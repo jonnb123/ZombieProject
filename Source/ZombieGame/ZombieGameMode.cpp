@@ -31,7 +31,8 @@ void AZombieGameMode::SpawnZombies()
     FVector CenterPoint = FVector(-53220.0, 400780.0, -378590.0);
     // float CenterPointZMin = -379930.0;
     // float CenterPointZMax = -379170.0;
-    float CenterPointZ = -377330.0;
+    // float CenterPointZ = -377330.0;
+    float CenterPointZ = -373777.0;
 
     // HalfLength: the distance from the centerpoint to cornerpoint1
 
@@ -52,68 +53,92 @@ void AZombieGameMode::SpawnZombies()
         ZombieTotal = CurrentWave / 5; // Calculate the number of additional zombies to add
         ZombiesLeft = ZombieTotal;
 
-          for (int i = 0; i < ZombieTotal; i++)
+        for (int i = 0; i < ZombieTotal; i++)
         {
-            FVector SpawnLocation = FMath::RandPointInBox(FBox(MinBounds, MaxBounds)); // Generate a random point within the defined bounds
+            FVector SpawnLocation;
+            bool bValidSpawnLocation = false;
 
-            // Snap the zombie to the ground by tracing downward from the spawn location
-            FVector TraceStart = SpawnLocation + FVector(0.0f, 0.0f, 10000.0f); // Start the trace slightly above the spawn location
-            FVector TraceEnd = SpawnLocation - FVector(0.0f, 0.0f, 10000.0f);   // Trace downward to find the ground
-
-            FHitResult HitResult;
-            FCollisionQueryParams QueryParams;
-            QueryParams.AddIgnoredActor(this); // Ignore the spawner actor during the trace
-
-            if (GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECC_WorldStatic, QueryParams))
+            while (!bValidSpawnLocation)
             {
-                // Adjust the zombie's Z-coordinate to the ground level
-                FVector GroundLocation = HitResult.Location;
-                SpawnLocation.Z = GroundLocation.Z;
+                SpawnLocation = FMath::RandPointInBox(FBox(MinBounds, MaxBounds)); // Generate a random point within the defined bounds
 
-                // Spawn the zombie at the adjusted location
-                UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), FireZombiePawn, BehaviorTree, SpawnLocation);
+                FVector SweepStart = SpawnLocation + FVector(0.0f, 0.0f, 6500.0f); // Start the sweep slightly above the spawn location
+                FVector SweepEnd = SpawnLocation - FVector(0.0f, 0.0f, 6500.0f);   // Sweep downward to find the ground
+
+                FHitResult SweepResult;
+                FCollisionQueryParams QueryParams;
+                QueryParams.AddIgnoredActor(this); // Ignore the spawner actor during the sweep
+
+                if (GetWorld()->SweepSingleByChannel(SweepResult, SweepStart, SweepEnd, FQuat::Identity, ECC_WorldStatic, FCollisionShape::MakeSphere(75.0f), QueryParams))
+                {
+                    // Check if the hit component is a static mesh
+                    if (SweepResult.GetComponent() && SweepResult.GetComponent()->IsA<UStaticMeshComponent>())
+                    {
+                        // If it's a tree static mesh, the spawn location is not valid
+                        continue;
+                    }
+
+                    // Adjust the zombie's Z-coordinate to the ground level
+                    FVector GroundLocation = SweepResult.Location;
+                    SpawnLocation.Z = GroundLocation.Z;
+
+                    bValidSpawnLocation = true;
+                }
+                else
+                {
+                    bValidSpawnLocation = true; // No collision, so the spawn location is valid
+                }
             }
-            else
-            {
-                // If the trace fails, spawn the zombie at the original location without snapping to the ground
-                UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), FireZombiePawn, BehaviorTree, SpawnLocation);
-            }
+
+            // Spawn the zombie at the adjusted location
+            UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), FireZombiePawn, BehaviorTree, SpawnLocation);
         }
     }
 
     else // for normal zombie rounds
     {
         ZombieTotal = CurrentWave * 4;
-        // ZombieTotal = 0;
-
         ZombiesLeft = ZombieTotal;
 
         for (int i = 0; i < ZombieTotal; i++)
         {
-            FVector SpawnLocation = FMath::RandPointInBox(FBox(MinBounds, MaxBounds)); // Generate a random point within the defined bounds
+            FVector SpawnLocation;
+            bool bValidSpawnLocation = false;
 
-            // Snap the zombie to the ground by tracing downward from the spawn location
-            FVector TraceStart = SpawnLocation + FVector(0.0f, 0.0f, 10000.0f); // Start the trace slightly above the spawn location
-            FVector TraceEnd = SpawnLocation - FVector(0.0f, 0.0f, 10000.0f);   // Trace downward to find the ground
-
-            FHitResult HitResult;
-            FCollisionQueryParams QueryParams;
-            QueryParams.AddIgnoredActor(this); // Ignore the spawner actor during the trace
-
-            if (GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECC_WorldStatic, QueryParams))
+            while (!bValidSpawnLocation)
             {
-                // Adjust the zombie's Z-coordinate to the ground level
-                FVector GroundLocation = HitResult.Location;
-                SpawnLocation.Z = GroundLocation.Z;
+                SpawnLocation = FMath::RandPointInBox(FBox(MinBounds, MaxBounds)); // Generate a random point within the defined bounds
 
-                // Spawn the zombie at the adjusted location
-                UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), ZombiePawn, BehaviorTree, SpawnLocation);
+                FVector SweepStart = SpawnLocation + FVector(0.0f, 0.0f, 6500.0f); // Start the sweep slightly above the spawn location
+                FVector SweepEnd = SpawnLocation - FVector(0.0f, 0.0f, 6500.0f);   // Sweep downward to find the ground
+
+                FHitResult SweepResult;
+                FCollisionQueryParams QueryParams;
+                QueryParams.AddIgnoredActor(this); // Ignore the spawner actor during the sweep
+
+                if (GetWorld()->SweepSingleByChannel(SweepResult, SweepStart, SweepEnd, FQuat::Identity, ECC_WorldStatic, FCollisionShape::MakeSphere(75.0f), QueryParams))
+                {
+                    // Check if the hit component is a static mesh
+                    if (SweepResult.GetComponent() && SweepResult.GetComponent()->IsA<UStaticMeshComponent>())
+                    {
+                        // If it's a tree static mesh, the spawn location is not valid
+                        continue;
+                    }
+
+                    // Adjust the zombie's Z-coordinate to the ground level
+                    FVector GroundLocation = SweepResult.Location;
+                    SpawnLocation.Z = GroundLocation.Z;
+
+                    bValidSpawnLocation = true;
+                }
+                else
+                {
+                    bValidSpawnLocation = true; // No collision, so the spawn location is valid
+                }
             }
-            else
-            {
-                // If the trace fails, spawn the zombie at the original location without snapping to the ground
-                UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), ZombiePawn, BehaviorTree, SpawnLocation);
-            }
+
+            // Spawn the zombie at the adjusted location
+            UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), ZombiePawn, BehaviorTree, SpawnLocation);
         }
     }
 }

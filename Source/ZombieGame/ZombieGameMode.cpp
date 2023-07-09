@@ -68,21 +68,23 @@ void AZombieGameMode::SpawnZombies()
                 FHitResult SweepResult;
                 FCollisionQueryParams QueryParams;
                 QueryParams.AddIgnoredActor(this); // Ignore the spawner actor during the sweep
-                // Used a sweep instead of a line as it's more forgiving, this stopped the zombies spawning under the floor. I found a Sphere of 75.0f to work best. 
+                // Used a sweep instead of a line as it's more forgiving, this stopped the zombies spawning under the floor. I found a Sphere of 75.0f to work best.
                 if (GetWorld()->SweepSingleByChannel(SweepResult, SweepStart, SweepEnd, FQuat::Identity, ECC_WorldStatic, FCollisionShape::MakeSphere(75.0f), QueryParams))
                 {
                     // Check if the hit component is a static mesh
                     if (SweepResult.GetComponent() && SweepResult.GetComponent()->IsA<UStaticMeshComponent>())
                     {
                         // If it's a tree static mesh, the spawn location is not valid
-                        continue;
+                        bValidSpawnLocation = false;
                     }
+                    else
+                    {
+                        // Adjust the zombie's Z-coordinate to the ground level
+                        FVector GroundLocation = SweepResult.Location;
+                        SpawnLocation.Z = GroundLocation.Z;
 
-                    // Adjust the zombie's Z-coordinate to the ground level
-                    FVector GroundLocation = SweepResult.Location;
-                    SpawnLocation.Z = GroundLocation.Z;
-
-                    bValidSpawnLocation = true;
+                        bValidSpawnLocation = true;
+                    }
                 }
                 else
                 {
@@ -105,7 +107,7 @@ void AZombieGameMode::SpawnZombies()
             FVector SpawnLocation;
             bool bValidSpawnLocation = false;
 
-            while (!bValidSpawnLocation)
+            while (!bValidSpawnLocation) // while bvaildspawnlocation is false
             {
                 SpawnLocation = FMath::RandPointInBox(FBox(MinBounds, MaxBounds)); // Generate a random point within the defined bounds
 
@@ -122,14 +124,16 @@ void AZombieGameMode::SpawnZombies()
                     if (SweepResult.GetComponent() && SweepResult.GetComponent()->IsA<UStaticMeshComponent>())
                     {
                         // If it's a tree static mesh, the spawn location is not valid
-                        continue;
+                        bValidSpawnLocation = false;
                     }
+                    else
+                    {
+                        // Adjust the zombie's Z-coordinate to the ground level
+                        FVector GroundLocation = SweepResult.Location;
+                        SpawnLocation.Z = GroundLocation.Z;
 
-                    // Adjust the zombie's Z-coordinate to the ground level
-                    FVector GroundLocation = SweepResult.Location;
-                    SpawnLocation.Z = GroundLocation.Z;
-
-                    bValidSpawnLocation = true;
+                        bValidSpawnLocation = true;
+                    }
                 }
                 else
                 {

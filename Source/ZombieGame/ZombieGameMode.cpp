@@ -71,24 +71,17 @@ void AZombieGameMode::SpawnZombies()
                 // Used a sweep instead of a line as it's more forgiving, this stopped the zombies spawning under the floor. I found a Sphere of 75.0f to work best.
                 if (GetWorld()->SweepSingleByChannel(SweepResult, SweepStart, SweepEnd, FQuat::Identity, ECC_WorldStatic, FCollisionShape::MakeSphere(75.0f), QueryParams))
                 {
-                    // Check if the hit component is a static mesh
+                    // If the sweep hits a static mesh reassign
                     if (SweepResult.GetComponent() && SweepResult.GetComponent()->IsA<UStaticMeshComponent>())
                     {
-                        // If it's a tree static mesh, the spawn location is not valid
-                        bValidSpawnLocation = false;
+                        // Do nothing and keep it as a non valid location.
+                        continue;
                     }
+                    // else it is a valid spawn location
                     else
                     {
-                        // Adjust the zombie's Z-coordinate to the ground level
-                        FVector GroundLocation = SweepResult.Location;
-                        SpawnLocation.Z = GroundLocation.Z;
-
                         bValidSpawnLocation = true;
                     }
-                }
-                else
-                {
-                    bValidSpawnLocation = true; // No collision, so the spawn location is valid
                 }
             }
 
@@ -120,24 +113,17 @@ void AZombieGameMode::SpawnZombies()
 
                 if (GetWorld()->SweepSingleByChannel(SweepResult, SweepStart, SweepEnd, FQuat::Identity, ECC_WorldStatic, FCollisionShape::MakeSphere(75.0f), QueryParams))
                 {
-                    // Check if the hit component is a static mesh
+                    // If the sweep hits a static mesh reassign
                     if (SweepResult.GetComponent() && SweepResult.GetComponent()->IsA<UStaticMeshComponent>())
                     {
-                        // If it's a tree static mesh, the spawn location is not valid
-                        bValidSpawnLocation = false;
+                        // Do nothing and keep it as a non valid location.
+                        continue;
                     }
+                    // else it is a valid spawn location
                     else
                     {
-                        // Adjust the zombie's Z-coordinate to the ground level
-                        FVector GroundLocation = SweepResult.Location;
-                        SpawnLocation.Z = GroundLocation.Z;
-
                         bValidSpawnLocation = true;
                     }
-                }
-                else
-                {
-                    bValidSpawnLocation = true; // No collision, so the spawn location is valid
                 }
             }
 

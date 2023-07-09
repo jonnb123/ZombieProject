@@ -77,9 +77,13 @@ void AZombieGameMode::SpawnZombies()
                         // Do nothing and keep it as a non valid location.
                         continue;
                     }
-                    // else it is a valid spawn location
                     else
                     {
+                        // else it is a valid spawn location
+                        bValidSpawnLocation = true;
+                        // Adjust the zombie's Z-coordinate to the ground level
+                        FVector GroundLocation = SweepResult.Location;
+                        SpawnLocation.Z = GroundLocation.Z;
                         bValidSpawnLocation = true;
                     }
                 }

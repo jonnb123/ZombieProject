@@ -11,7 +11,7 @@
 
 void AZombieGameMode::StartGame()
 {
-    SpawnZombies();
+    // SpawnZombies();
 }
 
 void AZombieGameMode::SpawnZombies()
@@ -84,7 +84,6 @@ void AZombieGameMode::SpawnZombies()
                         // Adjust the zombie's Z-coordinate to the ground level
                         FVector GroundLocation = SweepResult.Location;
                         SpawnLocation.Z = GroundLocation.Z;
-                        bValidSpawnLocation = true;
                     }
                 }
             }
@@ -96,7 +95,7 @@ void AZombieGameMode::SpawnZombies()
 
     else // for normal zombie rounds
     {
-        ZombieTotal = CurrentWave * 4;
+        ZombieTotal = CurrentWave * 4; 
         ZombiesLeft = ZombieTotal;
 
         for (int i = 0; i < ZombieTotal; i++)
@@ -130,7 +129,6 @@ void AZombieGameMode::SpawnZombies()
                         // Adjust the zombie's Z-coordinate to the ground level
                         FVector GroundLocation = SweepResult.Location;
                         SpawnLocation.Z = GroundLocation.Z;
-                        bValidSpawnLocation = true;
                     }
                 }
             }

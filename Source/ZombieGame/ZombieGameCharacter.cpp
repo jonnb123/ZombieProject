@@ -256,6 +256,12 @@ void AZombieGameCharacter::ZoomOut()
 void AZombieGameCharacter::Fire()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Current ammo: %d"), Weapons[WeaponIndex]->CurrentAmmo);
+	
+	if (IsReloading)
+	{
+		UE_LOG(LogTemp, Log, TEXT("RELOADINGGGGG"));
+	}
+
 
 	if (IsShooting)
 	{
@@ -356,7 +362,7 @@ void AZombieGameCharacter::StopFiring()
 
 void AZombieGameCharacter::ManualReload()
 {
-	if (Weapons[WeaponIndex])
+	if (Weapons[WeaponIndex]) // if the player has a weapon
 	{
 		ReloadWeapon(Weapons[WeaponIndex]->WeaponType);
 	}
@@ -366,7 +372,6 @@ void AZombieGameCharacter::ReloadWeapon(EWeaponType _WeaponType)
 {
 	if (Weapons[WeaponIndex])
 	{
-		IsReloading = true;
 		switch (_WeaponType)
 		{
 		case EWeaponType::E_AssaultRifle:
@@ -388,10 +393,12 @@ int AZombieGameCharacter::CalculateAmmo(int _AmmoAmount)
 {
 	if (Weapons[WeaponIndex]->CurrentAmmo == Weapons[WeaponIndex]->MaxClipSize || _AmmoAmount <= 0)
 	{
+		// if the currentammo in the weapon is at the max clip size or is less than or the gun has no ammo do nothing
 	}
 	else
 	{
-		IsReloading = true;
+		// IsReloading = true;
+		// PlayReloadAnimations();
 		int NeededAmmo = Weapons[WeaponIndex]->MaxClipSize - Weapons[WeaponIndex]->CurrentAmmo;
 		if (_AmmoAmount >= NeededAmmo)
 		{
@@ -407,9 +414,10 @@ int AZombieGameCharacter::CalculateAmmo(int _AmmoAmount)
 			}
 		}
 
-		PlayReloadAnimations();
 
-		IsReloading = false;
+		// PlayReloadAnimations();
+
+		// IsReloading = false;
 	}
 
 	return _AmmoAmount;

@@ -108,6 +108,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "State")
 	bool IsShooting;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animation")
+	class UAnimMontage* ReloadMontage;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int Points = 1000;
 

@@ -8,6 +8,7 @@
 #include "InteractionInterface.h"
 #include "BaseWeapon.h"
 #include "BaseAmmo.h"
+#include "Animation/AnimMontage.h"
 #include "ZombieGameCharacter.generated.h"
 
 class UInputComponent;
@@ -108,8 +109,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "State")
 	bool IsShooting;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animation")
-	class UAnimMontage* ReloadMontage;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+	UAnimMontage* PistolReloadMontage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int Points = 1000;
@@ -166,8 +167,8 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 	void PlayFireAnimations();
 
-	UFUNCTION(BlueprintImplementableEvent)
-	void PlayReloadAnimations();
+	// UFUNCTION(BlueprintImplementableEvent)
+	// void PlayReloadAnimations();
 	
 	// UFUNCTION(BlueprintCallable)
 	// void AddAmmoCrate();
@@ -248,11 +249,17 @@ protected:
 	// Reloads the current weapon
 	void ReloadWeapon(EWeaponType _WeaponType);
 
+	// stops the reload animaton 
+	void StopReloading();
+
 	//calculate the ammo in the weapon's clip and on the player
 	int CalculateAmmo(int _AmmoAmount);
 
-	// void Interact();
+	void PistolReloadAnimations();
 
+	FTimerHandle ReloadTimerHandle;
+
+	// void Interact();
 	void Interacting();
 
 	

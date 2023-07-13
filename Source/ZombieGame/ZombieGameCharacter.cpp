@@ -256,12 +256,11 @@ void AZombieGameCharacter::ZoomOut()
 void AZombieGameCharacter::Fire()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Current ammo: %d"), Weapons[WeaponIndex]->CurrentAmmo);
-	
+
 	if (IsReloading)
 	{
 		UE_LOG(LogTemp, Log, TEXT("RELOADINGGGGG"));
 	}
-
 
 	if (IsShooting)
 	{
@@ -293,7 +292,7 @@ void AZombieGameCharacter::Fire()
 					FVector ShotDirection = -Rotation.Vector();
 
 					AActor *HitActor = Hit.GetActor();
-					if (HitActor != nullptr) // very important nullptr check, was breaking randomly without this. 
+					if (HitActor != nullptr) // very important nullptr check, was breaking randomly without this.
 					{
 						UE_LOG(LogTemp, Log, TEXT("actor is %s"), *HitActor->GetName());
 						// Get hit surface type
@@ -337,7 +336,7 @@ void AZombieGameCharacter::Fire()
 			}
 			else
 			{
-				ReloadWeapon(Weapons[WeaponIndex]->WeaponType);
+				// ReloadWeapon(Weapons[WeaponIndex]->WeaponType); this was for autoreload but made the animations not work
 			}
 		}
 		else
@@ -379,6 +378,7 @@ void AZombieGameCharacter::ReloadWeapon(EWeaponType _WeaponType)
 			break;
 		case EWeaponType::E_Pistol:
 			PistolAmmo = CalculateAmmo(PistolAmmo);
+			PistolReloadAnimations();
 			break;
 		case EWeaponType::E_Shotgun:
 			ShotgunAmmo = CalculateAmmo(ShotgunAmmo);
@@ -389,6 +389,29 @@ void AZombieGameCharacter::ReloadWeapon(EWeaponType _WeaponType)
 	}
 }
 
+void AZombieGameCharacter::PistolReloadAnimations()
+{
+    if (PistolReloadMontage)
+    {
+        UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+        if (AnimInstance)
+        {
+            float MontageDuration = PistolReloadMontage->GetPlayLength();
+            float TimerDuration = MontageDuration - 1.0f; // Skip the last second
+            AnimInstance->Montage_Play(PistolReloadMontage);
+            IsReloading = true;
+            // Start a timer to stop the reloading process a second early
+            GetWorldTimerManager().SetTimer(ReloadTimerHandle, this, &AZombieGameCharacter::StopReloading, TimerDuration, false);
+        }
+    }
+}
+
+void AZombieGameCharacter::StopReloading()
+{
+    IsReloading = false;
+}
+
+
 int AZombieGameCharacter::CalculateAmmo(int _AmmoAmount)
 {
 	if (Weapons[WeaponIndex]->CurrentAmmo == Weapons[WeaponIndex]->MaxClipSize || _AmmoAmount <= 0)
@@ -397,8 +420,6 @@ int AZombieGameCharacter::CalculateAmmo(int _AmmoAmount)
 	}
 	else
 	{
-		// IsReloading = true;
-		// PlayReloadAnimations();
 		int NeededAmmo = Weapons[WeaponIndex]->MaxClipSize - Weapons[WeaponIndex]->CurrentAmmo;
 		if (_AmmoAmount >= NeededAmmo)
 		{
@@ -413,11 +434,7 @@ int AZombieGameCharacter::CalculateAmmo(int _AmmoAmount)
 				_AmmoAmount = 0;
 			}
 		}
-
-
 		// PlayReloadAnimations();
-
-		// IsReloading = false;
 	}
 
 	return _AmmoAmount;

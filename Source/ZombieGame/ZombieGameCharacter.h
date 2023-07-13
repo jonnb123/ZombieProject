@@ -114,36 +114,29 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "State")
 	bool IsShooting;
 
-	// pistol animations
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
-	UAnimMontage* PistolReloadMontage;
-
+	// pistol fire animation
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
 	UAnimMontage* PistolWeaponFireMontage;
 
+	// pistol reload animation
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
-	UAnimMontage* PistolArmsFireMontage;
+	UAnimMontage* PistolWeaponReloadMontage;
 
-	// assault rife animations
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
-	UAnimMontage* ARReloadMontage;
-
+	// AR fire animation
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
 	UAnimMontage* ARWeaponFireMontage;
 
+	// AR fire animation
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
-	UAnimMontage* ARArmsFireMontage;
+	UAnimMontage* ARWeaponReloadMontage;
 	
-	// Shotgun animations
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
-	UAnimMontage* ShotgunReloadMontage;
-
+	// Shotgun animation
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
 	UAnimMontage* ShotgunWeaponFireMontage;
 
+	// Shotgun animation
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
-	UAnimMontage* ShotgunArmsFireMontage;
+	UAnimMontage* ShotgunWeaponReloadMontage;
 
 	void PlayFiringAnimations();
 

@@ -264,41 +264,17 @@ void AZombieGameCharacter::PlayFiringAnimations()
 {
 	if (Weapons[WeaponIndex]->WeaponType == EWeaponType::E_Pistol)
 	{
-		if (PistolArmsFireMontage)
-		{
-			UAnimInstance *ArmsAnimInstance = Mesh1P->GetAnimInstance();
-			if (ArmsAnimInstance)
-			{
-				ArmsAnimInstance->Montage_Play(PistolArmsFireMontage);
-				GunMesh->PlayAnimation(PistolWeaponFireMontage, false); // creating a gunmesh instance does not work, no clue why.
-			}
-		}
+		GunMesh->PlayAnimation(PistolWeaponFireMontage, false); // creating a gunmesh instance does not work, no clue why.
 	}
 
-	if (Weapons[WeaponIndex]->WeaponType == EWeaponType::E_AssaultRifle)
+	else if (Weapons[WeaponIndex]->WeaponType == EWeaponType::E_AssaultRifle)
 	{
-		if (ARArmsFireMontage)
-		{
-			UAnimInstance *ArmsAnimInstance = Mesh1P->GetAnimInstance();
-			if (ArmsAnimInstance)
-			{
-				ArmsAnimInstance->Montage_Play(ARArmsFireMontage);
-				GunMesh->PlayAnimation(ARWeaponFireMontage, false);
-			}
-		}
+		GunMesh->PlayAnimation(ARWeaponFireMontage, false);
 	}
 
-	if (Weapons[WeaponIndex]->WeaponType == EWeaponType::E_Shotgun)
+	else if (Weapons[WeaponIndex]->WeaponType == EWeaponType::E_Shotgun)
 	{
-		if (ShotgunArmsFireMontage)
-		{
-			UAnimInstance *ArmsAnimInstance = Mesh1P->GetAnimInstance();
-			if (ArmsAnimInstance)
-			{
-				ArmsAnimInstance->Montage_Play(ShotgunArmsFireMontage);
-				GunMesh->PlayAnimation(ShotgunWeaponFireMontage, false);
-			}
-		}
+		GunMesh->PlayAnimation(ShotgunWeaponFireMontage, false);
 	}
 }
 
@@ -408,6 +384,7 @@ void AZombieGameCharacter::StopFiring()
 
 void AZombieGameCharacter::ManualReload()
 {
+	// UE_LOG(LogTemp, Warning, TEXT("Max Clip Size: %d"), Weapons[WeaponIndex]->TotalAmmo);
 	if (Weapons[WeaponIndex] && Weapons[WeaponIndex]->CurrentAmmo != Weapons[WeaponIndex]->MaxClipSize) // if the player has a weapon and they don't have a full clip
 	{
 		ReloadWeapon(Weapons[WeaponIndex]->WeaponType);
@@ -422,15 +399,12 @@ void AZombieGameCharacter::ReloadWeapon(EWeaponType _WeaponType)
 		{
 		case EWeaponType::E_AssaultRifle:
 			AssaultRifleAmmo = CalculateAmmo(AssaultRifleAmmo);
-			ReloadAnimations();
 			break;
 		case EWeaponType::E_Pistol:
 			PistolAmmo = CalculateAmmo(PistolAmmo);
-			ReloadAnimations();
 			break;
 		case EWeaponType::E_Shotgun:
 			ShotgunAmmo = CalculateAmmo(ShotgunAmmo);
-			ReloadAnimations();
 			break;
 		default:
 			break;
@@ -442,54 +416,32 @@ void AZombieGameCharacter::ReloadAnimations()
 {
 	if (Weapons[WeaponIndex]->WeaponType == EWeaponType::E_Pistol)
 	{
-		if (PistolReloadMontage)
-		{
-			UAnimInstance *AnimInstance = Mesh1P->GetAnimInstance();
-			if (AnimInstance)
-			{
-				float MontageDuration = PistolReloadMontage->GetPlayLength();
-				float TimerDuration = MontageDuration - 1.0f; // Skip the last second
-				AnimInstance->Montage_Play(PistolReloadMontage);
-				IsReloading = true;
-				// Start a timer to stop the reloading process a second early
-				GetWorldTimerManager().SetTimer(ReloadTimerHandle, this, &AZombieGameCharacter::StopReloading, TimerDuration, false);
-			}
-		}
+		float MontageDuration = PistolWeaponReloadMontage->GetPlayLength();
+		float TimerDuration = MontageDuration - 0.2; // Skip the last 0.2second
+		GunMesh->PlayAnimation(PistolWeaponReloadMontage, false);
+		IsReloading = true;
+		// Start a timer to stop the reloading process a second early
+		GetWorldTimerManager().SetTimer(ReloadTimerHandle, this, &AZombieGameCharacter::StopReloading, TimerDuration, false);
 	}
 	else if (Weapons[WeaponIndex]->WeaponType == EWeaponType::E_AssaultRifle)
 	{
-		if (ARReloadMontage)
-		{
-			UAnimInstance *AnimInstance = Mesh1P->GetAnimInstance();
-			if (AnimInstance)
-			{
-				float MontageDuration = ARReloadMontage->GetPlayLength();
-				float TimerDuration = MontageDuration - 1.0f; // Skip the last second
-				AnimInstance->Montage_Play(ARReloadMontage);
-				IsReloading = true;
-				// Start a timer to stop the reloading process a second early
-				GetWorldTimerManager().SetTimer(ReloadTimerHandle, this, &AZombieGameCharacter::StopReloading, TimerDuration, false);
-			}
-		}
+		float MontageDuration = ARWeaponReloadMontage->GetPlayLength();
+		float TimerDuration = MontageDuration - 0.2; // Skip the last 0.2 second
+		GunMesh->PlayAnimation(ARWeaponReloadMontage, false);
+		IsReloading = true;
+		// Start a timer to stop the reloading process a second early
+		GetWorldTimerManager().SetTimer(ReloadTimerHandle, this, &AZombieGameCharacter::StopReloading, TimerDuration, false);
 	}
 
 	else if (Weapons[WeaponIndex]->WeaponType == EWeaponType::E_Shotgun)
 	{
-		if (ShotgunReloadMontage)
-		{
-			UAnimInstance *AnimInstance = Mesh1P->GetAnimInstance();
-			if (AnimInstance)
-			{
-				float MontageDuration = ShotgunReloadMontage->GetPlayLength();
-				float TimerDuration = MontageDuration - 1.0f; // Skip the last second
-				AnimInstance->Montage_Play(ShotgunReloadMontage);
-				IsReloading = true;
-				// Start a timer to stop the reloading process a second early
-				GetWorldTimerManager().SetTimer(ReloadTimerHandle, this, &AZombieGameCharacter::StopReloading, TimerDuration, false);
-			}
-		}
+		float MontageDuration = ShotgunWeaponReloadMontage->GetPlayLength();
+		float TimerDuration = MontageDuration; // Skip the last 0.2 second
+		GunMesh->PlayAnimation(ShotgunWeaponReloadMontage, false);
+		IsReloading = true;
+		// Start a timer to stop the reloading process a second early
+		GetWorldTimerManager().SetTimer(ReloadTimerHandle, this, &AZombieGameCharacter::StopReloading, TimerDuration, false);
 	}
-
 }
 
 void AZombieGameCharacter::StopReloading()
@@ -519,7 +471,7 @@ int AZombieGameCharacter::CalculateAmmo(int _AmmoAmount)
 				_AmmoAmount = 0;
 			}
 		}
-		// PlayReloadAnimations();
+		ReloadAnimations();
 	}
 
 	return _AmmoAmount;

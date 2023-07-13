@@ -9,6 +9,7 @@
 #include "BaseWeapon.h"
 #include "BaseAmmo.h"
 #include "Animation/AnimMontage.h"
+#include "Animation/AnimSequence.h"
 #include "ZombieGameCharacter.generated.h"
 
 class UInputComponent;
@@ -46,6 +47,10 @@ public:
 	/** Pawn mesh: 1st person view (arms; seen only by self) */
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Mesh)
 	USkeletalMeshComponent* Mesh1P;
+
+	/** Pawn mesh: 1st person view (arms; seen only by self) */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Mesh)
+	USkeletalMeshComponent* GunMesh;
 
 protected:
 	virtual void BeginPlay();
@@ -109,8 +114,38 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "State")
 	bool IsShooting;
 
+	// pistol animations
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
 	UAnimMontage* PistolReloadMontage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+	UAnimMontage* PistolWeaponFireMontage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+	UAnimMontage* PistolArmsFireMontage;
+
+	// assault rife animations
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+	UAnimMontage* ARReloadMontage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+	UAnimMontage* ARWeaponFireMontage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+	UAnimMontage* ARArmsFireMontage;
+	
+	// Shotgun animations
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+	UAnimMontage* ShotgunReloadMontage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+	UAnimMontage* ShotgunWeaponFireMontage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+	UAnimMontage* ShotgunArmsFireMontage;
+
+	void PlayFiringAnimations();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int Points = 1000;
@@ -164,8 +199,8 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 	void HideBlood();
 
-	UFUNCTION(BlueprintImplementableEvent)
-	void PlayFireAnimations();
+	// UFUNCTION(BlueprintImplementableEvent)
+	// void PlayFireAnimations();
 
 	// UFUNCTION(BlueprintImplementableEvent)
 	// void PlayReloadAnimations();
@@ -255,7 +290,7 @@ protected:
 	//calculate the ammo in the weapon's clip and on the player
 	int CalculateAmmo(int _AmmoAmount);
 
-	void PistolReloadAnimations();
+	void ReloadAnimations();
 
 	FTimerHandle ReloadTimerHandle;
 
@@ -272,6 +307,9 @@ protected:
 public:
 	/** Returns Mesh1P subobject **/
 	USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
+
+	USkeletalMeshComponent* GetGunMesh() const { return GunMesh; }
+
 	/** Returns FirstPersonCameraComponent subobject **/
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
 

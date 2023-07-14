@@ -100,12 +100,15 @@ public:
 	// UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	// int MaxClipSize = 9;
 
+	// Total pistol ammo the player has
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	int PistolAmmo;
 
+	// Total assault rifle ammo the player has
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	int AssaultRifleAmmo;
 
+	// total shotgun ammo the player has
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	int ShotgunAmmo;
 

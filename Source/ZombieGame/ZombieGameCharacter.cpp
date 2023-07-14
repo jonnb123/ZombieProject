@@ -443,7 +443,7 @@ void AZombieGameCharacter::ManualReload()
 
 void AZombieGameCharacter::ReloadWeapon(EWeaponType _WeaponType)
 {
-	if (Weapons[WeaponIndex]->WeaponType == EWeaponType::E_Pistol)
+	if (Weapons[WeaponIndex]->WeaponType == EWeaponType::E_Pistol && PistolAmmo !=0 )
 	{
 		float MontageDuration = PistolWeaponReloadMontage->GetPlayLength();
 		float TimerDuration = MontageDuration - 0.2; // Skip the last 0.2second
@@ -456,7 +456,7 @@ void AZombieGameCharacter::ReloadWeapon(EWeaponType _WeaponType)
 		GetWorldTimerManager().SetTimer(ReloadTimerHandle, TimerDelegate, TimerDuration, false);
 	}
 
-	else if (Weapons[WeaponIndex]->WeaponType == EWeaponType::E_AssaultRifle)
+	else if (Weapons[WeaponIndex]->WeaponType == EWeaponType::E_AssaultRifle && AssaultRifleAmmo != 0)
 	{
 		float MontageDuration = ARWeaponReloadMontage->GetPlayLength();
 		float TimerDuration = MontageDuration - 0.2; // Skip the last 0.2 second
@@ -469,15 +469,16 @@ void AZombieGameCharacter::ReloadWeapon(EWeaponType _WeaponType)
 		GetWorldTimerManager().SetTimer(ReloadTimerHandle, TimerDelegate, TimerDuration, false);
 	}
 
-	else if (Weapons[WeaponIndex]->WeaponType == EWeaponType::E_Shotgun)
+	else if (Weapons[WeaponIndex]->WeaponType == EWeaponType::E_Shotgun && ShotgunAmmo != 0)
 	{
 		float MontageDuration = ShotgunWeaponReloadMontage->GetPlayLength();
 		float TimerDuration = MontageDuration; // Skip the last 0.2 second
 		GunMesh->PlayAnimation(ShotgunWeaponReloadMontage, false);
 		IsReloading = true;
 		
+		// this basically plays the ReloadCalcAndPlayAnimations once the animation is complete.
 		FTimerDelegate TimerDelegate;
-		TimerDelegate.BindUObject(this, &AZombieGameCharacter::ReloadCalcAndPlayAnimations);
+		TimerDelegate.BindUObject(this, &AZombieGameCharacter::ReloadCalcAndPlayAnimations); 
 
 		GetWorldTimerManager().SetTimer(ReloadTimerHandle, TimerDelegate, TimerDuration, false);
 	}
@@ -507,7 +508,7 @@ void AZombieGameCharacter::StopReloading()
 
 int AZombieGameCharacter::CalculateAmmo(int _AmmoAmount)
 {
-	UE_LOG(LogTemp, Log, TEXT("SWITCHING MAGSSSS"));
+	UE_LOG(LogTemp, Log, TEXT("Switching Mags!"));
 	// IsReloading = false;
 	if (Weapons[WeaponIndex]->CurrentAmmo == Weapons[WeaponIndex]->MaxClipSize || _AmmoAmount <= 0)
 	{

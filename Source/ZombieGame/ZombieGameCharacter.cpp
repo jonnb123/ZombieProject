@@ -10,6 +10,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "PhysicalMaterials/PhysicalMaterial.h"
 #include "Zombie.h"
+#include "Engine/SkeletalMesh.h"
 #include "NiagaraFunctionLibrary.h"
 
 //////////////////////////////////////////////////////////////////////////
@@ -41,6 +42,8 @@ AZombieGameCharacter::AZombieGameCharacter()
 	GunMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Gun Mesh"));
 	GunMesh->SetOnlyOwnerSee(true);
 	GunMesh->SetupAttachment(Mesh1P);
+	Mesh1P->bCastDynamicShadow = false;
+	Mesh1P->CastShadow = false;
 	// Attach GunMeshNEW to Mesh1P using a specific socket name
 	FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, true);
 	GunMesh->AttachToComponent(Mesh1P, AttachmentRules, TEXT("PistolSocket"));
@@ -108,7 +111,44 @@ void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
 			{
 				Success = true;
 				WeaponIndex = i;
-				SwitchWeaponMesh(Weapons[WeaponIndex]->Index);
+				// SwitchWeaponMesh(Weapons[WeaponIndex]->Index);
+				GunMesh->SetSkeletalMesh(WeaponMeshes[Weapons[WeaponIndex]->Index]);
+
+				if (WeaponMeshes[Weapons[WeaponIndex]->Index] == WeaponMeshes[0])
+				{
+					// Detach the GunMesh from the current socket
+					GunMesh->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
+
+					// Attach GunMesh to the new socket
+					GunMesh->AttachToComponent(Mesh1P, FAttachmentTransformRules::SnapToTargetIncludingScale, TEXT("PistolSocket"));
+
+					// This is referenced in the abp to change weapon
+					EquippedWeaponCharacter = EWeaponType::E_Pistol;
+				}
+
+				else if (WeaponMeshes[Weapons[WeaponIndex]->Index] == WeaponMeshes[1])
+				{
+					// Detach the GunMesh from the current socket
+					GunMesh->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
+
+					// Attach GunMesh to the new socket
+					GunMesh->AttachToComponent(Mesh1P, FAttachmentTransformRules::SnapToTargetIncludingScale, TEXT("ARSocket"));
+
+					// This is referenced in the abp to change weapon
+					EquippedWeaponCharacter = EWeaponType::E_AssaultRifle;
+				}
+				else if (WeaponMeshes[Weapons[WeaponIndex]->Index] == WeaponMeshes[2])
+				{
+					// Detach the GunMesh from the current socket
+					GunMesh->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
+
+					// Attach GunMesh to the new socket
+					GunMesh->AttachToComponent(Mesh1P, FAttachmentTransformRules::SnapToTargetIncludingScale, TEXT("ShotgunSocket"));
+
+					// This is referenced in the abp to change weapon
+					EquippedWeaponCharacter = EWeaponType::E_Shotgun;
+				}
+
 				break;
 			}
 		}
@@ -117,7 +157,14 @@ void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
 	if (!Success)
 	{
 		WeaponIndex = 0;
-		SwitchWeaponMesh(WeaponIndex);
+		// SwitchWeaponMesh(WeaponIndex);
+		GunMesh->SetSkeletalMesh(WeaponMeshes[Weapons[WeaponIndex]->Index]);
+		// Detach the GunMesh from the current socket
+		GunMesh->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
+		// Attach GunMesh to the new socket
+		GunMesh->AttachToComponent(Mesh1P, FAttachmentTransformRules::SnapToTargetIncludingScale, TEXT("PistolSocket"));
+
+		EquippedWeaponCharacter = EWeaponType::E_Pistol;
 	}
 }
 
@@ -457,6 +504,7 @@ int AZombieGameCharacter::CalculateAmmo(int _AmmoAmount)
 	}
 	else
 	{
+		ReloadAnimations();
 		int NeededAmmo = Weapons[WeaponIndex]->MaxClipSize - Weapons[WeaponIndex]->CurrentAmmo;
 		if (_AmmoAmount >= NeededAmmo)
 		{
@@ -471,7 +519,6 @@ int AZombieGameCharacter::CalculateAmmo(int _AmmoAmount)
 				_AmmoAmount = 0;
 			}
 		}
-		ReloadAnimations();
 	}
 
 	return _AmmoAmount;

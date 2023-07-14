@@ -10,6 +10,7 @@
 #include "BaseAmmo.h"
 #include "Animation/AnimMontage.h"
 #include "Animation/AnimSequence.h"
+#include "Engine/SkeletalMesh.h"
 #include "ZombieGameCharacter.generated.h"
 
 class UInputComponent;
@@ -176,9 +177,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void SwitchToNextPrimaryWeapon();
 
-	// switches mesh of weapon currently being used
-	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Weapon")
-	void SwitchWeaponMesh(int _index);
+	// meshes of weapons
+	UPROPERTY(EditDefaultsOnly, Category = "Weapons")
+    TArray<class USkeletalMesh*> WeaponMeshes;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapons")
+    EWeaponType EquippedWeaponCharacter;
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void Death();

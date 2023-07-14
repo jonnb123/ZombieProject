@@ -102,7 +102,7 @@ void AZombieGameCharacter::BeginPlay()
 
 void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
 {
-	GetWorldTimerManager().ClearTimer(ReloadTimerHandle); // if the user switches weapon whilst reloading, the reload animation will not carry over to the next weapon. 
+	GetWorldTimerManager().ClearTimer(ReloadTimerHandle); // if the user switches weapon whilst reloading, the reload animation will not carry over to the next weapon.
 	IsReloading = false;
 	bool Success = false;
 
@@ -139,7 +139,6 @@ void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
 
 					// This is referenced in the abp to change weapon
 					EquippedWeaponCharacter = EWeaponType::E_AssaultRifle;
-
 				}
 				else if (WeaponMeshes[Weapons[WeaponIndex]->Index] == WeaponMeshes[2])
 				{
@@ -444,45 +443,30 @@ void AZombieGameCharacter::ManualReload()
 
 void AZombieGameCharacter::ReloadWeapon(EWeaponType _WeaponType)
 {
-	ReloadAnimations();
-	if (Weapons[WeaponIndex])
-	{
-		switch (_WeaponType)
-		{
-		case EWeaponType::E_AssaultRifle:
-			AssaultRifleAmmo = CalculateAmmo(AssaultRifleAmmo);
-			break;
-		case EWeaponType::E_Pistol:
-			PistolAmmo = CalculateAmmo(PistolAmmo);
-			break;
-		case EWeaponType::E_Shotgun:
-			ShotgunAmmo = CalculateAmmo(ShotgunAmmo);
-			break;
-		default:
-			break;
-		}
-	}
-}
-
-void AZombieGameCharacter::ReloadAnimations()
-{
 	if (Weapons[WeaponIndex]->WeaponType == EWeaponType::E_Pistol)
 	{
 		float MontageDuration = PistolWeaponReloadMontage->GetPlayLength();
 		float TimerDuration = MontageDuration - 0.2; // Skip the last 0.2second
 		GunMesh->PlayAnimation(PistolWeaponReloadMontage, false);
 		IsReloading = true;
-		// Start a timer to stop the reloading process a second early
-		GetWorldTimerManager().SetTimer(ReloadTimerHandle, this, &AZombieGameCharacter::StopReloading, TimerDuration, false);
+
+		FTimerDelegate TimerDelegate;
+		TimerDelegate.BindUObject(this, &AZombieGameCharacter::ReloadCalcAndPlayAnimations);
+
+		GetWorldTimerManager().SetTimer(ReloadTimerHandle, TimerDelegate, TimerDuration, false);
 	}
+
 	else if (Weapons[WeaponIndex]->WeaponType == EWeaponType::E_AssaultRifle)
 	{
 		float MontageDuration = ARWeaponReloadMontage->GetPlayLength();
 		float TimerDuration = MontageDuration - 0.2; // Skip the last 0.2 second
 		GunMesh->PlayAnimation(ARWeaponReloadMontage, false);
 		IsReloading = true;
-		// Start a timer to stop the reloading process a second early
-		GetWorldTimerManager().SetTimer(ReloadTimerHandle, this, &AZombieGameCharacter::StopReloading, TimerDuration, false);
+		
+		FTimerDelegate TimerDelegate;
+		TimerDelegate.BindUObject(this, &AZombieGameCharacter::ReloadCalcAndPlayAnimations);
+
+		GetWorldTimerManager().SetTimer(ReloadTimerHandle, TimerDelegate, TimerDuration, false);
 	}
 
 	else if (Weapons[WeaponIndex]->WeaponType == EWeaponType::E_Shotgun)
@@ -491,9 +475,29 @@ void AZombieGameCharacter::ReloadAnimations()
 		float TimerDuration = MontageDuration; // Skip the last 0.2 second
 		GunMesh->PlayAnimation(ShotgunWeaponReloadMontage, false);
 		IsReloading = true;
-		// Start a timer to stop the reloading process a second early
-		GetWorldTimerManager().SetTimer(ReloadTimerHandle, this, &AZombieGameCharacter::StopReloading, TimerDuration, false);
+		
+		FTimerDelegate TimerDelegate;
+		TimerDelegate.BindUObject(this, &AZombieGameCharacter::ReloadCalcAndPlayAnimations);
+
+		GetWorldTimerManager().SetTimer(ReloadTimerHandle, TimerDelegate, TimerDuration, false);
 	}
+}
+
+void AZombieGameCharacter::ReloadCalcAndPlayAnimations()
+{
+	if (Weapons[WeaponIndex]->WeaponType == EWeaponType::E_Pistol)
+	{
+		PistolAmmo = CalculateAmmo(PistolAmmo);
+	}
+	else if (Weapons[WeaponIndex]->WeaponType == EWeaponType::E_AssaultRifle)
+	{
+		AssaultRifleAmmo = CalculateAmmo(AssaultRifleAmmo);
+	}
+	else if (Weapons[WeaponIndex]->WeaponType == EWeaponType::E_Shotgun)
+	{
+		ShotgunAmmo = CalculateAmmo(ShotgunAmmo);
+	}
+	StopReloading(); // all of them will stop reloading
 }
 
 void AZombieGameCharacter::StopReloading()
@@ -503,6 +507,7 @@ void AZombieGameCharacter::StopReloading()
 
 int AZombieGameCharacter::CalculateAmmo(int _AmmoAmount)
 {
+	UE_LOG(LogTemp, Log, TEXT("SWITCHING MAGSSSS"));
 	// IsReloading = false;
 	if (Weapons[WeaponIndex]->CurrentAmmo == Weapons[WeaponIndex]->MaxClipSize || _AmmoAmount <= 0)
 	{
@@ -510,8 +515,6 @@ int AZombieGameCharacter::CalculateAmmo(int _AmmoAmount)
 	}
 	else
 	{
-		// ReloadAnimations();
-		
 		int NeededAmmo = Weapons[WeaponIndex]->MaxClipSize - Weapons[WeaponIndex]->CurrentAmmo;
 		if (_AmmoAmount >= NeededAmmo)
 		{
@@ -530,8 +533,6 @@ int AZombieGameCharacter::CalculateAmmo(int _AmmoAmount)
 
 	return _AmmoAmount;
 }
-
-
 
 void AZombieGameCharacter::Interacting()
 {

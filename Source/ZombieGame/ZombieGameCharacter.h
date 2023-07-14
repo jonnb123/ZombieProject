@@ -280,6 +280,9 @@ protected:
 	// Reloads the current weapon on R button press
 	void ManualReload();
 
+	// Calls back the calculateammo and stop reloading functions
+	void ReloadCalcAndPlayAnimations();
+
 	// Reloads the current weapon
 	void ReloadWeapon(EWeaponType _WeaponType);
 
@@ -288,8 +291,6 @@ protected:
 
 	//calculate the ammo in the weapon's clip and on the player
 	int CalculateAmmo(int _AmmoAmount);
-
-	void ReloadAnimations();
 
 	FTimerHandle ReloadTimerHandle;
 

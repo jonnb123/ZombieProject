@@ -237,6 +237,8 @@ public:
 
 	EPhysicalSurface TempSurface;
 
+	bool IsSwappingWeapon = false;
+
 protected:
 	
 	// /** Fires a projectile. */

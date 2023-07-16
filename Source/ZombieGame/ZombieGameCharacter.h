@@ -284,13 +284,13 @@ protected:
 	void ManualReload();
 
 	// Calls back the calculateammo and stop reloading functions
-	void ReloadCalcAndPlayAnimations();
+	void ReloadCalculations();
 
 	// Reloads the current weapon
 	void ReloadWeapon(EWeaponType _WeaponType);
 
-	// stops the reload animaton 
-	void StopReloading();
+	// // stops the reload animaton 
+	// void StopReloading();
 
 	//calculate the ammo in the weapon's clip and on the player
 	int CalculateAmmo(int _AmmoAmount);

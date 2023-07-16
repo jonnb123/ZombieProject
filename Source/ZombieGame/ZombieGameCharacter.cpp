@@ -443,16 +443,16 @@ void AZombieGameCharacter::ManualReload()
 
 void AZombieGameCharacter::ReloadWeapon(EWeaponType _WeaponType)
 {
-	if (Weapons[WeaponIndex]->WeaponType == EWeaponType::E_Pistol && PistolAmmo !=0 )
+	if (Weapons[WeaponIndex]->WeaponType == EWeaponType::E_Pistol && PistolAmmo != 0)
 	{
 		float MontageDuration = PistolWeaponReloadMontage->GetPlayLength();
 		float TimerDuration = MontageDuration - 0.2; // Skip the last 0.2second
 		GunMesh->PlayAnimation(PistolWeaponReloadMontage, false);
 		IsReloading = true;
-
+		// A delegate is created and is binded to the member function.
 		FTimerDelegate TimerDelegate;
-		TimerDelegate.BindUObject(this, &AZombieGameCharacter::ReloadCalcAndPlayAnimations);
-
+		TimerDelegate.BindUObject(this, &AZombieGameCharacter::ReloadCalculations);
+		// this basically plays the ReloadCalcAndPlayAnimations once the animation is complete.
 		GetWorldTimerManager().SetTimer(ReloadTimerHandle, TimerDelegate, TimerDuration, false);
 	}
 
@@ -462,9 +462,9 @@ void AZombieGameCharacter::ReloadWeapon(EWeaponType _WeaponType)
 		float TimerDuration = MontageDuration - 0.2; // Skip the last 0.2 second
 		GunMesh->PlayAnimation(ARWeaponReloadMontage, false);
 		IsReloading = true;
-		
+
 		FTimerDelegate TimerDelegate;
-		TimerDelegate.BindUObject(this, &AZombieGameCharacter::ReloadCalcAndPlayAnimations);
+		TimerDelegate.BindUObject(this, &AZombieGameCharacter::ReloadCalculations);
 
 		GetWorldTimerManager().SetTimer(ReloadTimerHandle, TimerDelegate, TimerDuration, false);
 	}
@@ -475,16 +475,15 @@ void AZombieGameCharacter::ReloadWeapon(EWeaponType _WeaponType)
 		float TimerDuration = MontageDuration; // Skip the last 0.2 second
 		GunMesh->PlayAnimation(ShotgunWeaponReloadMontage, false);
 		IsReloading = true;
-		
-		// this basically plays the ReloadCalcAndPlayAnimations once the animation is complete.
+
 		FTimerDelegate TimerDelegate;
-		TimerDelegate.BindUObject(this, &AZombieGameCharacter::ReloadCalcAndPlayAnimations); 
+		TimerDelegate.BindUObject(this, &AZombieGameCharacter::ReloadCalculations);
 
 		GetWorldTimerManager().SetTimer(ReloadTimerHandle, TimerDelegate, TimerDuration, false);
 	}
 }
 
-void AZombieGameCharacter::ReloadCalcAndPlayAnimations()
+void AZombieGameCharacter::ReloadCalculations()
 {
 	if (Weapons[WeaponIndex]->WeaponType == EWeaponType::E_Pistol)
 	{
@@ -498,15 +497,10 @@ void AZombieGameCharacter::ReloadCalcAndPlayAnimations()
 	{
 		ShotgunAmmo = CalculateAmmo(ShotgunAmmo);
 	}
-	StopReloading(); // all of them will stop reloading
-}
-
-void AZombieGameCharacter::StopReloading()
-{
 	IsReloading = false;
 }
 
-int AZombieGameCharacter::CalculateAmmo(int _AmmoAmount)
+int AZombieGameCharacter::CalculateAmmo(int _AmmoAmount) // _AmmoAmmount is overall ammo of the player for that weapon
 {
 	UE_LOG(LogTemp, Log, TEXT("Switching Mags!"));
 	// IsReloading = false;
@@ -516,22 +510,20 @@ int AZombieGameCharacter::CalculateAmmo(int _AmmoAmount)
 	}
 	else
 	{
+		// current ammo is the current ammo in the clip
+		// Needed ammo is the ammount of ammo needed to make a full clip 
 		int NeededAmmo = Weapons[WeaponIndex]->MaxClipSize - Weapons[WeaponIndex]->CurrentAmmo;
 		if (_AmmoAmount >= NeededAmmo)
 		{
-			Weapons[WeaponIndex]->CurrentAmmo = Weapons[WeaponIndex]->CurrentAmmo + NeededAmmo;
-			_AmmoAmount = _AmmoAmount - NeededAmmo;
+			Weapons[WeaponIndex]->CurrentAmmo = Weapons[WeaponIndex]->CurrentAmmo + NeededAmmo; // adds the ammo needed for a full clip
+			_AmmoAmount = _AmmoAmount - NeededAmmo; // deducts ammo added to clip
 		}
-		else
+		else if (_AmmoAmount > 0) // if the ammo amount is less than the needed ammo 
 		{
-			if (_AmmoAmount > 0)
-			{
-				Weapons[WeaponIndex]->CurrentAmmo = Weapons[WeaponIndex]->CurrentAmmo + _AmmoAmount;
-				_AmmoAmount = 0;
-			}
+			Weapons[WeaponIndex]->CurrentAmmo = Weapons[WeaponIndex]->CurrentAmmo + _AmmoAmount; 
+			_AmmoAmount = 0;
 		}
 	}
-
 	return _AmmoAmount;
 }
 

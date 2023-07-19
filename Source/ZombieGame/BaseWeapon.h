@@ -12,7 +12,9 @@ enum class EWeaponType : uint8
 {
 	E_Pistol		 UMETA(DisplayName = "PISTOL"),
 	E_AssaultRifle 	 UMETA(DisplayName = "ASSAULT_RIFLE"),
-	E_Shotgun  		 UMETA(DisplayName = "SHOTGUN")
+	E_Shotgun  		 UMETA(DisplayName = "SHOTGUN"),
+
+	E_Size			 UMETA(DisplayName = "Size")
 };
 
 
@@ -28,8 +30,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	int CurrentAmmo;
 
+	// array iterates on the value of the Enum for weapons: EWeaponType
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-	int TotalAmmo;		
+	TArray<int> AmmoArray;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	int TotalAmmo;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	int MaximumAmmo;			
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	int MaxClipSize;

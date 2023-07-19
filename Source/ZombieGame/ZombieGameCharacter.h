@@ -112,6 +112,23 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	int ShotgunAmmo;
 
+	// array iterates on the value of the Enum for weapons: EWeaponType
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	TArray<int> AmmoArray;
+
+	EWeaponType CurrentWeaponID;
+
+	// index of the weapon the player is currently using
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	int CurrentWeaponIndex = static_cast<int>(CurrentWeaponID);
+	// int CurrentWeaponIndex;
+
+	// primary weapons 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	TArray<ABaseWeapon*> Weapons;
+
+
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool IsReloading;
 
@@ -165,17 +182,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FX")
 	class UMaterialInterface* BulletHole;
 
-	// primary weapons 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-	TArray<ABaseWeapon*> Weapons;
-
+	
 	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	// ABaseWeapon* Weapon;
 
-	// index of the weapon the player is currently using
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-	int WeaponIndex;
+	// // index of the weapon the player is currently using
+	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	// int WeaponIndex;
 
+	
 	// Switch the player's current primary weapon
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void SwitchToNextPrimaryWeapon();
@@ -292,8 +307,11 @@ protected:
 	// // stops the reload animaton 
 	// void StopReloading();
 
+	// //calculate the ammo in the weapon's clip and on the player
+	// int CalculateAmmo(int _AmmoAmount);
+
 	//calculate the ammo in the weapon's clip and on the player
-	int CalculateAmmo(int _AmmoAmount);
+	int CalculateAmmo();
 
 	FTimerHandle ReloadTimerHandle;
 

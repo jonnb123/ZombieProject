@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Animation/AnimMontage.h"
+#include "Engine/SkeletalMesh.h"
 #include "BaseWeapon.generated.h"
 
 
@@ -59,9 +60,17 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
 	UAnimMontage* WeaponReloadMontage;
 
+	// mesh of weapon
+	UPROPERTY(EditDefaultsOnly, Category = "Weapons")
+    class USkeletalMesh* WeaponMesh;
+
 	// The name of the weapon
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	FString Name;
+
+	// The name of the weapon
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	FName SocketName;
 
 	// The name of the weapon
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")

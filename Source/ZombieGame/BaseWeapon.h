@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Animation/AnimMontage.h"
 #include "BaseWeapon.generated.h"
 
 
@@ -49,6 +50,14 @@ public:
 	// The type of weapon
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	EWeaponType WeaponType;
+
+	// fire animation for weapon
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+	UAnimMontage* WeaponFireMontage;
+
+	// reload animation for weapon
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+	UAnimMontage* WeaponReloadMontage;
 
 	// The name of the weapon
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")

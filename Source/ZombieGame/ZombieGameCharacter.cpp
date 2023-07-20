@@ -180,33 +180,12 @@ void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
 	}
 }
 
-// Add ammo for a specific weapon
-void AZombieGameCharacter::AddAmmo(EAmmoType _AmmoType, int _AmmoAmount)
-{
-	switch (_AmmoType)
-	{
-	case EAmmoType::E_AssaultRifle:
-		AssaultRifleAmmo += _AmmoAmount;
-		break;
-
-	case EAmmoType::E_Pistol:
-		PistolAmmo += _AmmoAmount;
-		break;
-
-	case EAmmoType::E_Shotgun:
-		ShotgunAmmo += _AmmoAmount;
-		break;
-
-	default:
-		break;
-	}
-}
 
 void AZombieGameCharacter::MaxAmmo()
 {
 	for (int i = 0; i < Weapons.Num(); i++)
 	{
-		Weapons[i]->TotalAmmo = Weapons[i]->MaximumAmmo; 
+		Weapons[i]->TotalAmmo = Weapons[i]->MaximumAmmo;
 	}
 }
 
@@ -320,24 +299,6 @@ void AZombieGameCharacter::ZoomOut()
 	}
 }
 
-void AZombieGameCharacter::PlayFiringAnimations()
-{
-	if (Weapons[CurrentWeaponIndex]->WeaponType == EWeaponType::E_Pistol)
-	{
-		GunMesh->PlayAnimation(PistolWeaponFireMontage, false); // creating a gunmesh instance does not work, no clue why.
-	}
-
-	else if (Weapons[CurrentWeaponIndex]->WeaponType == EWeaponType::E_AssaultRifle)
-	{
-		GunMesh->PlayAnimation(ARWeaponFireMontage, false);
-	}
-
-	else if (Weapons[CurrentWeaponIndex]->WeaponType == EWeaponType::E_Shotgun)
-	{
-		GunMesh->PlayAnimation(ShotgunWeaponFireMontage, false);
-	}
-}
-
 void AZombieGameCharacter::Fire()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Current ammo: %d"), Weapons[CurrentWeaponIndex]->CurrentAmmo);
@@ -355,8 +316,8 @@ void AZombieGameCharacter::Fire()
 			if (IsReloading == false)
 			{
 				Weapons[CurrentWeaponIndex]->CurrentAmmo--;
-				PlayFiringAnimations();
-
+				// PlayFiringAnimations();
+				GunMesh->PlayAnimation(Weapons[CurrentWeaponIndex]->WeaponFireMontage, false);
 				FVector Location;
 				FRotator Rotation;
 				// FHitResult Hit;
@@ -446,7 +407,7 @@ void AZombieGameCharacter::ManualReload()
 {
 	if (Weapons[CurrentWeaponIndex] && Weapons[CurrentWeaponIndex]->CurrentAmmo != Weapons[CurrentWeaponIndex]->MaxClipSize) // if the player has a weapon and they don't have a full clip
 	{
-	UE_LOG(LogTemp, Warning, TEXT("Max Clip Size: %d"), Weapons[CurrentWeaponIndex]->TotalAmmo);
+		UE_LOG(LogTemp, Warning, TEXT("Max Clip Size: %d"), Weapons[CurrentWeaponIndex]->TotalAmmo);
 
 		ReloadWeapon(Weapons[CurrentWeaponIndex]->WeaponType);
 	}
@@ -454,56 +415,23 @@ void AZombieGameCharacter::ManualReload()
 
 void AZombieGameCharacter::ReloadWeapon(EWeaponType _WeaponType)
 {
-	if (Weapons[CurrentWeaponIndex]->WeaponType == EWeaponType::E_Pistol && Weapons[CurrentWeaponIndex]->TotalAmmo != 0)
+	if (Weapons[CurrentWeaponIndex]->TotalAmmo != 0)
 	{
-		float MontageDuration = PistolWeaponReloadMontage->GetPlayLength();
+		float MontageDuration = Weapons[CurrentWeaponIndex]->WeaponReloadMontage->GetPlayLength();
 		float TimerDuration = MontageDuration - 0.2; // Skip the last 0.2second
-		GunMesh->PlayAnimation(PistolWeaponReloadMontage, false);
+		GunMesh->PlayAnimation(Weapons[CurrentWeaponIndex]->WeaponReloadMontage, false);
 		IsReloading = true;
 		// A delegate is created and is binded to the member function.
 		FTimerDelegate TimerDelegate;
-		TimerDelegate.BindUObject(this, &AZombieGameCharacter::ReloadCalculations);
+		TimerDelegate.BindUObject(this, &AZombieGameCharacter::CalculateAmmo);
 		// this basically plays the ReloadCalcAndPlayAnimations once the animation is complete.
 		GetWorldTimerManager().SetTimer(ReloadTimerHandle, TimerDelegate, TimerDuration, false);
 	}
-
-	else if (Weapons[CurrentWeaponIndex]->WeaponType == EWeaponType::E_AssaultRifle && Weapons[CurrentWeaponIndex]->TotalAmmo != 0)
-	{
-		float MontageDuration = ARWeaponReloadMontage->GetPlayLength();
-		float TimerDuration = MontageDuration - 0.2; // Skip the last 0.2 second
-		GunMesh->PlayAnimation(ARWeaponReloadMontage, false);
-		IsReloading = true;
-
-		FTimerDelegate TimerDelegate;
-		TimerDelegate.BindUObject(this, &AZombieGameCharacter::ReloadCalculations);
-
-		GetWorldTimerManager().SetTimer(ReloadTimerHandle, TimerDelegate, TimerDuration, false);
-	}
-
-	else if (Weapons[CurrentWeaponIndex]->WeaponType == EWeaponType::E_Shotgun && Weapons[CurrentWeaponIndex]->TotalAmmo != 0)
-	{
-		float MontageDuration = ShotgunWeaponReloadMontage->GetPlayLength();
-		float TimerDuration = MontageDuration; // Skip the last 0.2 second
-		GunMesh->PlayAnimation(ShotgunWeaponReloadMontage, false);
-		IsReloading = true;
-
-		FTimerDelegate TimerDelegate;
-		TimerDelegate.BindUObject(this, &AZombieGameCharacter::ReloadCalculations);
-
-		GetWorldTimerManager().SetTimer(ReloadTimerHandle, TimerDelegate, TimerDuration, false);
-	}
 }
 
-void AZombieGameCharacter::ReloadCalculations()
-{
-	AmmoArray[CurrentWeaponIndex] = CalculateAmmo();
-	IsReloading = false;
-}
-
-int AZombieGameCharacter::CalculateAmmo() // _AmmoAmmount is overall ammo of the player for that weapon
+void AZombieGameCharacter::CalculateAmmo()
 {
 	UE_LOG(LogTemp, Log, TEXT("Switching Mags!"));
-	IsReloading = false;
 	if (Weapons[CurrentWeaponIndex]->CurrentAmmo == Weapons[CurrentWeaponIndex]->MaxClipSize || Weapons[CurrentWeaponIndex]->TotalAmmo <= 0)
 	{
 		// if the currentammo in the weapon is at the max clip size or is less than or the gun has no reserve ammo
@@ -516,7 +444,7 @@ int AZombieGameCharacter::CalculateAmmo() // _AmmoAmmount is overall ammo of the
 		if (Weapons[CurrentWeaponIndex]->TotalAmmo >= NeededAmmo)
 		{
 			Weapons[CurrentWeaponIndex]->CurrentAmmo = Weapons[CurrentWeaponIndex]->CurrentAmmo + NeededAmmo; // adds the ammo needed for a full clip
-			Weapons[CurrentWeaponIndex]->TotalAmmo = Weapons[CurrentWeaponIndex]->TotalAmmo - NeededAmmo;   // deducts ammo added to clip
+			Weapons[CurrentWeaponIndex]->TotalAmmo = Weapons[CurrentWeaponIndex]->TotalAmmo - NeededAmmo;	  // deducts ammo added to clip
 		}
 		else if (Weapons[CurrentWeaponIndex]->TotalAmmo > 0) // if the ammo amount is less than the needed ammo
 		{
@@ -524,7 +452,8 @@ int AZombieGameCharacter::CalculateAmmo() // _AmmoAmmount is overall ammo of the
 			Weapons[CurrentWeaponIndex]->TotalAmmo = 0;
 		}
 	}
-	return Weapons[CurrentWeaponIndex]->TotalAmmo;
+	AmmoArray[CurrentWeaponIndex] = Weapons[CurrentWeaponIndex]->TotalAmmo;
+	IsReloading = false;
 }
 
 void AZombieGameCharacter::Interacting()

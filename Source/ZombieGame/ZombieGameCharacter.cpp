@@ -50,20 +50,12 @@ AZombieGameCharacter::AZombieGameCharacter()
 
 	IsAiming = false;
 
-	CurrentWeaponIndex = 0;
+	// CurrentWeaponIndex = 0;
 
 	IsShooting = false;
 
-	// AmmoArray.Reserve(static_cast<int>(EWeaponType::E_Size)); // reserves 3 spaces in the array currently
-	// AmmoArray.SetNum(static_cast<int>(EWeaponType::E_Size));
-
 	// Initialize the WeaponAmmoArray with default values
-	AmmoArray.Init(0, static_cast<int32>(EWeaponType::E_Size));
-
-	// Set the initial ammo values for each weapon type
-	AmmoArray[static_cast<int>(EWeaponType::E_Pistol)] = PistolAmmo;
-	AmmoArray[static_cast<int>(EWeaponType::E_Shotgun)] = ShotgunAmmo;
-	AmmoArray[static_cast<int>(EWeaponType::E_AssaultRifle)] = AssaultRifleAmmo;
+	AmmoArray.Init(0, static_cast<int>(EWeaponType::E_Size));
 }
 
 float AZombieGameCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) // this is called in BTTask_Attack.cpp
@@ -110,7 +102,6 @@ void AZombieGameCharacter::BeginPlay()
 
 void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Current Weapon index: %d"), CurrentWeaponIndex);
 	GetWorldTimerManager().ClearTimer(ReloadTimerHandle); // if the user switches weapon whilst reloading, the reload animation will not carry over to the next weapon.
 	IsReloading = false;
 	bool Success = false;
@@ -123,7 +114,7 @@ void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
 			{
 				Success = true;
 				CurrentWeaponIndex = i;
-				
+				UE_LOG(LogTemp, Warning, TEXT("Current Weapon index: %d"), CurrentWeaponIndex);
 				GunMesh->SetSkeletalMesh(Weapons[CurrentWeaponIndex]->WeaponMesh);
 
 				// Attach GunMesh to the new socket
@@ -131,13 +122,17 @@ void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
 
 				// This is referenced in the abp to change weapon
 				EquippedWeaponCharacter = Weapons[CurrentWeaponIndex]->WeaponType;
+				
 			}
+		break; // breaks out of the for loop
 		}
 	}
 
-	if (!Success)
+	if (!Success) // for the pistol
 	{
 		CurrentWeaponIndex = 0;
+		UE_LOG(LogTemp, Warning, TEXT("Current Weapon index: %d"), CurrentWeaponIndex);
+
 		// SwitchWeaponMesh(CurrentWeaponIndex);
 		GunMesh->SetSkeletalMesh(Weapons[CurrentWeaponIndex]->WeaponMesh);
 		

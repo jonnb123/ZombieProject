@@ -91,27 +91,6 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	float MaxHealth = 100;
 
-	// UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	// int CurrentAmmo = 9;
-
-	// UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	// int TotalAmmo = 10;		
-
-	// UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	// int MaxClipSize = 9;
-
-	// Total pistol ammo the player has
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-	int PistolAmmo;
-
-	// Total assault rifle ammo the player has
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-	int AssaultRifleAmmo;
-
-	// total shotgun ammo the player has
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-	int ShotgunAmmo;
-
 	// array iterates on the value of the Enum for weapons: EWeaponType
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	TArray<int> AmmoArray;
@@ -121,13 +100,10 @@ public:
 	// index of the weapon the player is currently using
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	int CurrentWeaponIndex = static_cast<int>(CurrentWeaponID);
-	// int CurrentWeaponIndex;
 
 	// primary weapons 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	TArray<ABaseWeapon*> Weapons;
-
-
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool IsReloading;

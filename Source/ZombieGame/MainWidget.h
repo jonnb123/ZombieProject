@@ -61,4 +61,22 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	FText UpdateWaveText();
+
+	UFUNCTION(BlueprintCallable)
+	float UpdateHealthBar();
+
+	UFUNCTION(BlueprintCallable)
+	FText UpdateZombiesRemaining();
+
+	UFUNCTION(BlueprintCallable)
+	FText UpdateAmmunition();
+
+	UFUNCTION(BlueprintCallable)
+	FText UpdateCharacterPoints();
+
+	UFUNCTION(BlueprintCallable)
+	FText UpdatePlayerWeaponName();
+
+	UFUNCTION(BlueprintCallable)
+	void ShowEquipText();
 };

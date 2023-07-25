@@ -76,8 +76,6 @@ private:
 	UPROPERTY(EditAnywhere)
 	USceneComponent* _RootComponent;
 
-	
-
     // // The location at which the turret will be spawned
     UPROPERTY(EditAnywhere, Category = "Turret")
     USceneComponent* TurretSpawnLocation;

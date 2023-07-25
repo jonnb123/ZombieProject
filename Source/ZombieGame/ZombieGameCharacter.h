@@ -11,6 +11,7 @@
 #include "Animation/AnimMontage.h"
 #include "Animation/AnimSequence.h"
 #include "Engine/SkeletalMesh.h"
+#include "MainWidget.h"
 #include "ZombieGameCharacter.generated.h"
 
 class UInputComponent;
@@ -176,7 +177,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapons")
     EWeaponType EquippedWeaponCharacter;
 
-	UFUNCTION(BlueprintImplementableEvent)
+	UFUNCTION(BlueprintCallable)
 	void Death();
 
 	UFUNCTION(BlueprintImplementableEvent)
@@ -226,6 +227,11 @@ public:
 	EPhysicalSurface TempSurface;
 
 	bool IsSwappingWeapon = false;
+
+	// gets main widget reference
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UUserWidget> WidgetClass;
+	UMainWidget* MainWidgetInstance;
 
 protected:
 	

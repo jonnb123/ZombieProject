@@ -24,10 +24,12 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	virtual void HealthJuice();
-	virtual void FullyAuto();
-	virtual void MaxSpeed();
-	virtual void ExtendedMag();
+	// These are all from the IInteractionInterface that are overriden
+	void HealthJuice() override;
+	void FullyAuto() override;
+	void MaxSpeed() override;
+	void ExtendedMag() override;
+	void AddTurret() override;
 
 
 	// The name of the weapon
@@ -47,8 +49,6 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 	void PlayConsumeAnimation();
 
-	UFUNCTION()
-	void AddTurret();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Complete")
 	bool FireRateComplete;

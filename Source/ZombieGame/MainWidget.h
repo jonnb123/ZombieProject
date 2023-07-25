@@ -40,6 +40,21 @@ public:
 	class UVerticalBox *WinWindow;
 
 	UPROPERTY(meta = (BindWidget), BlueprintReadWrite)
+	class UButton *ExitToMainMenuButtonWin;
+
+	UPROPERTY(meta = (BindWidget), BlueprintReadWrite)
+	class UButton *ExitToMainMenuButtonLose;
+
+	UPROPERTY(meta = (BindWidget), BlueprintReadWrite)
+	class UButton *QuitGameButtonWin;
+
+	UPROPERTY(meta = (BindWidget), BlueprintReadWrite)
+	class UButton *QuitGameButtonLose;
+
+	UPROPERTY(meta = (BindWidget), BlueprintReadWrite)
+	class UButton *RetryButton;
+
+	UPROPERTY(meta = (BindWidget), BlueprintReadWrite)
 	class UVerticalBox *DeathWindow;
 
 	UPROPERTY(meta = (BindWidget), BlueprintReadWrite)
@@ -78,5 +93,37 @@ public:
 	FText UpdatePlayerWeaponName();
 
 	UFUNCTION(BlueprintCallable)
-	void ShowEquipText();
+	void ShowWaveStart(int CurrentWave);
+
+	UFUNCTION(BlueprintCallable)
+	void ShowWinText();
+
+	UFUNCTION(BlueprintCallable)
+	void ShowDeathWindow();
+
+	UFUNCTION(BlueprintCallable)
+	void ShowBloodOverlay();
+
+	UFUNCTION(BlueprintCallable)
+	void HideBloodEffect();
+
+	// Button handling
+	UFUNCTION(BlueprintCallable)
+	void OnMainMenuClicked();
+
+	UFUNCTION(BlueprintCallable)
+	void OnQuitClicked();
+
+	UFUNCTION(BlueprintCallable)
+	void OnRetryClicked();
+
+	// Animations
+	UPROPERTY(Transient, meta = (BindWidgetAnim))
+	class UWidgetAnimation *WaveAnimation;
+
+	UPROPERTY(Transient, meta = (BindWidgetAnim))
+	class UWidgetAnimation *WinWindowAnimation;
+
+	UPROPERTY(Transient, meta = (BindWidgetAnim))
+	class UWidgetAnimation *BloodAnimation;
 };

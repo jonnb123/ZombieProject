@@ -13,6 +13,8 @@
 #include "Engine/SkeletalMesh.h"
 #include "NiagaraFunctionLibrary.h"
 
+
+
 //////////////////////////////////////////////////////////////////////////
 // AZombieGameCharacter
 
@@ -58,6 +60,16 @@ AZombieGameCharacter::AZombieGameCharacter()
 	AmmoArray.Init(0, static_cast<int>(EWeaponType::E_Size));
 }
 
+void AZombieGameCharacter::BeginPlay()
+{
+	// Call the base class
+	Super::BeginPlay();
+	MainWidgetInstance = CreateWidget<UMainWidget>(GetWorld(), WidgetClass);
+	MainWidgetInstance->AddToViewport();
+	
+	UE_LOG(LogTemp, Warning, TEXT("Current Weapon index: %d"), CurrentWeaponIndex);
+}
+
 float AZombieGameCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) // this is called in BTTask_Attack.cpp
 {
 	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser); // takes the damage values from the zombie in BTTask_Attack and plugs them into the base implementation of TakeDamage
@@ -70,11 +82,19 @@ float AZombieGameCharacter::TakeDamage(float DamageAmount, struct FDamageEvent c
 		}
 		if (Health <= 50)
 		{
-			BloodOverlay();
+			// BloodOverlay();
+			if (MainWidgetInstance)
+			{
+				MainWidgetInstance->ShowBloodOverlay();
+			}
 		}
 		else
 		{
-			HideBlood();
+			// HideBlood();
+			if (MainWidgetInstance)
+			{
+				MainWidgetInstance->ShowBloodOverlay();
+			}
 		}
 		DamageToApply = FMath::Min(Health, DamageToApply);
 		Health -= DamageToApply; // deducts damage from health
@@ -93,11 +113,13 @@ float AZombieGameCharacter::TakeDamage(float DamageAmount, struct FDamageEvent c
 	return DamageToApply; // DamageToApply just needs to be in function, not sure why
 }
 
-void AZombieGameCharacter::BeginPlay()
+void AZombieGameCharacter::Death()
 {
-	// Call the base class
-	Super::BeginPlay();
-	UE_LOG(LogTemp, Warning, TEXT("Current Weapon index: %d"), CurrentWeaponIndex);
+	IsDead = true;
+	MainWidgetInstance->ShowDeathWindow();
+	APlayerController* PlayerController = Cast<APlayerController>(GetController());
+	PlayerController->SetInputMode(FInputModeUIOnly());
+	PlayerController->bShowMouseCursor = true;
 }
 
 void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
@@ -231,6 +253,7 @@ void AZombieGameCharacter::LookUpAtRate(float Rate)
 
 void AZombieGameCharacter::ZoomIn()
 {
+	MainWidgetInstance->RemoveFromViewport();
 	// uses UCharacterMovementComponent
 	if (this->GetCharacterMovement()->MaxWalkSpeed == 1200.0f)
 	{
@@ -248,6 +271,7 @@ void AZombieGameCharacter::ZoomIn()
 
 void AZombieGameCharacter::ZoomOut()
 {
+	MainWidgetInstance->AddToViewport();
 	if (FastWalking == true)
 	{
 		this->GetCharacterMovement()->MaxWalkSpeed = 1200.0f;

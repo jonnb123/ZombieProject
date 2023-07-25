@@ -5,10 +5,44 @@
 #include "Kismet/GameplayStatics.h"
 #include "UMG/Public/Components/TextBlock.h"
 #include "ZombieGameCharacter.h"
+#include "BuyableItem.h"
+#include "UMG/Public/Components/HorizontalBox.h"
+#include "UMG/Public/Components/VerticalBox.h"
+#include "UMG/Public/Components/Image.h"
+#include "UMG/Public/Components/Button.h"
+#include "UMG/Public/Animation/WidgetAnimation.h"
+#include "GenericPlatform/GenericPlatformMisc.h"
+#include "GameFramework/PlayerController.h"
+
 // #include "BaseWeapon.h"
 
 void UMainWidget::NativeConstruct()
 {
+    Super::NativeConstruct();
+
+    // if the Exit to main menu button is clicked
+    if (ExitToMainMenuButtonWin)
+    {
+        ExitToMainMenuButtonWin->OnClicked.AddDynamic(this, &UMainWidget::OnMainMenuClicked);
+    }
+    if (ExitToMainMenuButtonLose)
+    {
+        ExitToMainMenuButtonLose->OnClicked.AddDynamic(this, &UMainWidget::OnMainMenuClicked);
+    }
+    // if the quit game button is clicked
+    if (QuitGameButtonWin)
+    {
+        QuitGameButtonWin->OnClicked.AddDynamic(this, &UMainWidget::OnQuitClicked);
+    }
+    if (QuitGameButtonLose)
+    {
+        QuitGameButtonLose->OnClicked.AddDynamic(this, &UMainWidget::OnQuitClicked);
+    }
+    // if the retry button is clicked
+    if (RetryButton)
+    {
+        RetryButton->OnClicked.AddDynamic(this, &UMainWidget::OnRetryClicked);
+    }
 }
 
 FText UMainWidget::UpdateWaveText()
@@ -102,7 +136,61 @@ FText UMainWidget::UpdatePlayerWeaponName()
     }
 }
 
-void UMainWidget::ShowEquipText()
+void UMainWidget::ShowWaveStart(int CurrentWave)
 {
-    
+    FString Text = FString::Printf(TEXT("Wave %d Starting!"), CurrentWave);
+    FText TextToSet = FText::FromString(Text);
+    WaveStartingText->SetText(TextToSet);
+    WaveStartingBox->SetVisibility(ESlateVisibility::Visible);
+    PlayAnimationForward(WaveAnimation);
+}
+
+void UMainWidget::ShowWinText()
+{
+    WinWindow->SetVisibility(ESlateVisibility::Visible);
+    PlayAnimationForward(WinWindowAnimation);
+}
+
+void UMainWidget::ShowDeathWindow()
+{
+    DeathWindow->SetVisibility(ESlateVisibility::Visible);
+}
+
+void UMainWidget::ShowBloodOverlay()
+{
+    BloodOverlay->SetVisibility(ESlateVisibility::Visible);
+    PlayAnimationForward(BloodAnimation);
+}
+
+void UMainWidget::HideBloodEffect()
+{
+    BloodOverlay->SetVisibility(ESlateVisibility::Hidden);
+    StopAnimation(BloodAnimation);
+}
+
+void UMainWidget::OnMainMenuClicked()
+{
+    UGameplayStatics::OpenLevel(GetWorld(), TEXT("MainMenu"));
+}
+
+void UMainWidget::OnQuitClicked()
+{
+    // FGenericPlatformMisc::RequestExit(false);
+    UE_LOG(LogTemp, Log, TEXT("quit clicked"));
+
+}
+
+void UMainWidget::OnRetryClicked()
+{
+    UGameplayStatics::OpenLevel(GetWorld(), TEXT("ZombieMap"));
+
+    ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+    AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+    APlayerController* PlayerController = Cast<APlayerController>(Character->GetController());
+    if (PlayerController)
+    {
+        PlayerController->Possess(Character);
+        PlayerController->SetInputMode(FInputModeGameOnly());
+	    // PlayerController->bShowMouseCursor = true;
+    }
 }

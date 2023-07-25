@@ -175,9 +175,8 @@ void UMainWidget::OnMainMenuClicked()
 
 void UMainWidget::OnQuitClicked()
 {
-    // FGenericPlatformMisc::RequestExit(false);
-    UE_LOG(LogTemp, Log, TEXT("quit clicked"));
-
+    FGenericPlatformMisc::RequestExit(false);
+    // UE_LOG(LogTemp, Log, TEXT("quit clicked"));
 }
 
 void UMainWidget::OnRetryClicked()

@@ -95,7 +95,7 @@ void AZombieGameMode::SpawnZombies()
 
     else // for normal zombie rounds
     {
-        ZombieTotal = CurrentWave * 4; 
+        ZombieTotal = CurrentWave * 4;
         ZombiesLeft = ZombieTotal;
 
         for (int i = 0; i < ZombieTotal; i++)
@@ -188,4 +188,15 @@ void AZombieGameMode::BeginPlay()
     Super::BeginPlay();
 
     StartGame();
+}
+
+void AZombieGameMode::WaveStart()
+{
+    ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+    AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+    CurrentWave += 1;
+    if (Character->MainWidgetInstance)
+    {
+        Character->MainWidgetInstance->ShowWaveStart(CurrentWave);
+    }
 }

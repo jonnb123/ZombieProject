@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "MainWidget.h"
 #include "ZombieGameMode.generated.h"
 
 /**
@@ -24,7 +25,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SpawnZombies();
 
-	UFUNCTION(BlueprintImplementableEvent) // doesn't need to be implemented here, all code for this is in unreal
+	UFUNCTION(BlueprintCallable) // doesn't need to be implemented here, all code for this is in unreal
 	void WaveStart();
 
 	void ZombiesKilled();
@@ -38,7 +39,7 @@ public:
 	void SpawnAmmo();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int CurrentWave = 34;
+	int CurrentWave = 5;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int ZombieTotal = 1;
@@ -57,6 +58,11 @@ public:
 
 	UPROPERTY( EditAnywhere, BlueprintReadWrite )
 	TSubclassOf<APawn> FireZombiePawn;
+
+	// // gets main widget reference
+	// UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	// TSubclassOf<UUserWidget> WidgetClass;
+	// UMainWidget* MainWidgetInstance;
 
 	FTimerHandle TimerHandle;
 

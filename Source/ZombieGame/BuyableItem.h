@@ -44,7 +44,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void IncreaseFireRate();
 
-	UFUNCTION(BlueprintImplementableEvent)
+	UFUNCTION(BlueprintCallable)
 	void ExtendMagazine();
 
 	UFUNCTION(BlueprintImplementableEvent)

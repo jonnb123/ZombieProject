@@ -5,6 +5,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "BaseWeapon.h"
 #include "UMG/Public/Components/TextBlock.h"
+#include "Algo/Sort.h"
 
 // Sets default values
 ABuyableItem::ABuyableItem()
@@ -37,7 +38,6 @@ void ABuyableItem::BeginPlay()
 	Super::BeginPlay();
 	BoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &ABuyableItem::OnBoxBeginOverlap);
 	BoxCollisionComponent->OnComponentEndOverlap.AddDynamic(this, &ABuyableItem::OnMyComponentEndOverlap);
-
 }
 
 // Called every frame
@@ -66,7 +66,7 @@ void ABuyableItem::FullyAuto()
 	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
 	if (Character->Points >= 100 && FireRateComplete == false) // set the points to be 1000
 	{
-		IncreaseFireRate(); 
+		IncreaseFireRate();
 		PlayConsumeAnimation();
 	}
 }
@@ -135,7 +135,7 @@ void ABuyableItem::OnBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, A
 	}
 }
 
-void ABuyableItem::OnMyComponentEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+void ABuyableItem::OnMyComponentEndOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex)
 {
 	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
@@ -149,8 +149,33 @@ void ABuyableItem::IncreaseFireRate()
 {
 	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
-	ABaseWeapon* Pistol = Character->Weapons[0];
+	ABaseWeapon *Pistol = Character->Weapons[0];
 	Pistol->FireRate = 0.1;
 	FireRateComplete = true;
+	Character->Points -= 100;
+}
+
+void ABuyableItem::ExtendMagazine()
+{
+	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+	TArray<AActor *> FoundActors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABaseWeapon::StaticClass(), FoundActors);
+	TArray<ABaseWeapon*> FoundWeapons;
+	for (AActor *Actor : FoundActors)
+	{
+		ABaseWeapon *Weapon = Cast<ABaseWeapon>(Actor);
+		if (Weapon)
+		{
+			FoundWeapons.Add(Weapon);
+		}
+	}
+	FoundWeapons[0]->MaxClipSize = 18;
+	FoundWeapons[0]->CurrentAmmo = 18;
+	FoundWeapons[1]->MaxClipSize = 60;
+	FoundWeapons[1]->CurrentAmmo = 60;
+	FoundWeapons[2]->MaxClipSize = 10;
+	FoundWeapons[2]->CurrentAmmo = 10;
+	ExtendedMagComplete = true;
 	Character->Points-=100;
 }

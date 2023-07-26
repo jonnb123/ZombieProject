@@ -7,6 +7,7 @@
 #include "InteractionInterface.h"
 #include "Turret.h"
 #include "Components/BoxComponent.h"
+#include "Animation/AnimSequence.h"
 #include "BuyableItem.generated.h"
 
 UCLASS()
@@ -47,9 +48,24 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ExtendMagazine();
 
-	UFUNCTION(BlueprintImplementableEvent)
+	UFUNCTION(BlueprintCallable)
 	void PlayConsumeAnimation();
 
+	UFUNCTION(BlueprintCallable)
+	void PlayConsumeAnimationSecondHalf();
+
+	FTimerHandle PlayAfterDelayHandle;
+
+	FTimerDelegate PlayAfterDelayDelegate;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
+	UStaticMesh* PerkBottle;
+
+	UPROPERTY(VisibleAnywhere)
+    UStaticMeshComponent* MeshComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Animation")
+    UAnimSequence* DrinkingAnimationSequence;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Complete")
 	bool FireRateComplete;

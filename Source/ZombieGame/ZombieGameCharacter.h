@@ -36,9 +36,9 @@ class AZombieGameCharacter : public ACharacter
 	// UPROPERTY(VisibleDefaultsOnly, Category=Mesh)
 	// USkeletalMeshComponent* Mesh1P;
 
-	/** First person camera */ 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	UCameraComponent* FirstPersonCameraComponent;
+	
+
+	
 
 public:
 	AZombieGameCharacter();
@@ -53,6 +53,13 @@ public:
 	/** Pawn mesh: 1st person view (arms; seen only by self) */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Mesh)
 	USkeletalMeshComponent* GunMesh;
+
+	/** First person camera */ 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
+	UCameraComponent* FirstPersonCameraComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
+	UCameraComponent* AnimationCameraComponent;
 
 protected:
 	virtual void BeginPlay();

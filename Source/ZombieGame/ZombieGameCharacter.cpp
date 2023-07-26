@@ -31,6 +31,11 @@ AZombieGameCharacter::AZombieGameCharacter()
 	FirstPersonCameraComponent->SetRelativeLocation(FVector(-39.56f, 1.75f, 64.f)); // Position the camera
 	FirstPersonCameraComponent->bUsePawnControlRotation = true;
 
+	// animation camera component
+	AnimationCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("AnimationCamera"));
+	AnimationCameraComponent->SetupAttachment(GetCapsuleComponent());
+	AnimationCameraComponent->SetRelativeLocation(FVector((-78.296213,-0.000000,67.275858))); // Position the camera
+
 	// Create a mesh component that will be used when being viewed from a '1st person' view (when controlling this pawn)
 	Mesh1P = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh1P"));
 	Mesh1P->SetOnlyOwnerSee(true);

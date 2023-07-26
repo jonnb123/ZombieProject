@@ -58,6 +58,11 @@ protected:
 	virtual void BeginPlay();
 
 public:
+	UPROPERTY(EditAnywhere)
+	ABaseWeapon* OverlappingWeapon;
+
+	FTimerHandle WeaponPickupTimerHandle;
+
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float TurnRateGamepad;
@@ -205,6 +210,9 @@ public:
 	// UFUNCTION(BlueprintCallable)
 	// void AddAmmoCrate();
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	UAnimSequence* WeaponPickupAnimation; // Declare the UPROPERTY for the animation asset
+
 	UFUNCTION(BlueprintImplementableEvent)
 	void PlayAmmoSound();
 
@@ -297,8 +305,9 @@ protected:
 
 	// void Interact();
 	void PerkMachineInteract();
+	void WeaponPickup();
+	void WeaponPickupAfterDelay();
 	void OnInteractingPressed();
-
 
 	
 	

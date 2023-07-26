@@ -12,6 +12,7 @@
 #include "Zombie.h"
 #include "Engine/SkeletalMesh.h"
 #include "NiagaraFunctionLibrary.h"
+#include "Misc/CString.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AZombieGameCharacter
@@ -178,6 +179,7 @@ void AZombieGameCharacter::MaxAmmo()
 void AZombieGameCharacter::OnInteractingPressed()
 {
 	PerkMachineInteract();
+	WeaponPickup();
 }
 
 void AZombieGameCharacter::SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent)
@@ -190,9 +192,7 @@ void AZombieGameCharacter::SetupPlayerInputComponent(class UInputComponent *Play
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
 	// Bind Interact events
-	// PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &AZombieGameCharacter::Interact);
-
-	PlayerInputComponent->BindAction("Interacting", IE_Pressed, this, &AZombieGameCharacter::OnInteractingPressed);
+	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &AZombieGameCharacter::OnInteractingPressed);
 
 	// Bind fire event
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AZombieGameCharacter::StartFiring);
@@ -538,6 +538,35 @@ void AZombieGameCharacter::PerkMachineInteract()
 		}
 	}
 }
+
+void AZombieGameCharacter::WeaponPickup()
+{
+	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+	
+	if (OverlappingWeapon)
+	{
+		if (OverlappingWeapon->Overlapping == true && OverlappingWeapon->IsObtained == false && Points >= FCString::Atoi(*OverlappingWeapon->ItemPrice))
+		{
+			Points = Points - FCString::Atoi(*OverlappingWeapon->ItemPrice);
+			Mesh1P->PlayAnimation(WeaponPickupAnimation, false);
+			// Set a timer for 1.5 seconds and specify the function to be called after the delay
+			GetWorldTimerManager().SetTimer(WeaponPickupTimerHandle, this, &AZombieGameCharacter::WeaponPickupAfterDelay, 1.5f, false);
+		}
+	}
+}
+
+void AZombieGameCharacter::WeaponPickupAfterDelay()
+{
+	Mesh1P->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+	OverlappingWeapon->IsObtained = true;
+	Weapons.AddUnique(OverlappingWeapon);
+	if (Weapons.Num()-1 != -1)
+	{
+		SwitchToNextPrimaryWeapon();
+	}
+}
+
 
 void AZombieGameCharacter::RegenerateHealth()
 {

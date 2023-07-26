@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "Animation/AnimMontage.h"
 #include "Engine/SkeletalMesh.h"
+#include "Components/BoxComponent.h"
 #include "BaseWeapon.generated.h"
 
 
@@ -61,8 +62,8 @@ public:
 	UAnimMontage* WeaponReloadMontage;
 
 	// mesh of weapon
-	UPROPERTY(EditDefaultsOnly, Category = "Weapons")
-    class USkeletalMesh* WeaponMesh;
+	UPROPERTY(EditAnywhere, Category = "Weapons")
+    USkeletalMesh* WeaponMesh;
 
 	// The name of the weapon
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
@@ -88,7 +89,21 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	float FireRate;
 
+	// Function to handle the begin overlap event
+    UFUNCTION()
+    void OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+                           int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
+	UFUNCTION()
+    void OnMyComponentEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+	ABaseWeapon* OverlappingWeapon;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+    UBoxComponent* BoxCollisionComponent;
+
+	UPROPERTY(EditAnywhere)
+	USceneComponent* _RootComponent;
 
 protected:
 	// Called when the game starts or when spawned

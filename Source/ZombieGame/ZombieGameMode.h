@@ -32,14 +32,14 @@ public:
 
 	void WaveIncrement();
 
-	UFUNCTION(BlueprintImplementableEvent)
+	UFUNCTION(BlueprintCallable)
 	void PlayerWins();
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void SpawnAmmo();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int CurrentWave = 5;
+	int CurrentWave = 34;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int ZombieTotal = 1;
@@ -48,7 +48,7 @@ public:
 	int ZombiesLeft;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int MaxWaves = 34; // max number of 8 zombies per random point, so creating more spots will help.
+	int MaxWaves = 100; // max number of 8 zombies per random point, so creating more spots will help.
 
 	UPROPERTY(EditAnywhere)
 	class UBehaviorTree* BehaviorTree;

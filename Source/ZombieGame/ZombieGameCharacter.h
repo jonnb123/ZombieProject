@@ -180,8 +180,15 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void Death();
 
-	UFUNCTION(BlueprintImplementableEvent)
-	void HealthRegenTimer();
+	// UFUNCTION(BlueprintCallable)
+	// void HealthRegenTimer();
+
+	UFUNCTION(BlueprintCallable)
+	void RegenerateHealth();
+
+	FTimerDelegate HealthRegenTimerDelegate;
+	FTimerHandle HealthRegenTimerHandle;
+	float HealthRegenDuration = 5.0; // Skip the last 0.2second
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void BloodOverlay();
@@ -289,7 +296,9 @@ protected:
 	FTimerHandle ReloadTimerHandle;
 
 	// void Interact();
-	void Interacting();
+	void PerkMachineInteract();
+	void OnInteractingPressed();
+
 
 	
 	

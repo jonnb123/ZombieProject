@@ -13,6 +13,7 @@
 #include "UMG/Public/Animation/WidgetAnimation.h"
 #include "GenericPlatform/GenericPlatformMisc.h"
 #include "GameFramework/PlayerController.h"
+#include "BuyableItem.h"
 
 // #include "BaseWeapon.h"
 
@@ -193,3 +194,12 @@ void UMainWidget::OnRetryClicked()
 	    // PlayerController->bShowMouseCursor = true;
     }
 }
+
+// void UMainWidget::ShowEquipText()
+// {
+//     ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+//     AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+    
+     
+//     // EquipItemText = FString::Printf(TEXT("%d/%d"), CurrentWeapon->CurrentAmmo, CurrentWeapon->TotalAmmo);
+// }

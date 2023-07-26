@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "InteractionInterface.h"
 #include "Turret.h"
+#include "Components/BoxComponent.h"
 #include "BuyableItem.generated.h"
 
 UCLASS()
@@ -71,6 +72,21 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* PerkMachineMesh;
+
+	// Child box collision component
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+    UBoxComponent* BoxCollisionComponent;
+
+	// Function to handle the begin overlap event
+    UFUNCTION()
+    void OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+                           int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+    void OnMyComponentEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	
+	UPROPERTY()
+    ABuyableItem* OverlappingBuyableItem;
 
 private:
 	UPROPERTY(EditAnywhere)

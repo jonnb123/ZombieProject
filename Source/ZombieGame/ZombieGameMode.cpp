@@ -9,9 +9,10 @@
 #include "FireZombieBoss.h"
 #include "EngineUtils.h" // Include the appropriate header for TActorIterator
 
+
 void AZombieGameMode::StartGame()
 {
-    SpawnZombies();
+    // SpawnZombies();
 }
 
 void AZombieGameMode::SpawnZombies()
@@ -198,5 +199,19 @@ void AZombieGameMode::WaveStart()
     if (Character->MainWidgetInstance)
     {
         Character->MainWidgetInstance->ShowWaveStart(CurrentWave);
+    }
+}
+
+void AZombieGameMode::PlayerWins()
+{
+    ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+    AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+    APlayerController* PlayerController = Cast<APlayerController>(Character->GetController());
+    if (Character->MainWidgetInstance)
+    {
+        Character->GetCharacterMovement()->StopMovementImmediately();
+        PlayerController->SetInputMode(FInputModeUIOnly());
+        PlayerController->bShowMouseCursor = true;
+        Character->MainWidgetInstance->ShowWinText();
     }
 }

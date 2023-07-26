@@ -19,6 +19,7 @@ void ABuyDoor::BuyDoor()
         FRotator NewRotation = PerkMachineMesh->GetRelativeRotation();
         NewRotation.Yaw += 90.0f; // Rotate by 90 degrees around the Z-axis
         PerkMachineMesh->SetRelativeRotation(NewRotation);
+        bDoorRotated = true;
 	}
 }
 

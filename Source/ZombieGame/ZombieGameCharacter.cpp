@@ -13,8 +13,6 @@
 #include "Engine/SkeletalMesh.h"
 #include "NiagaraFunctionLibrary.h"
 
-
-
 //////////////////////////////////////////////////////////////////////////
 // AZombieGameCharacter
 
@@ -66,7 +64,7 @@ void AZombieGameCharacter::BeginPlay()
 	Super::BeginPlay();
 	MainWidgetInstance = CreateWidget<UMainWidget>(GetWorld(), WidgetClass);
 	MainWidgetInstance->AddToViewport();
-	
+
 	UE_LOG(LogTemp, Warning, TEXT("Current Weapon index: %d"), CurrentWeaponIndex);
 }
 
@@ -78,7 +76,10 @@ float AZombieGameCharacter::TakeDamage(float DamageAmount, struct FDamageEvent c
 		// removing health regen and blood overlay for test
 		if (Health <= 90)
 		{
-			HealthRegenTimer();
+			// HealthRegenTimer();
+			HealthRegenTimerDelegate.BindUObject(this, &AZombieGameCharacter::RegenerateHealth);
+			// this basically plays the ReloadCalcAndPlayAnimations once the animation is complete.
+			GetWorldTimerManager().SetTimer(HealthRegenTimerHandle, HealthRegenTimerDelegate, HealthRegenDuration, true);
 		}
 		if (Health <= 50)
 		{
@@ -117,7 +118,8 @@ void AZombieGameCharacter::Death()
 {
 	IsDead = true;
 	MainWidgetInstance->ShowDeathWindow();
-	APlayerController* PlayerController = Cast<APlayerController>(GetController());
+	APlayerController *PlayerController = Cast<APlayerController>(GetController());
+	GetCharacterMovement()->StopMovementImmediately();
 	PlayerController->SetInputMode(FInputModeUIOnly());
 	PlayerController->bShowMouseCursor = true;
 }
@@ -144,9 +146,8 @@ void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
 
 				// This is referenced in the abp to change weapon
 				EquippedWeaponCharacter = Weapons[CurrentWeaponIndex]->WeaponType;
-				
 			}
-		break; // breaks out of the for loop
+			break; // breaks out of the for loop
 		}
 	}
 
@@ -157,7 +158,7 @@ void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
 
 		// SwitchWeaponMesh(CurrentWeaponIndex);
 		GunMesh->SetSkeletalMesh(Weapons[CurrentWeaponIndex]->WeaponMesh);
-		
+
 		GunMesh->AttachToComponent(Mesh1P, FAttachmentTransformRules::SnapToTargetIncludingScale, Weapons[CurrentWeaponIndex]->SocketName);
 
 		EquippedWeaponCharacter = Weapons[CurrentWeaponIndex]->WeaponType;
@@ -174,6 +175,11 @@ void AZombieGameCharacter::MaxAmmo()
 
 //////////////////////////////////////////////////////////////////////////// Input
 
+void AZombieGameCharacter::OnInteractingPressed()
+{
+	PerkMachineInteract();
+}
+
 void AZombieGameCharacter::SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent)
 {
 	// Set up gameplay key bindings
@@ -186,7 +192,7 @@ void AZombieGameCharacter::SetupPlayerInputComponent(class UInputComponent *Play
 	// Bind Interact events
 	// PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &AZombieGameCharacter::Interact);
 
-	PlayerInputComponent->BindAction("Interacting", IE_Pressed, this, &AZombieGameCharacter::Interacting);
+	PlayerInputComponent->BindAction("Interacting", IE_Pressed, this, &AZombieGameCharacter::OnInteractingPressed);
 
 	// Bind fire event
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AZombieGameCharacter::StartFiring);
@@ -441,7 +447,7 @@ void AZombieGameCharacter::CalculateAmmo()
 	IsReloading = false;
 }
 
-void AZombieGameCharacter::Interacting()
+void AZombieGameCharacter::PerkMachineInteract()
 {
 	UE_LOG(LogTemp, Warning, TEXT("boop bop"));
 
@@ -530,5 +536,22 @@ void AZombieGameCharacter::Interacting()
 				}
 			}
 		}
+	}
+}
+
+void AZombieGameCharacter::RegenerateHealth()
+{
+	if (Health == 100)
+	{
+		GetWorldTimerManager().ClearTimer(HealthRegenTimerHandle);
+	}
+	else
+	{
+		Health += 5;
+		Health = FMath::Clamp(Health, 0.f, 100.f);
+	}
+	if (Health >= 50)
+	{
+		MainWidgetInstance->HideBloodEffect();
 	}
 }

@@ -41,7 +41,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Price")
 	FString ItemPrice;
 
-	UFUNCTION(BlueprintImplementableEvent)
+	UFUNCTION(BlueprintCallable)
 	void IncreaseFireRate();
 
 	UFUNCTION(BlueprintImplementableEvent)

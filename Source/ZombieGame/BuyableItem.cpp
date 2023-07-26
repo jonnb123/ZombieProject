@@ -66,7 +66,7 @@ void ABuyableItem::FullyAuto()
 	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
 	if (Character->Points >= 100 && FireRateComplete == false) // set the points to be 1000
 	{
-		IncreaseFireRate(); // functionality in blueprint
+		IncreaseFireRate(); 
 		PlayConsumeAnimation();
 	}
 }
@@ -143,4 +143,14 @@ void ABuyableItem::OnMyComponentEndOverlap(UPrimitiveComponent* OverlappedCompon
 	{
 		Character->MainWidgetInstance->EquipItemText->SetVisibility(ESlateVisibility::Hidden);
 	}
+}
+
+void ABuyableItem::IncreaseFireRate()
+{
+	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+	ABaseWeapon* Pistol = Character->Weapons[0];
+	Pistol->FireRate = 0.1;
+	FireRateComplete = true;
+	Character->Points-=100;
 }

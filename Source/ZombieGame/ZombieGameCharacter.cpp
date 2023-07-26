@@ -561,7 +561,7 @@ void AZombieGameCharacter::WeaponPickupAfterDelay()
 	Mesh1P->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 	OverlappingWeapon->IsObtained = true;
 	Weapons.AddUnique(OverlappingWeapon);
-	if (Weapons.Num()-1 != -1)
+	if (Weapons.Num()-1 != -1) // if the newly added weapons index isn't -1
 	{
 		SwitchToNextPrimaryWeapon();
 	}

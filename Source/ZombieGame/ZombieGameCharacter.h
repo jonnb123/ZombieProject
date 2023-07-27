@@ -312,7 +312,7 @@ protected:
 
 	// void Interact();
 	void PerkMachineInteract();
-	void WeaponPickup();
+	void WeaponPickupInteract();
 	void WeaponPickupAfterDelay();
 	void OnInteractingPressed();
 

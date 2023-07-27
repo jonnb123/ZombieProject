@@ -184,7 +184,7 @@ void AZombieGameCharacter::MaxAmmo()
 void AZombieGameCharacter::OnInteractingPressed()
 {
 	PerkMachineInteract();
-	WeaponPickup();
+	WeaponPickupInteract();
 }
 
 void AZombieGameCharacter::SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent)
@@ -544,7 +544,7 @@ void AZombieGameCharacter::PerkMachineInteract()
 	}
 }
 
-void AZombieGameCharacter::WeaponPickup()
+void AZombieGameCharacter::WeaponPickupInteract()
 {
 	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);

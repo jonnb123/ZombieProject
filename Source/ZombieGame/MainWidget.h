@@ -117,9 +117,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void OnRetryClicked();
 
-	// UFUNCTION(BlueprintCallable)
-	// void ShowEquipText();
-
 	// Animations
 	UPROPERTY(Transient, meta = (BindWidgetAnim))
 	class UWidgetAnimation *WaveAnimation;

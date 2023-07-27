@@ -56,16 +56,11 @@ void ABaseWeapon::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AA
         if (Character->MainWidgetInstance)
         {
             Overlapping = true;
-            // OverlappingWeapon = Cast<ABaseWeapon>(OtherActor);
-
             FString Text = FString::Printf(TEXT("Press 'E' To Buy %s [Price: %s]"), *Name, *ItemPrice);
             Character->MainWidgetInstance->EquipItemText->SetText(FText::FromString(Text));
             Character->MainWidgetInstance->EquipItemText->SetVisibility(ESlateVisibility::Visible);
 			Character->OverlappingWeapon = Cast<ABaseWeapon>(OverlappedComponent->GetOwner());
 			UE_LOG(LogTemp, Warning, TEXT("Overlapped Component: %s"), *OverlappedComponent->GetOwner()->GetName());
-			UE_LOG(LogTemp, Warning, TEXT("Other actor is: %s"), *OtherActor->GetName());
-			UE_LOG(LogTemp, Warning, TEXT("Other Component: %s"), *OtherComp->GetName());
-
         }
     }
 }

@@ -177,7 +177,6 @@ void UMainWidget::OnMainMenuClicked()
 void UMainWidget::OnQuitClicked()
 {
     FGenericPlatformMisc::RequestExit(false);
-    // UE_LOG(LogTemp, Log, TEXT("quit clicked"));
 }
 
 void UMainWidget::OnRetryClicked()
@@ -191,15 +190,6 @@ void UMainWidget::OnRetryClicked()
     {
         PlayerController->Possess(Character);
         PlayerController->SetInputMode(FInputModeGameOnly());
-	    // PlayerController->bShowMouseCursor = true;
     }
 }
 
-// void UMainWidget::ShowEquipText()
-// {
-//     ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-//     AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
-    
-     
-//     // EquipItemText = FString::Printf(TEXT("%d/%d"), CurrentWeapon->CurrentAmmo, CurrentWeapon->TotalAmmo);
-// }

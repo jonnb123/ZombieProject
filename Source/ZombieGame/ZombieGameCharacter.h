@@ -317,7 +317,6 @@ protected:
 	FTimerHandle ReloadTimerHandle;
 
 	// void Interact();
-	void PerkMachineInteract();
 	// void WeaponPickupInteract();
 	// void WeaponPickupAfterDelay();
 	void OnInteractingPressed();

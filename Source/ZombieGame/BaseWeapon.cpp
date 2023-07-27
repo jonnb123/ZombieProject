@@ -4,6 +4,7 @@
 #include "ZombieGameCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "UMG/Public/Components/TextBlock.h"
+#include "Camera/CameraComponent.h"
 
 // Sets default values
 ABaseWeapon::ABaseWeapon()
@@ -62,9 +63,11 @@ void ABaseWeapon::UseBuyableItem()
 	if (IsObtained == false && Character->Points >= FCString::Atoi(*ItemPrice))
 	{
 		Character->Points -= FCString::Atoi(*ItemPrice);
+		// Character->AnimationCameraComponent->SetActive(true);
+		// Character->FirstPersonCameraComponent->SetActive(false);
 		Character->Mesh1P->PlayAnimation(WeaponPickupAnimation, false);
 		// Set a timer for 1.5 seconds and specify the function to be called after the delay
-		GetWorldTimerManager().SetTimer(WeaponPickupTimerHandle, this, &ABaseWeapon::WeaponPickupAfterDelay, 1.5f, false);
+		GetWorldTimerManager().SetTimer(WeaponPickupTimerHandle, this, &ABaseWeapon::WeaponPickupAfterDelay, 5.0f, false);
 	}
 }
 

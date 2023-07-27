@@ -11,7 +11,7 @@
 #include "BuyableItem.generated.h"
 
 UCLASS()
-class ZOMBIEGAME_API ABuyableItem : public AActor, public IInteractionInterface
+class ZOMBIEGAME_API ABuyableItem : public AActor
 {
 	GENERATED_BODY()
 	
@@ -26,13 +26,6 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	// These are all from the IInteractionInterface that are overriden
-	void HealthJuice() override;
-	void FullyAuto() override;
-	void MaxSpeed() override;
-	void ExtendedMag() override;
-	void AddTurret() override;
-
 
 	// The name of the weapon
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Name")
@@ -41,18 +34,6 @@ public:
 	// Price of the perk
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Price")
 	FString ItemPrice;
-
-	UFUNCTION(BlueprintCallable)
-	void IncreaseFireRate();
-
-	UFUNCTION(BlueprintCallable)
-	void ExtendMagazine();
-
-	UFUNCTION(BlueprintCallable)
-	void PlayConsumeAnimation();
-
-	UFUNCTION(BlueprintCallable)
-	void PlayConsumeAnimationSecondHalf();
 
 	FTimerHandle PlayAfterDelayHandle;
 
@@ -66,28 +47,6 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Animation")
     UAnimSequence* DrinkingAnimationSequence;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Complete")
-	bool FireRateComplete;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Complete")
-	bool ExtendedMagComplete;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Complete")
-	bool TurretComplete = false;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FVector SpawnLocation;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FRotator SpawnRotation;
-
-	// The class of the turret that will be spawned
-    UPROPERTY(EditAnywhere)
-    TSubclassOf<ATurret> TurretClass;
-
-	UPROPERTY(EditAnywhere)
-	UStaticMeshComponent* PerkMachineMesh;
 
 	// Child box collision component
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
@@ -108,7 +67,7 @@ private:
 	UPROPERTY(EditAnywhere)
 	USceneComponent* _RootComponent;
 
-    // // The location at which the turret will be spawned
-    UPROPERTY(EditAnywhere, Category = "Turret")
-    USceneComponent* TurretSpawnLocation;
+    // // // The location at which the turret will be spawned
+    // UPROPERTY(EditAnywhere, Category = "Turret")
+    // USceneComponent* TurretSpawnLocation;
 };

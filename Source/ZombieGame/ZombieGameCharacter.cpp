@@ -187,6 +187,42 @@ void AZombieGameCharacter::OnInteractingPressed()
 	WeaponPickupInteract();
 }
 
+void AZombieGameCharacter::WeaponPickupInteract()
+{
+	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+	
+	if (OverlappingWeapon)
+	{
+		if (OverlappingWeapon->Overlapping == true && OverlappingWeapon->IsObtained == false && Points >= FCString::Atoi(*OverlappingWeapon->ItemPrice))
+		{
+			Points = Points - FCString::Atoi(*OverlappingWeapon->ItemPrice);
+			Mesh1P->PlayAnimation(WeaponPickupAnimation, false);
+			// Set a timer for 1.5 seconds and specify the function to be called after the delay
+			GetWorldTimerManager().SetTimer(WeaponPickupTimerHandle, this, &AZombieGameCharacter::WeaponPickupAfterDelay, 1.5f, false);
+		}
+	}
+}
+
+void AZombieGameCharacter::WeaponPickupAfterDelay()
+{
+	Mesh1P->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+	OverlappingWeapon->IsObtained = true;
+	Weapons.AddUnique(OverlappingWeapon);
+	if (Weapons.Num()-1 != -1) // if the newly added weapons index isn't -1
+	{
+		SwitchToNextPrimaryWeapon();
+	}
+}
+
+void AZombieGameCharacter::PerkMachineInteract()
+{
+	if (OverlappingPerkMachine)
+	{
+		OverlappingPerkMachine->UsePerk();
+	}
+}
+
 void AZombieGameCharacter::SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent)
 {
 	// Set up gameplay key bindings
@@ -452,125 +488,9 @@ void AZombieGameCharacter::CalculateAmmo()
 	IsReloading = false;
 }
 
-void AZombieGameCharacter::PerkMachineInteract()
-{
-	UE_LOG(LogTemp, Warning, TEXT("boop bop"));
 
-	FVector Location;
-	FRotator Rotation;
 
-	FHitResult InteractHit;
 
-	GetController()->GetPlayerViewPoint(Location, Rotation);
-
-	FVector Start = Location;
-	// FVector End = Location + Rotation.Vector() * MaxRange;
-	FVector End = Location + Rotation.Vector() * 150;
-
-	FCollisionQueryParams TraceParams = FCollisionQueryParams::DefaultQueryParam;
-	TraceParams.bReturnPhysicalMaterial = true;
-	TraceParams.AddIgnoredActor(this);
-
-	bool bSuccess = GetWorld()->LineTraceSingleByChannel(InteractHit, Start, End, ECC_WorldDynamic, TraceParams);
-
-	if (bSuccess)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Hit Actor!"));
-
-		if (InteractHit.GetActor())
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Hit Actor: %s"), *InteractHit.GetActor()->GetName());
-			// play consume animation
-			// PlayConsumeAnimation();
-			// for health juice
-			if (InteractHit.GetActor()->GetName() == "BP_PerkMachine_C_1")
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Hit Actor: %s"), *InteractHit.GetActor()->GetName());
-				Interface = Cast<IInteractionInterface>(InteractHit.GetActor());
-				if (Interface)
-				{
-					Interface->HealthJuice();
-				}
-			}
-			else if (InteractHit.GetActor()->GetName() == "BP_FullyAuto_C_1")
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Hit Actor: %s"), *InteractHit.GetActor()->GetName());
-				Interface = Cast<IInteractionInterface>(InteractHit.GetActor());
-				if (Interface)
-				{
-					Interface->FullyAuto();
-				}
-			}
-
-			else if (InteractHit.GetActor()->GetName() == "BP_MaxSpeed_C_1")
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Hit Actor: %s"), *InteractHit.GetActor()->GetName());
-				Interface = Cast<IInteractionInterface>(InteractHit.GetActor());
-				if (Interface)
-				{
-					Interface->MaxSpeed();
-				}
-			}
-
-			else if (InteractHit.GetActor()->GetName() == "BP_ExtendedMag_C_1")
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Hit Actor: %s"), *InteractHit.GetActor()->GetName());
-				Interface = Cast<IInteractionInterface>(InteractHit.GetActor());
-				if (Interface)
-				{
-					Interface->ExtendedMag();
-				}
-			}
-
-			else if (InteractHit.GetActor()->GetName() == "BP_TurretShop_C_1")
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Hit Actor: %s"), *InteractHit.GetActor()->GetName());
-				Interface = Cast<IInteractionInterface>(InteractHit.GetActor());
-				if (Interface)
-				{
-					Interface->AddTurret();
-				}
-			}
-			else if (InteractHit.GetActor()->GetName().StartsWith("BP_BuyDoor"))
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Hit Actor: %s"), *InteractHit.GetActor()->GetName());
-				Interface = Cast<IInteractionInterface>(InteractHit.GetActor());
-				if (Interface)
-				{
-					Interface->BuyDoor();
-				}
-			}
-		}
-	}
-}
-
-void AZombieGameCharacter::WeaponPickupInteract()
-{
-	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
-	
-	if (OverlappingWeapon)
-	{
-		if (OverlappingWeapon->Overlapping == true && OverlappingWeapon->IsObtained == false && Points >= FCString::Atoi(*OverlappingWeapon->ItemPrice))
-		{
-			Points = Points - FCString::Atoi(*OverlappingWeapon->ItemPrice);
-			Mesh1P->PlayAnimation(WeaponPickupAnimation, false);
-			// Set a timer for 1.5 seconds and specify the function to be called after the delay
-			GetWorldTimerManager().SetTimer(WeaponPickupTimerHandle, this, &AZombieGameCharacter::WeaponPickupAfterDelay, 1.5f, false);
-		}
-	}
-}
-
-void AZombieGameCharacter::WeaponPickupAfterDelay()
-{
-	Mesh1P->SetAnimationMode(EAnimationMode::AnimationBlueprint);
-	OverlappingWeapon->IsObtained = true;
-	Weapons.AddUnique(OverlappingWeapon);
-	if (Weapons.Num()-1 != -1) // if the newly added weapons index isn't -1
-	{
-		SwitchToNextPrimaryWeapon();
-	}
-}
 
 
 void AZombieGameCharacter::RegenerateHealth()

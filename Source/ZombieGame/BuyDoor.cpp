@@ -14,12 +14,12 @@ void ABuyDoor::BuyDoor()
 	AZombieGameCharacter* Character = Cast<AZombieGameCharacter>(PlayerCharacter);
 	if (Character->Points >= 100 && !bDoorRotated) // set the points to be 2000
 	{
-		Character->Points -= 100; // set the points to be 2000
-        // Destroy();
-        FRotator NewRotation = PerkMachineMesh->GetRelativeRotation();
-        NewRotation.Yaw += 90.0f; // Rotate by 90 degrees around the Z-axis
-        PerkMachineMesh->SetRelativeRotation(NewRotation);
-        bDoorRotated = true;
+		// Character->Points -= 100; // set the points to be 2000
+        // // Destroy();
+        // FRotator NewRotation = PerkMachineMesh->GetRelativeRotation();
+        // NewRotation.Yaw += 90.0f; // Rotate by 90 degrees around the Z-axis
+        // PerkMachineMesh->SetRelativeRotation(NewRotation);
+        // bDoorRotated = true;
 	}
 }
 

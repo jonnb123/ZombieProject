@@ -19,7 +19,7 @@ void AAddTurret::UsePerk()
 	// Check if the player has enough points to buy the turret
 	if (Character->Points >= 100 && TurretComplete == false)
 	{
-		// PlayConsumeAnimation();
+		PlayConsumeAnimation();
 		// Spawn the turret at the specified location
 		AActor *Turret = World->SpawnActor(TurretClass, &SpawnLocation, &SpawnRotation);
 		if (Turret)

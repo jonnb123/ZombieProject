@@ -15,5 +15,5 @@ class ZOMBIEGAME_API AHealthJuice : public APerkMachine
 	GENERATED_BODY()
 	
 public:
-	void UsePerk() override;
+	void UseBuyableItem() override;
 };

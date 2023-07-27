@@ -63,6 +63,9 @@ public:
 	UPROPERTY()
     ABuyableItem* OverlappingBuyableItem;
 
+	UFUNCTION(BlueprintCallable)
+	virtual void UseBuyableItem();
+
 private:
 	UPROPERTY(EditAnywhere)
 	USceneComponent* _RootComponent;

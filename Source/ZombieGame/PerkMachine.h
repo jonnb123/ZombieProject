@@ -31,7 +31,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void PlayConsumeAnimationSecondHalf();
 
-	UFUNCTION(BlueprintCallable)
-	virtual void UsePerk();
+	// UFUNCTION(BlueprintCallable)
+	// virtual void UsePerk();
 
 };

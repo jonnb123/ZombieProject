@@ -10,7 +10,7 @@
 #include "Camera/CameraComponent.h"
 
 
-void AExtendedMag::UsePerk()
+void AExtendedMag::UseBuyableItem()
 {
     UE_LOG(LogTemp, Warning, TEXT("You have interacted with fully auto"));
 	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);

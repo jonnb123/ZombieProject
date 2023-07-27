@@ -15,7 +15,7 @@ class ZOMBIEGAME_API AExtendedMag : public APerkMachine
 	GENERATED_BODY()
 	
 public:
-	void UsePerk() override;
+	void UseBuyableItem() override;
 
 	UFUNCTION(BlueprintCallable)
 	void ExtendMagazine();

@@ -9,7 +9,7 @@
 #include "Camera/CameraComponent.h"
 
 
-void AHealthJuice::UsePerk() 
+void AHealthJuice::UseBuyableItem() 
 {
     UE_LOG(LogTemp, Warning, TEXT("You have interacted with health juice"));
 	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);

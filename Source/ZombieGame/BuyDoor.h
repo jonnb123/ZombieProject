@@ -15,6 +15,11 @@ class ZOMBIEGAME_API ABuyDoor : public ABuyableItem
 	GENERATED_BODY()
 
 public:
-	virtual void BuyDoor();
+	ABuyDoor();
+
+	void UseBuyableItem() override;
 	bool bDoorRotated = false;
+
+	UPROPERTY(EditAnywhere)
+	UStaticMeshComponent* DoorMesh;
 };

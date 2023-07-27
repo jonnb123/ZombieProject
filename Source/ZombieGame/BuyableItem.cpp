@@ -17,9 +17,6 @@ ABuyableItem::ABuyableItem()
 	_RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root Component"));
 	RootComponent = _RootComponent;
 
-	// PerkMachineMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Perk Machine Mesh"));
-	// PerkMachineMesh->SetupAttachment(RootComponent);
-
 	// Create the box collision and attach it to the root
 	BoxCollisionComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollisionComponent"));
 	BoxCollisionComponent->InitBoxExtent(FVector(100.f, 100.f, 100.f));
@@ -59,7 +56,7 @@ void ABuyableItem::OnBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, A
 			FString Text = FString::Printf(TEXT("Press 'E' To Buy %s [Price: %s]"), *Name, *ItemPrice);
 			Character->MainWidgetInstance->EquipItemText->SetText(FText::FromString(Text));
 			Character->MainWidgetInstance->EquipItemText->SetVisibility(ESlateVisibility::Visible);
-			Character->OverlappingPerkMachine = Cast<APerkMachine>(OverlappedComponent->GetOwner());
+			Character->OverlappingBuyableItem = Cast<ABuyableItem>(OverlappedComponent->GetOwner());
 			UE_LOG(LogTemp, Warning, TEXT("Overlapped Component: %s"), *OverlappedComponent->GetOwner()->GetName());
 		}
 	}
@@ -73,4 +70,9 @@ void ABuyableItem::OnMyComponentEndOverlap(UPrimitiveComponent *OverlappedCompon
 	{
 		Character->MainWidgetInstance->EquipItemText->SetVisibility(ESlateVisibility::Hidden);
 	}
+}
+
+void ABuyableItem::UseBuyableItem()
+{
+    
 }

@@ -15,7 +15,7 @@ class ZOMBIEGAME_API AAddTurret : public APerkMachine
 	GENERATED_BODY()
 
 public:
-	void UsePerk() override;
+	void UseBuyableItem() override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Complete")
 	bool TurretComplete = false;

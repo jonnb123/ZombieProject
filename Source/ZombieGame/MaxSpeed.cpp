@@ -8,7 +8,7 @@
 #include "Algo/Sort.h"
 #include "Camera/CameraComponent.h"
 
-void AMaxSpeed::UsePerk()
+void AMaxSpeed::UseBuyableItem()
 {
     UE_LOG(LogTemp, Warning, TEXT("You have interacted with Max Speed"));
     ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);

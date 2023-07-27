@@ -217,9 +217,13 @@ void AZombieGameCharacter::WeaponPickupAfterDelay()
 
 void AZombieGameCharacter::PerkMachineInteract()
 {
-	if (OverlappingPerkMachine)
+	// if (OverlappingPerkMachine)
+	// {
+	// 	OverlappingPerkMachine->UsePerk();
+	// }
+	if (OverlappingBuyableItem)
 	{
-		OverlappingPerkMachine->UsePerk();
+		OverlappingBuyableItem->UseBuyableItem();
 	}
 }
 

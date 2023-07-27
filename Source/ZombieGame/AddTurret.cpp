@@ -9,7 +9,7 @@
 #include "Algo/Sort.h"
 #include "Camera/CameraComponent.h"
 
-void AAddTurret::UsePerk()
+void AAddTurret::UseBuyableItem()
 {
     UE_LOG(LogTemp, Warning, TEXT("You have interacted with turret"));
 	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);

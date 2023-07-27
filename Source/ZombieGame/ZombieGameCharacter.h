@@ -13,6 +13,7 @@
 #include "Engine/SkeletalMesh.h"
 #include "MainWidget.h"
 #include "PerkMachine.h"
+#include "BuyableItem.h"
 #include "ZombieGameCharacter.generated.h"
 
 class UInputComponent;
@@ -69,8 +70,11 @@ public:
 	UPROPERTY(EditAnywhere)
 	ABaseWeapon* OverlappingWeapon;
 
+	// UPROPERTY(EditAnywhere)
+	// APerkMachine* OverlappingPerkMachine;
+
 	UPROPERTY(EditAnywhere)
-	APerkMachine* OverlappingPerkMachine;
+	ABuyableItem* OverlappingBuyableItem;
 
 	FTimerHandle WeaponPickupTimerHandle;
 

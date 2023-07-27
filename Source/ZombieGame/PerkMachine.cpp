@@ -57,10 +57,10 @@ void APerkMachine::PlayConsumeAnimationSecondHalf()
 	Character->Mesh1P->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 }
 
-void APerkMachine::UsePerk()
-{
+// void APerkMachine::UsePerk()
+// {
     
-}
+// }
 
 
 

@@ -7,6 +7,7 @@
 #include "Animation/AnimMontage.h"
 #include "Engine/SkeletalMesh.h"
 #include "Components/BoxComponent.h"
+#include "BuyableItem.h"
 #include "BaseWeapon.generated.h"
 
 
@@ -22,13 +23,30 @@ enum class EWeaponType : uint8
 
 
 UCLASS()
-class ZOMBIEGAME_API ABaseWeapon : public AActor
+// class ZOMBIEGAME_API ABaseWeapon : public AActor
+class ZOMBIEGAME_API ABaseWeapon : public ABuyableItem
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
 	ABaseWeapon();
+
+	// // The name of the weapon
+	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	// FString Name;
+
+	// // The name of the weapon
+	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	// FString ItemPrice;
+
+	// Function to handle the begin overlap event
+    // UFUNCTION()
+    // void OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+    //                        int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	// UFUNCTION()
+    // void OnMyComponentEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	int CurrentAmmo;
@@ -67,15 +85,7 @@ public:
 
 	// The name of the weapon
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-	FString Name;
-
-	// The name of the weapon
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	FName SocketName;
-
-	// The name of the weapon
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-	FString ItemPrice;
 
 	// has the weapon been obtained by the player
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
@@ -89,21 +99,23 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	float FireRate;
 
-	// Function to handle the begin overlap event
-    UFUNCTION()
-    void OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-                           int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	UFUNCTION()
-    void OnMyComponentEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-
 	ABaseWeapon* OverlappingWeapon;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-    UBoxComponent* BoxCollisionComponent;
+	FTimerHandle WeaponPickupTimerHandle;
 
-	UPROPERTY(EditAnywhere)
-	USceneComponent* _RootComponent;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	UAnimSequence* WeaponPickupAnimation; // Declare the UPROPERTY for the animation asset
+
+	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+    // UBoxComponent* BoxCollisionComponent;
+
+	// UPROPERTY(EditAnywhere)
+	// USceneComponent* _RootComponent;
+
+	// UFUNCTION(BlueprintCallable)
+	void UseBuyableItem() override;
+	void WeaponPickupAfterDelay();
+
 
 protected:
 	// Called when the game starts or when spawned

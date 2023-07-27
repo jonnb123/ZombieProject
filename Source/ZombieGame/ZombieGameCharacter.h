@@ -67,16 +67,14 @@ protected:
 	virtual void BeginPlay();
 
 public:
-	UPROPERTY(EditAnywhere)
-	ABaseWeapon* OverlappingWeapon;
+	// UPROPERTY(EditAnywhere)
+	// ABaseWeapon* OverlappingWeapon;
 
 	// UPROPERTY(EditAnywhere)
 	// APerkMachine* OverlappingPerkMachine;
 
 	UPROPERTY(EditAnywhere)
 	ABuyableItem* OverlappingBuyableItem;
-
-	FTimerHandle WeaponPickupTimerHandle;
 
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
@@ -225,8 +223,8 @@ public:
 	// UFUNCTION(BlueprintCallable)
 	// void AddAmmoCrate();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-	UAnimSequence* WeaponPickupAnimation; // Declare the UPROPERTY for the animation asset
+	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	// UAnimSequence* WeaponPickupAnimation; // Declare the UPROPERTY for the animation asset
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void PlayAmmoSound();
@@ -320,8 +318,8 @@ protected:
 
 	// void Interact();
 	void PerkMachineInteract();
-	void WeaponPickupInteract();
-	void WeaponPickupAfterDelay();
+	// void WeaponPickupInteract();
+	// void WeaponPickupAfterDelay();
 	void OnInteractingPressed();
 
 	

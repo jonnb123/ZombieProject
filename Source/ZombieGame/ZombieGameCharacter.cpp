@@ -184,36 +184,36 @@ void AZombieGameCharacter::MaxAmmo()
 void AZombieGameCharacter::OnInteractingPressed()
 {
 	PerkMachineInteract();
-	WeaponPickupInteract();
+	// WeaponPickupInteract();
 }
 
-void AZombieGameCharacter::WeaponPickupInteract()
-{
-	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+// void AZombieGameCharacter::WeaponPickupInteract()
+// {
+// 	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+// 	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
 	
-	if (OverlappingWeapon)
-	{
-		if (OverlappingWeapon->Overlapping == true && OverlappingWeapon->IsObtained == false && Points >= FCString::Atoi(*OverlappingWeapon->ItemPrice))
-		{
-			Points = Points - FCString::Atoi(*OverlappingWeapon->ItemPrice);
-			Mesh1P->PlayAnimation(WeaponPickupAnimation, false);
-			// Set a timer for 1.5 seconds and specify the function to be called after the delay
-			GetWorldTimerManager().SetTimer(WeaponPickupTimerHandle, this, &AZombieGameCharacter::WeaponPickupAfterDelay, 1.5f, false);
-		}
-	}
-}
+// 	if (OverlappingWeapon)
+// 	{
+// 		if (OverlappingWeapon->Overlapping == true && OverlappingWeapon->IsObtained == false && Points >= FCString::Atoi(*OverlappingWeapon->ItemPrice))
+// 		{
+// 			Points = Points - FCString::Atoi(*OverlappingWeapon->ItemPrice);
+// 			Mesh1P->PlayAnimation(WeaponPickupAnimation, false);
+// 			// Set a timer for 1.5 seconds and specify the function to be called after the delay
+// 			GetWorldTimerManager().SetTimer(WeaponPickupTimerHandle, this, &AZombieGameCharacter::WeaponPickupAfterDelay, 1.5f, false);
+// 		}
+// 	}
+// }
 
-void AZombieGameCharacter::WeaponPickupAfterDelay()
-{
-	Mesh1P->SetAnimationMode(EAnimationMode::AnimationBlueprint);
-	OverlappingWeapon->IsObtained = true;
-	Weapons.AddUnique(OverlappingWeapon);
-	if (Weapons.Num()-1 != -1) // if the newly added weapons index isn't -1
-	{
-		SwitchToNextPrimaryWeapon();
-	}
-}
+// void AZombieGameCharacter::WeaponPickupAfterDelay()
+// {
+// 	Mesh1P->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+// 	OverlappingWeapon->IsObtained = true;
+// 	Weapons.AddUnique(OverlappingWeapon);
+// 	if (Weapons.Num()-1 != -1) // if the newly added weapons index isn't -1
+// 	{
+// 		SwitchToNextPrimaryWeapon();
+// 	}
+// }
 
 void AZombieGameCharacter::PerkMachineInteract()
 {

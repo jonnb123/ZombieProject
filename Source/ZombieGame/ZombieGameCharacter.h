@@ -5,10 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "InteractionInterface.h"
 #include "BaseWeapon.h"
 #include "BaseAmmo.h"
-#include "Animation/AnimMontage.h"
 #include "Animation/AnimSequence.h"
 #include "Engine/SkeletalMesh.h"
 #include "MainWidget.h"
@@ -16,31 +14,17 @@
 #include "BuyableItem.h"
 #include "ZombieGameCharacter.generated.h"
 
-class UInputComponent;
-class USkeletalMeshComponent;
-class USceneComponent;
+class USkeletalMesh;
 class UCameraComponent;
-class UAnimMontage;
 class USoundBase;
-
-
-// Declaration of the delegate that will be called when the Primary Action is triggered
-// It is declared as dynamic so it can be accessed also in Blueprints
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUseItem);
+class UNiagaraSystem;
+class UMaterialInterface;
 
 
 UCLASS(config=Game)
 class AZombieGameCharacter : public ACharacter
 {
 	GENERATED_BODY()
-
-	// /** Pawn mesh: 1st person view (arms; seen only by self) */
-	// UPROPERTY(VisibleDefaultsOnly, Category=Mesh)
-	// USkeletalMeshComponent* Mesh1P;
-
-	
-
-	
 
 public:
 	AZombieGameCharacter();
@@ -63,26 +47,12 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	UCameraComponent* AnimationCameraComponent;
 
-protected:
-	virtual void BeginPlay();
-
-public:
-	// UPROPERTY(EditAnywhere)
-	// ABaseWeapon* OverlappingWeapon;
-
-	// UPROPERTY(EditAnywhere)
-	// APerkMachine* OverlappingPerkMachine;
-
 	UPROPERTY(EditAnywhere)
 	ABuyableItem* OverlappingBuyableItem;
 
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float TurnRateGamepad;
-
-	// /** Delegate to whom anyone can subscribe to receive this event */
-	// UPROPERTY(BlueprintAssignable, Category = "Interaction")
-	FOnUseItem OnUseItem;
 
 	// Determines if the character is currently sprinting
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
@@ -115,7 +85,6 @@ public:
 	TArray<int> AmmoArray;
 
 	EWeaponType CurrentWeaponID;
-
 	// index of the weapon the player is currently using
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	int CurrentWeaponIndex = static_cast<int>(CurrentWeaponID);
@@ -130,30 +99,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "State")
 	bool IsShooting;
 
-	// pistol fire animation
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
-	UAnimMontage* PistolWeaponFireMontage;
-
-	// pistol reload animation
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
-	UAnimMontage* PistolWeaponReloadMontage;
-
-	// AR fire animation
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
-	UAnimMontage* ARWeaponFireMontage;
-
-	// AR fire animation
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
-	UAnimMontage* ARWeaponReloadMontage;
-	
-	// Shotgun animation
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
-	UAnimMontage* ShotgunWeaponFireMontage;
-
-	// Shotgun animation
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
-	UAnimMontage* ShotgunWeaponReloadMontage;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int Points = 1000;
 
@@ -167,30 +112,21 @@ public:
 	UParticleSystem* FireImpactEffect;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FX")
-	class UNiagaraSystem* HeadshotFX;
+	UNiagaraSystem* HeadshotFX;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FX")
-	class UNiagaraSystem* BodyShotFX;
+	UNiagaraSystem* BodyShotFX;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FX")
-	class UMaterialInterface* BulletHole;
+	UMaterialInterface* BulletHole;
 
-	
-	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-	// ABaseWeapon* Weapon;
-
-	// // index of the weapon the player is currently using
-	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-	// int WeaponIndex;
-
-	
 	// Switch the player's current primary weapon
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void SwitchToNextPrimaryWeapon();
 
 	// meshes of weapons
 	UPROPERTY(EditDefaultsOnly, Category = "Weapons")
-    TArray<class USkeletalMesh*> WeaponMeshes;
+    TArray<USkeletalMesh*> WeaponMeshes;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapons")
     EWeaponType EquippedWeaponCharacter;
@@ -198,15 +134,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void Death();
 
-	// UFUNCTION(BlueprintCallable)
-	// void HealthRegenTimer();
-
 	UFUNCTION(BlueprintCallable)
 	void RegenerateHealth();
 
 	FTimerDelegate HealthRegenTimerDelegate;
 	FTimerHandle HealthRegenTimerHandle;
-	float HealthRegenDuration = 5.0; // Skip the last 0.2second
+	float HealthRegenDuration = 5.0; 
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void BloodOverlay();
@@ -214,33 +147,12 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 	void HideBlood();
 
-	// UFUNCTION(BlueprintImplementableEvent)
-	// void PlayFireAnimations();
-
-	// UFUNCTION(BlueprintImplementableEvent)
-	// void PlayReloadAnimations();
-	
-	// UFUNCTION(BlueprintCallable)
-	// void AddAmmoCrate();
-
-	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-	// UAnimSequence* WeaponPickupAnimation; // Declare the UPROPERTY for the animation asset
-
 	UFUNCTION(BlueprintImplementableEvent)
 	void PlayAmmoSound();
-
-	// UFUNCTION(BlueprintImplementableEvent)
-	// void PlayConsumeAnimation();
 
 	/** Sound to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Gameplay)
 	USoundBase* OutOfAmmoSound;
-
-	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HeadShot")
-	// class UMaterialInstance* HeadShotDamage;
-
-	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BodyShot")
-	// class UMaterialInstance* BodyShotDamage;
 
 	// max ammo 
 	UFUNCTION(BlueprintCallable)
@@ -248,8 +160,6 @@ public:
 
 	// The firing timer handle
 	FTimerHandle FireTimerHandle;
-
-
 	FHitResult Hit;
 
 	EPhysicalSurface TempSurface;
@@ -262,71 +172,32 @@ public:
 	UMainWidget* MainWidgetInstance;
 
 protected:
-	
-	// /** Fires a projectile. */
-	// void OnPrimaryAction();
+	virtual void BeginPlay();
 
-	/** Handles moving forward/backward */
+	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
+
 	void MoveForward(float Val);
-
-	/** Handles strafing movement, left and right */
 	void MoveRight(float Val);
 
-	/**
-	 * Called via input to turn at a given rate.
-	 * @param Rate	This is a normalized rate, i.e. 1.0 means 100% of desired turn rate
-	 */
 	void TurnAtRate(float Rate);
-
-	/**
-	 * Called via input to turn look up/down at a given rate.
-	 * @param Rate	This is a normalized rate, i.e. 1.0 means 100% of desired turn rate
-	 */
 	void LookUpAtRate(float Rate);
 
-	// Zoom in
 	void ZoomIn();
-
-	// zoom out
 	void ZoomOut();
 
-	// fire
 	void Fire();
-
-	// starts firing the weapon
 	void StartFiring();
-
-	// stops firing the weapon
 	void StopFiring();
 	
-	// Reloads the current weapon on R button press
 	void ManualReload();
-
-	// Reloads the current weapon
 	void ReloadWeapon(EWeaponType _WeaponType);
 
-	// // stops the reload animaton 
-	// void StopReloading();
-
-	// //calculate the ammo in the weapon's clip and on the player
-	// int CalculateAmmo(int _AmmoAmount);
-
-	//calculate the ammo in the weapon's clip and on the player
 	void CalculateAmmo();
 
 	FTimerHandle ReloadTimerHandle;
 
-	// void Interact();
-	// void WeaponPickupInteract();
-	// void WeaponPickupAfterDelay();
 	void OnInteractingPressed();
-
 	
-	
-protected:
-	// APawn interface
-	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
-	// End of APawn interface
 
 public:
 	/** Returns Mesh1P subobject **/
@@ -339,7 +210,7 @@ public:
 
 
 private:
-	IInteractionInterface* Interface = nullptr;
+	// IInteractionInterface* Interface = nullptr;
 
 };
 

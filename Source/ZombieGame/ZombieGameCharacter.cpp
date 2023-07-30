@@ -235,12 +235,6 @@ void AZombieGameCharacter::SetupPlayerInputComponent(class UInputComponent *Play
 	PlayerInputComponent->BindAxis("Look Up / Down Gamepad", this, &AZombieGameCharacter::LookUpAtRate);
 }
 
-// void AZombieGameCharacter::OnPrimaryAction()
-// {
-// 	// Trigger the OnItemUsed Event
-// 	OnUseItem.Broadcast();
-// }
-
 void AZombieGameCharacter::MoveForward(float Value)
 {
 	if (Value != 0.0f)
@@ -273,7 +267,9 @@ void AZombieGameCharacter::LookUpAtRate(float Rate)
 
 void AZombieGameCharacter::ZoomIn()
 {
-	MainWidgetInstance->RemoveFromViewport();
+	// MainWidgetInstance->RemoveFromViewport();
+	MainWidgetInstance->RemoveFromParent();
+	
 	// uses UCharacterMovementComponent
 	if (this->GetCharacterMovement()->MaxWalkSpeed == 1200.0f)
 	{

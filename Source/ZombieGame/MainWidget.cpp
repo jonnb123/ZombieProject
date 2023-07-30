@@ -175,7 +175,7 @@ void UMainWidget::ShowDeathWindow()
 void UMainWidget::ShowBloodOverlay()
 {
     BloodOverlay->SetVisibility(ESlateVisibility::Visible);
-    PlayAnimationForward(BloodAnimation);
+    PlayAnimation(BloodAnimation, 0.f, 0); // setting no. of loops to play to 0 does infinite loops!
 }
 
 void UMainWidget::HideBloodEffect()

@@ -4,7 +4,7 @@
 #include "ZombieGameCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "BaseWeapon.h"
-#include "UMG/Public/Components/TextBlock.h"
+#include "UMG/Public/Components/ProgressBar.h"
 #include "Algo/Sort.h"
 #include "Camera/CameraComponent.h"
 
@@ -18,6 +18,8 @@ void AHealthJuice::UseBuyableItem()
 	{
 		Character->Points -= 100; // set the points to be 2000
 		Character->Health = 200;
+		Character->MainWidgetInstance->HJHealthBar->SetVisibility(ESlateVisibility::Visible);
+		Character->MainWidgetInstance->HealthBar->SetVisibility(ESlateVisibility::Hidden);
 		PlayConsumeAnimation();
 	}
 }

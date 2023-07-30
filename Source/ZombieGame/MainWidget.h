@@ -25,6 +25,9 @@ public:
 	class UProgressBar *HealthBar;
 
 	UPROPERTY(meta = (BindWidget))
+	class UProgressBar *HJHealthBar;
+
+	UPROPERTY(meta = (BindWidget))
 	class UTextBlock *WaveText;
 
 	UPROPERTY(meta = (BindWidget))
@@ -79,6 +82,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	float UpdateHealthBar();
+
+	UFUNCTION(BlueprintCallable)
+	float UpdateHJHealthBar();
 
 	UFUNCTION(BlueprintCallable)
 	FText UpdateZombiesRemaining();

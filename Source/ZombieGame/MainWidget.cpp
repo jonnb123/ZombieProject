@@ -21,6 +21,7 @@ void UMainWidget::NativeConstruct()
 {
     Super::NativeConstruct();
 
+
     // if the Exit to main menu button is clicked
     if (ExitToMainMenuButtonWin)
     {
@@ -68,6 +69,20 @@ float UMainWidget::UpdateHealthBar()
     if (Character)
     {
         return Character->Health * 0.01;
+    }
+    else
+    {
+        return 0.f;
+    }
+}
+
+float UMainWidget::UpdateHJHealthBar()
+{
+    ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+    AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+    if (Character)
+    {
+        return Character->Health * 0.005;
     }
     else
     {

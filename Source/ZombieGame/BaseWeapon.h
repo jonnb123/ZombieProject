@@ -101,20 +101,17 @@ public:
 
 	ABaseWeapon* OverlappingWeapon;
 
-	FTimerHandle WeaponPickupTimerHandle;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	UAnimSequence* WeaponPickupAnimation; // Declare the UPROPERTY for the animation asset
 
-	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-    // UBoxComponent* BoxCollisionComponent;
-
-	// UPROPERTY(EditAnywhere)
-	// USceneComponent* _RootComponent;
-
 	// UFUNCTION(BlueprintCallable)
 	void UseBuyableItem() override;
-	void WeaponPickupAfterDelay();
+
+	UPROPERTY(EditAnywhere, Category = "Damage")
+	float BodyDamage = 10;
+
+	UPROPERTY(EditAnywhere, Category = "Damage")
+	float HeadDamage = 50;
 
 
 protected:

@@ -65,12 +65,6 @@ public:
 	UPROPERTY(EditAnywhere)
 	float MaxInteractRange = 150;
 
-	UPROPERTY(EditAnywhere)
-	float BodyDamage = 10;
-
-	UPROPERTY(EditAnywhere)
-	float HeadDamage = 50;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool IsDead;
 
@@ -164,7 +158,13 @@ public:
 
 	EPhysicalSurface TempSurface;
 
+	// Determines if the character is currently swapping weapon
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	bool IsSwappingWeapon = false;
+
+	void WeaponSwapAfterDelay();
+
+	FTimerHandle WeaponSwapTimerHandle;
 
 	// gets main widget reference
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

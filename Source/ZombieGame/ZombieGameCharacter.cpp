@@ -142,6 +142,8 @@ void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
 		{
 			if (Weapons[i]->IsObtained)
 			{
+				IsSwappingWeapon = true;
+				GetWorldTimerManager().SetTimer(WeaponSwapTimerHandle, this, &AZombieGameCharacter::WeaponSwapAfterDelay, 0.7f, false);
 				Success = true;
 				CurrentWeaponIndex = i;
 				UE_LOG(LogTemp, Warning, TEXT("Current Weapon index: %d"), CurrentWeaponIndex);
@@ -171,6 +173,11 @@ void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
 	}
 }
 
+void AZombieGameCharacter::WeaponSwapAfterDelay()
+{
+	IsSwappingWeapon = false;
+}
+
 void AZombieGameCharacter::MaxAmmo()
 {
 	for (int i = 0; i < Weapons.Num(); i++)
@@ -188,7 +195,6 @@ void AZombieGameCharacter::OnInteractingPressed()
 		OverlappingBuyableItem->UseBuyableItem();
 	}
 }
-
 
 void AZombieGameCharacter::SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent)
 {
@@ -346,24 +352,24 @@ void AZombieGameCharacter::Fire()
 						{
 							if (TempSurface == SurfaceType1) // for headshots on zombie
 							{
-								FPointDamageEvent DamageEvent(HeadDamage, Hit, ShotDirection, nullptr);
-								HitActor->TakeDamage(HeadDamage, DamageEvent, GetInstigatorController(), this); // this calls the takedamage function in zombie.cpp when the zombie is hit
+								FPointDamageEvent DamageEvent(Weapons[CurrentWeaponIndex]->HeadDamage, Hit, ShotDirection, nullptr);
+								HitActor->TakeDamage(Weapons[CurrentWeaponIndex]->HeadDamage, DamageEvent, GetInstigatorController(), this); // this calls the takedamage function in zombie.cpp when the zombie is hit
 								UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), HeadshotFX, Hit.Location, ShotDirection.Rotation());
 								Points += 50;
 							}
 							else if (TempSurface == SurfaceType2) // for body shots on zombie
 							{
 								UE_LOG(LogTemp, Log, TEXT("Surface 2"));
-								FPointDamageEvent DamageEvent(BodyDamage, Hit, ShotDirection, nullptr);
-								HitActor->TakeDamage(BodyDamage, DamageEvent, GetInstigatorController(), this);
+								FPointDamageEvent DamageEvent(Weapons[CurrentWeaponIndex]->BodyDamage, Hit, ShotDirection, nullptr);
+								HitActor->TakeDamage(Weapons[CurrentWeaponIndex]->BodyDamage, DamageEvent, GetInstigatorController(), this);
 								UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), BodyShotFX, Hit.Location, ShotDirection.Rotation());
 								Points += 10;
 							}
 							else if (TempSurface == SurfaceType3) // for the fire boss
 							{
 								UE_LOG(LogTemp, Log, TEXT("Entered Fireboss loop"));
-								FPointDamageEvent DamageEvent(BodyDamage, Hit, ShotDirection, nullptr);
-								HitActor->TakeDamage(BodyDamage, DamageEvent, GetInstigatorController(), this);
+								FPointDamageEvent DamageEvent(Weapons[CurrentWeaponIndex]->BodyDamage, Hit, ShotDirection, nullptr);
+								HitActor->TakeDamage(Weapons[CurrentWeaponIndex]->BodyDamage, DamageEvent, GetInstigatorController(), this);
 								UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), FireImpactEffect, Hit.Location, ShotDirection.Rotation());
 								Points += 10;
 							}

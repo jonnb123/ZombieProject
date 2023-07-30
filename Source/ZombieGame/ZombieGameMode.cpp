@@ -12,7 +12,7 @@
 
 void AZombieGameMode::StartGame()
 {
-    // SpawnZombies();
+    SpawnZombies();
 }
 
 void AZombieGameMode::SpawnZombies()
@@ -187,7 +187,7 @@ void AZombieGameMode::WaveIncrement()
 void AZombieGameMode::BeginPlay()
 {
     Super::BeginPlay();
-
+    
     StartGame();
 }
 

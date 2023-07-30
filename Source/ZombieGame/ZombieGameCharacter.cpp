@@ -80,14 +80,14 @@ float AZombieGameCharacter::TakeDamage(float DamageAmount, struct FDamageEvent c
 	if (IsDead == false)
 	{
 		// removing health regen and blood overlay for test
-		if (Health <= 90)
+		if (Health <= 0.9f * MaxHealth)
 		{
 			// HealthRegenTimer();
 			HealthRegenTimerDelegate.BindUObject(this, &AZombieGameCharacter::RegenerateHealth);
 			// this basically plays the ReloadCalcAndPlayAnimations once the animation is complete.
 			GetWorldTimerManager().SetTimer(HealthRegenTimerHandle, HealthRegenTimerDelegate, HealthRegenDuration, true);
 		}
-		if (Health <= 50)
+		if (Health <= 0.5f * MaxHealth)
 		{
 			// BloodOverlay();
 			if (MainWidgetInstance)
@@ -463,16 +463,16 @@ void AZombieGameCharacter::CalculateAmmo()
 
 void AZombieGameCharacter::RegenerateHealth()
 {
-	if (Health == 100)
+	if (Health == MaxHealth)
 	{
 		GetWorldTimerManager().ClearTimer(HealthRegenTimerHandle);
 	}
 	else
 	{
 		Health += 5;
-		Health = FMath::Clamp(Health, 0.f, 100.f);
+		Health = FMath::Clamp(Health, 0.f, MaxHealth);
 	}
-	if (Health >= 50)
+	if (Health >= 0.5f * MaxHealth)
 	{
 		MainWidgetInstance->HideBloodEffect();
 	}

@@ -18,6 +18,7 @@ void AHealthJuice::UseBuyableItem()
 	{
 		Character->Points -= 100; // set the points to be 2000
 		Character->Health = 200;
+		Character->MaxHealth = 200;
 		Character->MainWidgetInstance->HJHealthBar->SetVisibility(ESlateVisibility::Visible);
 		Character->MainWidgetInstance->HealthBar->SetVisibility(ESlateVisibility::Hidden);
 		PlayConsumeAnimation();

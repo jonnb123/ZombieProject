@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Components/BoxComponent.h"
+
 #include "ZombieGameProjectile.generated.h"
 
 class USphereComponent;
@@ -15,8 +17,11 @@ class AZombieGameProjectile : public AActor
 	GENERATED_BODY()
 
 	/** Sphere collision component */
+	// UPROPERTY(VisibleDefaultsOnly, Category = Projectile)
+	// USphereComponent *CollisionComp;
+
 	UPROPERTY(VisibleDefaultsOnly, Category = Projectile)
-	USphereComponent *CollisionComp;
+	UBoxComponent *CollisionComponent;
 
 	/** Projectile movement component */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
@@ -29,8 +34,10 @@ public:
 	UFUNCTION()
 	virtual void OnHit(UPrimitiveComponent *HitComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit);
 
+	// /** Returns CollisionComp subobject **/
+	// USphereComponent *GetCollisionComp() const { return CollisionComp; }
 	/** Returns CollisionComp subobject **/
-	USphereComponent *GetCollisionComp() const { return CollisionComp; }
+	UBoxComponent *GetCollisionComp() const { return CollisionComponent; }
 	/** Returns ProjectileMovement subobject **/
 	UProjectileMovementComponent *GetProjectileMovement() const { return ProjectileMovement; }
 

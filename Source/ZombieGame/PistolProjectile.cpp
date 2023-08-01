@@ -66,18 +66,13 @@
 
 void APistolProjectile::OnHit(UPrimitiveComponent *HitComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit)
 {
-    // AZombie* Zombie = Cast<AZombie>(OtherActor);
-    // if (Zombie)
-    // {
-
-    // }
     Destroy();
 }
 
 APistolProjectile::APistolProjectile()
 {
     HeadDamage = 20;
-    TorsoDamage = 15;
+    TorsoDamage = 15; 
     LegDamage = 10;
     ArmDamage = 10;
 }

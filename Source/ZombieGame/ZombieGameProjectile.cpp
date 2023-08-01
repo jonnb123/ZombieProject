@@ -10,22 +10,23 @@
 AZombieGameProjectile::AZombieGameProjectile()
 {
 	// Use a sphere as a simple collision representation
-	CollisionComp = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComp"));
-	CollisionComp->InitSphereRadius(5.0f);
-	CollisionComp->BodyInstance.SetCollisionProfileName("Projectile");
-	CollisionComp->SetCollisionObjectType(ECC_WorldDynamic);
-	CollisionComp->OnComponentHit.AddDynamic(this, &AZombieGameProjectile::OnHit); // set up a notification for when this component hits something blocking
+	CollisionComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxComp"));
+	// CollisionComp->InitSphereRadius(5.0f);
+	CollisionComponent->InitBoxExtent(FVector(4.5f, 4.5f, 4.5f));
+	CollisionComponent->BodyInstance.SetCollisionProfileName("Projectile");
+	CollisionComponent->SetCollisionObjectType(ECC_WorldDynamic);
+	CollisionComponent->OnComponentHit.AddDynamic(this, &AZombieGameProjectile::OnHit); // set up a notification for when this component hits something blocking
 
 	// Players can't walk on it
-	CollisionComp->SetWalkableSlopeOverride(FWalkableSlopeOverride(WalkableSlope_Unwalkable, 0.f));
-	CollisionComp->CanCharacterStepUpOn = ECB_No;
+	CollisionComponent->SetWalkableSlopeOverride(FWalkableSlopeOverride(WalkableSlope_Unwalkable, 0.f));
+	CollisionComponent->CanCharacterStepUpOn = ECB_No;
 
 	// Set as root component
-	RootComponent = CollisionComp;
+	RootComponent = CollisionComponent;
 
 	// Use a ProjectileMovementComponent to govern this projectile's movement
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileComp"));
-	ProjectileMovement->UpdatedComponent = CollisionComp;
+	ProjectileMovement->UpdatedComponent = CollisionComponent;
 	ProjectileMovement->InitialSpeed = 3000.f;
 	ProjectileMovement->MaxSpeed = 3000.f;
 	ProjectileMovement->bRotationFollowsVelocity = true;

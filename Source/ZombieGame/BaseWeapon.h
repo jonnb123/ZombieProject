@@ -8,6 +8,7 @@
 #include "Engine/SkeletalMesh.h"
 #include "Components/BoxComponent.h"
 #include "BuyableItem.h"
+#include "ZombieGameProjectile.h"
 #include "BaseWeapon.generated.h"
 
 
@@ -32,22 +33,6 @@ public:
 	// Sets default values for this actor's properties
 	ABaseWeapon();
 
-	// // The name of the weapon
-	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-	// FString Name;
-
-	// // The name of the weapon
-	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-	// FString ItemPrice;
-
-	// Function to handle the begin overlap event
-    // UFUNCTION()
-    // void OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-    //                        int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	// UFUNCTION()
-    // void OnMyComponentEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	int CurrentAmmo;
 
@@ -66,6 +51,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	bool Overlapping;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+	TSubclassOf<AZombieGameProjectile> ProjectileClass;
 
 	// The type of weapon
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")

@@ -52,7 +52,7 @@ public:
 
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
-	float TurnRateGamepad;
+	float TurnRateGamepad = 45.f;
 
 	// Determines if the character is currently sprinting
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
@@ -170,6 +170,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<UUserWidget> WidgetClass;
 	UMainWidget* MainWidgetInstance;
+
 
 protected:
 	virtual void BeginPlay();

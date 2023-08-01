@@ -5,14 +5,16 @@
 #include "Components/SphereComponent.h"
 #include "Zombie.h"
 #include "Kismet/GameplayStatics.h"
+#include "ZombieGameCharacter.h"
 
-AZombieGameProjectile::AZombieGameProjectile() 
+AZombieGameProjectile::AZombieGameProjectile()
 {
 	// Use a sphere as a simple collision representation
 	CollisionComp = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComp"));
 	CollisionComp->InitSphereRadius(5.0f);
 	CollisionComp->BodyInstance.SetCollisionProfileName("Projectile");
-	CollisionComp->OnComponentHit.AddDynamic(this, &AZombieGameProjectile::OnHit);		// set up a notification for when this component hits something blocking
+	CollisionComp->SetCollisionObjectType(ECC_WorldDynamic);
+	CollisionComp->OnComponentHit.AddDynamic(this, &AZombieGameProjectile::OnHit); // set up a notification for when this component hits something blocking
 
 	// Players can't walk on it
 	CollisionComp->SetWalkableSlopeOverride(FWalkableSlopeOverride(WalkableSlope_Unwalkable, 0.f));
@@ -29,27 +31,14 @@ AZombieGameProjectile::AZombieGameProjectile()
 	ProjectileMovement->bRotationFollowsVelocity = true;
 	ProjectileMovement->bShouldBounce = true;
 
+
 	// Die after 3 seconds by default
 	InitialLifeSpan = 3.0f;
 }
 
-void AZombieGameProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+void AZombieGameProjectile::OnHit(UPrimitiveComponent *HitComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit)
 {
-    if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
-    {
-        // Check if the OtherActor is a zombie
-        if (OtherActor->IsA(AZombie::StaticClass()))
-        {
-            // Apply damage to the zombie
-            UGameplayStatics::ApplyDamage(OtherActor, 20.f, nullptr, this, UDamageType::StaticClass());
-        }
-
-        // Add impulse and destroy projectile
-        if (OtherComp->IsSimulatingPhysics())
-        {
-            OtherComp->AddImpulseAtLocation(GetVelocity() * 100.0f, GetActorLocation());
-        }
-
-        Destroy();
-    }
+	// ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	// AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+	// Destroy();
 }

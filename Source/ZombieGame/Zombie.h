@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Components/AudioComponent.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "Components/BoxComponent.h"
 #include "Zombie.generated.h"
 
 UCLASS()
@@ -37,14 +39,88 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool ZombieHitCheck = false;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, Category = Health)
 	float Health;
+
+	UPROPERTY(VisibleAnywhere, Category = Health)
+	float HeadHealth = 100;
+
+	UPROPERTY(VisibleAnywhere, Category = Health)
+	float TorsoHealth = 100;
+
+	UPROPERTY(VisibleAnywhere, Category = Health)
+	float LeftArmHealth = 50;
+
+	UPROPERTY(VisibleAnywhere, Category = Health)
+	float RightArmHealth = 50;
+
+	UPROPERTY(VisibleAnywhere, Category = Health)
+	float LeftLegHealth = 100;
+
+	UPROPERTY(VisibleAnywhere, Category = Health)
+	float RightLegHealth = 100;
 
 	UPROPERTY(VisibleAnywhere)
 	bool IsDead;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Audio")
     UAudioComponent* AudioComponent;
+
+	// head component with overlap
+	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Audio")
+    // USkeletalMeshComponent* HeadComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+    UBoxComponent* HeadBoxCollisionComponent;
+	UFUNCTION()
+    void OnHeadBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+                           int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	// right arm component with overlap
+	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Audio")
+    // USkeletalMeshComponent* RightArmComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+    UBoxComponent* RightArmBoxCollisionComponent;
+	UFUNCTION()
+    void OnRightArmBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+                           int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	// torso component with overlap
+	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Audio")
+    // USkeletalMeshComponent* TorsoComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+    UBoxComponent* TorsoBoxCollisionComponent;
+	UFUNCTION()
+    void OnTorsoBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+                           int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+
+	// right leg component with overlap
+	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Audio")
+    // USkeletalMeshComponent* RightLegComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+    UBoxComponent* RightLegBoxCollisionComponent;
+	UFUNCTION()
+    void OnRightLegBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+                           int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	
+	// left leg component with overlap
+	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Audio")
+    // USkeletalMeshComponent* LeftLegComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+    UBoxComponent* LeftLegBoxCollisionComponent;
+	UFUNCTION()
+    void OnLeftLegBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+                           int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	// left arm component with overlap
+	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Audio")
+    // USkeletalMeshComponent* LeftArmComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+    UBoxComponent* LeftArmBoxCollisionComponent;
+	UFUNCTION()
+    void OnLeftArmBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+                           int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
 
 	UFUNCTION()
 	void OnTimerEnd();

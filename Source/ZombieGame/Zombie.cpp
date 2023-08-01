@@ -4,21 +4,44 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "ZombieGameMode.h"
+#include "ZombieGameProjectile.h"
 #include "PawnSensingComponent.generated.h"
-
-
 
 // Sets default values
 AZombie::AZombie()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	// Create and attach the audio component
-    AudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioComponent"));
-    AudioComponent->SetupAttachment(RootComponent);
+	AudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioComponent"));
+	AudioComponent->SetupAttachment(RootComponent);
+
+	HeadBoxCollisionComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("HeadBoxCollisionComponent"));
+	HeadBoxCollisionComponent->SetupAttachment(GetMesh());
+	HeadBoxCollisionComponent->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("head"));
+
+	TorsoBoxCollisionComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("TorsoBoxCollisionComponent"));
+	TorsoBoxCollisionComponent->SetupAttachment(GetMesh());
+	TorsoBoxCollisionComponent->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("spine_01"));
+
+	RightLegBoxCollisionComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("RightLegBoxCollisionComponent"));
+	RightLegBoxCollisionComponent->SetupAttachment(GetMesh());
+	RightLegBoxCollisionComponent->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("calf_r"));
+
+	RightArmBoxCollisionComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("RightArmBoxCollisionComponent"));
+	RightArmBoxCollisionComponent->SetupAttachment(GetMesh());
+	RightArmBoxCollisionComponent->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("lowerarm_r"));
+
+	LeftLegBoxCollisionComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("LeftLegBoxCollisionComponent"));
+	LeftLegBoxCollisionComponent->SetupAttachment(GetMesh());
+	LeftLegBoxCollisionComponent->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("calf_l"));
+
+	LeftArmBoxCollisionComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("LeftArmBoxCollisionComponent"));
+	LeftArmBoxCollisionComponent->SetupAttachment(GetMesh());
+	LeftArmBoxCollisionComponent->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("lowerarm_l"));
 }
 
-float AZombie::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) 
+float AZombie::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser)
 {
 	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	if (IsDead == false)
@@ -40,7 +63,6 @@ float AZombie::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageE
 		return DamageToApply;
 	}
 	return DamageToApply; // DamageToApply just needs to be in function, not sure why
-	
 }
 
 // Called when the game starts or when spawned
@@ -48,7 +70,110 @@ void AZombie::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// Bind the OnBoxBeginOverlap function to the OnComponentBeginOverlap event
+	RightArmBoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AZombie::OnRightArmBoxBeginOverlap);
+	HeadBoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AZombie::OnHeadBoxBeginOverlap);
+	TorsoBoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AZombie::OnTorsoBoxBeginOverlap);
+	RightLegBoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AZombie::OnRightLegBoxBeginOverlap);
+	LeftLegBoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AZombie::OnLeftLegBoxBeginOverlap);
+	LeftArmBoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AZombie::OnLeftArmBoxBeginOverlap);
+
 	Health = MaxHealth; // sets health equal to 100
+}
+
+void AZombie::OnHeadBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
+									int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
+{
+	AZombieGameProjectile *Projectile = Cast<AZombieGameProjectile>(OtherActor);
+	if (Projectile)
+	{
+		FHitResult Hit;
+		FPointDamageEvent DamageEvent(Projectile->HeadDamage, Hit, FVector::ZeroVector, nullptr);
+		TakeDamage(Projectile->HeadDamage, DamageEvent, GetInstigatorController(), this);
+		HeadHealth -= Projectile->HeadDamage;
+	}
+	if (Projectile && HeadHealth <= 0)
+	{
+		GetMesh()->HideBoneByName(TEXT("head"), PBO_None);
+	}
+	// HeadComponent->SetLeaderPoseComponent(nullptr);
+	// HeadComponent->SetSimulatePhysics(true);
+}
+
+//
+void AZombie::OnRightArmBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
+										int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
+{
+	AZombieGameProjectile *Projectile = Cast<AZombieGameProjectile>(OtherActor);
+	if (Projectile)
+	{
+		FHitResult Hit;
+		FPointDamageEvent DamageEvent(Projectile->ArmDamage, Hit, FVector::ZeroVector, nullptr);
+		TakeDamage(Projectile->ArmDamage, DamageEvent, GetInstigatorController(), this);
+		RightArmHealth -= Projectile->ArmDamage;
+		if (RightArmHealth <= 0 && LeftArmHealth != 0)
+		{
+			GetMesh()->HideBoneByName(TEXT("lowerarm_r"), PBO_None);
+		}
+	}
+
+	// RightArmComponent->SetLeaderPoseComponent(nullptr);
+	// RightArmComponent->SetSimulatePhysics(true);
+}
+
+void AZombie::OnLeftArmBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
+									   int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
+{
+	AZombieGameProjectile *Projectile = Cast<AZombieGameProjectile>(OtherActor);
+	if (Projectile)
+	{
+		FHitResult Hit;
+		FPointDamageEvent DamageEvent(Projectile->ArmDamage, Hit, FVector::ZeroVector, nullptr);
+		TakeDamage(Projectile->ArmDamage, DamageEvent, GetInstigatorController(), this);
+		LeftArmHealth -= Projectile->ArmDamage;
+		if (LeftArmHealth <= 0 && RightArmHealth != 0)
+		{
+			GetMesh()->HideBoneByName(TEXT("lowerarm_l"), PBO_None);
+		}
+	}
+
+	// LeftArmComponent->SetLeaderPoseComponent(nullptr);
+	// LeftArmComponent->SetSimulatePhysics(true);
+}
+
+void AZombie::OnTorsoBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
+									 int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
+{
+	AZombieGameProjectile *Projectile = Cast<AZombieGameProjectile>(OtherActor);
+	if (Projectile)
+	{
+		FHitResult Hit;
+		FPointDamageEvent DamageEvent(Projectile->TorsoDamage, Hit, FVector::ZeroVector, nullptr);
+		TakeDamage(Projectile->TorsoDamage, DamageEvent, GetInstigatorController(), this);
+		TorsoHealth -= Projectile->TorsoDamage;
+	}
+	// TorsoComponent->SetLeaderPoseComponent(nullptr);
+	// TorsoComponent->SetSimulatePhysics(true);
+}
+
+void AZombie::OnRightLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
+										int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
+{
+	AZombieGameProjectile *Projectile = Cast<AZombieGameProjectile>(OtherActor);
+	// RightLegComponent->SetLeaderPoseComponent(nullptr);
+	// RightLegComponent->SetSimulatePhysics(true);
+	// if (Projectile)
+	// {
+	// 	GetMesh()->HideBoneByName(TEXT("calf_r"),PBO_None);
+	// }
+}
+
+void AZombie::OnLeftLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
+									   int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
+{
+	// AZombieGameProjectile* Projectile = Cast<AZombieGameProjectile>(OtherActor);
+	// LeftLegComponent->SetLeaderPoseComponent(nullptr);
+	// LeftLegComponent->SetSimulatePhysics(true);
 }
 
 void AZombie::OnTimerEnd() // not necessary for interview
@@ -59,16 +184,16 @@ void AZombie::OnTimerEnd() // not necessary for interview
 // Called every frame
 void AZombie::Tick(float DeltaTime)
 {
-	Super::Tick(DeltaTime); 
+	Super::Tick(DeltaTime);
 }
 
 // Called to bind functionality to input
-void AZombie::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void AZombie::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
-void AZombie::Death() 
+void AZombie::Death()
 {
 	IsDead = true;
 
@@ -79,12 +204,11 @@ void AZombie::Death()
 
 	this->PlayAnimMontage(AnimMontage);
 
-	AZombieGameMode* MyMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(GetWorld())); // gets the game mode
+	AZombieGameMode *MyMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(GetWorld())); // gets the game mode
 
 	MyMode->ZombiesKilled();
 
 	// GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AZombie::OnTimerEnd, 10.f, false);
-	
+
 	// this->Destroy();
 }
-

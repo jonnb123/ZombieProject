@@ -13,6 +13,7 @@
 #include "Engine/SkeletalMesh.h"
 #include "NiagaraFunctionLibrary.h"
 #include "Misc/CString.h"
+#include "ZombieGameProjectile.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AZombieGameCharacter
@@ -22,8 +23,8 @@ AZombieGameCharacter::AZombieGameCharacter()
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(55.f, 96.0f);
 
-	// set our turn rates for input
-	TurnRateGamepad = 45.f;
+	// // set our turn rates for input
+	// TurnRateGamepad = 45.f;
 
 	// Create a CameraComponent
 	FirstPersonCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
@@ -71,7 +72,6 @@ void AZombieGameCharacter::BeginPlay()
 	MainWidgetInstance = CreateWidget<UMainWidget>(GetWorld(), WidgetClass);
 	MainWidgetInstance->AddToViewport();
 
-	UE_LOG(LogTemp, Warning, TEXT("Current Weapon index: %d"), CurrentWeaponIndex);
 }
 
 float AZombieGameCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) // this is called in BTTask_Attack.cpp
@@ -146,7 +146,7 @@ void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
 				GetWorldTimerManager().SetTimer(WeaponSwapTimerHandle, this, &AZombieGameCharacter::WeaponSwapAfterDelay, 0.7f, false);
 				Success = true;
 				CurrentWeaponIndex = i;
-				UE_LOG(LogTemp, Warning, TEXT("Current Weapon index: %d"), CurrentWeaponIndex);
+				UE_LOG(LogTemp, Display, TEXT("Current Weapon index: %d"), CurrentWeaponIndex);
 				GunMesh->SetSkeletalMesh(Weapons[CurrentWeaponIndex]->WeaponMesh);
 
 				// Attach GunMesh to the new socket
@@ -162,7 +162,7 @@ void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
 	if (!Success) // for the pistol
 	{
 		CurrentWeaponIndex = 0;
-		UE_LOG(LogTemp, Warning, TEXT("Current Weapon index: %d"), CurrentWeaponIndex);
+		UE_LOG(LogTemp, Display, TEXT("Current Weapon index: %d"), CurrentWeaponIndex);
 
 		// SwitchWeaponMesh(CurrentWeaponIndex);
 		GunMesh->SetSkeletalMesh(Weapons[CurrentWeaponIndex]->WeaponMesh);
@@ -269,7 +269,7 @@ void AZombieGameCharacter::ZoomIn()
 {
 	// MainWidgetInstance->RemoveFromViewport();
 	MainWidgetInstance->RemoveFromParent();
-	
+
 	// uses UCharacterMovementComponent
 	if (this->GetCharacterMovement()->MaxWalkSpeed == 1200.0f)
 	{
@@ -300,6 +300,98 @@ void AZombieGameCharacter::ZoomOut()
 	}
 }
 
+// void AZombieGameCharacter::Fire()
+// {
+// 	UE_LOG(LogTemp, Warning, TEXT("Current ammo: %d"), Weapons[CurrentWeaponIndex]->CurrentAmmo);
+
+// 	if (IsReloading)
+// 	{
+// 		UE_LOG(LogTemp, Log, TEXT("RELOADINGGGGG"));
+// 	}
+
+// 	if (IsShooting)
+// 	{
+// 		UE_LOG(LogTemp, Warning, TEXT("Shooting!!!!!!"));
+// 		if (Weapons[CurrentWeaponIndex]->CurrentAmmo > 0)
+// 		{
+// 			if (IsReloading == false)
+// 			{
+// 				Weapons[CurrentWeaponIndex]->CurrentAmmo--;
+// 				// PlayFiringAnimations();
+// 				GunMesh->PlayAnimation(Weapons[CurrentWeaponIndex]->WeaponFireMontage, false);
+// 				FVector Location;
+// 				FRotator Rotation;
+// 				// FHitResult Hit;
+// 				GetController()->GetPlayerViewPoint(Location, Rotation);
+// 				FVector Start = Location;
+// 				FVector End = Location + Rotation.Vector() * MaxBulletRange;
+
+// 				FCollisionQueryParams TraceParams = FCollisionQueryParams::DefaultQueryParam;
+// 				TraceParams.bReturnPhysicalMaterial = true;
+// 				TraceParams.AddIgnoredActor(this);
+
+				// bool bSuccess = GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_WorldDynamic, TraceParams);
+
+// 				if (bSuccess)
+// 				{
+// 					FVector ShotDirection = -Rotation.Vector();
+
+// 					AActor *HitActor = Hit.GetActor();
+// 					if (HitActor != nullptr) // very important nullptr check, was breaking randomly without this.
+// 					{
+// 						UE_LOG(LogTemp, Log, TEXT("actor is %s"), *HitActor->GetName());
+// 						// Get hit surface type
+// 						TempSurface = UGameplayStatics::GetSurfaceType(Hit);
+
+// 						UE_LOG(LogTemp, Log, TEXT("The surface is %s"), *UEnum::GetValueAsString(TempSurface));
+// 						if (HitActor != nullptr)
+// 						{
+// 							if (TempSurface == SurfaceType1) // for headshots on zombie
+// 							{
+// 								FPointDamageEvent DamageEvent(Weapons[CurrentWeaponIndex]->HeadDamage, Hit, ShotDirection, nullptr);
+// 								HitActor->TakeDamage(Weapons[CurrentWeaponIndex]->HeadDamage, DamageEvent, GetInstigatorController(), this); // this calls the takedamage function in zombie.cpp when the zombie is hit
+// 								UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), HeadshotFX, Hit.Location, ShotDirection.Rotation());
+// 								Points += 50;
+// 							}
+// 							else if (TempSurface == SurfaceType2) // for body shots on zombie
+// 							{
+// 								UE_LOG(LogTemp, Log, TEXT("Surface 2"));
+// 								FPointDamageEvent DamageEvent(Weapons[CurrentWeaponIndex]->BodyDamage, Hit, ShotDirection, nullptr);
+// 								HitActor->TakeDamage(Weapons[CurrentWeaponIndex]->BodyDamage, DamageEvent, GetInstigatorController(), this);
+// 								UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), BodyShotFX, Hit.Location, ShotDirection.Rotation());
+// 								Points += 10;
+// 							}
+// 							else if (TempSurface == SurfaceType3) // for the fire boss
+// 							{
+// 								UE_LOG(LogTemp, Log, TEXT("Entered Fireboss loop"));
+// 								FPointDamageEvent DamageEvent(Weapons[CurrentWeaponIndex]->BodyDamage, Hit, ShotDirection, nullptr);
+// 								HitActor->TakeDamage(Weapons[CurrentWeaponIndex]->BodyDamage, DamageEvent, GetInstigatorController(), this);
+// 								UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), FireImpactEffect, Hit.Location, ShotDirection.Rotation());
+// 								Points += 10;
+// 							}
+// 							else
+// 							{
+// 								UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.Location, ShotDirection.Rotation());
+// 								UGameplayStatics::SpawnDecalAtLocation(GetWorld(), BulletHole, FVector(15, 15, 15), Hit.Location, ShotDirection.Rotation());
+// 							}
+// 						}
+// 					}
+// 				}
+// 				GetWorld()->GetTimerManager().SetTimer(FireTimerHandle, this, &AZombieGameCharacter::Fire, Weapons[CurrentWeaponIndex]->FireRate, false); // to make the weapon fully auto
+// 			}
+// 			else
+// 			{
+// 				// ReloadWeapon(Weapons[CurrentWeaponIndex]->WeaponType); this was for autoreload but made the animations not work
+// 			}
+// 		}
+// 		else
+// 		{
+// 			// if we don't have any ammo in the gun, make a click noise
+// 			UGameplayStatics::PlaySoundAtLocation(this, OutOfAmmoSound, this->GetActorLocation());
+// 		}
+// 	}
+// }
+
 void AZombieGameCharacter::Fire()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Current ammo: %d"), Weapons[CurrentWeaponIndex]->CurrentAmmo);
@@ -324,59 +416,23 @@ void AZombieGameCharacter::Fire()
 				// FHitResult Hit;
 				GetController()->GetPlayerViewPoint(Location, Rotation);
 				FVector Start = Location;
-				FVector End = Location + Rotation.Vector() * MaxBulletRange;
 
-				FCollisionQueryParams TraceParams = FCollisionQueryParams::DefaultQueryParam;
-				TraceParams.bReturnPhysicalMaterial = true;
-				TraceParams.AddIgnoredActor(this);
+				// Calculate the muzzle location in world space
+				const FVector MuzzleLocation = GunMesh->GetSocketLocation(Weapons[CurrentWeaponIndex]->SocketName);
+				// Default offset from the character location for projectiles to spawn
+				// FVector MuzzleOffset = FVector(100.0f, 0.0f, 10.0f);
 
-				bool bSuccess = GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_WorldDynamic, TraceParams);
+				APlayerController *PlayerController = Cast<APlayerController>(GetController());
+				const FRotator SpawnRotation = PlayerController->PlayerCameraManager->GetCameraRotation();
+				// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
 
-				if (bSuccess)
-				{
-					FVector ShotDirection = -Rotation.Vector();
+				// Set Spawn Collision Handling Override
+				FActorSpawnParameters ActorSpawnParams;
+				ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
 
-					AActor *HitActor = Hit.GetActor();
-					if (HitActor != nullptr) // very important nullptr check, was breaking randomly without this.
-					{
-						UE_LOG(LogTemp, Log, TEXT("actor is %s"), *HitActor->GetName());
-						// Get hit surface type
-						TempSurface = UGameplayStatics::GetSurfaceType(Hit);
-
-						UE_LOG(LogTemp, Log, TEXT("The surface is %s"), *UEnum::GetValueAsString(TempSurface));
-						if (HitActor != nullptr)
-						{
-							if (TempSurface == SurfaceType1) // for headshots on zombie
-							{
-								FPointDamageEvent DamageEvent(Weapons[CurrentWeaponIndex]->HeadDamage, Hit, ShotDirection, nullptr);
-								HitActor->TakeDamage(Weapons[CurrentWeaponIndex]->HeadDamage, DamageEvent, GetInstigatorController(), this); // this calls the takedamage function in zombie.cpp when the zombie is hit
-								UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), HeadshotFX, Hit.Location, ShotDirection.Rotation());
-								Points += 50;
-							}
-							else if (TempSurface == SurfaceType2) // for body shots on zombie
-							{
-								UE_LOG(LogTemp, Log, TEXT("Surface 2"));
-								FPointDamageEvent DamageEvent(Weapons[CurrentWeaponIndex]->BodyDamage, Hit, ShotDirection, nullptr);
-								HitActor->TakeDamage(Weapons[CurrentWeaponIndex]->BodyDamage, DamageEvent, GetInstigatorController(), this);
-								UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), BodyShotFX, Hit.Location, ShotDirection.Rotation());
-								Points += 10;
-							}
-							else if (TempSurface == SurfaceType3) // for the fire boss
-							{
-								UE_LOG(LogTemp, Log, TEXT("Entered Fireboss loop"));
-								FPointDamageEvent DamageEvent(Weapons[CurrentWeaponIndex]->BodyDamage, Hit, ShotDirection, nullptr);
-								HitActor->TakeDamage(Weapons[CurrentWeaponIndex]->BodyDamage, DamageEvent, GetInstigatorController(), this);
-								UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), FireImpactEffect, Hit.Location, ShotDirection.Rotation());
-								Points += 10;
-							}
-							else
-							{
-								UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.Location, ShotDirection.Rotation());
-								UGameplayStatics::SpawnDecalAtLocation(GetWorld(), BulletHole, FVector(15, 15, 15), Hit.Location, ShotDirection.Rotation());
-							}
-						}
-					}
-				}
+				// Spawn the projectile at the muzzle
+				GetWorld()->SpawnActor<AZombieGameProjectile>(Weapons[CurrentWeaponIndex]->ProjectileClass, MuzzleLocation, SpawnRotation, ActorSpawnParams);
+				
 				GetWorld()->GetTimerManager().SetTimer(FireTimerHandle, this, &AZombieGameCharacter::Fire, Weapons[CurrentWeaponIndex]->FireRate, false); // to make the weapon fully auto
 			}
 			else

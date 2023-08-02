@@ -9,10 +9,16 @@
 #include "FireZombieBoss.h"
 #include "EngineUtils.h" // Include the appropriate header for TActorIterator
 
+AZombieGameMode::AZombieGameMode()
+{
+    // Initialize the array with your AI pawn classes
+    // ZombiePawnClasses.Add(ZombiePawn1);
+    // ZombiePawnClasses.Add(ZombiePawn2);
+}
 
 void AZombieGameMode::StartGame()
 {
-    // SpawnZombies();
+    SpawnZombies();
 }
 
 void AZombieGameMode::SpawnZombies()
@@ -96,6 +102,11 @@ void AZombieGameMode::SpawnZombies()
 
     else // for normal zombie rounds
     {
+        // tried adding to the array in constructor but didn't work 
+        ZombiePawnClasses.Add(ZombiePawn1); 
+        ZombiePawnClasses.Add(ZombiePawn2);
+        ZombiePawnClasses.Add(ZombiePawn3);
+
         ZombieTotal = CurrentWave * 4;
         ZombiesLeft = ZombieTotal;
 
@@ -133,9 +144,10 @@ void AZombieGameMode::SpawnZombies()
                     }
                 }
             }
-
+            // Select a random pawn class from the array
+            TSubclassOf<APawn> RandomPawnClass = ZombiePawnClasses[FMath::RandRange(0, ZombiePawnClasses.Num() - 1)];
             // Spawn the zombie at the adjusted location
-            UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), ZombiePawn, BehaviorTree, SpawnLocation);
+            UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), RandomPawnClass, BehaviorTree, SpawnLocation);
         }
     }
 }
@@ -187,7 +199,7 @@ void AZombieGameMode::WaveIncrement()
 void AZombieGameMode::BeginPlay()
 {
     Super::BeginPlay();
-    
+
     StartGame();
 }
 
@@ -206,7 +218,7 @@ void AZombieGameMode::PlayerWins()
 {
     ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
     AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
-    APlayerController* PlayerController = Cast<APlayerController>(Character->GetController());
+    APlayerController *PlayerController = Cast<APlayerController>(Character->GetController());
     if (Character->MainWidgetInstance)
     {
         Character->GetCharacterMovement()->StopMovementImmediately();

@@ -20,6 +20,8 @@ protected:
 	virtual void BeginPlay() override;
 	
 public:
+	AZombieGameMode();
+	
 	void StartGame();
 
 	UFUNCTION(BlueprintCallable)
@@ -54,7 +56,16 @@ public:
 	class UBehaviorTree* BehaviorTree;
 
 	UPROPERTY( EditAnywhere, BlueprintReadWrite )
-	TSubclassOf<APawn> ZombiePawn;
+	TSubclassOf<APawn> ZombiePawn1;
+
+	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+	TSubclassOf<APawn> ZombiePawn2;
+
+	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+	TSubclassOf<APawn> ZombiePawn3;
+
+	TArray<TSubclassOf<APawn>> ZombiePawnClasses;
+	
 
 	UPROPERTY( EditAnywhere, BlueprintReadWrite )
 	TSubclassOf<APawn> FireZombiePawn;

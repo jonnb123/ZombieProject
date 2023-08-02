@@ -5,6 +5,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "ZombieGameMode.h"
 #include "ZombieGameProjectile.h"
+#include "ZombieGameCharacter.h"
 #include "PawnSensingComponent.generated.h"
 
 // Sets default values
@@ -85,16 +86,20 @@ void AZombie::OnHeadBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AA
 									int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
 	AZombieGameProjectile *Projectile = Cast<AZombieGameProjectile>(OtherActor);
+	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
 	if (Projectile)
 	{
 		FHitResult Hit;
 		FPointDamageEvent DamageEvent(Projectile->HeadDamage, Hit, FVector::ZeroVector, nullptr);
 		TakeDamage(Projectile->HeadDamage, DamageEvent, GetInstigatorController(), this);
 		HeadHealth -= Projectile->HeadDamage;
-	}
-	if (Projectile && HeadHealth <= 0)
-	{
-		GetMesh()->HideBoneByName(TEXT("head"), PBO_None);
+		Character->Points += 50;
+		if (Projectile && HeadHealth <= 0)
+		{
+			GetMesh()->HideBoneByName(TEXT("head"), PBO_None);
+			HeadBoxCollisionComponent->DestroyComponent();
+		}
 	}
 	// HeadComponent->SetLeaderPoseComponent(nullptr);
 	// HeadComponent->SetSimulatePhysics(true);
@@ -105,6 +110,8 @@ void AZombie::OnRightArmBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent
 										int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
 	AZombieGameProjectile *Projectile = Cast<AZombieGameProjectile>(OtherActor);
+	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
 	if (Projectile)
 	{
 		FHitResult Hit;
@@ -114,6 +121,7 @@ void AZombie::OnRightArmBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent
 		if (RightArmHealth <= 0 && LeftArmHealth != 0)
 		{
 			GetMesh()->HideBoneByName(TEXT("lowerarm_r"), PBO_None);
+			RightArmBoxCollisionComponent->DestroyComponent();
 		}
 	}
 
@@ -125,6 +133,8 @@ void AZombie::OnLeftArmBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent,
 									   int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
 	AZombieGameProjectile *Projectile = Cast<AZombieGameProjectile>(OtherActor);
+	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
 	if (Projectile)
 	{
 		FHitResult Hit;
@@ -134,6 +144,7 @@ void AZombie::OnLeftArmBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent,
 		if (LeftArmHealth <= 0 && RightArmHealth != 0)
 		{
 			GetMesh()->HideBoneByName(TEXT("lowerarm_l"), PBO_None);
+			LeftArmBoxCollisionComponent->DestroyComponent();
 		}
 	}
 
@@ -145,6 +156,8 @@ void AZombie::OnTorsoBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, A
 									 int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
 	AZombieGameProjectile *Projectile = Cast<AZombieGameProjectile>(OtherActor);
+	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
 	if (Projectile)
 	{
 		FHitResult Hit;
@@ -160,6 +173,10 @@ void AZombie::OnRightLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent
 										int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
 	AZombieGameProjectile *Projectile = Cast<AZombieGameProjectile>(OtherActor);
+	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+	
+	
 	// RightLegComponent->SetLeaderPoseComponent(nullptr);
 	// RightLegComponent->SetSimulatePhysics(true);
 	// if (Projectile)
@@ -171,7 +188,11 @@ void AZombie::OnRightLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent
 void AZombie::OnLeftLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
 									   int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
-	// AZombieGameProjectile* Projectile = Cast<AZombieGameProjectile>(OtherActor);
+	AZombieGameProjectile* Projectile = Cast<AZombieGameProjectile>(OtherActor);
+	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+
+
 	// LeftLegComponent->SetLeaderPoseComponent(nullptr);
 	// LeftLegComponent->SetSimulatePhysics(true);
 }

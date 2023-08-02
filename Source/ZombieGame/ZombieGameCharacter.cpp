@@ -418,7 +418,7 @@ void AZombieGameCharacter::Fire()
 				FVector Start = Location;
 
 				// Calculate the muzzle location in world space
-				const FVector MuzzleLocation = GunMesh->GetSocketLocation(Weapons[CurrentWeaponIndex]->SocketName);
+				FVector MuzzleLocation = GunMesh->GetSocketLocation(TEXT("FireSocket"));
 				// Default offset from the character location for projectiles to spawn
 				// FVector MuzzleOffset = FVector(100.0f, 0.0f, 10.0f);
 

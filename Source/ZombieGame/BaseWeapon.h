@@ -75,6 +75,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	FName SocketName;
 
+	// Name of socket to fire projectile from 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	FName FireSocketName;
+
 	// has the weapon been obtained by the player
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	bool IsObtained;
@@ -95,11 +99,11 @@ public:
 	// UFUNCTION(BlueprintCallable)
 	void UseBuyableItem() override;
 
-	UPROPERTY(EditAnywhere, Category = "Damage")
-	float BodyDamage = 10;
+	// UPROPERTY(EditAnywhere, Category = "Damage")
+	// float BodyDamage = 10;
 
-	UPROPERTY(EditAnywhere, Category = "Damage")
-	float HeadDamage = 50;
+	// UPROPERTY(EditAnywhere, Category = "Damage")
+	// float HeadDamage = 50;
 
 
 protected:

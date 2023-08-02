@@ -64,6 +64,9 @@ public:
 	UPROPERTY( EditAnywhere, BlueprintReadWrite )
 	TSubclassOf<APawn> ZombiePawn3;
 
+	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+	TSubclassOf<APawn> ZombiePawn4;
+
 	TArray<TSubclassOf<APawn>> ZombiePawnClasses;
 	
 

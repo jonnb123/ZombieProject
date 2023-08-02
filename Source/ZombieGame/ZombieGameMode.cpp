@@ -106,6 +106,7 @@ void AZombieGameMode::SpawnZombies()
         ZombiePawnClasses.Add(ZombiePawn1); 
         ZombiePawnClasses.Add(ZombiePawn2);
         ZombiePawnClasses.Add(ZombiePawn3);
+        ZombiePawnClasses.Add(ZombiePawn4);
 
         ZombieTotal = CurrentWave * 4;
         ZombiesLeft = ZombieTotal;

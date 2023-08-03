@@ -6,6 +6,7 @@
 #include "ZombieGameMode.h"
 #include "ZombieGameProjectile.h"
 #include "ZombieGameCharacter.h"
+#include "NiagaraFunctionLibrary.h"
 #include "PawnSensingComponent.generated.h"
 
 // Sets default values
@@ -95,8 +96,16 @@ void AZombie::OnHeadBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AA
 		TakeDamage(Projectile->HeadDamage, DamageEvent, GetInstigatorController(), this);
 		HeadHealth -= Projectile->HeadDamage;
 		Character->Points += 50;
+		// Get the location of the detached head bone
+		FVector DetachedHeadLocation = GetMesh()->GetSocketLocation(TEXT("head"));
 		if (Projectile && HeadHealth <= 0)
 		{
+			UNiagaraFunctionLibrary::SpawnSystemAtLocation(
+				GetWorld(),
+				HeadshotFX, 
+				DetachedHeadLocation,		 // Use the location of the detached head bone
+				FRotator::ZeroRotator		 // You can adjust the rotation as needed
+			);
 			GetMesh()->HideBoneByName(TEXT("head"), PBO_None);
 			HeadBoxCollisionComponent->DestroyComponent();
 		}
@@ -175,8 +184,7 @@ void AZombie::OnRightLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent
 	AZombieGameProjectile *Projectile = Cast<AZombieGameProjectile>(OtherActor);
 	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
-	
-	
+
 	// RightLegComponent->SetLeaderPoseComponent(nullptr);
 	// RightLegComponent->SetSimulatePhysics(true);
 	// if (Projectile)
@@ -188,10 +196,9 @@ void AZombie::OnRightLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent
 void AZombie::OnLeftLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
 									   int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
-	AZombieGameProjectile* Projectile = Cast<AZombieGameProjectile>(OtherActor);
+	AZombieGameProjectile *Projectile = Cast<AZombieGameProjectile>(OtherActor);
 	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
-
 
 	// LeftLegComponent->SetLeaderPoseComponent(nullptr);
 	// LeftLegComponent->SetSimulatePhysics(true);

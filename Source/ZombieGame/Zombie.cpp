@@ -193,12 +193,25 @@ void AZombie::OnRightLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent
 	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
 
+	if (Projectile)
+	{
+		FHitResult Hit;
+		FPointDamageEvent DamageEvent(Projectile->LegDamage, Hit, FVector::ZeroVector, nullptr);
+		TakeDamage(Projectile->LegDamage, DamageEvent, GetInstigatorController(), this);
+		LegHealth -= Projectile->LegDamage;
+		if (LegHealth <= 0)
+		{
+			// hide both legs!
+			GetMesh()->HideBoneByName(TEXT("calf_l"), PBO_None);
+			GetMesh()->HideBoneByName(TEXT("calf_r"), PBO_None);
+			LeftLegBoxCollisionComponent->DestroyComponent();
+			RightLegBoxCollisionComponent->DestroyComponent();
+			IsCrawling = true;
+		}
+	}
+
 	// RightLegComponent->SetLeaderPoseComponent(nullptr);
 	// RightLegComponent->SetSimulatePhysics(true);
-	// if (Projectile)
-	// {
-	// 	GetMesh()->HideBoneByName(TEXT("calf_r"),PBO_None);
-	// }
 }
 
 void AZombie::OnLeftLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
@@ -207,6 +220,23 @@ void AZombie::OnLeftLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent,
 	AZombieGameProjectile *Projectile = Cast<AZombieGameProjectile>(OtherActor);
 	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+
+	if (Projectile)
+	{
+		FHitResult Hit;
+		FPointDamageEvent DamageEvent(Projectile->LegDamage, Hit, FVector::ZeroVector, nullptr);
+		TakeDamage(Projectile->LegDamage, DamageEvent, GetInstigatorController(), this);
+		LegHealth -= Projectile->LegDamage;
+		if (LegHealth <= 0)
+		{
+			// hide both legs!
+			GetMesh()->HideBoneByName(TEXT("calf_l"), PBO_None);
+			GetMesh()->HideBoneByName(TEXT("calf_r"), PBO_None);
+			LeftLegBoxCollisionComponent->DestroyComponent();
+			RightLegBoxCollisionComponent->DestroyComponent();
+			IsCrawling = true;
+		}
+	}
 
 	// LeftLegComponent->SetLeaderPoseComponent(nullptr);
 	// LeftLegComponent->SetSimulatePhysics(true);

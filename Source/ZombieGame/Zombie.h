@@ -54,14 +54,20 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = Health)
 	float RightArmHealth = 50;
 
-	UPROPERTY(VisibleAnywhere, Category = Health)
-	float LeftLegHealth = 100;
+	// UPROPERTY(VisibleAnywhere, Category = Health)
+	// float LeftLegHealth = 100;
+
+	// UPROPERTY(VisibleAnywhere, Category = Health)
+	// float RightLegHealth = 100;
 
 	UPROPERTY(VisibleAnywhere, Category = Health)
-	float RightLegHealth = 100;
+	float LegHealth = 50;
 
 	UPROPERTY(VisibleAnywhere)
 	bool IsDead;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool IsCrawling = false;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Audio")
     UAudioComponent* AudioComponent;

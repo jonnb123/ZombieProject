@@ -105,8 +105,8 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Impact Effect")
 	UParticleSystem* FireImpactEffect;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FX")
-	UNiagaraSystem* HeadshotFX;
+	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FX")
+	// UNiagaraSystem* HeadshotFX;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FX")
 	UNiagaraSystem* BodyShotFX;

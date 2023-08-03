@@ -98,7 +98,7 @@ void AZombie::OnHeadBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AA
 		Character->Points += 50;
 		// Get the location of the detached head bone
 		FVector DetachedHeadLocation = GetMesh()->GetSocketLocation(TEXT("head"));
-		if (Projectile && HeadHealth <= 0)
+		if (HeadHealth <= 0)
 		{
 			UNiagaraFunctionLibrary::SpawnSystemAtLocation(
 				GetWorld(),
@@ -127,8 +127,16 @@ void AZombie::OnRightArmBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent
 		FPointDamageEvent DamageEvent(Projectile->ArmDamage, Hit, FVector::ZeroVector, nullptr);
 		TakeDamage(Projectile->ArmDamage, DamageEvent, GetInstigatorController(), this);
 		RightArmHealth -= Projectile->ArmDamage;
+		// Get the location of the detached arm bone
+		FVector DetachedArmLocation = GetMesh()->GetSocketLocation(TEXT("lowerarm_r"));
 		if (RightArmHealth <= 0 && LeftArmHealth != 0)
 		{
+			UNiagaraFunctionLibrary::SpawnSystemAtLocation(
+				GetWorld(),
+				ArmFX, 
+				DetachedArmLocation,		 // Use the location of the detached head bone
+				FRotator::ZeroRotator		 // You can adjust the rotation as needed
+			);
 			GetMesh()->HideBoneByName(TEXT("lowerarm_r"), PBO_None);
 			RightArmBoxCollisionComponent->DestroyComponent();
 		}

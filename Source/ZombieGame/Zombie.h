@@ -129,6 +129,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FX")
 	class UNiagaraSystem* HeadshotFX;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FX")
+	class UNiagaraSystem* ArmFX;
+
 
 public:	
 	// Called every frame

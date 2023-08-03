@@ -26,9 +26,6 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-	// Determines if the character is currently sprinting
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-	class UAnimMontage* AnimMontage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	class UAnimMontage* HitMontage;
@@ -63,7 +60,7 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = Health)
 	float LegHealth = 50;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	bool IsDead;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
@@ -133,11 +130,7 @@ public:
 	FTimerHandle TimerHandle;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FX")
-	class UNiagaraSystem* HeadshotFX;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FX")
-	class UNiagaraSystem* ArmFX;
-
+	class UNiagaraSystem* ExplodeFX;
 
 public:	
 	// Called every frame

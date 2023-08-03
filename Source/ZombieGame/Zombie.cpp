@@ -102,9 +102,9 @@ void AZombie::OnHeadBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AA
 		{
 			UNiagaraFunctionLibrary::SpawnSystemAtLocation(
 				GetWorld(),
-				HeadshotFX, 
-				DetachedHeadLocation,		 // Use the location of the detached head bone
-				FRotator::ZeroRotator		 // You can adjust the rotation as needed
+				ExplodeFX,
+				DetachedHeadLocation, // Use the location of the detached head bone
+				FRotator::ZeroRotator // You can adjust the rotation as needed
 			);
 			GetMesh()->HideBoneByName(TEXT("head"), PBO_None);
 			HeadBoxCollisionComponent->DestroyComponent();
@@ -133,9 +133,9 @@ void AZombie::OnRightArmBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent
 		{
 			UNiagaraFunctionLibrary::SpawnSystemAtLocation(
 				GetWorld(),
-				ArmFX, 
-				DetachedArmLocation,		 // Use the location of the detached head bone
-				FRotator::ZeroRotator		 // You can adjust the rotation as needed
+				ExplodeFX,
+				DetachedArmLocation,  // Use the location of the detached head bone
+				FRotator::ZeroRotator // You can adjust the rotation as needed
 			);
 			GetMesh()->HideBoneByName(TEXT("lowerarm_r"), PBO_None);
 			RightArmBoxCollisionComponent->DestroyComponent();
@@ -158,8 +158,15 @@ void AZombie::OnLeftArmBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent,
 		FPointDamageEvent DamageEvent(Projectile->ArmDamage, Hit, FVector::ZeroVector, nullptr);
 		TakeDamage(Projectile->ArmDamage, DamageEvent, GetInstigatorController(), this);
 		LeftArmHealth -= Projectile->ArmDamage;
+		FVector DetachedArmLocation = GetMesh()->GetSocketLocation(TEXT("lowerarm_l"));
 		if (LeftArmHealth <= 0 && RightArmHealth != 0)
 		{
+			UNiagaraFunctionLibrary::SpawnSystemAtLocation(
+				GetWorld(),
+				ExplodeFX,
+				DetachedArmLocation,  // Use the location of the detached head bone
+				FRotator::ZeroRotator // You can adjust the rotation as needed
+			);
 			GetMesh()->HideBoneByName(TEXT("lowerarm_l"), PBO_None);
 			LeftArmBoxCollisionComponent->DestroyComponent();
 		}
@@ -199,8 +206,22 @@ void AZombie::OnRightLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent
 		FPointDamageEvent DamageEvent(Projectile->LegDamage, Hit, FVector::ZeroVector, nullptr);
 		TakeDamage(Projectile->LegDamage, DamageEvent, GetInstigatorController(), this);
 		LegHealth -= Projectile->LegDamage;
+		FVector DetachedLeftLegLocation = GetMesh()->GetSocketLocation(TEXT("calf_l"));
+		FVector DetachedRightLegLocation = GetMesh()->GetSocketLocation(TEXT("calf_r"));
 		if (LegHealth <= 0)
 		{
+			UNiagaraFunctionLibrary::SpawnSystemAtLocation(
+				GetWorld(),
+				ExplodeFX,
+				DetachedLeftLegLocation, // Use the location of the detached head bone
+				FRotator::ZeroRotator	 // You can adjust the rotation as needed
+			);
+			UNiagaraFunctionLibrary::SpawnSystemAtLocation(
+				GetWorld(),
+				ExplodeFX,
+				DetachedRightLegLocation, // Use the location of the detached head bone
+				FRotator::ZeroRotator	  // You can adjust the rotation as needed
+			);
 			// hide both legs!
 			GetMesh()->HideBoneByName(TEXT("calf_l"), PBO_None);
 			GetMesh()->HideBoneByName(TEXT("calf_r"), PBO_None);
@@ -227,8 +248,22 @@ void AZombie::OnLeftLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent,
 		FPointDamageEvent DamageEvent(Projectile->LegDamage, Hit, FVector::ZeroVector, nullptr);
 		TakeDamage(Projectile->LegDamage, DamageEvent, GetInstigatorController(), this);
 		LegHealth -= Projectile->LegDamage;
+		FVector DetachedLeftLegLocation = GetMesh()->GetSocketLocation(TEXT("calf_l"));
+		FVector DetachedRightLegLocation = GetMesh()->GetSocketLocation(TEXT("calf_r"));
 		if (LegHealth <= 0)
 		{
+			UNiagaraFunctionLibrary::SpawnSystemAtLocation(
+				GetWorld(),
+				ExplodeFX,
+				DetachedLeftLegLocation, // Use the location of the detached head bone
+				FRotator::ZeroRotator	 // You can adjust the rotation as needed
+			);
+			UNiagaraFunctionLibrary::SpawnSystemAtLocation(
+				GetWorld(),
+				ExplodeFX,
+				DetachedRightLegLocation, // Use the location of the detached head bone
+				FRotator::ZeroRotator	  // You can adjust the rotation as needed
+			);
 			// hide both legs!
 			GetMesh()->HideBoneByName(TEXT("calf_l"), PBO_None);
 			GetMesh()->HideBoneByName(TEXT("calf_r"), PBO_None);
@@ -268,13 +303,7 @@ void AZombie::Death()
 	AudioComponent->SetComponentTickEnabled(false);
 	AudioComponent->Stop();
 
-	this->PlayAnimMontage(AnimMontage);
-
 	AZombieGameMode *MyMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(GetWorld())); // gets the game mode
 
 	MyMode->ZombiesKilled();
-
-	// GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AZombie::OnTimerEnd, 10.f, false);
-
-	// this->Destroy();
 }

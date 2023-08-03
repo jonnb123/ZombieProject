@@ -21,9 +21,11 @@ EBTNodeResult::Type UBTTask_Attack::ExecuteTask(UBehaviorTreeComponent &OwnerCom
     Super::ExecuteTask(OwnerComp, NodeMemory);
 
 
+
     AAIController* AIController {OwnerComp.GetAIOwner()};
     const APawn* AIPawn {AIController->GetPawn()};
     ACharacter* AICharacter {AIController->GetCharacter()};
+    AZombie *ZombieCharacter = Cast<AZombie>(AICharacter);
 
     // Set what actors to seek out from it's collision channel
     TArray<TEnumAsByte<EObjectTypeQuery>> traceObjectTypes;
@@ -59,16 +61,24 @@ EBTNodeResult::Type UBTTask_Attack::ExecuteTask(UBehaviorTreeComponent &OwnerCom
     {
         UE_LOG(LogTemp, Warning, TEXT("Damaging..."));
         UE_LOG(LogTemp, Log, TEXT("Name of actor: %s"), *AICharacter->GetName());
-        AICharacter->PlayAnimMontage(AttackMontage);
 		FDamageEvent DamageEvent;
 		
         if (AICharacter->GetName().StartsWith("BP_FireZombie"))
         {
+            AICharacter->PlayAnimMontage(AttackMontage);
             UGameplayStatics::PlaySoundAtLocation(GetWorld(), FireZombieAttackSound, AICharacter->GetActorLocation());
             Player->TakeDamage(FireMeleeDamage, DamageEvent, AIController, AICharacter);  
         }
         else
         {
+            if (ZombieCharacter->IsCrawling == false)
+            {
+                AICharacter->PlayAnimMontage(AttackMontage);
+            }
+            else
+            {
+                AICharacter->PlayAnimMontage(CrawlAttackMontage);
+            }
             UGameplayStatics::PlaySoundAtLocation(GetWorld(), ZombieAttackSound, AICharacter->GetActorLocation());
             Player->TakeDamage(MeleeDamage, DamageEvent, AIController, AICharacter);  // this is where the TakeDamage function from the ZombieGameCharacter is called.
         }

@@ -50,7 +50,7 @@ void AZombieAIController::Tick(float DeltaSeconds)
         UE_LOG(LogTemp, Log, TEXT("Name of actor: %s"), *ZombieCharacter->GetName());
         if (ZombieCharacter->GetName().StartsWith("BP_FireZombie")) // if it's a fire boss zombie
         {
-           
+
             UCharacterMovementComponent *FireZombieMovement = Cast<UCharacterMovementComponent>(FireZombieCharacter->GetMovementComponent());
             if (ZombieCharacter->ZombieHitCheck == true)
             {
@@ -76,10 +76,16 @@ void AZombieAIController::Tick(float DeltaSeconds)
         else // if it's a normal zombie
         {
             UCharacterMovementComponent *ZombieMovement = Cast<UCharacterMovementComponent>(ZombieCharacter->GetMovementComponent());
-
             if (ZombieCharacter->ZombieHitCheck == true)
             {
-                ZombieMovement->MaxWalkSpeed = 300;
+                if (ZombieCharacter->IsCrawling == false)
+                {
+                    ZombieMovement->MaxWalkSpeed = 300;
+                }
+                else
+                {
+                    ZombieMovement->MaxWalkSpeed = 60;
+                }
                 GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerLocation"), Player->GetActorLocation());
                 GetBlackboardComponent()->SetValueAsVector(TEXT("LastKnownPlayerLocation"), Player->GetActorLocation());
                 ZombieCharacter->ZombieHitCheck = false;
@@ -88,7 +94,14 @@ void AZombieAIController::Tick(float DeltaSeconds)
             else if (AIPerceptionComponent->HasAnyCurrentStimulus(*Player))
             {
                 UE_LOG(LogTemp, Log, TEXT("Is normal zombie"));
-                ZombieMovement->MaxWalkSpeed = 300;
+                if (ZombieCharacter->IsCrawling == false)
+                {
+                    ZombieMovement->MaxWalkSpeed = 300;
+                }
+                else
+                {
+                    ZombieMovement->MaxWalkSpeed = 60;
+                }
                 GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerLocation"), Player->GetActorLocation());
                 GetBlackboardComponent()->SetValueAsVector(TEXT("LastKnownPlayerLocation"), Player->GetActorLocation());
                 // ZombieCharacter->ZombieHitCheck = false;

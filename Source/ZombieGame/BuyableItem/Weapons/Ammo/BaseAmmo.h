@@ -7,13 +7,13 @@
 #include "BaseAmmo.generated.h"
 
 
-UENUM(BlueprintType)
-enum class EAmmoType : uint8
-{
-	E_AssaultRifle 	 UMETA(DisplayName = "ASSAULT_RIFLE"),
-	E_Pistol		 UMETA(DisplayName = "PISTOL"),
-	E_Shotgun  		 UMETA(DisplayName = "SHOTGUN")
-};
+// UENUM(BlueprintType)
+// enum class EAmmoType : uint8
+// {
+// 	E_AssaultRifle 	 UMETA(DisplayName = "ASSAULT_RIFLE"),
+// 	E_Pistol		 UMETA(DisplayName = "PISTOL"),
+// 	E_Shotgun  		 UMETA(DisplayName = "SHOTGUN")
+// };
 
 
 UCLASS()
@@ -31,15 +31,5 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	// The total amount of ammo in this pickup.
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-	int AmmoAmount;
-
-	// The type of ammo in this pickup
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-	EAmmoType AmmoType;
-
-	
 
 };

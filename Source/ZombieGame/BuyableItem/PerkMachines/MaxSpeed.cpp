@@ -19,6 +19,7 @@ void AMaxSpeed::UseBuyableItem()
     {
         Character->Points -= 100;
         Character->GetCharacterMovement()->MaxWalkSpeed = 1200.0f;
+        Character->HasMaxSpeed = true;
         PlayConsumeAnimation();
     }
 }

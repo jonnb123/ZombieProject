@@ -25,8 +25,7 @@ class USoundBase;
 class UNiagaraSystem;
 class UMaterialInterface;
 
-
-UCLASS(config=Game)
+UCLASS(config = Game)
 class AZombieGameCharacter : public ACharacter
 {
 	GENERATED_BODY()
@@ -34,111 +33,92 @@ class AZombieGameCharacter : public ACharacter
 public:
 	AZombieGameCharacter();
 
-	// The virtual here shows that I intend to override the function, it overrides the virtual function from the base class, i.e. APawn
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
+	// Getters for meshes and cameras to be accessed in any class
+	USkeletalMeshComponent *GetMesh1P() const { return Mesh1P; }
+	USkeletalMeshComponent *GetGunMesh() const { return GunMesh; }
+	UCameraComponent *GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
+	UCameraComponent *GetAnimationCameraComponent() const { return AnimationCameraComponent; }
 
-	/** Pawn mesh: 1st person view (arms; seen only by self) */
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Mesh)
-	USkeletalMeshComponent* Mesh1P;
+	// Get a reference to the buyable item being overlapped
+	UPROPERTY(EditAnywhere, Category = "References")
+	ABuyableItem *OverlappingBuyableItem;
 
-	/** Pawn mesh: 1st person view (arms; seen only by self) */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Mesh)
-	USkeletalMeshComponent* GunMesh;
+	// gets main widget reference
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "References")
+	TSubclassOf<UUserWidget> WidgetClass;
+	UMainWidget *MainWidgetInstance;
 
-	/** First person camera */ 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
-	UCameraComponent* FirstPersonCameraComponent;
+	// Booleans
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
-	UCameraComponent* AnimationCameraComponent;
-
-	UPROPERTY(EditAnywhere)
-	ABuyableItem* OverlappingBuyableItem;
-
-	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
-	float TurnRateGamepad = 45.f;
-
-	// Determines if the character is currently sprinting
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-	bool IsAiming;
-
-	// maximum range
-	UPROPERTY(EditAnywhere)
-	float MaxBulletRange = 2000;
-
-	UPROPERTY(EditAnywhere)
-	float MaxInteractRange = 150;
+	bool IsAiming = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool IsDead;
+	bool IsDead = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool IsReloading = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "State")
+	bool IsShooting = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool HasMaxSpeed = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	bool IsSwappingWeapon = false;
+
+	// Values
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
 	float Health = 100;
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = "Health")
 	float MaxHealth = 100;
 
-	// array iterates on the value of the Enum for weapons: EWeaponType
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-	TArray<int> AmmoArray;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int Points = 1000;
+
+	// Weapons
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapons")
+	EWeaponType EquippedWeaponCharacter;
 
 	EWeaponType CurrentWeaponID;
 	// index of the weapon the player is currently using
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	int CurrentWeaponIndex = static_cast<int>(CurrentWeaponID);
 
-	// primary weapons 
+	// primary weapons
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-	TArray<ABaseWeapon*> Weapons;
+	TArray<ABaseWeapon *> Weapons;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool IsReloading;
+	// array iterates on the value of the Enum for weapons: EWeaponType
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	TArray<int> AmmoArray;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "State")
-	bool IsShooting;
+	/** Sound to play each time we fire */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	USoundBase *OutOfAmmoSound;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int Points = 1000;
+	// Functions
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool FastWalking = false;
-
-	UPROPERTY(EditAnywhere, Category = "Impact Effect")
-	UParticleSystem* ImpactEffect;
-
-	UPROPERTY(EditAnywhere, Category = "Impact Effect")
-	UParticleSystem* FireImpactEffect;
-
-	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FX")
-	// UNiagaraSystem* HeadshotFX;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FX")
-	UNiagaraSystem* BodyShotFX;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FX")
-	UMaterialInterface* BulletHole;
+	// The virtual here shows that I intend to override the function, it overrides the virtual function from the base class, i.e. APawn
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) override;
 
 	// Switch the player's current primary weapon
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void SwitchToNextPrimaryWeapon();
 
-	// meshes of weapons
-	UPROPERTY(EditDefaultsOnly, Category = "Weapons")
-    TArray<USkeletalMesh*> WeaponMeshes;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapons")
-    EWeaponType EquippedWeaponCharacter;
-
+	// called after a timer during SwitchToNextPrimaryWeapon
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	void WeaponSwapAfterDelay();
+	
 	UFUNCTION(BlueprintCallable)
 	void Death();
 
 	UFUNCTION(BlueprintCallable)
 	void RegenerateHealth();
-
-	FTimerDelegate HealthRegenTimerDelegate;
-	FTimerHandle HealthRegenTimerHandle;
-	float HealthRegenDuration = 5.0; 
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void BloodOverlay();
@@ -149,70 +129,76 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 	void PlayAmmoSound();
 
-	/** Sound to play each time we fire */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Gameplay)
-	USoundBase* OutOfAmmoSound;
-
-	// max ammo 
 	UFUNCTION(BlueprintCallable)
 	void MaxAmmo();
 
-	// The firing timer handle
-	FTimerHandle FireTimerHandle;
-	FHitResult Hit;
-
-	EPhysicalSurface TempSurface;
-
-	// Determines if the character is currently swapping weapon
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-	bool IsSwappingWeapon = false;
-
-	void WeaponSwapAfterDelay();
-
-	FTimerHandle WeaponSwapTimerHandle;
-
-	// gets main widget reference
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TSubclassOf<UUserWidget> WidgetClass;
-	UMainWidget* MainWidgetInstance;
-
-
-protected:
-	virtual void BeginPlay();
-
-	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
-
-	void MoveForward(float Val);
-	void MoveRight(float Val);
-
-	void TurnAtRate(float Rate);
-	void LookUpAtRate(float Rate);
-
-	void ZoomIn();
-	void ZoomOut();
-
-	void Fire();
-	void StartFiring();
-	void StopFiring();
-	
 	void ManualReload();
+
 	void ReloadWeapon(EWeaponType _WeaponType);
 
 	void CalculateAmmo();
 
+	void OnInteractingPressed();
+
+	// Timers 
+
+	// The time for this is the fire-rate of the weapon, used in the weapon classes
+	FTimerHandle FireTimerHandle; // Not used with delegate
+
+	// timer is used locally
 	FTimerHandle ReloadTimerHandle;
 
-	void OnInteractingPressed();
+	const float WeaponSwapDelay = 0.7;
+	FTimerHandle WeaponSwapTimerHandle; // Not used with delegate
+
+	FTimerDelegate HealthRegenTimerDelegate;
+	FTimerHandle HealthRegenTimerHandle;
+	const float HealthRegenDuration = 5.0;
+
+protected:
+	virtual void BeginPlay();
+
+	// Input functions
+	virtual void SetupPlayerInputComponent(UInputComponent *InputComponent) override;
+	void MoveForward(float Val);
+	void MoveRight(float Val);
+	void TurnAtRate(float Rate);
+	void LookUpAtRate(float Rate);
+	void ZoomIn();
+	void ZoomOut();
+	void Fire();
+	void StartFiring();
+	void StopFiring();
+
+	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
+	float TurnRateGamepad = 45.f; 
+
+	/** Pawn mesh: 1st person view (arms; seen only by self) */
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Mesh)
+	USkeletalMeshComponent *Mesh1P;
+
+	/** Pawn mesh: 1st person view (arms; seen only by self) */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Mesh)
+	USkeletalMeshComponent *GunMesh;
+
+	/** First person camera */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
+	UCameraComponent *FirstPersonCameraComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
+	UCameraComponent *AnimationCameraComponent;
 	
-
-public:
-	/** Returns Mesh1P subobject **/
-	USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
-
-	USkeletalMeshComponent* GetGunMesh() const { return GunMesh; }
-
-	/** Returns FirstPersonCameraComponent subobject **/
-	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
-
 };
 
+// // meshes of weapons
+// 	UPROPERTY(EditDefaultsOnly, Category = "Weapons")
+// 	TArray<USkeletalMesh *> WeaponMeshes;
+
+// EPhysicalSurface TempSurface;
+// FHitResult Hit;
+//  UPROPERTY(EditAnywhere, Category = "Impact Effect")
+// 	UParticleSystem* ImpactEffect;
+
+// 	UPROPERTY(EditAnywhere, Category = "Impact Effect")
+// 	UParticleSystem* FireImpactEffect;

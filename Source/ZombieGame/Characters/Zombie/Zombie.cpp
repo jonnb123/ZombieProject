@@ -1,16 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Zombie.h"
-#include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
-// #include "ZombieGameMode.h"
 #include "ZombieGame/GameMode/ZombieGameMode.h"
-// #include "ZombieGameProjectile.h"
-#include "ZombieGame/BuyableItem/Weapons/Projectiles/ZombieGameProjectile.h"
-// #include "ZombieGameCharacter.h"
 #include "ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h"
 #include "NiagaraFunctionLibrary.h"
-#include "PawnSensingComponent.generated.h"
 
 // Sets default values
 AZombie::AZombie()

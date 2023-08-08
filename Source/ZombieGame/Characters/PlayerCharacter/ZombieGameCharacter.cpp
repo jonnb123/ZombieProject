@@ -5,7 +5,6 @@
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
 
-
 AZombieGameCharacter::AZombieGameCharacter()
 {
 	// Set size for collision capsule
@@ -304,14 +303,14 @@ void AZombieGameCharacter::Fire()
 		{
 			Weapons[CurrentWeaponIndex]->CurrentAmmo--;
 			GunMesh->PlayAnimation(Weapons[CurrentWeaponIndex]->WeaponFireMontage, false);
-			
+
 			// Location and Rotation
 			APlayerController *PlayerController = Cast<APlayerController>(GetController());
 			const FRotator SpawnRotation = PlayerController->PlayerCameraManager->GetCameraRotation();
 			// Added a fire socket where the bullet will come from
 			FVector MuzzleLocation = GunMesh->GetSocketLocation(TEXT("FireSocket"));
 
-			// Set Spawn Collision 
+			// Set Spawn Collision
 			FActorSpawnParameters ActorSpawnParams;
 			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
 
@@ -409,52 +408,6 @@ void AZombieGameCharacter::RegenerateHealth()
 	}
 }
 
-// void AZombieGameCharacter::Fire()
-// {
-// 	UE_LOG(LogTemp, Warning, TEXT("Current ammo: %d"), Weapons[CurrentWeaponIndex]->CurrentAmmo);
-
-// 	if (IsReloading)
-// 	{
-// 		UE_LOG(LogTemp, Log, TEXT("RELOADINGGGGG"));
-// 	}
-
-// 	if (IsShooting)
-// 	{
-// 		UE_LOG(LogTemp, Warning, TEXT("Shooting!!!!!!"));
-// 		if (Weapons[CurrentWeaponIndex]->CurrentAmmo > 0)
-// 		{
-// 			if (IsReloading == false)
-// 			{
-// 				Weapons[CurrentWeaponIndex]->CurrentAmmo--;
-// 				// PlayFiringAnimations();
-// 				GunMesh->PlayAnimation(Weapons[CurrentWeaponIndex]->WeaponFireMontage, false);
-// 				FVector Location;
-// 				FRotator Rotation;
-// 				// FHitResult Hit;
-// 				GetController()->GetPlayerViewPoint(Location, Rotation);
-// 				FVector Start = Location;
-// 				FVector End = Location + Rotation.Vector() * MaxBulletRange;
-
-// 				FCollisionQueryParams TraceParams = FCollisionQueryParams::DefaultQueryParam;
-// 				TraceParams.bReturnPhysicalMaterial = true;
-// 				TraceParams.AddIgnoredActor(this);
-
-// bool bSuccess = GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_WorldDynamic, TraceParams);
-
-// 				if (bSuccess)
-// 				{
-// 					FVector ShotDirection = -Rotation.Vector();
-
-// 					AActor *HitActor = Hit.GetActor();
-// 					if (HitActor != nullptr) // very important nullptr check, was breaking randomly without this.
-// 					{
-// 						UE_LOG(LogTemp, Log, TEXT("actor is %s"), *HitActor->GetName());
-// 						// Get hit surface type
-// 						TempSurface = UGameplayStatics::GetSurfaceType(Hit);
-
-// 						UE_LOG(LogTemp, Log, TEXT("The surface is %s"), *UEnum::GetValueAsString(TempSurface));
-// 						if (HitActor != nullptr)
-// 						{
 // 							if (TempSurface == SurfaceType1) // for headshots on zombie
 // 							{
 // 								FPointDamageEvent DamageEvent(Weapons[CurrentWeaponIndex]->HeadDamage, Hit, ShotDirection, nullptr);
@@ -483,15 +436,6 @@ void AZombieGameCharacter::RegenerateHealth()
 // 								UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.Location, ShotDirection.Rotation());
 // 								UGameplayStatics::SpawnDecalAtLocation(GetWorld(), BulletHole, FVector(15, 15, 15), Hit.Location, ShotDirection.Rotation());
 // 							}
-// 						}
-// 					}
-// 				}
-// 				GetWorld()->GetTimerManager().SetTimer(FireTimerHandle, this, &AZombieGameCharacter::Fire, Weapons[CurrentWeaponIndex]->FireRate, false); // to make the weapon fully auto
-// 			}
-// 			else
-// 			{
-// 				// ReloadWeapon(Weapons[CurrentWeaponIndex]->WeaponType); this was for autoreload but made the animations not work
-// 			}
 // 		}
 // 		else
 // 		{

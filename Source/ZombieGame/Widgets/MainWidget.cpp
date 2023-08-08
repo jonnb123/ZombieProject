@@ -71,7 +71,7 @@ float UMainWidget::UpdateHealthBar()
     AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
     if (Character)
     {
-        return Character->Health * 0.01;
+        return Character->GetCharacterHealth() * 0.01;
     }
     else
     {
@@ -85,7 +85,7 @@ float UMainWidget::UpdateHJHealthBar()
     AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
     if (Character)
     {
-        return Character->Health * 0.005;
+        return Character->GetCharacterHealth() * 0.005;
     }
     else
     {
@@ -131,7 +131,7 @@ FText UMainWidget::UpdateCharacterPoints()
     AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
     if (Character)
     {
-        FString Text = FString::Printf(TEXT("%d"), Character->Points);
+        FString Text = FString::Printf(TEXT("%d"), Character->GetPoints());
         return FText::FromString(Text);
     }
     else

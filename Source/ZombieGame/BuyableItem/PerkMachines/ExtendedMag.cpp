@@ -17,7 +17,7 @@ void AExtendedMag::UseBuyableItem()
     UE_LOG(LogTemp, Warning, TEXT("You have interacted with fully auto"));
 	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
-	if (Character->Points >= 100 && ExtendedMagComplete == false) // set the points to be 1000
+	if (Character->GetPoints() >= 100 && ExtendedMagComplete == false) // set the points to be 1000
 	{
 		ExtendMagazine(); 
 		PlayConsumeAnimation();
@@ -46,5 +46,5 @@ void AExtendedMag::ExtendMagazine()
 	FoundWeapons[2]->MaxClipSize = 10;
 	FoundWeapons[2]->CurrentAmmo = 10;
 	ExtendedMagComplete = true;
-	Character->Points -= 100;
+	Character->SetPoints(Character->GetPoints() - 100);
 }

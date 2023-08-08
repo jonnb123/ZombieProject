@@ -98,7 +98,7 @@ void AZombie::OnHeadBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AA
 		FPointDamageEvent DamageEvent(Projectile->HeadDamage, Hit, FVector::ZeroVector, nullptr);
 		TakeDamage(Projectile->HeadDamage, DamageEvent, GetInstigatorController(), this);
 		HeadHealth -= Projectile->HeadDamage;
-		Character->Points += 50;
+		Character->SetPoints(Character->GetPoints() + 50);
 		// Get the location of the detached head bone
 		FVector DetachedHeadLocation = GetMesh()->GetSocketLocation(TEXT("head"));
 		if (HeadHealth <= 0)

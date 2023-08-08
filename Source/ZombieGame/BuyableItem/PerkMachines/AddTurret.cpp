@@ -19,14 +19,14 @@ void AAddTurret::UseBuyableItem()
 	// Get the world
 	UWorld *const World = GetWorld();
 	// Check if the player has enough points to buy the turret
-	if (Character->Points >= 100 && TurretComplete == false)
+	if (Character->GetPoints() >= 100 && TurretComplete == false)
 	{
 		PlayConsumeAnimation();
 		// Spawn the turret at the specified location
 		AActor *Turret = World->SpawnActor(TurretClass, &SpawnLocation, &SpawnRotation);
 		if (Turret)
 		{
-			Character->Points -= 100;
+			Character->SetPoints(Character->GetPoints() - 100);
 			TurretComplete = true;
 		}
 	}

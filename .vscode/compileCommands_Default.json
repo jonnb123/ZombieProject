@@ -1,6 +1,6 @@
 [
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\AddTurret.cpp",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\BuyableItem.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -8,7 +8,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\AddTurret.h",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\BuyableItem.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -16,7 +16,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\AmmoPickup.cpp",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\Doors\\BuyDoor.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -24,7 +24,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\AmmoPickup.h",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\Doors\\BuyDoor.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -32,7 +32,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BTTask_Attack.cpp",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\PerkMachines\\AddTurret.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -40,7 +40,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BTTask_Attack.h",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\PerkMachines\\AddTurret.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -48,7 +48,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BTTask_BulletReaction.cpp",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\PerkMachines\\ExtendedMag.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -56,7 +56,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BTTask_BulletReaction.h",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\PerkMachines\\ExtendedMag.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -64,7 +64,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BTTask_ClearBlackboardValue.cpp",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\PerkMachines\\FullyAuto.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -72,7 +72,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BTTask_ClearBlackboardValue.h",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\PerkMachines\\FullyAuto.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -80,7 +80,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BTTask_FindRandomLocation.cpp",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\PerkMachines\\HealthJuice.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -88,7 +88,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BTTask_FindRandomLocation.h",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\PerkMachines\\HealthJuice.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -96,7 +96,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BTTask_MoveSpeed.cpp",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\PerkMachines\\MaxSpeed.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -104,7 +104,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BTTask_MoveSpeed.h",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\PerkMachines\\MaxSpeed.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -112,7 +112,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BaseAmmo.cpp",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\PerkMachines\\PerkMachine.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -120,7 +120,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BaseAmmo.h",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\PerkMachines\\PerkMachine.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -128,7 +128,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BaseWeapon.cpp",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\Weapons\\Ammo\\BaseAmmo.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -136,7 +136,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BaseWeapon.h",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\Weapons\\Ammo\\BaseAmmo.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -144,7 +144,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyDoor.cpp",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\Weapons\\BaseWeapon.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -152,7 +152,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyDoor.h",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\Weapons\\BaseWeapon.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -160,7 +160,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem.cpp",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\Weapons\\Projectiles\\ARProjectile.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -168,7 +168,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem.h",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\Weapons\\Projectiles\\ARProjectile.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -176,7 +176,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\ExtendedMag.cpp",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\Weapons\\Projectiles\\PistolProjectile.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -184,7 +184,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\ExtendedMag.h",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\Weapons\\Projectiles\\PistolProjectile.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -192,7 +192,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\FireZombieBoss.cpp",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\Weapons\\Projectiles\\ShotgunProjectile.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -200,7 +200,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\FireZombieBoss.h",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\Weapons\\Projectiles\\ShotgunProjectile.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -208,7 +208,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\FullyAuto.cpp",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\Weapons\\Projectiles\\ZombieGameProjectile.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -216,7 +216,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\FullyAuto.h",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\BuyableItem\\Weapons\\Projectiles\\ZombieGameProjectile.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -224,7 +224,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\HealthJuice.cpp",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\Characters\\PlayerCharacter\\ZombieGameCharacter.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -232,7 +232,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\HealthJuice.h",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\Characters\\PlayerCharacter\\ZombieGameCharacter.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -240,7 +240,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\InteractionInterface.cpp",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\Characters\\Turret\\Turret.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -248,7 +248,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\InteractionInterface.h",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\Characters\\Turret\\Turret.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -256,7 +256,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\MainWidget.cpp",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\Characters\\Zombie\\BTTask_Attack.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -264,7 +264,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\MainWidget.h",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\Characters\\Zombie\\BTTask_Attack.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -272,7 +272,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\MaxSpeed.cpp",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\Characters\\Zombie\\BTTask_BulletReaction.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -280,7 +280,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\MaxSpeed.h",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\Characters\\Zombie\\BTTask_BulletReaction.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -288,7 +288,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\PerkMachine.cpp",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\Characters\\Zombie\\BTTask_ClearBlackboardValue.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -296,7 +296,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\PerkMachine.h",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\Characters\\Zombie\\BTTask_ClearBlackboardValue.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -304,7 +304,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\PistolProjectile.cpp",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\Characters\\Zombie\\BTTask_FindRandomLocation.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -312,7 +312,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\PistolProjectile.h",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\Characters\\Zombie\\BTTask_FindRandomLocation.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -320,7 +320,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\Turret.cpp",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\Characters\\Zombie\\BTTask_MoveSpeed.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -328,7 +328,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\Turret.h",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\Characters\\Zombie\\BTTask_MoveSpeed.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -336,7 +336,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\Zombie.cpp",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\Characters\\Zombie\\FireZombieBoss.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -344,7 +344,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\Zombie.h",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\Characters\\Zombie\\FireZombieBoss.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -352,7 +352,7 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\ZombieAIController.cpp",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\Characters\\Zombie\\Zombie.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -360,7 +360,55 @@
 		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\ZombieAIController.h",
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\Characters\\Zombie\\Zombie.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
+		],
+		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\Characters\\Zombie\\ZombieAIController.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
+		],
+		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\Characters\\Zombie\\ZombieAIController.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
+		],
+		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\GameMode\\ZombieGameMode.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
+		],
+		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\GameMode\\ZombieGameMode.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
+		],
+		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\Widgets\\MainWidget.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
+		],
+		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\Widgets\\MainWidget.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
@@ -385,54 +433,6 @@
 	},
 	{
 		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\ZombieGame.h",
-		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
-			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
-		],
-		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
-	},
-	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\ZombieGameCharacter.cpp",
-		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
-			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
-		],
-		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
-	},
-	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\ZombieGameCharacter.h",
-		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
-			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
-		],
-		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
-	},
-	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\ZombieGameMode.cpp",
-		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
-			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
-		],
-		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
-	},
-	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\ZombieGameMode.h",
-		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
-			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
-		],
-		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
-	},
-	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\ZombieGameProjectile.cpp",
-		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
-			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"
-		],
-		"directory": "E:\\Epic Games\\UE_5.2\\Engine\\Source"
-	},
-	{
-		"file": "C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\Source\\ZombieGame\\ZombieGameProjectile.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.32.31326\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Jon10\\OneDrive\\Documents\\GitHub\\Unreal Projects\\ZombieGame 5.2\\ZombieProject\\.vscode\\compileCommands_Default\\ZombieGame.266.rsp"

@@ -1,20 +1,10 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "ZombieGameCharacter.h"
-// #include "ZombieGameProjectile.h"
-#include "ZombieGame/BuyableItem/Weapons/Projectiles/ZombieGameProjectile.h"
-#include "Animation/AnimInstance.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "Components/InputComponent.h"
-#include "GameFramework/InputSettings.h"
 #include "Kismet/GameplayStatics.h"
-#include "PhysicalMaterials/PhysicalMaterial.h"
-// #include "Zombie.h"
-#include "ZombieGame/Characters/Zombie/Zombie.h"
-#include "Engine/SkeletalMesh.h"
-#include "NiagaraFunctionLibrary.h"
-#include "Misc/CString.h"
+
 
 AZombieGameCharacter::AZombieGameCharacter()
 {
@@ -144,6 +134,28 @@ void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
 			break; // breaks out of the for loop
 		}
 	}
+
+	// // if current weapon index is last index set it to -1
+	// for (int i = CurrentWeaponIndex + 1; i < Weapons.Num(); i++)
+	// {
+	// 	if (i > CurrentWeaponIndex)
+	// 	{
+	// 		if (Weapons[i]->IsObtained)
+	// 		{
+	// 			IsSwappingWeapon = true;
+	// 			GetWorldTimerManager().SetTimer(WeaponSwapTimerHandle, this, &AZombieGameCharacter::WeaponSwapAfterDelay, WeaponSwapDelay, false);
+	// 			Success = true;
+	// 			CurrentWeaponIndex = i;
+	// 			UE_LOG(LogTemp, Display, TEXT("Current Weapon index: %d"), CurrentWeaponIndex);
+	// 			GunMesh->SetSkeletalMesh(Weapons[CurrentWeaponIndex]->WeaponMesh);
+	// 			// Attach GunMesh to the new socket
+	// 			GunMesh->AttachToComponent(Mesh1P, FAttachmentTransformRules::SnapToTargetIncludingScale, Weapons[CurrentWeaponIndex]->SocketName);
+	// 			// This is referenced in the abp to change weapon
+	// 			EquippedWeaponCharacter = Weapons[CurrentWeaponIndex]->WeaponType;
+	// 		}
+	// 		break; // breaks out of the for loop
+	// 	}
+	// }
 
 	if (!Success) // for the pistol
 	{

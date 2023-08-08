@@ -77,7 +77,6 @@ void AZombie::BeginPlay()
 	LeftLegBoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AZombie::OnLeftLegBoxBeginOverlap);
 	LeftArmBoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AZombie::OnLeftArmBoxBeginOverlap);
 
-	Health = MaxHealth; // sets health equal to 100
 }
 
 void AZombie::OnHeadBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
@@ -107,8 +106,6 @@ void AZombie::OnHeadBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AA
 			HeadBoxCollisionComponent->DestroyComponent();
 		}
 	}
-	// HeadComponent->SetLeaderPoseComponent(nullptr);
-	// HeadComponent->SetSimulatePhysics(true);
 }
 
 //
@@ -138,9 +135,6 @@ void AZombie::OnRightArmBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent
 			RightArmBoxCollisionComponent->DestroyComponent();
 		}
 	}
-
-	// RightArmComponent->SetLeaderPoseComponent(nullptr);
-	// RightArmComponent->SetSimulatePhysics(true);
 }
 
 void AZombie::OnLeftArmBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
@@ -168,9 +162,6 @@ void AZombie::OnLeftArmBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent,
 			LeftArmBoxCollisionComponent->DestroyComponent();
 		}
 	}
-
-	// LeftArmComponent->SetLeaderPoseComponent(nullptr);
-	// LeftArmComponent->SetSimulatePhysics(true);
 }
 
 void AZombie::OnTorsoBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
@@ -186,8 +177,6 @@ void AZombie::OnTorsoBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, A
 		TakeDamage(Projectile->TorsoDamage, DamageEvent, GetInstigatorController(), this);
 		TorsoHealth -= Projectile->TorsoDamage;
 	}
-	// TorsoComponent->SetLeaderPoseComponent(nullptr);
-	// TorsoComponent->SetSimulatePhysics(true);
 }
 
 void AZombie::OnRightLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
@@ -227,9 +216,6 @@ void AZombie::OnRightLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent
 			IsCrawling = true;
 		}
 	}
-
-	// RightLegComponent->SetLeaderPoseComponent(nullptr);
-	// RightLegComponent->SetSimulatePhysics(true);
 }
 
 void AZombie::OnLeftLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
@@ -269,20 +255,6 @@ void AZombie::OnLeftLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent,
 			IsCrawling = true;
 		}
 	}
-
-	// LeftLegComponent->SetLeaderPoseComponent(nullptr);
-	// LeftLegComponent->SetSimulatePhysics(true);
-}
-
-void AZombie::OnTimerEnd() // not necessary for interview
-{
-	UE_LOG(LogTemp, Warning, TEXT("Timer is up"));
-}
-
-// Called every frame
-void AZombie::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
 }
 
 // Called to bind functionality to input

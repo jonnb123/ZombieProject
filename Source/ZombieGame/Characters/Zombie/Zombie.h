@@ -14,26 +14,61 @@ class ZOMBIEGAME_API AZombie : public ACharacter
 	GENERATED_BODY()
 
 public:
-
 	// Sets default values for this character's properties
 	AZombie();
 
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	// getter and setter for HitCheck
+	bool GetZombieHitCheck() const { return ZombieHitCheck; }
+	void SetZombieHitCheck(bool NewValue) { ZombieHitCheck = NewValue; }
 
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
+	// Getter for IsDead
+	bool GetIsZombieDead() const { return IsDead; }
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-	class UAnimMontage* HitMontage;
+	// Getter for IsCrawling
+	bool GetIsCrawling() const { return IsCrawling; }
 
-	UPROPERTY(EditDefaultsOnly)
-	float MaxHealth = 100;
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool ZombieHitCheck = false;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UBoxComponent *HeadBoxCollisionComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UBoxComponent *RightArmBoxCollisionComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UBoxComponent *TorsoBoxCollisionComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UBoxComponent *RightLegBoxCollisionComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UBoxComponent *LeftLegBoxCollisionComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UBoxComponent *LeftArmBoxCollisionComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "FX")
+	UAudioComponent *AudioComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FX")
+	class UNiagaraSystem *ExplodeFX;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Animation)
+	class UAnimMontage *HitMontage;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool IsDead; // used in abp and zombieaicontroller and turret, only need a getter
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool IsCrawling = false; // used in abp and zombieaicontroller, and BTTastk_Attack only need a getter
 
 	UPROPERTY(VisibleAnywhere, Category = Health)
-	float Health;
+	float MaxHealth = 100;
+
+	UPROPERTY(VisibleAnywhere, Category = Health)
+	float Health = 100;
 
 	UPROPERTY(VisibleAnywhere, Category = Health)
 	float HeadHealth = 100;
@@ -50,67 +85,34 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = Health)
 	float LegHealth = 50;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	bool IsDead;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	bool IsCrawling = false;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Audio")
-    UAudioComponent* AudioComponent;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-    UBoxComponent* HeadBoxCollisionComponent;
+private:
+	// On begin overlap functions, DO NOT DELETE UFUNCTION IT'S ESSENTIAL
+	UFUNCTION() 
+	void OnHeadBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
+							   int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
 	UFUNCTION()
-    void OnHeadBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-                           int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-    UBoxComponent* RightArmBoxCollisionComponent;
+	void OnTorsoBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
+								int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
 	UFUNCTION()
-    void OnRightArmBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-                           int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-    UBoxComponent* TorsoBoxCollisionComponent;
+	void OnRightArmBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
+								   int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
 	UFUNCTION()
-    void OnTorsoBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-                           int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-    UBoxComponent* RightLegBoxCollisionComponent;
+	void OnLeftArmBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
+								  int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
 	UFUNCTION()
-    void OnRightLegBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-                           int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	void OnRightLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
+								   int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
+	UFUNCTION()
+	void OnLeftLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
+								  int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
+	// Functions
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-    UBoxComponent* LeftLegBoxCollisionComponent;
-	UFUNCTION()
-    void OnLeftLegBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-                           int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-    UBoxComponent* LeftArmBoxCollisionComponent;
-	UFUNCTION()
-    void OnLeftArmBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-                           int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	UFUNCTION()
-	void OnTimerEnd();
-
-	FTimerHandle TimerHandle;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FX")
-	class UNiagaraSystem* ExplodeFX;
-	
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	bool ZombieHitCheck = false; // also used in ZombieAIController, uses getter and setter
 
 	void Death();
 
-protected:
+	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
 
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) override;
 
 };

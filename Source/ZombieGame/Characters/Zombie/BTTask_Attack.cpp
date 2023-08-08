@@ -72,7 +72,7 @@ EBTNodeResult::Type UBTTask_Attack::ExecuteTask(UBehaviorTreeComponent &OwnerCom
         }
         else
         {
-            if (ZombieCharacter->IsCrawling == false)
+            if (ZombieCharacter->GetIsCrawling() == false)
             {
                 AICharacter->PlayAnimMontage(AttackMontage);
             }

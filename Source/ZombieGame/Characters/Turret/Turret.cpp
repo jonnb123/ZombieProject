@@ -74,7 +74,7 @@ AZombie* ATurret::GetClosestZombie()
     for (AActor* Actor : Zombies)
     {
         AZombie* Zombie = Cast<AZombie>(Actor);
-        if (Zombie && !Zombie->IsDead)
+        if (Zombie && !Zombie->GetIsZombieDead())
         {
             float Distance = FVector::Dist(Actor->GetActorLocation(), TurretLocation);
             if (Distance < MinDistance)
@@ -97,7 +97,7 @@ void ATurret::CheckFireCondition()
 	}
 
 	AZombie* ClosestZombie = GetClosestZombie();
-	if (ClosestZombie && !ClosestZombie->IsDead)
+	if (ClosestZombie && !ClosestZombie->GetIsZombieDead())
 	{
 		float Distance = FVector::Dist(ClosestZombie->GetActorLocation(), GetActorLocation());
 		if (Distance <= FireRange)

@@ -51,7 +51,7 @@ void AZombieGameCharacter::BeginPlay()
 	MainWidgetInstance->AddToViewport();
 }
 
-float AZombieGameCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) // this is called in BTTask_Attack.cpp
+float AZombieGameCharacter::TakeDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) // this is called in BTTask_Attack.cpp
 {
 	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser); // takes the damage values from the zombie in BTTask_Attack and plugs them into the base implementation of TakeDamage
 	if (IsDead == false)
@@ -66,35 +66,29 @@ float AZombieGameCharacter::TakeDamage(float DamageAmount, struct FDamageEvent c
 		}
 		if (Health <= 0.5f * MaxHealth)
 		{
-			// BloodOverlay();
-			if (MainWidgetInstance)
-			{
-				MainWidgetInstance->ShowBloodOverlay();
-			}
+			check(MainWidgetInstance != nullptr);
+			MainWidgetInstance->ShowBloodOverlay();
 		}
 		else
 		{
-			// HideBlood();
-			if (MainWidgetInstance)
-			{
-				MainWidgetInstance->ShowBloodOverlay();
-			}
+			check(MainWidgetInstance != nullptr);
+			MainWidgetInstance->ShowBloodOverlay();
 		}
 		DamageToApply = FMath::Min(Health, DamageToApply);
 		Health -= DamageToApply; // deducts damage from health
 		// if alive
 		if (Health > 0)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Health left %f"), Health);
+			UE_LOG(LogTemp, Log, TEXT("Health left %f"), Health);
 			return DamageToApply;
 		}
 		// when health is below 0
-		UE_LOG(LogTemp, Warning, TEXT("Health left %f"), Health);
+		UE_LOG(LogTemp, Log, TEXT("Health left %f"), Health);
 		Death();
 		this->SetActorEnableCollision(false);
 		return DamageToApply;
 	}
-	return DamageToApply; // DamageToApply just needs to be in function, not sure why
+	return DamageToApply; 
 }
 
 void AZombieGameCharacter::Death()
@@ -134,6 +128,8 @@ void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
 		}
 	}
 
+	// - Line 127 to 144: iirc, you look at the next index past your current weapon, but only 1.
+	//  So why a loop? You have an array and the current index! If you need a loop, start it fromp currentindex. Are you not handling the case of circling back?
 	// // if current weapon index is last index set it to -1
 	// for (int i = CurrentWeaponIndex + 1; i < Weapons.Num(); i++)
 	// {
@@ -182,10 +178,8 @@ void AZombieGameCharacter::MaxAmmo()
 
 void AZombieGameCharacter::OnInteractingPressed()
 {
-	if (OverlappingBuyableItem)
-	{
-		OverlappingBuyableItem->UseBuyableItem();
-	}
+	check(OverlappingBuyableItem != nullptr);
+	OverlappingBuyableItem->UseBuyableItem();
 }
 
 void AZombieGameCharacter::SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent)
@@ -205,7 +199,8 @@ void AZombieGameCharacter::SetupPlayerInputComponent(class UInputComponent *Play
 	PlayerInputComponent->BindAction("Fire", IE_Released, this, &AZombieGameCharacter::StopFiring);
 
 	// Bind fire event
-	PlayerInputComponent->BindAction("Reload", IE_Pressed, this, &AZombieGameCharacter::ManualReload);
+	PlayerInputComponent->BindAction("Reload", IE_Pressed, this, &AZombieGameCharacter::ReloadWeapon);
+
 
 	// Aiming
 	PlayerInputComponent->BindAction("Aim", IE_Pressed, this, &AZombieGameCharacter::ZoomIn);
@@ -338,17 +333,7 @@ void AZombieGameCharacter::StopFiring()
 	FireTimerHandle.Invalidate();
 }
 
-void AZombieGameCharacter::ManualReload()
-{
-	if (Weapons[CurrentWeaponIndex] && Weapons[CurrentWeaponIndex]->CurrentAmmo != Weapons[CurrentWeaponIndex]->MaxClipSize) // if the player has a weapon and they don't have a full clip
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Max Clip Size: %d"), Weapons[CurrentWeaponIndex]->TotalAmmo);
-
-		ReloadWeapon(Weapons[CurrentWeaponIndex]->WeaponType);
-	}
-}
-
-void AZombieGameCharacter::ReloadWeapon(EWeaponType _WeaponType)
+void AZombieGameCharacter::ReloadWeapon()
 {
 	if (Weapons[CurrentWeaponIndex]->TotalAmmo != 0)
 	{

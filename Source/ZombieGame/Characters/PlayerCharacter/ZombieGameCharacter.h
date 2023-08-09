@@ -143,11 +143,9 @@ private:
 	void StopFiring();
 
 	// functions
-	void ManualReload();
+	void ReloadWeapon();
 
-	void ReloadWeapon(EWeaponType _WeaponType);
-
-	void CalculateAmmo();
+	void CalculateAmmo(); // This is called after the reloadmontage is over inside reloadweapon
 
 	void OnInteractingPressed();
 
@@ -164,7 +162,7 @@ private:
 	void PlayAmmoSound();
 
 	// The virtual here shows that I intend to override the function, it overrides the virtual function from the base class, i.e. APawn
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) override;
+	virtual float TakeDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) override;
 
 	// Timers
 

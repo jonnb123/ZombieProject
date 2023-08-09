@@ -40,7 +40,7 @@ AZombie::AZombie()
 	LeftArmBoxCollisionComponent->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("lowerarm_l"));
 }
 
-float AZombie::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser)
+float AZombie::TakeDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser)
 {
 	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	if (IsDead == false)
@@ -61,7 +61,7 @@ float AZombie::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageE
 		this->SetActorEnableCollision(false);
 		return DamageToApply;
 	}
-	return DamageToApply; // DamageToApply just needs to be in function, not sure why
+	return DamageToApply; 
 }
 
 // Called when the game starts or when spawned

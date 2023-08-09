@@ -85,14 +85,17 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = Health)
 	float LegHealth = 50;
 
+	UPROPERTY(VisibleAnywhere, Category = Health)
+	float NoOppositeLimb = -1; // placeholder for when component such as head doesn't have an opposite limb
+
 private:
+	// Declare a common function to handle body part overlap
+    void HandleBodyPartOverlap(float Damage, float& LimbHealth, const FName& BoneToRemoveOne, const FName &BoneToRemoveTwo, AActor* OtherActor, UPrimitiveComponent* OverlappedComponent, float &OppositeLimbHealth);
+
 	// On begin overlap functions, DO NOT DELETE UFUNCTION IT'S ESSENTIAL
 	UFUNCTION() 
 	void OnHeadBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
 							   int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
-	UFUNCTION()
-	void OnTorsoBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
-								int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
 	UFUNCTION()
 	void OnRightArmBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
 								   int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
@@ -102,6 +105,10 @@ private:
 	UFUNCTION()
 	void OnRightLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
 								   int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
+
+	UFUNCTION()
+	void OnTorsoBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
+								int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
 	UFUNCTION()
 	void OnLeftLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
 								  int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);

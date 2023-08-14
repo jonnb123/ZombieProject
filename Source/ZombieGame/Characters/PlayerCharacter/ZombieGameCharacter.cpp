@@ -54,7 +54,13 @@ void AZombieGameCharacter::BeginPlay()
 float AZombieGameCharacter::TakeDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) // this is called in BTTask_Attack.cpp
 {
 	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser); // takes the damage values from the zombie in BTTask_Attack and plugs them into the base implementation of TakeDamage
-	if (IsDead == false)
+	if (Health <= 0)
+	{
+		// when health is below 0
+		UE_LOG(LogTemp, Log, TEXT("Health left %f"), Health);
+		CharacterDeath();
+	}
+	else // player is alive
 	{
 		// removing health regen and blood overlay for test
 		if (Health <= 0.9f * MaxHealth)
@@ -76,22 +82,12 @@ float AZombieGameCharacter::TakeDamage(float const DamageAmount, struct FDamageE
 		}
 		DamageToApply = FMath::Min(Health, DamageToApply);
 		Health -= DamageToApply; // deducts damage from health
-		// if alive
-		if (Health > 0)
-		{
-			UE_LOG(LogTemp, Log, TEXT("Health left %f"), Health);
-			return DamageToApply;
-		}
-		// when health is below 0
 		UE_LOG(LogTemp, Log, TEXT("Health left %f"), Health);
-		Death();
-		this->SetActorEnableCollision(false);
-		return DamageToApply;
 	}
-	return DamageToApply; 
+	return DamageToApply;
 }
 
-void AZombieGameCharacter::Death()
+void AZombieGameCharacter::CharacterDeath()
 {
 	IsDead = true;
 	MainWidgetInstance->ShowDeathWindow();
@@ -99,6 +95,7 @@ void AZombieGameCharacter::Death()
 	GetCharacterMovement()->StopMovementImmediately();
 	PlayerController->SetInputMode(FInputModeUIOnly());
 	PlayerController->bShowMouseCursor = true;
+	SetActorEnableCollision(false);
 }
 
 void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
@@ -200,7 +197,6 @@ void AZombieGameCharacter::SetupPlayerInputComponent(class UInputComponent *Play
 
 	// Bind fire event
 	PlayerInputComponent->BindAction("Reload", IE_Pressed, this, &AZombieGameCharacter::ReloadWeapon);
-
 
 	// Aiming
 	PlayerInputComponent->BindAction("Aim", IE_Pressed, this, &AZombieGameCharacter::ZoomIn);

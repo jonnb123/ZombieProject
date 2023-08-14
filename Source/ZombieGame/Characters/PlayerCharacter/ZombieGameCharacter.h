@@ -151,7 +151,7 @@ private:
 
 	void WeaponSwapAfterDelay();
 
-	void Death();
+	void CharacterDeath();
 
 	void RegenerateHealth();
 

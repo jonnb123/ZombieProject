@@ -58,7 +58,7 @@ float AZombieGameCharacter::TakeDamage(float const DamageAmount, struct FDamageE
 	{
 		// when health is below 0
 		UE_LOG(LogTemp, Log, TEXT("Health left %f"), Health);
-		CharacterDeath();
+		HandleCharacterDeath();
 	}
 	else // player is alive
 	{
@@ -87,7 +87,7 @@ float AZombieGameCharacter::TakeDamage(float const DamageAmount, struct FDamageE
 	return DamageToApply;
 }
 
-void AZombieGameCharacter::CharacterDeath()
+void AZombieGameCharacter::HandleCharacterDeath()
 {
 	IsDead = true;
 	MainWidgetInstance->ShowDeathWindow();
@@ -175,8 +175,12 @@ void AZombieGameCharacter::MaxAmmo()
 
 void AZombieGameCharacter::OnInteractingPressed()
 {
-	check(OverlappingBuyableItem != nullptr);
-	OverlappingBuyableItem->UseBuyableItem();
+	// check(OverlappingBuyableItem != nullptr);
+	// OverlappingBuyableItem->UseBuyableItem();
+	if (OverlappingBuyableItem)
+	{
+		OverlappingBuyableItem->UseBuyableItem();
+	}
 }
 
 void AZombieGameCharacter::SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent)
@@ -196,7 +200,7 @@ void AZombieGameCharacter::SetupPlayerInputComponent(class UInputComponent *Play
 	PlayerInputComponent->BindAction("Fire", IE_Released, this, &AZombieGameCharacter::StopFiring);
 
 	// Bind fire event
-	PlayerInputComponent->BindAction("Reload", IE_Pressed, this, &AZombieGameCharacter::ReloadWeapon);
+	PlayerInputComponent->BindAction("Reload", IE_Pressed, this, &AZombieGameCharacter::StartReload);
 
 	// Aiming
 	PlayerInputComponent->BindAction("Aim", IE_Pressed, this, &AZombieGameCharacter::ZoomIn);
@@ -329,7 +333,7 @@ void AZombieGameCharacter::StopFiring()
 	FireTimerHandle.Invalidate();
 }
 
-void AZombieGameCharacter::ReloadWeapon()
+void AZombieGameCharacter::StartReload()
 {
 	if (Weapons[CurrentWeaponIndex]->TotalAmmo != 0)
 	{
@@ -339,13 +343,13 @@ void AZombieGameCharacter::ReloadWeapon()
 		IsReloading = true;
 		// A delegate is created and is binded to the member function.
 		FTimerDelegate TimerDelegate;
-		TimerDelegate.BindUObject(this, &AZombieGameCharacter::CalculateAmmo);
+		TimerDelegate.BindUObject(this, &AZombieGameCharacter::RefillAmmo);
 		// this basically plays the ReloadCalcAndPlayAnimations once the animation is complete.
 		GetWorldTimerManager().SetTimer(ReloadTimerHandle, TimerDelegate, TimerDuration, false);
 	}
 }
 
-void AZombieGameCharacter::CalculateAmmo()
+void AZombieGameCharacter::RefillAmmo()
 {
 	UE_LOG(LogTemp, Log, TEXT("Switching Mags!"));
 	if (Weapons[CurrentWeaponIndex]->CurrentAmmo == Weapons[CurrentWeaponIndex]->MaxClipSize || Weapons[CurrentWeaponIndex]->TotalAmmo <= 0)

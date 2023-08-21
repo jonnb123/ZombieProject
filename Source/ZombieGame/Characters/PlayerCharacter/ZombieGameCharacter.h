@@ -142,16 +142,16 @@ private:
 
 	void StopFiring();
 
-	// functions
-	void ReloadWeapon();
+	// starts timer, if completed will call 
+	void StartReload();
 
-	void CalculateAmmo(); // This is called after the reloadmontage is over inside reloadweapon
+	void RefillAmmo(); // This is called after the reloadmontage is over inside StartReload
 
 	void OnInteractingPressed();
 
 	void WeaponSwapAfterDelay();
 
-	void CharacterDeath();
+	void HandleCharacterDeath();
 
 	void RegenerateHealth();
 

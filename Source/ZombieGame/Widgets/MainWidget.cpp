@@ -55,7 +55,7 @@ FText UMainWidget::UpdateWaveText()
     AZombieGameMode *GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
     if (GameMode)
     {
-        FString Text = FString::Printf(TEXT("Wave %d/%d"), GameMode->CurrentWave, GameMode->MaxWaves);
+        FString Text = FString::Printf(TEXT("Wave %d/%d"), GameMode->GetCurrentWave(), GameMode->GetMaxWaves());
         return FText::FromString(Text);
     }
     else
@@ -98,7 +98,7 @@ FText UMainWidget::UpdateZombiesRemaining()
     AZombieGameMode *GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
     if (GameMode)
     {
-        FString Text = FString::Printf(TEXT("Zombies Left: %d"), GameMode->ZombiesLeft);
+        FString Text = FString::Printf(TEXT("Zombies Left: %d"), GameMode->GetZombiesLeft());
         return FText::FromString(Text);
     }
     else

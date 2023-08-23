@@ -4,8 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
-// #include "MainWidget.h"
-#include "ZombieGame/Widgets/MainWidget.h"
 #include "ZombieGameMode.generated.h"
 
 /**
@@ -16,46 +14,24 @@ class ZOMBIEGAME_API AZombieGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-	
 public:
-	AZombieGameMode();
-	
-	void StartGame();
+	// Getter for zombies left
+	int GetZombiesLeft() const { return ZombiesLeft; }
 
-	UFUNCTION(BlueprintCallable)
-	void SpawnZombies();
+	// Getter for zombies left
+	int GetCurrentWave() const { return CurrentWave; }
 
-	UFUNCTION(BlueprintCallable) // doesn't need to be implemented here, all code for this is in unreal
-	void WaveStart();
+	// Getter for zombies left
+	int GetMaxWaves() const { return MaxWaves; }
 
-	void ZombiesKilled();
+	// This function is used in Zombie.cpp, so is kept public
+	void HandleZombieCountAndRound();
 
-	void WaveIncrement();
 
-	UFUNCTION(BlueprintCallable)
-	void PlayerWins();
+protected:
+	virtual void BeginPlay() override;
 
-	UFUNCTION(BlueprintImplementableEvent)
-	void SpawnAmmo();
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int CurrentWave = 6;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int ZombieTotal = 1;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int ZombiesLeft;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int MaxWaves = 100; // max number of 8 zombies per random point, so creating more spots will help.
-
-	UPROPERTY(EditAnywhere)
-	class UBehaviorTree* BehaviorTree;
-
+	// All zombies are in protected as they need to be set in blueprint
 	UPROPERTY( EditAnywhere, BlueprintReadWrite )
 	TSubclassOf<APawn> ZombiePawn1;
 
@@ -67,19 +43,36 @@ public:
 
 	UPROPERTY( EditAnywhere, BlueprintReadWrite )
 	TSubclassOf<APawn> ZombiePawn4;
-
-	TArray<TSubclassOf<APawn>> ZombiePawnClasses;
 	
-
 	UPROPERTY( EditAnywhere, BlueprintReadWrite )
 	TSubclassOf<APawn> FireZombiePawn;
 
-	// // gets main widget reference
-	// UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	// TSubclassOf<UUserWidget> WidgetClass;
-	// UMainWidget* MainWidgetInstance;
+	// A reference to the behaviour tree for the zombies
+	UPROPERTY(EditAnywhere)
+	class UBehaviorTree* BehaviorTree;
 
-	FTimerHandle TimerHandle;
+	// uses a getter to be used in widget, protected so the wave can be edited in BP
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int CurrentWave = 5;
 
+	// uses a getter to be used in widget, protected so the wave can be edited in BP
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int MaxWaves = 100;
+
+	// functionality in blueprint
+	UFUNCTION(BlueprintImplementableEvent)
+	void SpawnAmmo();
+
+private:
+	// functions
+	void StartGame();
+	void SpawnZombies();
+	void HandleWaveStart();
+	void WaveIncrement();
+	void PlayerWins();
 	
+	// variables
+	int ZombieTotal;
+	int ZombiesLeft; // uses a getter, as it's used in MainWidget.cpp
+	TArray<TSubclassOf<APawn>> ZombiePawnClasses;
 };

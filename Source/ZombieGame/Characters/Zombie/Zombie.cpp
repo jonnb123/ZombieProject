@@ -229,5 +229,5 @@ void AZombie::Death()
 
 	AZombieGameMode *MyMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(GetWorld())); // gets the game mode
 
-	MyMode->ZombiesKilled();
+	MyMode->HandleZombieCountAndRound();
 }

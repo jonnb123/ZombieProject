@@ -6,26 +6,59 @@
 #include "Blueprint/UserWidget.h"
 #include "MainWidget.generated.h"
 
-/**
- *
- */
 UCLASS()
 class ZOMBIEGAME_API UMainWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
 public:
+	// Used in BuyableItem.cpp
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock *EquipItemText;
+
+	// Used in HealthJuice.cpp
+	UPROPERTY(meta = (BindWidget))
+	class UProgressBar *HealthBar;
+
+	// Used in HealthJuice.cpp
+	UPROPERTY(meta = (BindWidget))
+	class UProgressBar *HJHealthBar;
+
+	// Used in ZombieGameMode.cpp
+	UFUNCTION(BlueprintCallable)
+	void ShowWaveStart(int CurrentWave);
+
+	// Used in ZombieGameMode.cpp
+	UFUNCTION(BlueprintCallable)
+	void ShowWinText();
+
+	// Used in ZombieGameCharacter.cpp
+	UFUNCTION(BlueprintCallable)
+	void ShowDeathWindow();
+
+	// Used in ZombieGameCharacter.cpp
+	UFUNCTION(BlueprintCallable)
+	void ShowBloodOverlay();
+
+	// Used in ZombieGameCharacter.cpp
+	UFUNCTION(BlueprintCallable)
+	void HideBloodEffect();
+
+private:
+	// Canvas Panel
+
 	UPROPERTY(meta = (BindWidget))
 	class UCanvasPanel *CanvasPanel;
+
+	// Images
 
 	UPROPERTY(meta = (BindWidget))
 	class UImage *Crosshair;
 
 	UPROPERTY(meta = (BindWidget))
-	class UProgressBar *HealthBar;
+	class UImage *BloodOverlay;
 
-	UPROPERTY(meta = (BindWidget))
-	class UProgressBar *HJHealthBar;
+	// Text Blocks
 
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock *WaveText;
@@ -33,58 +66,76 @@ public:
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock *ZombiesLeftText;
 
-	UPROPERTY(meta = (BindWidget), BlueprintReadWrite)
-	class UHorizontalBox *WaveStartingBox;
-
-	UPROPERTY(meta = (BindWidget), BlueprintReadWrite)
+	UPROPERTY(meta = (BindWidget))
 	class UTextBlock *WaveStartingText;
 
-	UPROPERTY(meta = (BindWidget), BlueprintReadWrite)
-	class UVerticalBox *WinWindow;
+	UPROPERTY(meta = (BindWidget))
+	class UHorizontalBox *WaveStartingBox;
 
-	UPROPERTY(meta = (BindWidget), BlueprintReadWrite)
-	class UButton *ExitToMainMenuButtonWin;
-
-	UPROPERTY(meta = (BindWidget), BlueprintReadWrite)
-	class UButton *ExitToMainMenuButtonLose;
-
-	UPROPERTY(meta = (BindWidget), BlueprintReadWrite)
-	class UButton *QuitGameButtonWin;
-
-	UPROPERTY(meta = (BindWidget), BlueprintReadWrite)
-	class UButton *QuitGameButtonLose;
-
-	UPROPERTY(meta = (BindWidget), BlueprintReadWrite)
-	class UButton *RetryButton;
-
-	UPROPERTY(meta = (BindWidget), BlueprintReadWrite)
-	class UVerticalBox *DeathWindow;
-
-	UPROPERTY(meta = (BindWidget), BlueprintReadWrite)
-	class UImage *BloodOverlay;
-
-	UPROPERTY(meta = (BindWidget), BlueprintReadWrite)
+	UPROPERTY(meta = (BindWidget))
 	class UTextBlock *PointsText;
 
-	UPROPERTY(meta = (BindWidget), BlueprintReadWrite)
+	UPROPERTY(meta = (BindWidget))
 	class UTextBlock *AmmoText;
 
-	UPROPERTY(meta = (BindWidget), BlueprintReadWrite)
-	class UTextBlock *EquipItemText;
-
-	UPROPERTY(meta = (BindWidget), BlueprintReadWrite)
+	UPROPERTY(meta = (BindWidget))
 	class UTextBlock *WeaponNameText;
+
+	// Vertical boxes
+
+	UPROPERTY(meta = (BindWidget))
+	class UVerticalBox *WinWindow;
+
+	UPROPERTY(meta = (BindWidget))
+	class UVerticalBox *DeathWindow;
+
+	// Buttons
+
+	UPROPERTY(meta = (BindWidget))
+	class UButton *ExitToMainMenuButtonWin;
+
+	UPROPERTY(meta = (BindWidget))
+	class UButton *ExitToMainMenuButtonLose;
+
+	UPROPERTY(meta = (BindWidget))
+	class UButton *QuitGameButtonWin;
+
+	UPROPERTY(meta = (BindWidget))
+	class UButton *QuitGameButtonLose;
+
+	UPROPERTY(meta = (BindWidget))
+	class UButton *RetryButton;
+
+	// Animations
+
+	UPROPERTY(Transient, meta = (BindWidgetAnim))
+	class UWidgetAnimation *WaveAnimation;
+
+	UPROPERTY(Transient, meta = (BindWidgetAnim))
+	class UWidgetAnimation *WinWindowAnimation;
+
+	UPROPERTY(Transient, meta = (BindWidgetAnim))
+	class UWidgetAnimation *BloodAnimation;
+
+	// Button handling
+
+	UFUNCTION(BlueprintCallable)
+	void OnMainMenuClicked();
+
+	UFUNCTION(BlueprintCallable)
+	void OnQuitClicked();
+
+	UFUNCTION(BlueprintCallable)
+	void OnRetryClicked();
+
+	// Native Construct
 
 	void NativeConstruct() override;
 
+	// Update functions
+
 	UFUNCTION(BlueprintCallable)
 	FText UpdateWaveText();
-
-	UFUNCTION(BlueprintCallable)
-	float UpdateHealthBar();
-
-	UFUNCTION(BlueprintCallable)
-	float UpdateHJHealthBar();
 
 	UFUNCTION(BlueprintCallable)
 	FText UpdateZombiesRemaining();
@@ -99,37 +150,8 @@ public:
 	FText UpdatePlayerWeaponName();
 
 	UFUNCTION(BlueprintCallable)
-	void ShowWaveStart(int CurrentWave);
+	float UpdateHealthBar();
 
 	UFUNCTION(BlueprintCallable)
-	void ShowWinText();
-
-	UFUNCTION(BlueprintCallable)
-	void ShowDeathWindow();
-
-	UFUNCTION(BlueprintCallable)
-	void ShowBloodOverlay();
-
-	UFUNCTION(BlueprintCallable)
-	void HideBloodEffect();
-
-	// Button handling
-	UFUNCTION(BlueprintCallable)
-	void OnMainMenuClicked();
-
-	UFUNCTION(BlueprintCallable)
-	void OnQuitClicked();
-
-	UFUNCTION(BlueprintCallable)
-	void OnRetryClicked();
-
-	// Animations
-	UPROPERTY(Transient, meta = (BindWidgetAnim))
-	class UWidgetAnimation *WaveAnimation;
-
-	UPROPERTY(Transient, meta = (BindWidgetAnim))
-	class UWidgetAnimation *WinWindowAnimation;
-
-	UPROPERTY(Transient, meta = (BindWidgetAnim))
-	class UWidgetAnimation *BloodAnimation;
+	float UpdateHJHealthBar();
 };

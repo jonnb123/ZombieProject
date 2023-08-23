@@ -1,29 +1,19 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "MainWidget.h"
-// #include "ZombieGameMode.h"
 #include "ZombieGame/GameMode/ZombieGameMode.h"
 #include "Kismet/GameplayStatics.h"
-#include "UMG/Public/Components/TextBlock.h"
-// #include "ZombieGameCharacter.h"
 #include "ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h"
-// #include "BuyableItem.h"
-#include "ZombieGame/BuyableItem/BuyableItem.h"
+#include "UMG/Public/Components/TextBlock.h"
 #include "UMG/Public/Components/HorizontalBox.h"
 #include "UMG/Public/Components/VerticalBox.h"
 #include "UMG/Public/Components/Image.h"
 #include "UMG/Public/Components/Button.h"
-#include "UMG/Public/Animation/WidgetAnimation.h"
-#include "GenericPlatform/GenericPlatformMisc.h"
-#include "GameFramework/PlayerController.h"
 
-
-// #include "BaseWeapon.h"
 
 void UMainWidget::NativeConstruct()
 {
     Super::NativeConstruct();
-
 
     // if the Exit to main menu button is clicked
     if (ExitToMainMenuButtonWin)

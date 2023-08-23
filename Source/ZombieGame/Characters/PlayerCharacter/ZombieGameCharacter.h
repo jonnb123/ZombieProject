@@ -155,10 +155,6 @@ private:
 
 	void RegenerateHealth();
 
-	void BloodOverlay();
-
-	void HideBlood();
-
 	void PlayAmmoSound();
 
 	// The virtual here shows that I intend to override the function, it overrides the virtual function from the base class, i.e. APawn

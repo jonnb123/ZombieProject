@@ -14,14 +14,13 @@ class ZOMBIEGAME_API UBTTask_FindRandomLocation : public UBTTask_BlackboardBase
 {
 	GENERATED_BODY()
 	
-public: 
+protected:
+
 	UBTTask_FindRandomLocation();
 
-protected:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory) override;
 	virtual FString GetStaticDescription() const override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Search", meta = (AllowPrivateAccess = true))
 	float SearchRadius {500.f};
-	
 };

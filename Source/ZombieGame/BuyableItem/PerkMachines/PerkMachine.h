@@ -23,8 +23,14 @@ class ZOMBIEGAME_API APerkMachine : public ABuyableItem
 public:
 	APerkMachine();
 
+	FTimerHandle PlayAfterDelayHandle;
+	FTimerDelegate PlayAfterDelayDelegate;
+
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* PerkMachineMesh;
+
+	UPROPERTY(VisibleAnywhere)
+    UStaticMeshComponent* MeshComponent;
 
 	UFUNCTION(BlueprintCallable)
 	void PlayConsumeAnimation();
@@ -32,7 +38,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void PlayConsumeAnimationSecondHalf();
 
-	// UFUNCTION(BlueprintCallable)
-	// virtual void UsePerk();
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
+	UStaticMesh* PerkBottle;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Animation")
+    UAnimSequence* DrinkingAnimationSequence;
 
 };

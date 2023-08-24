@@ -1,10 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BuyableItem.h"
-// #include "ZombieGameCharacter.h"
 #include "ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h"
 #include "Kismet/GameplayStatics.h"
-// #include "BaseWeapon.h"
 #include "ZombieGame/BuyableItem/Weapons/BaseWeapon.h"
 #include "UMG/Public/Components/TextBlock.h"
 #include "Algo/Sort.h"
@@ -13,9 +11,6 @@
 // Sets default values
 ABuyableItem::ABuyableItem()
 {
-	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
 	_RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root Component"));
 	RootComponent = _RootComponent;
 
@@ -24,28 +19,19 @@ ABuyableItem::ABuyableItem()
 	BoxCollisionComponent->InitBoxExtent(FVector(100.f, 100.f, 100.f));
 	BoxCollisionComponent->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
 	BoxCollisionComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
-
-	Name = "Health Juice";
-
-	ItemPrice = "2000";
 }
 
 // Called when the game starts or when spawned
 void ABuyableItem::BeginPlay()
 {
 	Super::BeginPlay();
-	BoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &ABuyableItem::OnBoxBeginOverlap);
-	BoxCollisionComponent->OnComponentEndOverlap.AddDynamic(this, &ABuyableItem::OnMyComponentEndOverlap);
+	BoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &ABuyableItem::OnItemBeginOverlap);
+	BoxCollisionComponent->OnComponentEndOverlap.AddDynamic(this, &ABuyableItem::OnItemEndOverlap);
 }
 
-// Called every frame
-void ABuyableItem::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-}
 
-// this function is bound in begin play, without binding it it doesn't work
-void ABuyableItem::OnBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
+// Bound in BeginPlay
+void ABuyableItem::OnItemBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
 									 int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
 	UE_LOG(LogTemp, Log, TEXT("OVERLAPPING IN CODE"));
@@ -64,7 +50,7 @@ void ABuyableItem::OnBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, A
 	}
 }
 
-void ABuyableItem::OnMyComponentEndOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex)
+void ABuyableItem::OnItemEndOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex)
 {
 	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
@@ -74,7 +60,8 @@ void ABuyableItem::OnMyComponentEndOverlap(UPrimitiveComponent *OverlappedCompon
 	}
 }
 
+
 void ABuyableItem::UseBuyableItem()
 {
-    
+	// This will be overriden
 }

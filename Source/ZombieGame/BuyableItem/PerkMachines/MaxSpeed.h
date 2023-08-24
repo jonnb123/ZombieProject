@@ -15,4 +15,5 @@ class ZOMBIEGAME_API AMaxSpeed : public APerkMachine
 	GENERATED_BODY()
 public:
 	void UseBuyableItem() override;
+
 };

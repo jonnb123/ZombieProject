@@ -18,6 +18,7 @@ APerkMachine::APerkMachine()
 	PerkMachineMesh->SetupAttachment(RootComponent);
 }
 
+
 void APerkMachine::PlayConsumeAnimation()
 {
 	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
@@ -58,11 +59,3 @@ void APerkMachine::PlayConsumeAnimationSecondHalf()
 	Character->GetAnimationCameraComponent()->SetActive(false);
 	Character->GetMesh1P()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 }
-
-// void APerkMachine::UsePerk()
-// {
-    
-// }
-
-
-

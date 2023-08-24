@@ -23,3 +23,4 @@ void AMaxSpeed::UseBuyableItem()
         PlayConsumeAnimation();
     }
 }
+

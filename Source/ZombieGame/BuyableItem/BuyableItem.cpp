@@ -3,10 +3,7 @@
 #include "BuyableItem.h"
 #include "ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h"
 #include "Kismet/GameplayStatics.h"
-#include "ZombieGame/BuyableItem/Weapons/BaseWeapon.h"
 #include "UMG/Public/Components/TextBlock.h"
-#include "Algo/Sort.h"
-#include "Camera/CameraComponent.h"
 
 // Sets default values
 ABuyableItem::ABuyableItem()

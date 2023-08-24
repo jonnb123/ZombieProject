@@ -3,13 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-// #include "BuyableItem.h"
 #include "ZombieGame/BuyableItem/BuyableItem.h"
-#include "GameFramework/Actor.h"
-// #include "Turret.h"
-#include "ZombieGame/Characters/Turret/Turret.h"
-#include "Components/BoxComponent.h"
-#include "Animation/AnimSequence.h"
 #include "PerkMachine.generated.h"
 
 /**
@@ -20,11 +14,8 @@ class ZOMBIEGAME_API APerkMachine : public ABuyableItem
 {
 	GENERATED_BODY()
 
-public:
+protected:
 	APerkMachine();
-
-	FTimerHandle PlayAfterDelayHandle;
-	FTimerDelegate PlayAfterDelayDelegate;
 
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* PerkMachineMesh;
@@ -32,16 +23,16 @@ public:
 	UPROPERTY(VisibleAnywhere)
     UStaticMeshComponent* MeshComponent;
 
-	UFUNCTION(BlueprintCallable)
-	void PlayConsumeAnimation();
-
-	UFUNCTION(BlueprintCallable)
-	void PlayConsumeAnimationSecondHalf();
-
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
 	UStaticMesh* PerkBottle;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Animation")
     UAnimSequence* DrinkingAnimationSequence;
+
+	UFUNCTION(BlueprintCallable)
+	void PlayConsumeAnimation();
+
+	UFUNCTION(BlueprintCallable)
+	void PlayConsumeAnimationSecondHalf();
 
 };

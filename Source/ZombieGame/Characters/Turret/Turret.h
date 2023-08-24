@@ -54,7 +54,7 @@ private:
 
 	
 	UPROPERTY(EditDefaultsOnly)
-	float FireRate;
+	float TurretFireRate;
 
 	UPROPERTY(EditDefaultsOnly)
 	float FireRange;

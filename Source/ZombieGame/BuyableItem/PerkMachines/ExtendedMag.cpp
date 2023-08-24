@@ -31,12 +31,12 @@ void AExtendedMag::ExtendMagazine()
 			FoundWeapons.Add(Weapon);
 		}
 	}
-	FoundWeapons[0]->MaxClipSize = 18;
-	FoundWeapons[0]->CurrentAmmo = 18;
-	FoundWeapons[1]->MaxClipSize = 60;
-	FoundWeapons[1]->CurrentAmmo = 60;
-	FoundWeapons[2]->MaxClipSize = 10;
-	FoundWeapons[2]->CurrentAmmo = 10;
+	FoundWeapons[0]->MaxWeaponClipSize = 18;
+	FoundWeapons[0]->CurrentWeaponAmmo = 18;
+	FoundWeapons[1]->MaxWeaponClipSize = 60;
+	FoundWeapons[1]->CurrentWeaponAmmo = 60;
+	FoundWeapons[2]->MaxWeaponClipSize = 10;
+	FoundWeapons[2]->CurrentWeaponAmmo = 10;
 	ExtendedMagComplete = true;
 	Character->SetPoints(Character->GetPoints() - 100);
 }

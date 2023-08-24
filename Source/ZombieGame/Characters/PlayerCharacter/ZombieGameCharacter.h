@@ -177,7 +177,7 @@ private:
 	FTimerHandle HealthRegenTimerHandle;
 	const float HealthRegenDuration = 5.0;
 
-	// variables
+	// // variables
 	TArray<int> AmmoArray; // Array of ammo for weapons
 
 	EWeaponType CurrentWeaponID;

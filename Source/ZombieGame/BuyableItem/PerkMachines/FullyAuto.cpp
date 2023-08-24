@@ -21,7 +21,7 @@ void AFullyAuto::IncreaseFireRate()
 	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
 	ABaseWeapon *Pistol = Character->Weapons[0];
-	Pistol->FireRate = 0.1;
+	Pistol->WeaponFireRate = 0.1;
 	FireRateComplete = true;
 	Character->SetPoints(Character->GetPoints() - 100);
 }

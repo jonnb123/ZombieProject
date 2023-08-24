@@ -24,7 +24,7 @@ ATurret::ATurret()
 	GunMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("GunMesh"));
 	GunMesh->SetupAttachment(RootComponent);
 
-	FireRate = 2.0f;
+	TurretFireRate = 2.0f;
 	FireRange = 1000.f;
 	Health = 100.f;
 
@@ -37,7 +37,7 @@ void ATurret::BeginPlay()
 	
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AZombie::StaticClass(), Zombies);
 
-	GetWorldTimerManager().SetTimer(FireRateTimerHandle, this, &ATurret::CheckFireCondition, FireRate, true);
+	GetWorldTimerManager().SetTimer(FireRateTimerHandle, this, &ATurret::CheckFireCondition, TurretFireRate, true);
 }
 
 void ATurret::Tick(float DeltaTime)

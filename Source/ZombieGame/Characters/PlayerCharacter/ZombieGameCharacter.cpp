@@ -117,7 +117,7 @@ void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
 				UE_LOG(LogTemp, Display, TEXT("Current Weapon index: %d"), CurrentWeaponIndex);
 				GunMesh->SetSkeletalMesh(Weapons[CurrentWeaponIndex]->WeaponMesh);
 				// Attach GunMesh to the new socket
-				GunMesh->AttachToComponent(Mesh1P, FAttachmentTransformRules::SnapToTargetIncludingScale, Weapons[CurrentWeaponIndex]->SocketName);
+				GunMesh->AttachToComponent(Mesh1P, FAttachmentTransformRules::SnapToTargetIncludingScale, Weapons[CurrentWeaponIndex]->WeaponSocketName);
 				// This is referenced in the abp to change weapon
 				EquippedWeaponCharacter = Weapons[CurrentWeaponIndex]->WeaponType;
 			}
@@ -141,7 +141,7 @@ void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
 	// 			UE_LOG(LogTemp, Display, TEXT("Current Weapon index: %d"), CurrentWeaponIndex);
 	// 			GunMesh->SetSkeletalMesh(Weapons[CurrentWeaponIndex]->WeaponMesh);
 	// 			// Attach GunMesh to the new socket
-	// 			GunMesh->AttachToComponent(Mesh1P, FAttachmentTransformRules::SnapToTargetIncludingScale, Weapons[CurrentWeaponIndex]->SocketName);
+	// 			GunMesh->AttachToComponent(Mesh1P, FAttachmentTransformRules::SnapToTargetIncludingScale, Weapons[CurrentWeaponIndex]->WeaponSocketName);
 	// 			// This is referenced in the abp to change weapon
 	// 			EquippedWeaponCharacter = Weapons[CurrentWeaponIndex]->WeaponType;
 	// 		}
@@ -155,7 +155,7 @@ void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
 		UE_LOG(LogTemp, Display, TEXT("Current Weapon index: %d"), CurrentWeaponIndex);
 		// SwitchWeaponMesh(CurrentWeaponIndex);
 		GunMesh->SetSkeletalMesh(Weapons[CurrentWeaponIndex]->WeaponMesh);
-		GunMesh->AttachToComponent(Mesh1P, FAttachmentTransformRules::SnapToTargetIncludingScale, Weapons[CurrentWeaponIndex]->SocketName);
+		GunMesh->AttachToComponent(Mesh1P, FAttachmentTransformRules::SnapToTargetIncludingScale, Weapons[CurrentWeaponIndex]->WeaponSocketName);
 		EquippedWeaponCharacter = Weapons[CurrentWeaponIndex]->WeaponType;
 	}
 }
@@ -169,7 +169,7 @@ void AZombieGameCharacter::MaxAmmo()
 {
 	for (int i = 0; i < Weapons.Num(); i++)
 	{
-		Weapons[i]->TotalAmmo = Weapons[i]->MaximumAmmo;
+		Weapons[i]->TotalWeaponAmmo = Weapons[i]->MaxWeaponAmmo;
 	}
 }
 
@@ -284,7 +284,7 @@ void AZombieGameCharacter::ZoomOut()
 
 void AZombieGameCharacter::Fire()
 {
-	UE_LOG(LogTemp, Log, TEXT("Current ammo: %d"), Weapons[CurrentWeaponIndex]->CurrentAmmo);
+	UE_LOG(LogTemp, Log, TEXT("Current ammo: %d"), Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo);
 
 	if (IsReloading)
 	{
@@ -294,9 +294,9 @@ void AZombieGameCharacter::Fire()
 	if (IsShooting)
 	{
 		UE_LOG(LogTemp, Log, TEXT("Firing!!"));
-		if (Weapons[CurrentWeaponIndex]->CurrentAmmo > 0 && IsReloading == false)
+		if (Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo > 0 && IsReloading == false)
 		{
-			Weapons[CurrentWeaponIndex]->CurrentAmmo--;
+			Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo--;
 			GunMesh->PlayAnimation(Weapons[CurrentWeaponIndex]->WeaponFireMontage, false);
 
 			// Location and Rotation
@@ -311,7 +311,7 @@ void AZombieGameCharacter::Fire()
 
 			// Spawn the projectile at the muzzle
 			GetWorld()->SpawnActor<AZombieGameProjectile>(Weapons[CurrentWeaponIndex]->ProjectileClass, MuzzleLocation, SpawnRotation, ActorSpawnParams);
-			GetWorld()->GetTimerManager().SetTimer(FireTimerHandle, this, &AZombieGameCharacter::Fire, Weapons[CurrentWeaponIndex]->FireRate, false); // to make the weapon fully auto
+			GetWorld()->GetTimerManager().SetTimer(FireTimerHandle, this, &AZombieGameCharacter::Fire, Weapons[CurrentWeaponIndex]->WeaponFireRate, false); // to make the weapon fully auto
 		}
 		else
 		{
@@ -335,7 +335,7 @@ void AZombieGameCharacter::StopFiring()
 
 void AZombieGameCharacter::StartReload()
 {
-	if (Weapons[CurrentWeaponIndex]->TotalAmmo != 0)
+	if (Weapons[CurrentWeaponIndex]->TotalWeaponAmmo != 0)
 	{
 		float MontageDuration = Weapons[CurrentWeaponIndex]->WeaponReloadMontage->GetPlayLength();
 		float TimerDuration = MontageDuration - 0.2; // Skip the last 0.2second
@@ -352,27 +352,27 @@ void AZombieGameCharacter::StartReload()
 void AZombieGameCharacter::RefillAmmo()
 {
 	UE_LOG(LogTemp, Log, TEXT("Switching Mags!"));
-	if (Weapons[CurrentWeaponIndex]->CurrentAmmo == Weapons[CurrentWeaponIndex]->MaxClipSize || Weapons[CurrentWeaponIndex]->TotalAmmo <= 0)
+	if (Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo == Weapons[CurrentWeaponIndex]->MaxWeaponClipSize || Weapons[CurrentWeaponIndex]->TotalWeaponAmmo <= 0)
 	{
-		// if the currentammo in the weapon is at the max clip size or is less than or the gun has no reserve ammo
+		// if the CurrentWeaponAmmo in the weapon is at the max clip size or is less than or the gun has no reserve ammo
 	}
 	else
 	{
 		// current ammo is the current ammo in the clip
 		// Needed ammo is the ammount of ammo needed to make a full clip
-		int NeededAmmo = Weapons[CurrentWeaponIndex]->MaxClipSize - Weapons[CurrentWeaponIndex]->CurrentAmmo;
-		if (Weapons[CurrentWeaponIndex]->TotalAmmo >= NeededAmmo)
+		int NeededAmmo = Weapons[CurrentWeaponIndex]->MaxWeaponClipSize - Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo;
+		if (Weapons[CurrentWeaponIndex]->TotalWeaponAmmo >= NeededAmmo)
 		{
-			Weapons[CurrentWeaponIndex]->CurrentAmmo = Weapons[CurrentWeaponIndex]->CurrentAmmo + NeededAmmo; // adds the ammo needed for a full clip
-			Weapons[CurrentWeaponIndex]->TotalAmmo = Weapons[CurrentWeaponIndex]->TotalAmmo - NeededAmmo;	  // deducts ammo added to clip
+			Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo = Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo + NeededAmmo; // adds the ammo needed for a full clip
+			Weapons[CurrentWeaponIndex]->TotalWeaponAmmo = Weapons[CurrentWeaponIndex]->TotalWeaponAmmo - NeededAmmo;	  // deducts ammo added to clip
 		}
-		else if (Weapons[CurrentWeaponIndex]->TotalAmmo > 0) // if the ammo amount is less than the needed ammo
+		else if (Weapons[CurrentWeaponIndex]->TotalWeaponAmmo > 0) // if the ammo amount is less than the needed ammo
 		{
-			Weapons[CurrentWeaponIndex]->CurrentAmmo = Weapons[CurrentWeaponIndex]->CurrentAmmo + Weapons[CurrentWeaponIndex]->TotalAmmo;
-			Weapons[CurrentWeaponIndex]->TotalAmmo = 0;
+			Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo = Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo + Weapons[CurrentWeaponIndex]->TotalWeaponAmmo;
+			Weapons[CurrentWeaponIndex]->TotalWeaponAmmo = 0;
 		}
 	}
-	AmmoArray[CurrentWeaponIndex] = Weapons[CurrentWeaponIndex]->TotalAmmo;
+	AmmoArray[CurrentWeaponIndex] = Weapons[CurrentWeaponIndex]->TotalWeaponAmmo;
 	IsReloading = false;
 }
 

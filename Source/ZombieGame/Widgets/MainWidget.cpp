@@ -105,7 +105,7 @@ FText UMainWidget::UpdateAmmunition()
     ABaseWeapon *CurrentWeapon = Character->Weapons[Character->CurrentWeaponIndex];
     if (CurrentWeapon)
     {
-        FString Text = FString::Printf(TEXT("%d/%d"), CurrentWeapon->CurrentAmmo, CurrentWeapon->TotalAmmo);
+        FString Text = FString::Printf(TEXT("%d/%d"), CurrentWeapon->CurrentWeaponAmmo, CurrentWeapon->TotalWeaponAmmo);
         return FText::FromString(Text);
     }
     else

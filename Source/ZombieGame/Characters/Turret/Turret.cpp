@@ -2,15 +2,8 @@
 
 #include "Turret.h"
 #include "Kismet/GameplayStatics.h"
-#include "DrawDebugHelpers.h"
-#include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
-#include "GameFramework/Actor.h"
-// #include "ZombieGameProjectile.h"
 #include "ZombieGame/BuyableItem/Weapons/Projectiles/ZombieGameProjectile.h"
-#include "Kismet/KismetMathLibrary.h"
-
-
 
 // Sets default values
 ATurret::ATurret()
@@ -27,7 +20,6 @@ ATurret::ATurret()
 	TurretFireRate = 2.0f;
 	FireRange = 1000.f;
 	Health = 100.f;
-
 }
 
 // Called when the game starts or when spawned
@@ -36,6 +28,8 @@ void ATurret::BeginPlay()
 	Super::BeginPlay();
 	
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AZombie::StaticClass(), Zombies);
+	
+    FTimerHandle FireRateTimerHandle;
 
 	GetWorldTimerManager().SetTimer(FireRateTimerHandle, this, &ATurret::CheckFireCondition, TurretFireRate, true);
 }
@@ -84,7 +78,6 @@ AZombie* ATurret::GetClosestZombie()
             }
         }
     }
-
     return ClosestZombie;
 }
 

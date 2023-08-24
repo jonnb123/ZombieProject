@@ -3,9 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
-#include "GameFramework/ProjectileMovementComponent.h"
-// #include "Zombie.h"
 #include "ZombieGame/Characters/Zombie/Zombie.h"
 #include "Turret.generated.h"
 
@@ -15,26 +12,13 @@ class ZOMBIEGAME_API ATurret : public AActor
 {
 	GENERATED_BODY()
 	
-public:	
-	// Sets default values for this actor's properties
-	ATurret();
-
 protected:
-	// Called when the game starts or when spawned
+
 	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
+	ATurret();
+
 	virtual void Tick(float DeltaTime) override;
-
-	UFUNCTION(BlueprintCallable)
-	void Fire();
-
-	FHitResult HitResult;
-
-	// maximum range
-	UPROPERTY(EditAnywhere)
-	float MaxBulletRange = 1000;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	TSubclassOf<AActor> ProjectileBlueprint;
@@ -42,17 +26,18 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UStaticMeshComponent* GunMesh;
 
-
-private:
-	void CheckFireCondition();
-	AZombie* GetClosestZombie();
-	AController* Instigator;
-
-private:
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* TurretMesh;
 
+private:
 	
+	void CheckFireCondition();
+	void Fire();
+
+	AZombie* GetClosestZombie();
+
+	TArray<AActor*> Zombies;
+
 	UPROPERTY(EditDefaultsOnly)
 	float TurretFireRate;
 
@@ -61,11 +46,5 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	float Health;
-
-	UPROPERTY()
-	TArray<AActor*> Zombies;
-
-	UPROPERTY()
-	FTimerHandle FireRateTimerHandle;
 
 };

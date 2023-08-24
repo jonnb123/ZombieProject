@@ -14,8 +14,10 @@ UCLASS()
 class ZOMBIEGAME_API UBTTask_Attack : public UBTTask_PlayAnimation
 {
 	GENERATED_BODY()
-	
-public:
+
+protected:
+	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory) override;
+
 	UBTTask_Attack();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
@@ -35,7 +37,4 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Audio")
     USoundCue* FireZombieAttackSound;
-
-protected:
-	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory) override;
 };

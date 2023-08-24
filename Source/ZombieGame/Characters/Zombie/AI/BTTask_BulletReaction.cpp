@@ -2,10 +2,6 @@
 
 #include "BTTask_BulletReaction.h"
 #include "Kismet/GameplayStatics.h"
-#include "ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h"
-#include "ZombieAIController.h"
-#include "ZombieGame/Characters/Zombie/Zombie.h"
-
 
 UBTTask_BulletReaction::UBTTask_BulletReaction() 
 {

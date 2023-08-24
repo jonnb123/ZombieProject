@@ -7,19 +7,19 @@
 #include "AddTurret.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class ZOMBIEGAME_API AAddTurret : public APerkMachine
 {
 	GENERATED_BODY()
 
-public:
+private:
 	void UseBuyableItem() override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Complete")
 	bool TurretComplete = false;
 
+protected: // these variables are set in blueprint
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector SpawnLocation;
 
@@ -27,6 +27,6 @@ public:
 	FRotator SpawnRotation;
 
 	// The class of the turret that will be spawned
-    UPROPERTY(EditAnywhere)
-    TSubclassOf<ATurret> TurretClass;
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<ATurret> TurretClass;
 };

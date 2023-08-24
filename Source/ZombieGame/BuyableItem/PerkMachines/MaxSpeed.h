@@ -13,7 +13,8 @@ UCLASS()
 class ZOMBIEGAME_API AMaxSpeed : public APerkMachine
 {
 	GENERATED_BODY()
-public:
+	
+private:
 	void UseBuyableItem() override;
 
 };

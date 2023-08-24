@@ -14,12 +14,10 @@ class ZOMBIEGAME_API AFullyAuto : public APerkMachine
 {
 	GENERATED_BODY()
 
-public:
+private:
 	void UseBuyableItem() override;
 
-	UFUNCTION(BlueprintCallable)
 	void IncreaseFireRate();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Complete")
 	bool FireRateComplete = false;
 };

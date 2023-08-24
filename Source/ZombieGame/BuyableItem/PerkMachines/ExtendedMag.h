@@ -14,12 +14,10 @@ class ZOMBIEGAME_API AExtendedMag : public APerkMachine
 {
 	GENERATED_BODY()
 	
-public:
+private:
 	void UseBuyableItem() override;
 
-	UFUNCTION(BlueprintCallable)
 	void ExtendMagazine();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Complete")
 	bool ExtendedMagComplete;
 };

@@ -1,9 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "BTTask_ClearBlackboardValue.h"
 #include "BehaviorTree/BlackboardComponent.h"
-
 
 UBTTask_ClearBlackboardValue::UBTTask_ClearBlackboardValue() 
 {
@@ -15,7 +13,6 @@ EBTNodeResult::Type UBTTask_ClearBlackboardValue::ExecuteTask(UBehaviorTreeCompo
     Super::ExecuteTask(OwnerComp, NodeMemory);
 
     OwnerComp.GetBlackboardComponent()->ClearValue(GetSelectedBlackboardKey());
-
 
     return EBTNodeResult::Succeeded;
 }

@@ -14,12 +14,11 @@ class ZOMBIEGAME_API UBTTask_BulletReaction : public UBTTask_MoveTo
 {
 	GENERATED_BODY()
 
-public: 
-	UBTTask_BulletReaction();
-
 protected:
+	
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory) override;
 	
+	UBTTask_BulletReaction();
 
 
 

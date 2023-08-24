@@ -14,6 +14,12 @@ EBTNodeResult::Type UBTTask_Attack::ExecuteTask(UBehaviorTreeComponent &OwnerCom
 {
     Super::ExecuteTask(OwnerComp, NodeMemory);
 
+    // this block gets the Zombie
+    AAIController *AIController{OwnerComp.GetAIOwner()};
+    const APawn *AIPawn{AIController->GetPawn()};
+    ACharacter *AICharacter{AIController->GetCharacter()};
+    AZombie *ZombieCharacter = Cast<AZombie>(AICharacter);
+
     // Set what actors to seek out from its collision channel
     TArray<TEnumAsByte<EObjectTypeQuery>> traceObjectTypes;
     traceObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_Pawn));
@@ -45,12 +51,6 @@ EBTNodeResult::Type UBTTask_Attack::ExecuteTask(UBehaviorTreeComponent &OwnerCom
 
         // gets the PlayerCharacter
         ACharacter *Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-
-        // this block gets the Zombie
-        AAIController *AIController{OwnerComp.GetAIOwner()};
-        const APawn *AIPawn{AIController->GetPawn()};
-        ACharacter *AICharacter{AIController->GetCharacter()};
-        AZombie *ZombieCharacter = Cast<AZombie>(AICharacter);
 
         if (AICharacter->GetName().StartsWith("BP_FireZombie"))
         {

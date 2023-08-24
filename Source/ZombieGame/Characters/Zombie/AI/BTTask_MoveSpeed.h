@@ -14,12 +14,12 @@ class ZOMBIEGAME_API UBTTask_MoveSpeed : public UBTTask_BlackboardBase
 {
 	GENERATED_BODY()
 	
-
-public:
-	UBTTask_MoveSpeed();
+	
 
 
 protected:
+
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory) override;
 
+	UBTTask_MoveSpeed();
 };

@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-// #include "BuyableItem.h"
 #include "ZombieGame/BuyableItem/BuyableItem.h"
 #include "BuyDoor.generated.h"
 
@@ -15,7 +14,7 @@ class ZOMBIEGAME_API ABuyDoor : public ABuyableItem
 {
 	GENERATED_BODY()
 
-public:
+private:
 	ABuyDoor();
 
 	void UseBuyableItem() override;

@@ -13,9 +13,6 @@ UCLASS()
 class ZOMBIEGAME_API UBTTask_MoveSpeed : public UBTTask_BlackboardBase
 {
 	GENERATED_BODY()
-	
-	
-
 
 protected:
 

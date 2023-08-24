@@ -3,12 +3,13 @@
 #include "ZombieAIController.h"
 #include "Kismet/GameplayStatics.h"
 #include "BehaviorTree/BlackboardComponent.h"
-#include "GameFramework/CharacterMovementComponent.h"
-#include "GameFramework/Character.h"
-#include "Runtime/AIModule/Classes/Perception/AISenseConfig_Sight.h"
-#include "ZombieGame/Characters/Zombie/Zombie.h"
 #include "ZombieGame/Characters/Zombie/FireZombieBoss.h"
 #include "ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h"
+
+AZombieAIController::AZombieAIController()
+{
+    AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerceptionComponent"));
+}
 
 void AZombieAIController::BeginPlay()
 {
@@ -24,24 +25,31 @@ void AZombieAIController::BeginPlay()
         RunBehaviorTree(AIBehavior);
 
         APawn *PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-
-        // GetBlackboardComponent()->SetValueAsVector(TEXT("StartLocation"), GetPawn()->GetActorLocation());
     }
+}
+
+// Bound on begin player if there's an AIPerceptionComponent
+void AZombieAIController::EnemyDetected(AActor *Actor, FAIStimulus Stimulus)
+{
+    AZombieGameCharacter *Player = Cast<AZombieGameCharacter>(Actor);
+    if (Player == nullptr)
+        return;
+
+    AZombie *ZombieCharacter = Cast<AZombie>(GetPawn());
 }
 
 void AZombieAIController::Tick(float DeltaSeconds)
 {
     Super::Tick(DeltaSeconds);
 
+    // Casting to different PlayerCharactrer types
     APawn *PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-
-    AZombie *ZombieCharacter = Cast<AZombie>(GetPawn());
-
-    AFireZombieBoss *FireZombieCharacter = Cast<AFireZombieBoss>(GetPawn());
-
     ACharacter *Player = Cast<ACharacter>(PlayerPawn);
-
     AZombieGameCharacter *ZombieGameCharacter = Cast<AZombieGameCharacter>(PlayerPawn);
+
+    // Gets Zombie and Fire Zombie
+    AZombie *ZombieCharacter = Cast<AZombie>(GetPawn());
+    AFireZombieBoss *FireZombieCharacter = Cast<AFireZombieBoss>(GetPawn());
 
     GetBlackboardComponent()->SetValueAsVector(TEXT("HouseLocation"), HouseLocation);
 
@@ -50,7 +58,6 @@ void AZombieAIController::Tick(float DeltaSeconds)
         UE_LOG(LogTemp, Log, TEXT("Name of actor: %s"), *ZombieCharacter->GetName());
         if (ZombieCharacter->GetName().StartsWith("BP_FireZombie")) // if it's a fire boss zombie
         {
-
             UCharacterMovementComponent *FireZombieMovement = Cast<UCharacterMovementComponent>(FireZombieCharacter->GetMovementComponent());
             if (ZombieCharacter->GetZombieHitCheck() == true)
             {
@@ -118,16 +125,4 @@ void AZombieAIController::Tick(float DeltaSeconds)
     }
 }
 
-AZombieAIController::AZombieAIController()
-{
-    AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerceptionComponent"));
-}
 
-void AZombieAIController::EnemyDetected(AActor *Actor, FAIStimulus Stimulus)
-{
-    AZombieGameCharacter *Player = Cast<AZombieGameCharacter>(Actor);
-    if (Player == nullptr)
-        return;
-
-    AZombie *ZombieCharacter = Cast<AZombie>(GetPawn());
-}

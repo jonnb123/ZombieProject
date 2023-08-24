@@ -15,18 +15,12 @@ class ZOMBIEGAME_API AZombieAIController : public AAIController
 {
 	GENERATED_BODY()
 
-public:
+protected:
+	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaSeconds) override;
 
-	
 	AZombieAIController();
-
-	UFUNCTION()
-	void EnemyDetected(AActor* Actor, FAIStimulus Stimulus);
-
-protected:
-	virtual void BeginPlay() override;
 
 	UPROPERTY(VisibleAnywhere, Category="AI", meta=(AllowPrivateAccess="true"))
 	UAIPerceptionComponent* AIPerceptionComponent;
@@ -34,8 +28,8 @@ protected:
 	UPROPERTY(EditAnywhere)
 	FVector HouseLocation;
 
-private:
 	UPROPERTY(EditAnywhere)
 	class UBehaviorTree* AIBehavior;
 
+	void EnemyDetected(AActor* Actor, FAIStimulus Stimulus);
 };

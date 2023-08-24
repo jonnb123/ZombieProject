@@ -10,7 +10,4 @@ AShotgunProjectile::AShotgunProjectile()
     ArmDamage = 20;
 }
 
-void AShotgunProjectile::OnHit(UPrimitiveComponent *HitComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit)
-{
-    Destroy();
-}
+

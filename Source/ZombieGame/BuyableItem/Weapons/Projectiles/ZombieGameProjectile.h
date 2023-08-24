@@ -3,9 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
 #include "Components/BoxComponent.h"
-
 #include "ZombieGameProjectile.generated.h"
 
 class USphereComponent;
@@ -16,34 +14,11 @@ class AZombieGameProjectile : public AActor
 {
 	GENERATED_BODY()
 
-	/** Sphere collision component */
-	// UPROPERTY(VisibleDefaultsOnly, Category = Projectile)
-	// USphereComponent *CollisionComp;
-
-	UPROPERTY(VisibleDefaultsOnly, Category = Projectile)
-	UBoxComponent *CollisionComponent;
-
-	/** Projectile movement component */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
-	UProjectileMovementComponent *ProjectileMovement;
-
 public:
-	AZombieGameProjectile();
-
-	/** called when projectile hits something */
-	UFUNCTION()
-	virtual void OnHit(UPrimitiveComponent *HitComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit);
-
-	// /** Returns CollisionComp subobject **/
-	// USphereComponent *GetCollisionComp() const { return CollisionComp; }
-	/** Returns CollisionComp subobject **/
-	UBoxComponent *GetCollisionComp() const { return CollisionComponent; }
-	/** Returns ProjectileMovement subobject **/
+	// Public getter because turret also uses this projectile class
 	UProjectileMovementComponent *GetProjectileMovement() const { return ProjectileMovement; }
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	class USphereComponent *ProjectileCollision;
-
+	// Need to be accessed in Zombie.cpp
 	UPROPERTY(EditAnywhere, Category = "Damage")
 	float HeadDamage;
 
@@ -55,6 +30,22 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Damage")
 	float LegDamage;
+
+protected:
+	AZombieGameProjectile();
+
+	/** called when projectile hits something */
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent *HitComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit);
+
+
+private:
+	UPROPERTY(VisibleDefaultsOnly, Category = Projectile)
+	UBoxComponent *CollisionComponent;
+
+	/** Projectile movement component */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
+	UProjectileMovementComponent *ProjectileMovement;
 
 
 };

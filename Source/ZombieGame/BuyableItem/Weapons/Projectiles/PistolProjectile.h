@@ -17,6 +17,4 @@ class ZOMBIEGAME_API APistolProjectile : public AZombieGameProjectile
 public:
 	APistolProjectile();
 
-	void OnHit(UPrimitiveComponent *HitComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit) override;
-
 };

@@ -2,17 +2,11 @@
 
 #include "ZombieGameProjectile.h"
 #include "GameFramework/ProjectileMovementComponent.h"
-#include "Components/SphereComponent.h"
-// #include "Zombie.h"
-#include "ZombieGame/Characters/Zombie/Zombie.h"
-#include "Kismet/GameplayStatics.h"
-#include "ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h"
 
 AZombieGameProjectile::AZombieGameProjectile()
 {
 	// Use a sphere as a simple collision representation
 	CollisionComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxComp"));
-	// CollisionComp->InitSphereRadius(5.0f);
 	CollisionComponent->InitBoxExtent(FVector(4.5f, 4.5f, 4.5f));
 	CollisionComponent->BodyInstance.SetCollisionProfileName("Projectile");
 	CollisionComponent->SetCollisionObjectType(ECC_WorldDynamic);
@@ -33,14 +27,11 @@ AZombieGameProjectile::AZombieGameProjectile()
 	ProjectileMovement->bRotationFollowsVelocity = true;
 	ProjectileMovement->bShouldBounce = true;
 
-
 	// Die after 3 seconds by default
 	InitialLifeSpan = 3.0f;
 }
 
 void AZombieGameProjectile::OnHit(UPrimitiveComponent *HitComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit)
 {
-	// ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-	// AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
-	// Destroy();
+	Destroy();
 }

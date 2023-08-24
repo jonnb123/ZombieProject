@@ -11,8 +11,3 @@ AARProjectile::AARProjectile()
     LegDamage = 10;
     ArmDamage = 10;
 }
-
-void AARProjectile::OnHit(UPrimitiveComponent *HitComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit)
-{
-    Destroy();
-}

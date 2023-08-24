@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "AIController.h"
-// #include "Perception/PawnSensingComponent.h"
 #include "ZombieAIController.generated.h"
 
 /**

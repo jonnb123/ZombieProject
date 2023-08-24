@@ -6,9 +6,8 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Character.h"
 #include "Runtime/AIModule/Classes/Perception/AISenseConfig_Sight.h"
-#include "Zombie.h"
-#include "FireZombieBoss.h"
-// #include "ZombieGameCharacter.h"
+#include "ZombieGame/Characters/Zombie/Zombie.h"
+#include "ZombieGame/Characters/Zombie/FireZombieBoss.h"
 #include "ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h"
 
 void AZombieAIController::BeginPlay()

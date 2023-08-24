@@ -183,35 +183,6 @@ void AZombie::HandleBodyPartOverlap(float Damage, float &LimbHealth, const FName
 	}
 }
 
-// void AZombie::OnHeadBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
-// 									int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
-// {
-// 	AZombieGameProjectile *Projectile = Cast<AZombieGameProjectile>(OtherActor);
-// 	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-// 	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
-// 	if (Projectile)
-// 	{
-// 		FHitResult Hit;
-// 		FPointDamageEvent DamageEvent(Projectile->HeadDamage, Hit, FVector::ZeroVector, nullptr);
-// 		TakeDamage(Projectile->HeadDamage, DamageEvent, GetInstigatorController(), this);
-// 		HeadHealth -= Projectile->HeadDamage;
-// 		Character->SetPoints(Character->GetPoints() + 50);
-// 		// Get the location of the detached head bone
-// 		FVector DetachedHeadLocation = GetMesh()->GetSocketLocation(TEXT("head"));
-// 		if (HeadHealth <= 0)
-// 		{
-// 			UNiagaraFunctionLibrary::SpawnSystemAtLocation(
-// 				GetWorld(),
-// 				ExplodeFX,
-// 				DetachedHeadLocation, // Use the location of the detached head bone
-// 				FRotator::ZeroRotator // You can adjust the rotation as needed
-// 			);
-// 			GetMesh()->HideBoneByName(TEXT("head"), PBO_None);
-// 			HeadBoxCollisionComponent->DestroyComponent();
-// 		}
-// 	}
-// }
-
 // Called to bind functionality to input
 void AZombie::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
 {

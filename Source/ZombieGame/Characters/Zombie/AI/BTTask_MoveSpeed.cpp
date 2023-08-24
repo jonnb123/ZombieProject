@@ -4,7 +4,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "AIController.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "Zombie.h"
+#include "ZombieGame/Characters/Zombie/Zombie.h"
 #include "NavigationSystem.h"
 
 UBTTask_MoveSpeed::UBTTask_MoveSpeed()

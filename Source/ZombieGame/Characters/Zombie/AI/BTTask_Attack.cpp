@@ -3,10 +3,9 @@
 #include "BTTask_Attack.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "AIController.h"
-#include "Zombie.h"
+#include "ZombieGame/Characters/Zombie/Zombie.h"
 #include "NavigationSystem.h"
 #include "Kismet\KismetSystemLibrary.h"
-// #include "ZombieGameCharacter.h"
 #include "ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h"
 #include "Kismet/GameplayStatics.h"
 

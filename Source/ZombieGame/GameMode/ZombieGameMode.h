@@ -27,7 +27,6 @@ public:
 	// This function is used in Zombie.cpp, so is kept public
 	void HandleZombieCountAndRound();
 
-
 protected:
 	virtual void BeginPlay() override;
 

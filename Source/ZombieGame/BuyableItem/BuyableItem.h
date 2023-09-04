@@ -15,6 +15,7 @@ public:
 	// Used in ZombieGameCharacter.cpp, implementation of function in child classes
 	virtual void UseBuyableItem();
 
+
 	// Used in MainWidget.cpp
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Name")
 	FString Name;

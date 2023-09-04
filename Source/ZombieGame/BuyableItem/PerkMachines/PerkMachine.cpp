@@ -52,3 +52,8 @@ void APerkMachine::PlayConsumeAnimationSecondHalf()
 	Character->GetAnimationCameraComponent()->SetActive(false);
 	Character->GetMesh1P()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 }
+
+void APerkMachine::UseBuyableItem()
+{
+	
+}

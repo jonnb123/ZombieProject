@@ -100,28 +100,39 @@ void AZombieGameCharacter::HandleCharacterDeath()
 
 void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
 {
-	GetWorldTimerManager().ClearTimer(ReloadTimerHandle); // if the user switches weapon whilst reloading, the reload animation will not carry over to the next weapon.
-	IsReloading = false;
-	bool Success = false;
-
-	for (int i = 0; i < Weapons.Num(); i++)
+	if (ChangeCharacterState(ECharacterState::SwappingWeapon))
 	{
-		if (i > CurrentWeaponIndex)
+		GetWorldTimerManager().ClearTimer(ReloadTimerHandle); // if the user switches weapon whilst reloading, the reload animation will not carry over to the next weapon.
+		bool Success = false;
+
+		for (int i = 0; i < Weapons.Num(); i++)
 		{
-			if (Weapons[i]->IsObtained)
+			if (i > CurrentWeaponIndex)
 			{
-				IsSwappingWeapon = true;
-				GetWorldTimerManager().SetTimer(WeaponSwapTimerHandle, this, &AZombieGameCharacter::WeaponSwapAfterDelay, WeaponSwapDelay, false);
-				Success = true;
-				CurrentWeaponIndex = i;
-				UE_LOG(LogTemp, Display, TEXT("Current Weapon index: %d"), CurrentWeaponIndex);
-				GunMesh->SetSkeletalMesh(Weapons[CurrentWeaponIndex]->WeaponMesh);
-				// Attach GunMesh to the new socket
-				GunMesh->AttachToComponent(Mesh1P, FAttachmentTransformRules::SnapToTargetIncludingScale, Weapons[CurrentWeaponIndex]->WeaponSocketName);
-				// This is referenced in the abp to change weapon
-				EquippedWeaponCharacter = Weapons[CurrentWeaponIndex]->WeaponType;
+				if (Weapons[i]->IsObtained)
+				{
+					GetWorldTimerManager().SetTimer(WeaponSwapTimerHandle, this, &AZombieGameCharacter::WeaponSwapAfterDelay, WeaponSwapDelay, false);
+					Success = true;
+					CurrentWeaponIndex = i;
+					UE_LOG(LogTemp, Display, TEXT("Current Weapon index: %d"), CurrentWeaponIndex);
+					GunMesh->SetSkeletalMesh(Weapons[CurrentWeaponIndex]->WeaponMesh);
+					// Attach GunMesh to the new socket
+					GunMesh->AttachToComponent(Mesh1P, FAttachmentTransformRules::SnapToTargetIncludingScale, Weapons[CurrentWeaponIndex]->WeaponSocketName);
+					// This is referenced in the abp to change weapon
+					EquippedWeaponCharacter = Weapons[CurrentWeaponIndex]->WeaponType;
+				}
+				break; // breaks out of the for loop
 			}
-			break; // breaks out of the for loop
+		}
+
+		if (!Success) // for the pistol
+		{
+			CurrentWeaponIndex = 0;
+			UE_LOG(LogTemp, Display, TEXT("Current Weapon index: %d"), CurrentWeaponIndex);
+			ChangeCharacterState(ECharacterState::Idle);
+			GunMesh->SetSkeletalMesh(Weapons[CurrentWeaponIndex]->WeaponMesh);
+			GunMesh->AttachToComponent(Mesh1P, FAttachmentTransformRules::SnapToTargetIncludingScale, Weapons[CurrentWeaponIndex]->WeaponSocketName);
+			EquippedWeaponCharacter = Weapons[CurrentWeaponIndex]->WeaponType;
 		}
 	}
 
@@ -148,21 +159,11 @@ void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
 	// 		break; // breaks out of the for loop
 	// 	}
 	// }
-
-	if (!Success) // for the pistol
-	{
-		CurrentWeaponIndex = 0;
-		UE_LOG(LogTemp, Display, TEXT("Current Weapon index: %d"), CurrentWeaponIndex);
-		// SwitchWeaponMesh(CurrentWeaponIndex);
-		GunMesh->SetSkeletalMesh(Weapons[CurrentWeaponIndex]->WeaponMesh);
-		GunMesh->AttachToComponent(Mesh1P, FAttachmentTransformRules::SnapToTargetIncludingScale, Weapons[CurrentWeaponIndex]->WeaponSocketName);
-		EquippedWeaponCharacter = Weapons[CurrentWeaponIndex]->WeaponType;
-	}
 }
 
 void AZombieGameCharacter::WeaponSwapAfterDelay()
 {
-	IsSwappingWeapon = false;
+	ChangeCharacterState(ECharacterState::Idle);
 }
 
 void AZombieGameCharacter::MaxAmmo()
@@ -175,8 +176,6 @@ void AZombieGameCharacter::MaxAmmo()
 
 void AZombieGameCharacter::OnInteractingPressed()
 {
-	// check(OverlappingBuyableItem != nullptr);
-	// OverlappingBuyableItem->UseBuyableItem();
 	if (OverlappingBuyableItem)
 	{
 		OverlappingBuyableItem->UseBuyableItem();
@@ -254,31 +253,35 @@ void AZombieGameCharacter::LookUpAtRate(float Rate)
 
 void AZombieGameCharacter::ZoomIn()
 {
-	MainWidgetInstance->RemoveFromParent();
-	IsAiming = true;
+	if (ChangeCharacterState(ECharacterState::Aiming))
+	{
+		MainWidgetInstance->RemoveFromParent();
 
-	if (HasMaxSpeed == true)
-	{
-		GetCharacterMovement()->MaxWalkSpeed = 400.0f;
-	}
-	else
-	{
-		GetCharacterMovement()->MaxWalkSpeed = 200.f;
+		if (HasMaxSpeed)
+		{
+			GetCharacterMovement()->MaxWalkSpeed = 400.0f;
+		}
+		else
+		{
+			GetCharacterMovement()->MaxWalkSpeed = 200.f;
+		}
 	}
 }
 
 void AZombieGameCharacter::ZoomOut()
 {
-	MainWidgetInstance->AddToViewport();
-	IsAiming = false;
+	if (ChangeCharacterState(ECharacterState::Idle))
+	{
+		MainWidgetInstance->AddToViewport();
 
-	if (HasMaxSpeed == true)
-	{
-		this->GetCharacterMovement()->MaxWalkSpeed = 1200.0f;
-	}
-	else
-	{
-		this->GetCharacterMovement()->MaxWalkSpeed = 600.0f;
+		if (HasMaxSpeed)
+		{
+			GetCharacterMovement()->MaxWalkSpeed = 1200.0f;
+		}
+		else
+		{
+			GetCharacterMovement()->MaxWalkSpeed = 600.0f;
+		}
 	}
 }
 
@@ -286,66 +289,78 @@ void AZombieGameCharacter::Fire()
 {
 	UE_LOG(LogTemp, Log, TEXT("Current ammo: %d"), Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo);
 
-	if (IsReloading)
+	if (Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo > 0)
 	{
-		UE_LOG(LogTemp, Log, TEXT("Reloading!!")); // to check if the player tries to fire whilst reloading
+		Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo--;
+		GunMesh->PlayAnimation(Weapons[CurrentWeaponIndex]->WeaponFireMontage, false);
+
+		// Location and Rotation
+		APlayerController *PlayerController = Cast<APlayerController>(GetController());
+		const FRotator SpawnRotation = PlayerController->PlayerCameraManager->GetCameraRotation();
+		// Added a fire socket where the bullet will come from
+		FVector MuzzleLocation = GunMesh->GetSocketLocation(TEXT("FireSocket"));
+
+		// Set Spawn Collision
+		FActorSpawnParameters ActorSpawnParams;
+		ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
+
+		// Spawn the projectile at the muzzle
+		GetWorld()->SpawnActor<AZombieGameProjectile>(Weapons[CurrentWeaponIndex]->ProjectileClass, MuzzleLocation, SpawnRotation, ActorSpawnParams);
+		GetWorld()->GetTimerManager().SetTimer(FireTimerHandle, this, &AZombieGameCharacter::Fire, Weapons[CurrentWeaponIndex]->WeaponFireRate, false); // to make the weapon fully auto
 	}
-
-	if (IsShooting)
+	else
 	{
-		UE_LOG(LogTemp, Log, TEXT("Firing!!"));
-		if (Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo > 0 && IsReloading == false)
-		{
-			Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo--;
-			GunMesh->PlayAnimation(Weapons[CurrentWeaponIndex]->WeaponFireMontage, false);
-
-			// Location and Rotation
-			APlayerController *PlayerController = Cast<APlayerController>(GetController());
-			const FRotator SpawnRotation = PlayerController->PlayerCameraManager->GetCameraRotation();
-			// Added a fire socket where the bullet will come from
-			FVector MuzzleLocation = GunMesh->GetSocketLocation(TEXT("FireSocket"));
-
-			// Set Spawn Collision
-			FActorSpawnParameters ActorSpawnParams;
-			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
-
-			// Spawn the projectile at the muzzle
-			GetWorld()->SpawnActor<AZombieGameProjectile>(Weapons[CurrentWeaponIndex]->ProjectileClass, MuzzleLocation, SpawnRotation, ActorSpawnParams);
-			GetWorld()->GetTimerManager().SetTimer(FireTimerHandle, this, &AZombieGameCharacter::Fire, Weapons[CurrentWeaponIndex]->WeaponFireRate, false); // to make the weapon fully auto
-		}
-		else
-		{
-			// if we don't have any ammo in the gun, make a click noise
-			UGameplayStatics::PlaySoundAtLocation(this, OutOfAmmoSound, this->GetActorLocation());
-		}
+		// if we don't have any ammo in the gun, make a click noise
+		UGameplayStatics::PlaySoundAtLocation(this, OutOfAmmoSound, this->GetActorLocation());
 	}
 }
 
-void AZombieGameCharacter::StartFiring()
+void AZombieGameCharacter::StartFiring() // rename
 {
-	IsShooting = true;
-	Fire();
+	if (ChangeCharacterState(ECharacterState::AimFiring))
+	{
+	}
+	else if (ChangeCharacterState(ECharacterState::Firing))
+	{
+
+	}
+
 }
 
 void AZombieGameCharacter::StopFiring()
 {
-	IsShooting = false;
-	FireTimerHandle.Invalidate();
+	if (CurrentState == ECharacterState::Reloading)
+	{
+		GetWorldTimerManager().ClearTimer(FireTimerHandle);
+	}
+
+	else if (ChangeCharacterState(ECharacterState::Aiming))
+	{
+		GetWorldTimerManager().ClearTimer(FireTimerHandle);
+	}
+
+	else if (ChangeCharacterState(ECharacterState::Idle))
+	{
+		GetWorldTimerManager().ClearTimer(FireTimerHandle);
+	}
 }
 
 void AZombieGameCharacter::StartReload()
 {
-	if (Weapons[CurrentWeaponIndex]->TotalWeaponAmmo != 0)
+	if (Weapons[CurrentWeaponIndex]->TotalWeaponAmmo != 0 && Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo != Weapons[CurrentWeaponIndex]->MaxWeaponClipSize)
 	{
-		float MontageDuration = Weapons[CurrentWeaponIndex]->WeaponReloadMontage->GetPlayLength();
-		float TimerDuration = MontageDuration - 0.2; // Skip the last 0.2second
-		GunMesh->PlayAnimation(Weapons[CurrentWeaponIndex]->WeaponReloadMontage, false);
-		IsReloading = true;
-		// A delegate is created and is binded to the member function.
-		FTimerDelegate TimerDelegate;
-		TimerDelegate.BindUObject(this, &AZombieGameCharacter::RefillAmmo);
-		// this basically plays the ReloadCalcAndPlayAnimations once the animation is complete.
-		GetWorldTimerManager().SetTimer(ReloadTimerHandle, TimerDelegate, TimerDuration, false);
+		if (ChangeCharacterState(ECharacterState::Reloading))
+		{
+
+			float MontageDuration = Weapons[CurrentWeaponIndex]->WeaponReloadMontage->GetPlayLength();
+			float TimerDuration = MontageDuration - 0.2; // Skip the last 0.2second
+			GunMesh->PlayAnimation(Weapons[CurrentWeaponIndex]->WeaponReloadMontage, false);
+			// A delegate is created and is binded to the member function.
+			FTimerDelegate TimerDelegate;
+			TimerDelegate.BindUObject(this, &AZombieGameCharacter::RefillAmmo);
+			// this basically plays the ReloadCalcAndPlayAnimations once the animation is complete.
+			GetWorldTimerManager().SetTimer(ReloadTimerHandle, TimerDelegate, TimerDuration, false);
+		}
 	}
 }
 
@@ -373,7 +388,7 @@ void AZombieGameCharacter::RefillAmmo()
 		}
 	}
 	AmmoArray[CurrentWeaponIndex] = Weapons[CurrentWeaponIndex]->TotalWeaponAmmo;
-	IsReloading = false;
+	ChangeCharacterState(ECharacterState::Idle);
 }
 
 void AZombieGameCharacter::RegenerateHealth()
@@ -392,6 +407,61 @@ void AZombieGameCharacter::RegenerateHealth()
 		MainWidgetInstance->HideBloodEffect();
 	}
 }
+
+bool AZombieGameCharacter::ChangeCharacterState(ECharacterState NewState)
+{
+	bool CanChange = false; // replace with an if
+
+	switch (NewState)
+	{
+	case ECharacterState::Idle:
+		CanChange = true; // Allow transitioning to Idle state from any state
+		break;
+	case ECharacterState::Firing:
+		CanChange = ((CurrentState == ECharacterState::Idle || CurrentState == ECharacterState::Aiming) && (CurrentState != ECharacterState::Reloading));
+		Fire();
+		break;
+	case ECharacterState::SwappingWeapon:
+		CanChange = true;
+		break;
+	case ECharacterState::Aiming:
+		CanChange = (CurrentState == ECharacterState::Idle || CurrentState == ECharacterState::AimFiring);
+		break;
+	case ECharacterState::AimFiring:
+		CanChange = (CurrentState == ECharacterState::Aiming);
+		Fire();
+		break;
+	case ECharacterState::Reloading:
+		CanChange = (CurrentState != ECharacterState::Reloading);
+		break;
+	}
+
+	if (CanChange)
+	{
+		CurrentState = NewState;
+	}
+
+	return CanChange;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // 							if (TempSurface == SurfaceType1) // for headshots on zombie
 // 							{

@@ -14,6 +14,20 @@ class USoundBase;
 class UNiagaraSystem;
 class UMaterialInterface;
 
+// careful changing the ordering, as abp relies on the int of the enum
+UENUM(BlueprintType)
+enum class ECharacterState : uint8
+{
+	Idle,
+	SwappingWeapon,
+	Aiming,
+	Firing,
+	Reloading,
+	AimFiring
+};
+
+// add a change state function
+
 UCLASS(config = Game)
 class AZombieGameCharacter : public ACharacter
 {
@@ -94,17 +108,24 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	EWeaponType EquippedWeaponCharacter; // left in protected as it's used in the abp
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Boolean)
-	bool IsSwappingWeapon = false; // left in protected as it's used in abp
+	// This variable tracks the players current state
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State")
+	ECharacterState CurrentState = ECharacterState::Idle;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Boolean)
-	bool IsAiming = false; // left in protected as it's used in the abp
+	UFUNCTION(BlueprintCallable, Category = "State")
+    bool ChangeCharacterState(ECharacterState NewState);
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Boolean)
-	bool IsShooting = false; // left in protected as it's used in the abp
+	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Boolean)
+	// bool IsReloading = false; // left in protected as it's used in the abp
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Boolean)
-	bool IsReloading = false; // left in protected as it's used in the abp
+	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Boolean)
+	// bool IsShooting = false; // left in protected as it's used in the abp
+
+	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Boolean)
+	// bool IsAiming = false; // left in protected as it's used in the abp
+
+	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Boolean)
+	// bool IsSwappingWeapon = false; // left in protected as it's used in the abp
 
 	// variable needs to be changed in maxspeed class use a setter
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Boolean)
@@ -142,7 +163,7 @@ private:
 
 	void StopFiring();
 
-	// starts timer, if completed will call 
+	// starts timer, if completed will call
 	void StartReload();
 
 	void RefillAmmo(); // This is called after the reloadmontage is over inside StartReload

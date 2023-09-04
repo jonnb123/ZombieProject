@@ -35,4 +35,6 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void PlayConsumeAnimationSecondHalf();
 
+	virtual void UseBuyableItem() override;
+
 };

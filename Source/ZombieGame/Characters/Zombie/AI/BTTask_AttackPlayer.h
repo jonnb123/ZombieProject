@@ -3,28 +3,37 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "BehaviorTree/Tasks/BTTask_BlackboardBase.h"
 #include "BehaviorTree/Tasks/BTTask_PlayAnimation.h"
 #include "Sound/SoundCue.h"
-#include "BTTask_Attack.generated.h"
+#include "AttackNotify.h"
+#include "BTTask_AttackPlayer.generated.h"
 
 /**
- * 
+ *
  */
+
+
 UCLASS()
-class ZOMBIEGAME_API UBTTask_Attack : public UBTTask_PlayAnimation
+class ZOMBIEGAME_API UBTTask_AttackPlayer : public UBTTask_BlackboardBase
 {
 	GENERATED_BODY()
 
 protected:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory) override;
 
-	UBTTask_Attack();
+	UFUNCTION()
+	void AttackFinished();
+
+    FKFOnAttackEnd OnAttackEnd;
+
+	UBTTask_AttackPlayer();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-	class UAnimMontage* AttackMontage;
+	class UAnimMontage *AttackMontage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-	class UAnimMontage* CrawlAttackMontage;
+	class UAnimMontage *CrawlAttackMontage;
 
 	UPROPERTY(EditAnywhere)
 	float MeleeDamage = 10;
@@ -32,9 +41,12 @@ protected:
 	UPROPERTY(EditAnywhere)
 	float FireMeleeDamage = 20;
 
-	UPROPERTY(EditAnywhere, Category = "Audio")
-    USoundCue* ZombieAttackSound;
+	UPROPERTY(EditAnywhere)
+	bool FinishedAttack = false;
 
 	UPROPERTY(EditAnywhere, Category = "Audio")
-    USoundCue* FireZombieAttackSound;
+	USoundCue *ZombieAttackSound;
+
+	UPROPERTY(EditAnywhere, Category = "Audio")
+	USoundCue *FireZombieAttackSound;
 };

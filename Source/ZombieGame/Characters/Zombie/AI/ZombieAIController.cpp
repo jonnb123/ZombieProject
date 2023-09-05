@@ -28,7 +28,7 @@ void AZombieAIController::BeginPlay()
     }
 }
 
-// Bound on begin player if there's an AIPerceptionComponent
+// Bound on begin play if there's an AIPerceptionComponent
 void AZombieAIController::EnemyDetected(AActor *Actor, FAIStimulus Stimulus)
 {
     AZombieGameCharacter *Player = Cast<AZombieGameCharacter>(Actor);

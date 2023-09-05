@@ -319,10 +319,11 @@ void AZombieGameCharacter::StartFiring() // rename
 {
 	if (ChangeCharacterState(ECharacterState::AimFiring))
 	{
+		Fire();
 	}
 	else if (ChangeCharacterState(ECharacterState::Firing))
 	{
-
+		Fire();
 	}
 
 }
@@ -419,7 +420,6 @@ bool AZombieGameCharacter::ChangeCharacterState(ECharacterState NewState)
 		break;
 	case ECharacterState::Firing:
 		CanChange = ((CurrentState == ECharacterState::Idle || CurrentState == ECharacterState::Aiming) && (CurrentState != ECharacterState::Reloading));
-		Fire();
 		break;
 	case ECharacterState::SwappingWeapon:
 		CanChange = true;
@@ -429,7 +429,6 @@ bool AZombieGameCharacter::ChangeCharacterState(ECharacterState NewState)
 		break;
 	case ECharacterState::AimFiring:
 		CanChange = (CurrentState == ECharacterState::Aiming);
-		Fire();
 		break;
 	case ECharacterState::Reloading:
 		CanChange = (CurrentState != ECharacterState::Reloading);

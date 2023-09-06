@@ -7,6 +7,5 @@
 void UAttackNotify::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
 {
     GEngine->AddOnScreenDebugMessage(-1,4.5f, FColor::Magenta, __FUNCTION__);
-    
-    OnAttackEnd.Broadcast();
+    AttackEnd.Broadcast();
 }

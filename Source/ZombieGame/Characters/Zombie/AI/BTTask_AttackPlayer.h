@@ -22,12 +22,13 @@ class ZOMBIEGAME_API UBTTask_AttackPlayer : public UBTTask_BlackboardBase
 protected:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory) override;
 
-	UFUNCTION()
-	void AttackFinished();
-
-    FKFOnAttackEnd OnAttackEnd;
-
 	UBTTask_AttackPlayer();
+
+	UFUNCTION()
+	void OnAttackEnd();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	class UAttackNotify* AttackNotify;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	class UAnimMontage *AttackMontage;
@@ -40,9 +41,6 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	float FireMeleeDamage = 20;
-
-	UPROPERTY(EditAnywhere)
-	bool FinishedAttack = false;
 
 	UPROPERTY(EditAnywhere, Category = "Audio")
 	USoundCue *ZombieAttackSound;

@@ -8,13 +8,29 @@
 UBTTask_AttackPlayer::UBTTask_AttackPlayer()
 {
     NodeName = TEXT("Attack player");
-   
+
+    AttackNotify = NewObject<UAttackNotify>(this, TEXT("AttackNotify"));
+    AttackNotify->AttackEnd.AddDynamic(this, &UBTTask_AttackPlayer::OnAttackEnd);
+
+    if (AttackNotify->AttackEnd.IsBound())
+    {
+        UE_LOG(LogTemp, Log, TEXT("AttackEnd delegate is bound."));
+    }
+    else
+    {
+        UE_LOG(LogTemp, Log, TEXT("AttackEnd delegate is not bound."));
+    }
+}
+
+void UBTTask_AttackPlayer::OnAttackEnd()
+{
+    GEngine->AddOnScreenDebugMessage(-1, 4.5f, FColor::Blue, "Attack Ended!!");
+    UE_LOG(LogTemp, Warning, TEXT("HELLOOOO"));
 }
 
 EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory)
 {
     Super::ExecuteTask(OwnerComp, NodeMemory);
-    FinishedAttack = false;
 
     // this block gets the Zombie
     AAIController *AIController{OwnerComp.GetAIOwner()};
@@ -47,14 +63,19 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
             AICharacter->PlayAnimMontage(CrawlAttackMontage);
         }
         UGameplayStatics::PlaySoundAtLocation(GetWorld(), ZombieAttackSound, AICharacter->GetActorLocation());
-        OnAttackEnd.AddDynamic(this, &UBTTask_AttackPlayer::AttackFinished);
 
         // Player->TakeDamage(MeleeDamage, DamageEvent, AIController, AICharacter); // this is where the TakeDamage function from the ZombieGameCharacter is called.
     }
-    return EBTNodeResult::Succeeded;
+    // return EBTNodeResult::Succeeded;
+    return EBTNodeResult::InProgress;
 }
 
-void UBTTask_AttackPlayer::AttackFinished()
-{
-    UE_LOG(LogTemp, Warning, TEXT("HELLO FINISHED NOW"));
-}
+
+ // TArray<AActor *> FoundNotifies;
+    // UGameplayStatics::GetAllActorsOfClass(GetWorld(), UAttackNotify::StaticClass(), FoundNotifies);
+
+    // for (int i = 0; i < FoundNotifies.Num(); i++)
+    // {
+    //     UAttackNotify* TempNotify = Cast<UAttackNotify>(FoundNotifies[i]);
+    //     TempNotify->AttackEnd.AddDynamic(this, &UBTTask_AttackPlayer::OnAttackEnd);
+    // }

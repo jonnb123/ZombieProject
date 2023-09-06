@@ -20,7 +20,5 @@ class ZOMBIEGAME_API UAttackNotify : public UAnimNotify
 public:
 	virtual void Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) override;
 	
-	UPROPERTY(BlueprintAssignable)
-	FKFOnAttackEnd OnAttackEnd;
-
+	FKFOnAttackEnd AttackEnd;
 };

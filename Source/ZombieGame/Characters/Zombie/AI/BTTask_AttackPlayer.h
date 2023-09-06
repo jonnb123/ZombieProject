@@ -6,7 +6,6 @@
 #include "BehaviorTree/Tasks/BTTask_BlackboardBase.h"
 #include "BehaviorTree/Tasks/BTTask_PlayAnimation.h"
 #include "Sound/SoundCue.h"
-#include "AttackNotify.h"
 #include "BTTask_AttackPlayer.generated.h"
 
 /**
@@ -24,11 +23,11 @@ protected:
 
 	UBTTask_AttackPlayer();
 
+	// This breaks the zombie out of the attack node
 	UFUNCTION()
-	void OnAttackEnd();
+	void OnAttackEnd(UAnimMontage* Montage, bool bInterrupted);
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-	class UAttackNotify* AttackNotify;
+	UBehaviorTreeComponent* CachedOwnerComp; // Member variable to store OwnerComp
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	class UAnimMontage *AttackMontage;
@@ -38,6 +37,9 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	float MeleeDamage = 10;
+
+	UPROPERTY(EditAnywhere)
+	bool bAttackEnd = false;
 
 	UPROPERTY(EditAnywhere)
 	float FireMeleeDamage = 20;

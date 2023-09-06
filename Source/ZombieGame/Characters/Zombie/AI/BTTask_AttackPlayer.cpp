@@ -2,35 +2,25 @@
 #include "ZombieGame/Characters/Zombie/AI/BTTask_AttackPlayer.h"
 #include "AIController.h"
 #include "ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h"
-#include "AttackNotify.h"
 #include "Kismet/GameplayStatics.h"
 
 UBTTask_AttackPlayer::UBTTask_AttackPlayer()
 {
     NodeName = TEXT("Attack player");
-
-    AttackNotify = NewObject<UAttackNotify>(this, TEXT("AttackNotify"));
-    AttackNotify->AttackEnd.AddDynamic(this, &UBTTask_AttackPlayer::OnAttackEnd);
-
-    if (AttackNotify->AttackEnd.IsBound())
-    {
-        UE_LOG(LogTemp, Log, TEXT("AttackEnd delegate is bound."));
-    }
-    else
-    {
-        UE_LOG(LogTemp, Log, TEXT("AttackEnd delegate is not bound."));
-    }
 }
 
-void UBTTask_AttackPlayer::OnAttackEnd()
+void UBTTask_AttackPlayer::OnAttackEnd(UAnimMontage *Montage, bool bInterrupted)
 {
     GEngine->AddOnScreenDebugMessage(-1, 4.5f, FColor::Blue, "Attack Ended!!");
-    UE_LOG(LogTemp, Warning, TEXT("HELLOOOO"));
+    FinishLatentTask(*CachedOwnerComp, EBTNodeResult::Succeeded);
 }
 
 EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory)
 {
     Super::ExecuteTask(OwnerComp, NodeMemory);
+
+    // Stores a reference for OwnerComp for use in OnAttackEnd
+    CachedOwnerComp = &OwnerComp;
 
     // this block gets the Zombie
     AAIController *AIController{OwnerComp.GetAIOwner()};
@@ -41,6 +31,14 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
     // gets the character
     ACharacter *Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 
+    // Gets the Animation Instance and if it has ended play OnAttackEnd
+    UAnimInstance *AnimInstance = AICharacter->GetMesh()->GetAnimInstance();
+    if (AnimInstance)
+    {
+        // Bind a delegate function to the OnMontageEnded event
+        AnimInstance->OnMontageEnded.AddDynamic(this, &UBTTask_AttackPlayer::OnAttackEnd);
+    }
+
     UE_LOG(LogTemp, Log, TEXT("Damaging..."));
     UE_LOG(LogTemp, Log, TEXT("Name of actor: %s"), *AICharacter->GetName());
 
@@ -50,6 +48,7 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
     {
         AICharacter->PlayAnimMontage(AttackMontage);
         UGameplayStatics::PlaySoundAtLocation(GetWorld(), FireZombieAttackSound, AICharacter->GetActorLocation());
+
         Player->TakeDamage(FireMeleeDamage, DamageEvent, AIController, AICharacter);
     }
     else
@@ -64,18 +63,10 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
         }
         UGameplayStatics::PlaySoundAtLocation(GetWorld(), ZombieAttackSound, AICharacter->GetActorLocation());
 
-        // Player->TakeDamage(MeleeDamage, DamageEvent, AIController, AICharacter); // this is where the TakeDamage function from the ZombieGameCharacter is called.
+        Player->TakeDamage(MeleeDamage, DamageEvent, AIController, AICharacter); // this is where the TakeDamage function from the ZombieGameCharacter is called.
     }
-    // return EBTNodeResult::Succeeded;
+
+
     return EBTNodeResult::InProgress;
 }
 
-
- // TArray<AActor *> FoundNotifies;
-    // UGameplayStatics::GetAllActorsOfClass(GetWorld(), UAttackNotify::StaticClass(), FoundNotifies);
-
-    // for (int i = 0; i < FoundNotifies.Num(); i++)
-    // {
-    //     UAttackNotify* TempNotify = Cast<UAttackNotify>(FoundNotifies[i]);
-    //     TempNotify->AttackEnd.AddDynamic(this, &UBTTask_AttackPlayer::OnAttackEnd);
-    // }

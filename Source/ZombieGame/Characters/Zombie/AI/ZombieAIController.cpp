@@ -4,6 +4,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "ZombieGame/Characters/Zombie/FireZombieBoss.h"
+#include "ZombieGame/Characters/Grandad/Grandad.h"
 #include "ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h"
 
 AZombieAIController::AZombieAIController()
@@ -51,7 +52,12 @@ void AZombieAIController::Tick(float DeltaSeconds)
     AZombie *ZombieCharacter = Cast<AZombie>(GetPawn());
     AFireZombieBoss *FireZombieCharacter = Cast<AFireZombieBoss>(GetPawn());
 
-    GetBlackboardComponent()->SetValueAsVector(TEXT("HouseLocation"), HouseLocation);
+    TArray<AActor*> FoundActors;
+    UGameplayStatics::GetAllActorsWithTag(GetWorld(), FName(TEXT("GrandadTag")), FoundActors);
+
+    AGrandad* Grandad = Cast<AGrandad>(FoundActors[0]);
+    GetBlackboardComponent()->SetValueAsVector(TEXT("GrandadLocation"), Grandad->GetActorLocation());
+    // GetBlackboardComponent()->SetValueAsVector(TEXT("GrandadLocation"), HouseLocation);
 
     if (ZombieCharacter->GetIsZombieDead() == false)
     {

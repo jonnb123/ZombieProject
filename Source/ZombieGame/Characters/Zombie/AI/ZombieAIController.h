@@ -25,8 +25,8 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category="AI", meta=(AllowPrivateAccess="true"))
 	UAIPerceptionComponent* AIPerceptionComponent;
 
-	UPROPERTY(EditAnywhere)
-	FVector HouseLocation;
+	// UPROPERTY(EditAnywhere)
+	// FVector HouseLocation;
 
 	UPROPERTY(EditAnywhere)
 	class UBehaviorTree* AIBehavior;

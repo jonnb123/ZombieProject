@@ -59,6 +59,9 @@ public:
 	// Switch the player's current primary weapon
 	void SwitchToNextPrimaryWeapon(); // used in baseweapon
 
+	// Used in Grandad
+	void HandleCharacterDeath();
+
 	UFUNCTION(BlueprintCallable)
 	void MaxAmmo(); // used in bp_baseammo
 
@@ -172,7 +175,7 @@ private:
 
 	void WeaponSwapAfterDelay();
 
-	void HandleCharacterDeath();
+	
 
 	void RegenerateHealth();
 

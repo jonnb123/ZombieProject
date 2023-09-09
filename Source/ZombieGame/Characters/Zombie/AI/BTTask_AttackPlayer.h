@@ -12,7 +12,6 @@
  *
  */
 
-
 UCLASS()
 class ZOMBIEGAME_API UBTTask_AttackPlayer : public UBTTask_BlackboardBase
 {
@@ -25,15 +24,19 @@ protected:
 
 	// This breaks the zombie out of the attack node
 	UFUNCTION()
-	void OnAttackEnd(UAnimMontage* Montage, bool bInterrupted);
+	void OnAttackEnd(UAnimMontage *Montage, bool bInterrupted);
 
-	UBehaviorTreeComponent* CachedOwnerComp; // Member variable to store OwnerComp
+	UBehaviorTreeComponent *CachedOwnerComp; // Member variable to store OwnerComp
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	class UAnimMontage *AttackMontage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	class UAnimMontage *CrawlAttackMontage;
+
+	// Define a Blackboard key for the target actor
+	UPROPERTY(EditAnywhere, Category = Blackboard)
+	bool IsCharacter;
 
 	UPROPERTY(EditAnywhere)
 	float MeleeDamage = 10;

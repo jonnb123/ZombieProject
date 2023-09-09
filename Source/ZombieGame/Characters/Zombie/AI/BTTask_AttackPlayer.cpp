@@ -2,6 +2,8 @@
 #include "ZombieGame/Characters/Zombie/AI/BTTask_AttackPlayer.h"
 #include "AIController.h"
 #include "ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h"
+#include "BehaviorTree/BlackboardComponent.h"
+#include "ZombieGame/Characters/Grandad/Grandad.h"
 #include "Kismet/GameplayStatics.h"
 
 UBTTask_AttackPlayer::UBTTask_AttackPlayer()
@@ -29,7 +31,12 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
     AZombie *ZombieCharacter = Cast<AZombie>(AICharacter);
 
     // gets the character
-    ACharacter *Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+    ACharacter* Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+
+    TArray<AActor*> FoundActors;
+    UGameplayStatics::GetAllActorsWithTag(GetWorld(), FName(TEXT("GrandadTag")), FoundActors);
+
+    ACharacter* Grandad = Cast<ACharacter>(FoundActors[0]);
 
     // Gets the Animation Instance and if it has ended play OnAttackEnd
     UAnimInstance *AnimInstance = AICharacter->GetMesh()->GetAnimInstance();
@@ -63,10 +70,16 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
         }
         UGameplayStatics::PlaySoundAtLocation(GetWorld(), ZombieAttackSound, AICharacter->GetActorLocation());
 
-        Player->TakeDamage(MeleeDamage, DamageEvent, AIController, AICharacter); // this is where the TakeDamage function from the ZombieGameCharacter is called.
+        // This determines whether to damage character or Grandad
+        if (IsCharacter == true)
+        {
+            Player->TakeDamage(MeleeDamage, DamageEvent, AIController, AICharacter); // this is where the TakeDamage function from the ZombieGameCharacter is called.
+        }
+        else
+        {
+            Grandad->TakeDamage(MeleeDamage, DamageEvent, AIController, AICharacter);
+        }
     }
-
 
     return EBTNodeResult::InProgress;
 }
-

@@ -2,6 +2,10 @@
 
 
 #include "ZombieGame/Characters/Grandad/Grandad.h"
+#include "ZombieGame/GameMode/ZombieGameMode.h"
+#include "ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h"
+#include "Kismet/GameplayStatics.h"
+
 
 // Sets default values
 AGrandad::AGrandad()
@@ -30,5 +34,32 @@ void AGrandad::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+float AGrandad::TakeDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser)
+{
+	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser); // takes the damage values from the zombie in BTTask_Attack and plugs them into the base implementation of TakeDamage
+	if (Health <= 0)
+	{
+		// when health is below 0
+		UE_LOG(LogTemp, Log, TEXT("Health left %f"), Health);
+		ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+    	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+		Character->HandleCharacterDeath();
+	}
+	else // player is alive
+	{
+		DamageToApply = FMath::Min(Health, DamageToApply);
+		Health -= DamageToApply; // deducts damage from health
+		UE_LOG(LogTemp, Log, TEXT("Health left %f"), Health);
+	}
+	return DamageToApply;
+}
+
+void AGrandad::HandleDeath()
+{
+	IsDead = true;
+	AZombieGameMode *MyMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+	MainWidgetInstance->ShowDeathWindow();
 }
 

@@ -162,7 +162,10 @@ void UMainWidget::ShowWinText()
 
 void UMainWidget::ShowDeathWindow()
 {
-    DeathWindow->SetVisibility(ESlateVisibility::Visible);
+    if (DeathWindow)
+    {
+        DeathWindow->SetVisibility(ESlateVisibility::Visible);
+    }
 }
 
 void UMainWidget::ShowBloodOverlay()

@@ -121,7 +121,6 @@ void ATurret::Fire()
     FVector StartLocation = GunMesh->GetSocketLocation("Muzzle") + 100.f * GunMesh->GetForwardVector();
     FVector EndLocation = CurrentTarget->GetActorLocation();
 
-
     FCollisionQueryParams TraceParams = FCollisionQueryParams::DefaultQueryParam;
     TraceParams.bReturnPhysicalMaterial = true;
     TraceParams.AddIgnoredActor(this);
@@ -129,11 +128,9 @@ void ATurret::Fire()
     FVector MuzzleLocation = StartLocation;
     FRotator MuzzleRotation = GunMesh->GetSocketRotation("Muzzle");
 
-
     FVector ProjectileDirection = MuzzleRotation.Vector();
 
     FRotator ProjectileRotation = ProjectileDirection.Rotation();
-
 
     //Set Spawn Collision Handling Override
     FActorSpawnParameters ActorSpawnParams;
@@ -142,8 +139,7 @@ void ATurret::Fire()
     AZombieGameProjectile* Projectile = World->SpawnActor<AZombieGameProjectile>(ProjectileBlueprint, MuzzleLocation, ProjectileRotation, ActorSpawnParams);
     Projectile->GetProjectileMovement()->InitialSpeed = ProjectileDirection.Size() * Projectile->GetProjectileMovement()->MaxSpeed;
     Projectile->GetProjectileMovement()->Velocity = ProjectileDirection * Projectile->GetProjectileMovement()->InitialSpeed;
-    Projectile->GetProjectileMovement()->Activate();
-    
+    Projectile->GetProjectileMovement()->Activate();  
 }
 
 

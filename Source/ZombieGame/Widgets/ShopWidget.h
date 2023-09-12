@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "ZombieGame/Widgets/ShopItem.h"
 #include "ShopWidget.generated.h"
 
 /**
@@ -51,5 +52,15 @@ private:
 	UPROPERTY(meta = (BindWidget))
 	class UUniformGridPanel *ItemGrid;
 
-	
+	// Functions
+
+	void NativeConstruct() override;
+
+protected:
+
+	// Widget References
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "References")
+	TSubclassOf<UUserWidget> WidgetClass;
+	UShopItem* ShopItemWidgetInstance; // needs to be accessed in other classes
 };

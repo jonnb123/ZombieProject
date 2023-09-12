@@ -5,6 +5,9 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "ZombieGame/Widgets/MainWidget.h"
+#include "Components/BoxComponent.h"
+#include "Camera/CameraComponent.h"
+#include "ZombieGame/Widgets/ShopWidget.h"
 #include "Grandad.generated.h"
 
 UCLASS()
@@ -17,6 +20,23 @@ protected:
 	virtual void BeginPlay() override;
 
 	int Health = 100;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UBoxComponent *BoxCollisionComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UCameraComponent *ShopCameraComponent;
+
+	// Widget References
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "References")
+	TSubclassOf<UUserWidget> ShopWidgetClass;
+	UShopWidget* ShopWidgetInstance; // needs to be accessed in other classes
+
+	// Function to handle the begin overlap event
+    UFUNCTION()
+    void OnItemBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+                           int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 public:	
 	// Static method to get the Singleton instance

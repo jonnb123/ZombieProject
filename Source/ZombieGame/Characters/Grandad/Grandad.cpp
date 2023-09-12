@@ -13,6 +13,15 @@ AGrandad::AGrandad()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	// Create the box collision and attach it to the root
+	BoxCollisionComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollisionComponent"));
+	BoxCollisionComponent->InitBoxExtent(FVector(100.f, 100.f, 100.f));
+	BoxCollisionComponent->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
+	BoxCollisionComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+
+	ShopCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
+	ShopCameraComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 }
 
 // Called when the game starts or when spawned
@@ -20,10 +29,37 @@ void AGrandad::BeginPlay()
 {
 	Super::BeginPlay();
 
+	BoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AGrandad::OnItemBeginOverlap);
+
 	// The only way I've found to get an exact instance of an actor spawned in the world
 	TArray<AActor *> FoundActors;
 	UGameplayStatics::GetAllActorsWithTag(GetWorld(), FName(TEXT("GrandadTag")), FoundActors);
 	GrandadInstance = Cast<AGrandad>(FoundActors[0]);
+}
+
+void AGrandad::OnItemBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
+								  int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
+{
+	UE_LOG(LogTemp, Log, TEXT("OVERLAPPING WITH GRANDAD"));
+	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+	APlayerController *PlayerController = Cast<APlayerController>(Character->GetController());
+
+	if (OtherActor->IsA<AZombieGameCharacter>())
+	{
+		PlayerController->SetViewTargetWithBlend(this, 2.0);
+
+		if (MainWidgetInstance)
+		{
+			MainWidgetInstance->RemoveFromParent();
+		}
+
+		ShopWidgetInstance = CreateWidget<UShopWidget>(GetWorld(), ShopWidgetClass);
+		ShopWidgetInstance->AddToViewport();
+		// PlayerController->SetInputMode(FInputModeUIOnly());
+		// PlayerController->bShowMouseCursor = true;
+		// GetCharacterMovement()->StopMovementImmediately();
+	}
 }
 
 // Static method to get the Singleton instance

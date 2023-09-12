@@ -52,10 +52,8 @@ void AZombieAIController::Tick(float DeltaSeconds)
     AZombie *ZombieCharacter = Cast<AZombie>(GetPawn());
     AFireZombieBoss *FireZombieCharacter = Cast<AFireZombieBoss>(GetPawn());
 
-    TArray<AActor*> FoundActors;
-    UGameplayStatics::GetAllActorsWithTag(GetWorld(), FName(TEXT("GrandadTag")), FoundActors);
+    AGrandad* Grandad = AGrandad::GetInstance();
 
-    AGrandad* Grandad = Cast<AGrandad>(FoundActors[0]);
     GetBlackboardComponent()->SetValueAsVector(TEXT("GrandadLocation"), Grandad->GetActorLocation());
     // GetBlackboardComponent()->SetValueAsVector(TEXT("GrandadLocation"), HouseLocation);
 

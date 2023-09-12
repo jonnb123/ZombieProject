@@ -34,13 +34,13 @@ public:
 	TSubclassOf<UUserWidget> WidgetClass;
 	UMainWidget *MainWidgetInstance; // needs to be accessed in other classes
 
+	virtual float TakeDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) override;
 	
 
 private:
 	// Sets default values for this character's properties
 	AGrandad();
 
-	virtual float TakeDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) override;
 	
 	void HandleDeath();
 

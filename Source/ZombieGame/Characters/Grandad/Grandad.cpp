@@ -19,28 +19,18 @@ AGrandad::AGrandad()
 void AGrandad::BeginPlay()
 {
 	Super::BeginPlay();
-}
 
-// // Static method to get the Singleton instance
-// AGrandad* AGrandad::GetInstance()
-// {
-//     if (GrandadInstance == nullptr)
-//     {
-//         GrandadInstance = NewObject<AGrandad>();
-//     }
-//     return GrandadInstance;
-// }
+	// The only way I've found to get an exact instance of an actor spawned in the world
+	TArray<AActor *> FoundActors;
+	UGameplayStatics::GetAllActorsWithTag(GetWorld(), FName(TEXT("GrandadTag")), FoundActors);
+	GrandadInstance = Cast<AGrandad>(FoundActors[0]);
+}
 
 // Static method to get the Singleton instance
-AGrandad* AGrandad::GetInstance()
+AGrandad *AGrandad::GetInstance()
 {
-    if (GrandadInstance == nullptr)
-    {
-        GrandadInstance = NewObject<AGrandad>();
-    }
-    return GrandadInstance;
+	return GrandadInstance;
 }
-
 
 // Called every frame
 void AGrandad::Tick(float DeltaTime)

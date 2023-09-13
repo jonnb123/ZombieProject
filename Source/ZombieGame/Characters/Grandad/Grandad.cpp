@@ -47,7 +47,7 @@ void AGrandad::OnItemBeginOverlap(UPrimitiveComponent *OverlappedComponent, AAct
 
 	if (OtherActor->IsA<AZombieGameCharacter>())
 	{
-		PlayerController->SetViewTargetWithBlend(this, 2.0);
+		// PlayerController->SetViewTargetWithBlend(this, 2.0);
 
 		if (MainWidgetInstance)
 		{
@@ -56,9 +56,11 @@ void AGrandad::OnItemBeginOverlap(UPrimitiveComponent *OverlappedComponent, AAct
 
 		ShopWidgetInstance = CreateWidget<UShopWidget>(GetWorld(), ShopWidgetClass);
 		ShopWidgetInstance->AddToViewport();
-		// PlayerController->SetInputMode(FInputModeUIOnly());
-		// PlayerController->bShowMouseCursor = true;
-		// GetCharacterMovement()->StopMovementImmediately();
+		PlayerController->SetInputMode(FInputModeUIOnly());
+		PlayerController->bShowMouseCursor = true;
+		Character->GetCharacterMovement()->MaxWalkSpeed = 0;
+		// Character->GetCharacterMovement()->StopMovementImmediately();
+		
 	}
 }
 

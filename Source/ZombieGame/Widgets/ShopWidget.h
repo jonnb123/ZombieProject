@@ -37,9 +37,6 @@ private:
 	class UTextBlock *ShopText;
 
 	UPROPERTY(meta = (BindWidget))
-	class UTextBlock *PlayerPointsText;
-
-	UPROPERTY(meta = (BindWidget))
 	class UTextBlock *ExitText;
 
 	// Button
@@ -55,6 +52,9 @@ private:
 	// Functions
 
 	void NativeConstruct() override;
+
+	UFUNCTION(BlueprintCallable)
+	void OnExitClicked();
 
 protected:
 

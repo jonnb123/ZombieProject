@@ -6,6 +6,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "UMG/Public/Components/Button.h"
 #include "Camera/CameraComponent.h"
+#include "ZombieGame/Characters/Grandad/Grandad.h"
+
 
 void UShopWidget::NativeConstruct()
 {
@@ -21,6 +23,7 @@ void UShopWidget::NativeConstruct()
 
     for (int i = 0; i <= 7; i++)
     {
+        FetchItem(i);
         ShopItemWidgetInstance = CreateWidget<UShopItem>(GetWorld(), WidgetClass);
 
         ItemGrid->AddChildToUniformGrid(ShopItemWidgetInstance, i/4, i%4);
@@ -39,4 +42,20 @@ void UShopWidget::OnExitClicked()
     Character->GetCharacterMovement()->MaxWalkSpeed = 600;
     PlayerController->bShowMouseCursor = false;
     RemoveFromParent();
+}
+
+void UShopWidget::FetchItem(int Index)
+{
+    AGrandad* Grandad = AGrandad::GetInstance();
+
+    if (Grandad->Inventory.IsValidIndex(Index))
+    {
+        ItemID = Grandad->Inventory[Index];
+    }
+
+    else
+    {
+        ItemID = -1;
+    }
+    
 }

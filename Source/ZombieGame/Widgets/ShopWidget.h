@@ -5,11 +5,15 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "ZombieGame/Widgets/ShopItem.h"
+#include "Engine/DataTable.h"
 #include "ShopWidget.generated.h"
 
 /**
  * 
  */
+
+
+
 UCLASS()
 class ZOMBIEGAME_API UShopWidget : public UUserWidget
 {
@@ -56,6 +60,9 @@ private:
 	UFUNCTION(BlueprintCallable)
 	void OnExitClicked();
 
+	UFUNCTION()
+	void FetchItem(int Index);
+
 protected:
 
 	// Widget References
@@ -63,4 +70,10 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "References")
 	TSubclassOf<UUserWidget> WidgetClass;
 	UShopItem* ShopItemWidgetInstance; // needs to be accessed in other classes
+
+
+public:
+	UPROPERTY(EditAnywhere)
+	int ItemID;
+
 };

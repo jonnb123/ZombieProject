@@ -102,6 +102,7 @@ float AGrandad::TakeDamage(float const DamageAmount, struct FDamageEvent const &
 	return DamageToApply;
 }
 
+
 void AGrandad::HandleDeath()
 {
 	IsDead = true;

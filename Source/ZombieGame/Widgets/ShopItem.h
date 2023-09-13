@@ -4,11 +4,32 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Engine/DataTable.h"
 #include "ShopItem.generated.h"
 
 /**
  * 
  */
+
+USTRUCT(BlueprintType)
+struct FItemStructure : public FTableRowBase
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FText Name;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 Cost;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UTexture2D* Thumbnail;
+
+	
+
+};
+
+
 UCLASS()
 class ZOMBIEGAME_API UShopItem : public UUserWidget
 {
@@ -43,4 +64,16 @@ private:
 	UPROPERTY(meta = (BindWidget))
 	class UImage *ItemImage;
 
+	// Data Table
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	class UDataTable* ItemDataTable;
+
+	// native construct
+	void NativeConstruct() override;
+
+	// button functions
+	UFUNCTION(BlueprintCallable)
+	void OnItemClicked();
+	
+	FItemStructure* Item;
 };

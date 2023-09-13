@@ -27,11 +27,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UCameraComponent *ShopCameraComponent;
 
-	// Widget References
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "References")
-	TSubclassOf<UUserWidget> ShopWidgetClass;
-	UShopWidget* ShopWidgetInstance; // needs to be accessed in other classes
+	
 
 	// Function to handle the begin overlap event
     UFUNCTION()
@@ -54,8 +50,19 @@ public:
 	TSubclassOf<UUserWidget> WidgetClass;
 	UMainWidget *MainWidgetInstance; // needs to be accessed in other classes
 
+	// Widget References
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "References")
+	TSubclassOf<UUserWidget> ShopWidgetClass;
+	UShopWidget* ShopWidgetInstance; // needs to be accessed in other classes
+
 	virtual float TakeDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) override;
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<int32> Inventory;
+
+	
+
 
 private:
 	// Sets default values for this character's properties

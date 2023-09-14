@@ -17,7 +17,7 @@ AFrontDoor::AFrontDoor()
 
 	// Create the box collision and attach it to the root
 	BoxCollisionComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollisionComponent"));
-	BoxCollisionComponent->InitBoxExtent(FVector(100.f, 100.f, 100.f));
+	// BoxCollisionComponent->InitBoxExtent(FVector(100.f, 100.f, 100.f));
 	BoxCollisionComponent->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
 	BoxCollisionComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 
@@ -72,20 +72,39 @@ void AFrontDoor::UseFrontDoor()
 	UE_LOG(LogTemp, Warning, TEXT("You have interacted with buy door"));
     ACharacter* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	AZombieGameCharacter* Character = Cast<AZombieGameCharacter>(PlayerCharacter);
-	if (!bDoorRotated) // set the points to be 2000
+	if (!bDoorOpen) // set the points to be 2000
 	{
         FRotator NewRotation = DoorMesh->GetRelativeRotation();
         NewRotation.Yaw += 90.0f; // Rotate by 90 degrees around the Z-axis
         DoorMesh->SetRelativeRotation(NewRotation);
-        bDoorRotated = true;
+        bDoorOpen = true;
 	}
     else 
     {
         FRotator NewRotation = DoorMesh->GetRelativeRotation();
         NewRotation.Yaw -= 90.0f; // Rotate by 90 degrees around the Z-axis
         DoorMesh->SetRelativeRotation(NewRotation);
-        bDoorRotated = false;
+        bDoorOpen = false;
     }
+}
+
+float AFrontDoor::TakeDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser)
+{
+	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser); // takes the damage values from the zombie in BTTask_Attack and plugs them into the base implementation of TakeDamage
+	if (Health <= 0)
+	{
+		// when health is below 0
+		UE_LOG(LogTemp, Log, TEXT("Health left %f"), Health);
+		bIsSpawned = false;
+		Destroy();
+	}
+	else // player is alive
+	{
+		DamageToApply = FMath::Min(Health, DamageToApply);
+		Health -= DamageToApply; // deducts damage from health
+		UE_LOG(LogTemp, Log, TEXT("Health left %f"), Health);
+	}
+	return DamageToApply;
 }
 
 

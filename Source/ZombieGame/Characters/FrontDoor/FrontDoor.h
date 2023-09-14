@@ -18,6 +18,16 @@ public:
 
 	void UseFrontDoor();
 
+	int Health = 100;
+
+	bool bDestroyed = false;
+
+	bool bDoorOpen = false;
+
+	bool bIsSpawned = false;
+
+	virtual float TakeDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) override;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -42,5 +52,5 @@ private:
 
 	
 
-	bool bDoorRotated = false;
+	
 };

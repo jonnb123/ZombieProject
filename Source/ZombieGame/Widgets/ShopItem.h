@@ -89,4 +89,8 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FRotator DoorSpawnRotation;
+
+public:
+	// UPROPERTY()
+	// AFrontDoor* SpawnedDoor;
 };

@@ -8,7 +8,7 @@
 #include "ZombieGame/Characters/Grandad/Grandad.h"
 #include "ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h"
 #include "Kismet/GameplayStatics.h"
-
+#include "ZombieGame/GameMode/ZombieGameMode.h"
 
 
 void UShopItem::NativeConstruct()
@@ -50,9 +50,9 @@ void UShopItem::OnItemClicked()
         ItemButton->SetBackgroundColor(FLinearColor::Red);
         if (Item->Name.ToString() == TEXT("Front Door"))
         {
-            // FVector SpawnLocation = FVector((-54468.75,390340.71,-379744.33));
-            // FRotator SpawnRotation = FRotator((0,-180,0));
-            AActor* SpawnedDoor = GetWorld()->SpawnActor(FrontDoor, &DoorSpawnLocation, &DoorSpawnRotation);
+            AZombieGameMode *GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
+            GameMode->FrontDoor = Cast<AFrontDoor>(GetWorld()->SpawnActor(FrontDoor, &DoorSpawnLocation, &DoorSpawnRotation));
+            GameMode->FrontDoor->bIsSpawned = true;
         }
     }
 

@@ -5,10 +5,11 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "ZombieGame/Characters/Grandad/Grandad.h"
 #include "Kismet/GameplayStatics.h"
+#include "ZombieGame/GameMode/ZombieGameMode.h"
 
 UBTTask_AttackPlayer::UBTTask_AttackPlayer()
 {
-    NodeName = TEXT("Attack player");
+    NodeName = TEXT("Attack");
 }
 
 void UBTTask_AttackPlayer::OnAttackEnd(UAnimMontage *Montage, bool bInterrupted)
@@ -31,10 +32,15 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
     AZombie *ZombieCharacter = Cast<AZombie>(AICharacter);
 
     // gets the character
-    ACharacter* Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+    ACharacter *Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 
-    AGrandad* Grandad = AGrandad::GetInstance();
-    
+    // get grandad
+    AGrandad *Grandad = AGrandad::GetInstance();
+
+    // get door
+    AZombieGameMode *GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
+    AFrontDoor* FrontDoor = GameMode->FrontDoor;
+
     // Gets the Animation Instance and if it has ended play OnAttackEnd
     UAnimInstance *AnimInstance = AICharacter->GetMesh()->GetAnimInstance();
     if (AnimInstance)
@@ -72,12 +78,13 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
         {
             Player->TakeDamage(MeleeDamage, DamageEvent, AIController, AICharacter); // this is where the TakeDamage function from the ZombieGameCharacter is called.
         }
-        else
+        else if (IsGrandad == true)
         {
-            if (Grandad != nullptr)
-            {
-                Grandad->TakeDamage(MeleeDamage, DamageEvent, AIController, AICharacter);
-            }
+            Grandad->TakeDamage(MeleeDamage, DamageEvent, AIController, AICharacter);
+        }
+        else if (IsDoor == true)
+        {
+            FrontDoor->TakeDamage(MeleeDamage, DamageEvent, AIController, AICharacter);
         }
     }
 

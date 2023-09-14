@@ -6,6 +6,8 @@
 #include "ZombieGame/Characters/Zombie/FireZombieBoss.h"
 #include "ZombieGame/Characters/Grandad/Grandad.h"
 #include "ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h"
+#include "ZombieGame/GameMode/ZombieGameMode.h"
+#include "ZombieGame/Characters/FrontDoor/FrontDoor.h"
 
 AZombieAIController::AZombieAIController()
 {
@@ -53,6 +55,16 @@ void AZombieAIController::Tick(float DeltaSeconds)
     AFireZombieBoss *FireZombieCharacter = Cast<AFireZombieBoss>(GetPawn());
 
     // Get door instance 
+    AZombieGameMode *GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
+    AFrontDoor* FrontDoor = GameMode->FrontDoor;
+    if (FrontDoor && FrontDoor->bIsSpawned)
+    {
+        GetBlackboardComponent()->SetValueAsVector(TEXT("DoorLocation"), FrontDoor->GetActorLocation());
+    }
+    if (FrontDoor && FrontDoor->bDoorOpen == true)
+    {
+        GetBlackboardComponent()->ClearValue(TEXT("DoorLocation"));
+    }
 
     // Gets grandad instance
     AGrandad* Grandad = AGrandad::GetInstance();

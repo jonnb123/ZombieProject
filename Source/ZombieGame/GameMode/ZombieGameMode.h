@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "ZombieGame/Characters/FrontDoor/FrontDoor.h"
 #include "ZombieGameMode.generated.h"
 
 /**
@@ -26,6 +27,10 @@ public:
 
 	// This function is used in Zombie.cpp, so is kept public
 	void HandleZombieCountAndRound();
+
+	// Pointer for front door for easy access to variable
+	UPROPERTY()
+	AFrontDoor* FrontDoor;
 
 protected:
 	virtual void BeginPlay() override;

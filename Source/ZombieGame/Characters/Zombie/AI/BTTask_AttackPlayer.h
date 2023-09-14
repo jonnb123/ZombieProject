@@ -38,6 +38,14 @@ protected:
 	UPROPERTY(EditAnywhere, Category = Blackboard)
 	bool IsCharacter;
 
+	// Define a Blackboard key for the target actor
+	UPROPERTY(EditAnywhere, Category = Blackboard)
+	bool IsGrandad;
+
+		// Define a Blackboard key for the target actor
+	UPROPERTY(EditAnywhere, Category = Blackboard)
+	bool IsDoor;
+
 	UPROPERTY(EditAnywhere)
 	float MeleeDamage = 10;
 

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Engine/DataTable.h"
+#include "ZombieGame/Characters/FrontDoor/FrontDoor.h"
 #include "ShopItem.generated.h"
 
 /**
@@ -74,6 +75,18 @@ private:
 	// button functions
 	UFUNCTION(BlueprintCallable)
 	void OnItemClicked();
-	
+
 	FItemStructure* Item;
+
+	bool bIsOwned = false;
+
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<AFrontDoor> FrontDoor;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector DoorSpawnLocation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FRotator DoorSpawnRotation;
 };

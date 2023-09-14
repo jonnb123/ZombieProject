@@ -52,10 +52,12 @@ void AZombieAIController::Tick(float DeltaSeconds)
     AZombie *ZombieCharacter = Cast<AZombie>(GetPawn());
     AFireZombieBoss *FireZombieCharacter = Cast<AFireZombieBoss>(GetPawn());
 
-    AGrandad* Grandad = AGrandad::GetInstance();
+    // Get door instance 
 
+    // Gets grandad instance
+    AGrandad* Grandad = AGrandad::GetInstance();
     GetBlackboardComponent()->SetValueAsVector(TEXT("GrandadLocation"), Grandad->GetActorLocation());
-    // GetBlackboardComponent()->SetValueAsVector(TEXT("GrandadLocation"), HouseLocation);
+
 
     if (ZombieCharacter->GetIsZombieDead() == false)
     {

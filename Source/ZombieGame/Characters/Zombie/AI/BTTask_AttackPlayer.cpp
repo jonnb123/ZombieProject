@@ -34,11 +34,7 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
     ACharacter* Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 
     AGrandad* Grandad = AGrandad::GetInstance();
-    // ACharacter* Grandad = Cast<ACharacter>(GrandadInstance);
-
-   
-
-
+    
     // Gets the Animation Instance and if it has ended play OnAttackEnd
     UAnimInstance *AnimInstance = AICharacter->GetMesh()->GetAnimInstance();
     if (AnimInstance)
@@ -87,10 +83,3 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
 
     return EBTNodeResult::InProgress;
 }
-
-
-//  TArray<AActor*> FoundActors;
-//     UGameplayStatics::GetAllActorsWithTag(GetWorld(), FName(TEXT("GrandadTag")), FoundActors);
-
-//     // ACharacter* Grandad = Cast<ACharacter>(FoundActors[0]);
-//     AGrandad* Grandad = Cast<AGrandad>(FoundActors[0]);

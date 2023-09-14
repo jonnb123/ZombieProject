@@ -180,6 +180,11 @@ void AZombieGameCharacter::OnInteractingPressed()
 	{
 		OverlappingBuyableItem->UseBuyableItem();
 	}
+
+	if (OverlappingFrontDoor)
+	{
+		OverlappingFrontDoor->UseFrontDoor();
+	}
 }
 
 void AZombieGameCharacter::SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent)

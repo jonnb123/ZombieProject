@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "ZombieGame/BuyableItem/Weapons/BaseWeapon.h"
+#include "ZombieGame/Characters/FrontDoor/FrontDoor.h"
 #include "ZombieGame/Widgets/MainWidget.h"
 #include "ZombieGameCharacter.generated.h"
 
@@ -68,6 +69,10 @@ public:
 	// Get a reference to the buyable item being overlapped
 	UPROPERTY(EditAnywhere, Category = "References")
 	ABuyableItem *OverlappingBuyableItem; // needs to be accessed in other classes
+
+	// Get a reference to the buyable item being overlapped
+	UPROPERTY(EditAnywhere, Category = "References")
+	AFrontDoor *OverlappingFrontDoor; // needs to be accessed in other classes
 
 	// gets main widget reference
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "References")

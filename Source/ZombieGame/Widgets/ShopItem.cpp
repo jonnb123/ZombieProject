@@ -10,6 +10,7 @@
 #include "Kismet/GameplayStatics.h"
 
 
+
 void UShopItem::NativeConstruct()
 {
 
@@ -42,9 +43,17 @@ void UShopItem::OnItemClicked()
     ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
     AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
     
-    if (Character->GetPoints() >= Item->Cost)
+    if (Character->GetPoints() >= Item->Cost && bIsOwned == false)
     {
         Character->SetPoints(Character->GetPoints() - Item->Cost);
+        bIsOwned = true;
+        ItemButton->SetBackgroundColor(FLinearColor::Red);
+        if (Item->Name.ToString() == TEXT("Front Door"))
+        {
+            // FVector SpawnLocation = FVector((-54468.75,390340.71,-379744.33));
+            // FRotator SpawnRotation = FRotator((0,-180,0));
+            AActor* SpawnedDoor = GetWorld()->SpawnActor(FrontDoor, &DoorSpawnLocation, &DoorSpawnRotation);
+        }
     }
 
 }

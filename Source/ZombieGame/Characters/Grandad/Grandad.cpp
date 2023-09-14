@@ -19,9 +19,6 @@ AGrandad::AGrandad()
 	BoxCollisionComponent->InitBoxExtent(FVector(100.f, 100.f, 100.f));
 	BoxCollisionComponent->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
 	BoxCollisionComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
-
-	ShopCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
-	ShopCameraComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 }
 
 // Called when the game starts or when spawned

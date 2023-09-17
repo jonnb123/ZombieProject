@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 #include "ZombieGame/Characters/FrontDoor/FrontDoor.h"
+#include "ZombieGame/Characters/Zombie/Zombie.h"
 #include "ZombieGameMode.generated.h"
 
 /**
@@ -31,6 +32,9 @@ public:
 	// Pointer for front door for easy access to variable
 	UPROPERTY()
 	AFrontDoor* FrontDoor;
+
+	UPROPERTY()
+	AZombie* ClosestZombie;
 
 protected:
 	virtual void BeginPlay() override;

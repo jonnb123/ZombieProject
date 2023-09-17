@@ -9,6 +9,7 @@
 #include "ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "ZombieGame/GameMode/ZombieGameMode.h"
+#include "Blueprint/AIBlueprintHelperLibrary.h"
 
 
 void UShopItem::NativeConstruct()
@@ -53,6 +54,11 @@ void UShopItem::OnItemClicked()
             AZombieGameMode *GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
             GameMode->FrontDoor = Cast<AFrontDoor>(GetWorld()->SpawnActor(FrontDoor, &DoorSpawnLocation, &DoorSpawnRotation));
             GameMode->FrontDoor->bIsSpawned = true;
+        }
+
+        if (Item->Name.ToString() == TEXT("Dog"))
+        {
+            UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), DogPawn, BehaviorTree, DogSpawnLocation);
         }
     }
 

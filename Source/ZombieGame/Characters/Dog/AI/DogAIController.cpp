@@ -52,7 +52,7 @@ void ADogAIController::Tick(float DeltaSeconds)
         {
             GetBlackboardComponent()->SetValueAsVector(TEXT("ZombieLocation"), ClosestZombie->GetActorLocation());
             UCharacterMovementComponent *DogMovement = Cast<UCharacterMovementComponent>(GetPawn()->GetMovementComponent());
-            DogMovement->MaxWalkSpeed = 150.f;
+            DogMovement->MaxWalkSpeed = 380.f;
         }
     }
 

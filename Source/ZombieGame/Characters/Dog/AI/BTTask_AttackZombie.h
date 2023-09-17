@@ -32,5 +32,5 @@ protected:
 	USoundCue *DogAttackSound;
 
 	UPROPERTY(EditAnywhere)
-	float BiteDamage = 10;
+	float BiteDamage = 20;
 };

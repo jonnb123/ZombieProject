@@ -46,7 +46,7 @@ EBTNodeResult::Type UBTTask_AttackZombie::ExecuteTask(UBehaviorTreeComponent &Ow
     }
     else
     {
-        
+        // do nothing
     }
     return EBTNodeResult::InProgress;
 }

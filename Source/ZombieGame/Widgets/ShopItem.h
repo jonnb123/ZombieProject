@@ -90,6 +90,15 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FRotator DoorSpawnRotation;
 
+	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+	TSubclassOf<APawn> DogPawn;
+
+	UPROPERTY(EditAnywhere)
+	class UBehaviorTree* BehaviorTree;
+
+	UPROPERTY(EditAnywhere)
+	FVector DogSpawnLocation;
+
 public:
 	// UPROPERTY()
 	// AFrontDoor* SpawnedDoor;

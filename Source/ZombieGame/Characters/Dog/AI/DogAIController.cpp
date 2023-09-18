@@ -15,12 +15,6 @@ void ADogAIController::BeginPlay()
 
     UGameplayStatics::GetAllActorsOfClass(GetWorld(), AZombie::StaticClass(), AllZombies);
 
-    // if (AIPerceptionComponent != nullptr)
-    // {
-    //     AIPerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &ADogAIController::EnemyDetected);
-    // }
-
-
     if (AIBehavior != nullptr)
     {
         RunBehaviorTree(AIBehavior);
@@ -29,20 +23,6 @@ void ADogAIController::BeginPlay()
 
 void ADogAIController::Tick(float DeltaSeconds)
 {
-    // if (AIPerceptionComponent->HasAnyActiveStimulus(*Zombie))
-    // {
-    //     GetBlackboardComponent()->SetValueAsVector(TEXT("ZombieLocation"), Zombie->GetActorLocation());
-    //     // AZombie* ZombieNew = Cast<AZombie>(Zombie);
-    //     // UCharacterMovementComponent *ZombieMovement = Cast<UCharacterMovementComponent>(ZombieNew->GetMovementComponent());
-    //     // ZombieMovement->MaxWalkSpeed = 300;
-    // }
-    // else
-    // {
-    //     // AZombie* ZombieNew = Cast<AZombie>(Zombie);
-    //     // UCharacterMovementComponent *ZombieMovement = Cast<UCharacterMovementComponent>(ZombieNew->GetMovementComponent());
-    //     // ZombieMovement->MaxWalkSpeed = 60;
-    // }
-
     Super::Tick(DeltaSeconds);
     if (AllZombies.Num() > 0)
     {
@@ -60,22 +40,10 @@ void ADogAIController::Tick(float DeltaSeconds)
 
 ADogAIController::ADogAIController()
 {
-    AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerceptionComponent"));
+   
 }
 
 
-// // // // Bound on begin play if there's an AIPerceptionComponent
-// void ADogAIController::EnemyDetected(AActor *Actor, FAIStimulus Stimulus)
-// {
-
-//     Zombie = Cast<AZombie>(Actor);
-    
-//     Zombie = Actor;
-//     if (Zombie == nullptr)
-//         return;
-//     UE_LOG(LogTemp, Warning, TEXT("THIS IS WORKING"));
-//     // AZombie *ZombieCharacter = Cast<AZombie>(GetPawn());
-// }
 
 AZombie* ADogAIController::GetClosestZombie()
 {

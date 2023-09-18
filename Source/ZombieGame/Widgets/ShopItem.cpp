@@ -52,8 +52,11 @@ void UShopItem::OnItemClicked()
         if (Item->Name.ToString() == TEXT("Front Door"))
         {
             AZombieGameMode *GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
-            GameMode->FrontDoor = Cast<AFrontDoor>(GetWorld()->SpawnActor(FrontDoor, &DoorSpawnLocation, &DoorSpawnRotation));
-            GameMode->FrontDoor->bIsSpawned = true;
+            // GameMode->FrontDoor = Cast<AFrontDoor>(GetWorld()->SpawnActor(FrontDoor, &DoorSpawnLocation, &DoorSpawnRotation));
+            // GameMode->FrontDoor->bIsSpawned = true;
+
+            SpawnedDoor = Cast<AFrontDoor>(GetWorld()->SpawnActor(FrontDoor, &DoorSpawnLocation, &DoorSpawnRotation));
+            SpawnedDoor->bIsSpawned = true;
         }
 
         if (Item->Name.ToString() == TEXT("Dog"))
@@ -63,3 +66,8 @@ void UShopItem::OnItemClicked()
     }
 
 }
+
+// AFrontDoor* UShopItem::GetSpawnedDoorReference() const
+// {
+//     return SpawnedDoor;
+// }

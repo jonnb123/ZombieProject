@@ -8,6 +8,8 @@
 #include "ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h"
 #include "ZombieGame/GameMode/ZombieGameMode.h"
 #include "ZombieGame/Characters/FrontDoor/FrontDoor.h"
+#include "ZombieGame/Widgets/ShopItem.h"
+
 
 AZombieAIController::AZombieAIController()
 {
@@ -41,6 +43,11 @@ void AZombieAIController::EnemyDetected(AActor *Actor, FAIStimulus Stimulus)
     AZombie *ZombieCharacter = Cast<AZombie>(GetPawn());
 }
 
+// void AZombieAIController::SetFrontDoorReference(AFrontDoor* InFrontDoor)
+// {
+//     FrontDoorReference = InFrontDoor;
+// }
+
 void AZombieAIController::Tick(float DeltaSeconds)
 {
     Super::Tick(DeltaSeconds);
@@ -55,13 +62,19 @@ void AZombieAIController::Tick(float DeltaSeconds)
     AFireZombieBoss *FireZombieCharacter = Cast<AFireZombieBoss>(GetPawn());
 
     // Get door instance 
-    AZombieGameMode *GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
-    AFrontDoor* FrontDoor = GameMode->FrontDoor;
-    if (FrontDoor && FrontDoor->bIsSpawned)
+    // AZombieGameMode *GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
+    // AFrontDoor* FrontDoor = GameMode->FrontDoor;
+    // AZombieAIController* AIControllerInstance = NewObject<AZombieAIController>();
+    // AIControllerInstance->SetFrontDoorReference(FrontDoorReference);
+    UShopItem* ShopInstance = NewObject<UShopItem>();
+    AFrontDoor* FrontDoorReference = ShopInstance->SpawnedDoor;
+
+
+    if (FrontDoorReference && FrontDoorReference->bIsSpawned)
     {
-        GetBlackboardComponent()->SetValueAsVector(TEXT("DoorLocation"), FrontDoor->GetActorLocation());
+        GetBlackboardComponent()->SetValueAsVector(TEXT("DoorLocation"), FrontDoorReference->GetActorLocation());
     }
-    if (FrontDoor && FrontDoor->bDoorOpen == true)
+    if (FrontDoorReference && FrontDoorReference->bDoorOpen == true)
     {
         GetBlackboardComponent()->ClearValue(TEXT("DoorLocation"));
     }

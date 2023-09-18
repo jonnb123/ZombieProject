@@ -6,6 +6,8 @@
 #include "ZombieGame/Characters/Grandad/Grandad.h"
 #include "Kismet/GameplayStatics.h"
 #include "ZombieGame/GameMode/ZombieGameMode.h"
+#include "ZombieGame/Characters/Zombie/AI/DamageableInterface.h"
+#include "ZombieGame/Widgets/ShopItem.h"
 
 UBTTask_AttackPlayer::UBTTask_AttackPlayer()
 {
@@ -17,6 +19,11 @@ void UBTTask_AttackPlayer::OnAttackEnd(UAnimMontage *Montage, bool bInterrupted)
     GEngine->AddOnScreenDebugMessage(-1, 4.5f, FColor::Blue, "Attack Ended!!");
     FinishLatentTask(*CachedOwnerComp, EBTNodeResult::Succeeded);
 }
+
+// void UBTTask_AttackPlayer::SetFrontDoorReference(AFrontDoor* InFrontDoor)
+// {
+//     FrontDoorReference = InFrontDoor;
+// }
 
 EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory)
 {
@@ -38,8 +45,14 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
     AGrandad *Grandad = AGrandad::GetInstance();
 
     // get door
-    AZombieGameMode *GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
-    AFrontDoor* FrontDoor = GameMode->FrontDoor;
+    // AZombieGameMode *GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
+    // AFrontDoor *FrontDoor = GameMode->FrontDoor;
+    
+    // get door
+    // UBTTask_AttackPlayer* AttackPlayerInstance = NewObject<UBTTask_AttackPlayer>();
+    // AttackPlayerInstance->SetFrontDoorReference(FrontDoor);
+    UShopItem* ShopInstance = NewObject<UShopItem>();
+    AFrontDoor* FrontDoor = ShopInstance->SpawnedDoor;
 
     // Gets the Animation Instance and if it has ended play OnAttackEnd
     UAnimInstance *AnimInstance = AICharacter->GetMesh()->GetAnimInstance();
@@ -84,8 +97,17 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
         }
         else if (IsDoor == true)
         {
-            FrontDoor->TakeDamage(MeleeDamage, DamageEvent, AIController, AICharacter);
+            // FrontDoor->HandleDamage(MeleeDamage, DamageEvent, AIController, AICharacter);
+            FrontDoor->HandleDamage(MeleeDamage, DamageEvent, AIController, AICharacter);
         }
+
+        // UObject* Target = OwnerComp.GetBlackboardComponent()->GetValueAsObject(FName(TEXT("Target")));
+
+        // IDamageableInterface *TheInterface = Cast<IDamageableInterface>(Target);
+        // if (TheInterface)
+        // {
+        //     TheInterface->HandleDamage(MeleeDamage, DamageEvent, AIController, AICharacter);
+        // }
     }
 
     return EBTNodeResult::InProgress;

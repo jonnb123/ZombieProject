@@ -6,6 +6,7 @@
 #include "BehaviorTree/Tasks/BTTask_BlackboardBase.h"
 #include "BehaviorTree/Tasks/BTTask_PlayAnimation.h"
 #include "Sound/SoundCue.h"
+#include "ZombieGame/Characters/FrontDoor/FrontDoor.h"
 #include "BTTask_AttackPlayer.generated.h"
 
 /**
@@ -42,9 +43,12 @@ protected:
 	UPROPERTY(EditAnywhere, Category = Blackboard)
 	bool IsGrandad;
 
-		// Define a Blackboard key for the target actor
+	// Define a Blackboard key for the target actor
 	UPROPERTY(EditAnywhere, Category = Blackboard)
 	bool IsDoor;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Blackboard)
+	AActor* Target;
 
 	UPROPERTY(EditAnywhere)
 	float MeleeDamage = 10;
@@ -60,4 +64,14 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Audio")
 	USoundCue *FireZombieAttackSound;
+
+	// UFUNCTION(BlueprintCallable)
+	// void SetFrontDoorReference(AFrontDoor* InFrontDoor);
+
+	// AFrontDoor* FrontDoorReference;
+
+public:
+	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Blackboard)
+	// AActor* Target;
+
 };

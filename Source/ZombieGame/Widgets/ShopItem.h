@@ -100,6 +100,9 @@ protected:
 	FVector DogSpawnLocation;
 
 public:
-	// UPROPERTY()
-	// AFrontDoor* SpawnedDoor;
+	UPROPERTY()
+	AFrontDoor* SpawnedDoor;
+
+	// UFUNCTION(BlueprintCallable)
+    // AFrontDoor* GetSpawnedDoorReference() const;
 };

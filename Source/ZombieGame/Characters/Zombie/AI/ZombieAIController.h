@@ -32,4 +32,9 @@ protected:
 	class UBehaviorTree* AIBehavior;
 
 	void EnemyDetected(AActor* Actor, FAIStimulus Stimulus);
+
+	// UFUNCTION(BlueprintCallable)
+	// void SetFrontDoorReference(AFrontDoor* InFrontDoor);
+
+	// AFrontDoor* FrontDoorReference;
 };

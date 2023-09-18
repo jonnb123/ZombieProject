@@ -23,13 +23,8 @@ protected:
 
 	ADogAIController();
 
-	UPROPERTY(VisibleAnywhere, Category="AI", meta=(AllowPrivateAccess="true"))
-	UAIPerceptionComponent* AIPerceptionComponent;
-
 	UPROPERTY(EditAnywhere)
 	class UBehaviorTree* AIBehavior;
-
-	// void EnemyDetected(AActor* Actor, FAIStimulus Stimulus);
 
 	AZombie* GetClosestZombie();
 

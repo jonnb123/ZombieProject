@@ -5,10 +5,11 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Components/BoxComponent.h"
+#include "ZombieGame/Characters/Zombie/AI/DamageableInterface.h"
 #include "FrontDoor.generated.h"
 
 UCLASS()
-class ZOMBIEGAME_API AFrontDoor : public AActor
+class ZOMBIEGAME_API AFrontDoor : public AActor, public IDamageableInterface
 {
 	GENERATED_BODY()
 	
@@ -26,7 +27,9 @@ public:
 
 	bool bIsSpawned = false;
 
-	virtual float TakeDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) override;
+	virtual void HandleDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) override;
+
+	
 
 protected:
 	// Called when the game starts or when spawned

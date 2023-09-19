@@ -28,8 +28,11 @@ protected:
 
 	AZombie* GetClosestZombie();
 
+	
+
 	TArray<AActor*> AllZombies;
 
 public:
 
+	AZombie* ClosestZombie;
 };

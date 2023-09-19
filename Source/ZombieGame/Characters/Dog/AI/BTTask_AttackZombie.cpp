@@ -6,6 +6,7 @@
 #include "ZombieGame/GameMode/ZombieGameMode.h"
 #include "ZombieGame/Characters/Dog/Dog.h"
 #include "AIController.h"
+#include "ZombieGame/Characters/Dog/AI/DogAIController.h"
 
 UBTTask_AttackZombie::UBTTask_AttackZombie()
 {
@@ -19,16 +20,17 @@ EBTNodeResult::Type UBTTask_AttackZombie::ExecuteTask(UBehaviorTreeComponent &Ow
     // Stores a reference for OwnerComp for use in OnAttackEnd
     CachedOwnerComp = &OwnerComp;
 
-    AZombieGameMode *MyMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
-    AZombie *Zombie = MyMode->ClosestZombie;
-
-    FDamageEvent DamageEvent;
+    // gets the closest zombie
+    AAIController *AIController{OwnerComp.GetAIOwner()};
+    ADogAIController *DogController = Cast<ADogAIController>(AIController);
+    AZombie* Zombie = DogController->ClosestZombie;
 
     // gets the dog
-    AAIController *AIController{OwnerComp.GetAIOwner()};
     const APawn *AIPawn{AIController->GetPawn()};
     ACharacter *AICharacter{AIController->GetCharacter()};
     ADog *DogCharacter = Cast<ADog>(AICharacter);
+
+     FDamageEvent DamageEvent;
 
     UAnimInstance *AnimInstance = AICharacter->GetMesh()->GetAnimInstance();
 

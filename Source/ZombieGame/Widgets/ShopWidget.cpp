@@ -27,6 +27,9 @@ void UShopWidget::NativeConstruct()
         ShopItemWidgetInstance = CreateWidget<UShopItem>(GetWorld(), WidgetClass);
 
         ItemGrid->AddChildToUniformGrid(ShopItemWidgetInstance, i/4, i%4);
+
+        // Store the ShopItem instance in the array
+        ShopItems.Add(ShopItemWidgetInstance);
     }
 }
 

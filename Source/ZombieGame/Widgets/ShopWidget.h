@@ -63,6 +63,8 @@ private:
 	UFUNCTION()
 	void FetchItem(int Index);
 
+	
+
 protected:
 
 	// Widget References
@@ -75,5 +77,7 @@ protected:
 public:
 	UPROPERTY(EditAnywhere)
 	int ItemID;
+
+	TArray<UShopItem*> ShopItems;
 
 };

@@ -103,6 +103,4 @@ public:
 	UPROPERTY()
 	AFrontDoor* SpawnedDoor;
 
-	// UFUNCTION(BlueprintCallable)
-    // AFrontDoor* GetSpawnedDoorReference() const;
 };

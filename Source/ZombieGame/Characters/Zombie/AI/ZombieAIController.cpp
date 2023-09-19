@@ -10,7 +10,6 @@
 #include "ZombieGame/Characters/FrontDoor/FrontDoor.h"
 #include "ZombieGame/Widgets/ShopItem.h"
 
-
 AZombieAIController::AZombieAIController()
 {
     AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerceptionComponent"));
@@ -61,28 +60,25 @@ void AZombieAIController::Tick(float DeltaSeconds)
     AZombie *ZombieCharacter = Cast<AZombie>(GetPawn());
     AFireZombieBoss *FireZombieCharacter = Cast<AFireZombieBoss>(GetPawn());
 
-    // Get door instance 
-    // AZombieGameMode *GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
-    // AFrontDoor* FrontDoor = GameMode->FrontDoor;
-    // AZombieAIController* AIControllerInstance = NewObject<AZombieAIController>();
-    // AIControllerInstance->SetFrontDoorReference(FrontDoorReference);
-    UShopItem* ShopInstance = NewObject<UShopItem>();
-    AFrontDoor* FrontDoorReference = ShopInstance->SpawnedDoor;
-
-
-    if (FrontDoorReference && FrontDoorReference->bIsSpawned)
-    {
-        GetBlackboardComponent()->SetValueAsVector(TEXT("DoorLocation"), FrontDoorReference->GetActorLocation());
-    }
-    if (FrontDoorReference && FrontDoorReference->bDoorOpen == true)
-    {
-        GetBlackboardComponent()->ClearValue(TEXT("DoorLocation"));
-    }
-
     // Gets grandad instance
-    AGrandad* Grandad = AGrandad::GetInstance();
+    AGrandad *Grandad = AGrandad::GetInstance();
     GetBlackboardComponent()->SetValueAsVector(TEXT("GrandadLocation"), Grandad->GetActorLocation());
 
+    // Get door instance
+    if (Grandad->ShopWidgetInstance)
+    {
+        UShopItem *ShopItem = Grandad->ShopWidgetInstance->ShopItems[0];
+        AFrontDoor *FrontDoor = ShopItem->SpawnedDoor;
+
+        if (FrontDoor && FrontDoor->bIsSpawned)
+        {
+            GetBlackboardComponent()->SetValueAsVector(TEXT("DoorLocation"), FrontDoor->GetActorLocation());
+        }
+        if (FrontDoor && FrontDoor->bDoorOpen == true)
+        {
+            GetBlackboardComponent()->ClearValue(TEXT("DoorLocation"));
+        }
+    }
 
     if (ZombieCharacter->GetIsZombieDead() == false)
     {
@@ -155,5 +151,3 @@ void AZombieAIController::Tick(float DeltaSeconds)
         this->Destroy();   // Destroy the controller
     }
 }
-
-

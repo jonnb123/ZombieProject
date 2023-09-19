@@ -26,8 +26,7 @@ void ADogAIController::Tick(float DeltaSeconds)
     Super::Tick(DeltaSeconds);
     if (AllZombies.Num() > 0)
     {
-	    AZombieGameMode *MyMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
-        AZombie* ClosestZombie = MyMode->ClosestZombie = GetClosestZombie();
+        ClosestZombie = GetClosestZombie();
         if (ClosestZombie && ClosestZombie->GetIsZombieDead() == false)
         {
             GetBlackboardComponent()->SetValueAsVector(TEXT("ZombieLocation"), ClosestZombie->GetActorLocation());
@@ -47,7 +46,7 @@ ADogAIController::ADogAIController()
 
 AZombie* ADogAIController::GetClosestZombie()
 {
-    AZombie* ClosestZombie = nullptr;
+    ClosestZombie = nullptr;
     float MinDistance = MAX_FLT;
     FVector DogLocation = GetPawn()->GetActorLocation();
 

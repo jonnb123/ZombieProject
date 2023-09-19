@@ -64,10 +64,5 @@ void UShopItem::OnItemClicked()
             UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), DogPawn, BehaviorTree, DogSpawnLocation);
         }
     }
-
 }
 
-// AFrontDoor* UShopItem::GetSpawnedDoorReference() const
-// {
-//     return SpawnedDoor;
-// }

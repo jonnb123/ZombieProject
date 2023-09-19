@@ -29,13 +29,6 @@ public:
 	// This function is used in Zombie.cpp, so is kept public
 	void HandleZombieCountAndRound();
 
-	// Pointer for front door for easy access to variable
-	UPROPERTY()
-	AFrontDoor* FrontDoor;
-
-	UPROPERTY()
-	AZombie* ClosestZombie;
-
 protected:
 	virtual void BeginPlay() override;
 

@@ -48,11 +48,9 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
     // AZombieGameMode *GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
     // AFrontDoor *FrontDoor = GameMode->FrontDoor;
     
-    // get door
-    // UBTTask_AttackPlayer* AttackPlayerInstance = NewObject<UBTTask_AttackPlayer>();
-    // AttackPlayerInstance->SetFrontDoorReference(FrontDoor);
-    UShopItem* ShopInstance = NewObject<UShopItem>();
-    AFrontDoor* FrontDoor = ShopInstance->SpawnedDoor;
+    UShopItem* ShopItem = Grandad->ShopWidgetInstance->ShopItems[0];
+    AFrontDoor* FrontDoor = ShopItem->SpawnedDoor;
+  
 
     // Gets the Animation Instance and if it has ended play OnAttackEnd
     UAnimInstance *AnimInstance = AICharacter->GetMesh()->GetAnimInstance();

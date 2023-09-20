@@ -8,10 +8,11 @@
 #include "Components/BoxComponent.h"
 #include "Camera/CameraComponent.h"
 #include "ZombieGame/Widgets/ShopWidget.h"
+#include "ZombieGame/Characters/Zombie/AI/DamageableInterface.h"
 #include "Grandad.generated.h"
 
 UCLASS()
-class ZOMBIEGAME_API AGrandad : public ACharacter
+class ZOMBIEGAME_API AGrandad : public ACharacter, public IDamageableInterface
 {
 	GENERATED_BODY()
 
@@ -51,7 +52,7 @@ public:
 	TSubclassOf<UUserWidget> ShopWidgetClass;
 	UShopWidget* ShopWidgetInstance; // needs to be accessed in other classes
 
-	virtual float TakeDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) override;
+	virtual void HandleDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) override;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<int32> Inventory;

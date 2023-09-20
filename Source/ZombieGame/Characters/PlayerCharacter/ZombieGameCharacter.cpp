@@ -51,7 +51,7 @@ void AZombieGameCharacter::BeginPlay()
 	MainWidgetInstance->AddToViewport();
 }
 
-float AZombieGameCharacter::TakeDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) // this is called in BTTask_Attack.cpp
+void AZombieGameCharacter::HandleDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) // this is called in BTTask_Attack.cpp
 {
 	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser); // takes the damage values from the zombie in BTTask_Attack and plugs them into the base implementation of TakeDamage
 	if (Health <= 0)
@@ -84,7 +84,6 @@ float AZombieGameCharacter::TakeDamage(float const DamageAmount, struct FDamageE
 		Health -= DamageToApply; // deducts damage from health
 		UE_LOG(LogTemp, Log, TEXT("Health left %f"), Health);
 	}
-	return DamageToApply;
 }
 
 void AZombieGameCharacter::HandleCharacterDeath()

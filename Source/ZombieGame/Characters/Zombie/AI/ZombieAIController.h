@@ -25,16 +25,13 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category="AI", meta=(AllowPrivateAccess="true"))
 	UAIPerceptionComponent* AIPerceptionComponent;
 
-	// UPROPERTY(EditAnywhere)
-	// FVector HouseLocation;
-
 	UPROPERTY(EditAnywhere)
 	class UBehaviorTree* AIBehavior;
 
 	void EnemyDetected(AActor* Actor, FAIStimulus Stimulus);
 
-	// UFUNCTION(BlueprintCallable)
-	// void SetFrontDoorReference(AFrontDoor* InFrontDoor);
-
-	// AFrontDoor* FrontDoorReference;
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Blackboard)
+	AActor* Target;
+	
 };

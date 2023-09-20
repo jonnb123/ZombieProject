@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 #include "ZombieGame/Characters/Zombie/AI/BTTask_AttackPlayer.h"
 #include "AIController.h"
+#include "ZombieGame/Characters/Zombie/AI/ZombieAIController.h"
 #include "ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "ZombieGame/Characters/Grandad/Grandad.h"
@@ -8,10 +9,13 @@
 #include "ZombieGame/GameMode/ZombieGameMode.h"
 #include "ZombieGame/Characters/Zombie/AI/DamageableInterface.h"
 #include "ZombieGame/Widgets/ShopItem.h"
+#include "BehaviorTree/BlackboardComponent.h"
 
 UBTTask_AttackPlayer::UBTTask_AttackPlayer()
 {
     NodeName = TEXT("Attack");
+
+ 
 }
 
 void UBTTask_AttackPlayer::OnAttackEnd(UAnimMontage *Montage, bool bInterrupted)
@@ -19,11 +23,6 @@ void UBTTask_AttackPlayer::OnAttackEnd(UAnimMontage *Montage, bool bInterrupted)
     GEngine->AddOnScreenDebugMessage(-1, 4.5f, FColor::Blue, "Attack Ended!!");
     FinishLatentTask(*CachedOwnerComp, EBTNodeResult::Succeeded);
 }
-
-// void UBTTask_AttackPlayer::SetFrontDoorReference(AFrontDoor* InFrontDoor)
-// {
-//     FrontDoorReference = InFrontDoor;
-// }
 
 EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory)
 {
@@ -34,6 +33,7 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
 
     // this block gets the Zombie
     AAIController *AIController{OwnerComp.GetAIOwner()};
+    AZombieAIController *ZombieAIController = Cast<AZombieAIController>(AIController);
     const APawn *AIPawn{AIController->GetPawn()};
     ACharacter *AICharacter{AIController->GetCharacter()};
     AZombie *ZombieCharacter = Cast<AZombie>(AICharacter);
@@ -44,13 +44,8 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
     // get grandad
     AGrandad *Grandad = AGrandad::GetInstance();
 
-    // get door
-    // AZombieGameMode *GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
-    // AFrontDoor *FrontDoor = GameMode->FrontDoor;
-    
-    UShopItem* ShopItem = Grandad->ShopWidgetInstance->ShopItems[0];
-    AFrontDoor* FrontDoor = ShopItem->SpawnedDoor;
-  
+    // Get front door
+    AFrontDoor *FrontDoor = AFrontDoor::GetInstance();
 
     // Gets the Animation Instance and if it has ended play OnAttackEnd
     UAnimInstance *AnimInstance = AICharacter->GetMesh()->GetAnimInstance();
@@ -87,25 +82,22 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
         // This determines whether to damage character or Grandad
         if (IsCharacter == true)
         {
-            Player->TakeDamage(MeleeDamage, DamageEvent, AIController, AICharacter); // this is where the TakeDamage function from the ZombieGameCharacter is called.
+            ZombieAIController->Target = Player;
         }
         else if (IsGrandad == true)
         {
-            Grandad->TakeDamage(MeleeDamage, DamageEvent, AIController, AICharacter);
+           ZombieAIController->Target = Grandad;
         }
         else if (IsDoor == true)
         {
-            // FrontDoor->HandleDamage(MeleeDamage, DamageEvent, AIController, AICharacter);
-            FrontDoor->HandleDamage(MeleeDamage, DamageEvent, AIController, AICharacter);
+            ZombieAIController->Target = FrontDoor;
         }
 
-        // UObject* Target = OwnerComp.GetBlackboardComponent()->GetValueAsObject(FName(TEXT("Target")));
-
-        // IDamageableInterface *TheInterface = Cast<IDamageableInterface>(Target);
-        // if (TheInterface)
-        // {
-        //     TheInterface->HandleDamage(MeleeDamage, DamageEvent, AIController, AICharacter);
-        // }
+        IDamageableInterface *TheInterface = Cast<IDamageableInterface>(ZombieAIController->Target);
+        if (TheInterface)
+        {
+            TheInterface->HandleDamage(MeleeDamage, DamageEvent, AIController, AICharacter);
+        }
     }
 
     return EBTNodeResult::InProgress;

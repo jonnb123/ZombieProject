@@ -29,7 +29,10 @@ public:
 
 	virtual void HandleDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) override;
 
-	
+	// Static method to get the Singleton instance
+    static AFrontDoor* GetInstance();
+
+	static void SetInstance(AFrontDoor* NewInstance);
 
 protected:
 	// Called when the game starts or when spawned
@@ -53,7 +56,8 @@ private:
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* DoorMesh;
 
-	
+	// Static instance of Singleton
+	static AFrontDoor* FrontDoorInstance;
 
 	
 };

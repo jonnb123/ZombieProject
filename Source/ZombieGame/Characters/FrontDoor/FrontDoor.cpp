@@ -6,6 +6,9 @@
 #include "Kismet/GameplayStatics.h"
 #include "UMG/Public/Components/TextBlock.h"
 
+// Initialize the Singleton instance - this is done outside of any function
+AFrontDoor *AFrontDoor::FrontDoorInstance = nullptr;
+
 // Sets default values
 AFrontDoor::AFrontDoor()
 {
@@ -104,6 +107,17 @@ void AFrontDoor::HandleDamage(float const DamageAmount, struct FDamageEvent cons
 		Health -= DamageToApply; // deducts damage from health
 		UE_LOG(LogTemp, Log, TEXT("Health left %f"), Health);
 	}
+}
+
+AFrontDoor* AFrontDoor::GetInstance()
+{
+	return FrontDoorInstance;	
+}
+
+
+void AFrontDoor::SetInstance(AFrontDoor* NewInstance)
+{
+	FrontDoorInstance = NewInstance;
 }
 
 

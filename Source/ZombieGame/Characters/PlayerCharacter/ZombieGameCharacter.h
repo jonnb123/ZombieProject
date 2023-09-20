@@ -7,6 +7,7 @@
 #include "ZombieGame/BuyableItem/Weapons/BaseWeapon.h"
 #include "ZombieGame/Characters/FrontDoor/FrontDoor.h"
 #include "ZombieGame/Widgets/MainWidget.h"
+#include "ZombieGame/Characters/Zombie/AI/DamageableInterface.h"
 #include "ZombieGameCharacter.generated.h"
 
 class USkeletalMesh;
@@ -30,7 +31,7 @@ enum class ECharacterState : uint8
 // add a change state function
 
 UCLASS(config = Game)
-class AZombieGameCharacter : public ACharacter
+class AZombieGameCharacter : public ACharacter, public IDamageableInterface
 {
 	GENERATED_BODY()
 
@@ -185,7 +186,7 @@ private:
 	void RegenerateHealth();
 
 	// The virtual here shows that I intend to override the function, it overrides the virtual function from the base class, i.e. APawn
-	virtual float TakeDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) override;
+	virtual void HandleDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) override;
 
 	// Timers
 

@@ -79,7 +79,7 @@ void AGrandad::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
-float AGrandad::TakeDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser)
+void AGrandad::HandleDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser)
 {
 	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser); // takes the damage values from the zombie in BTTask_Attack and plugs them into the base implementation of TakeDamage
 	if (Health <= 0)
@@ -96,7 +96,6 @@ float AGrandad::TakeDamage(float const DamageAmount, struct FDamageEvent const &
 		Health -= DamageToApply; // deducts damage from health
 		UE_LOG(LogTemp, Log, TEXT("Health left %f"), Health);
 	}
-	return DamageToApply;
 }
 
 

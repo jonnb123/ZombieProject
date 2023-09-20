@@ -13,6 +13,7 @@
  *
  */
 
+
 UCLASS()
 class ZOMBIEGAME_API UBTTask_AttackPlayer : public UBTTask_BlackboardBase
 {
@@ -47,9 +48,6 @@ protected:
 	UPROPERTY(EditAnywhere, Category = Blackboard)
 	bool IsDoor;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Blackboard)
-	AActor* Target;
-
 	UPROPERTY(EditAnywhere)
 	float MeleeDamage = 10;
 
@@ -65,13 +63,7 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Audio")
 	USoundCue *FireZombieAttackSound;
 
-	// UFUNCTION(BlueprintCallable)
-	// void SetFrontDoorReference(AFrontDoor* InFrontDoor);
-
-	// AFrontDoor* FrontDoorReference;
-
 public:
-	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Blackboard)
-	// AActor* Target;
+	
 
 };

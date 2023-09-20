@@ -55,8 +55,11 @@ void UShopItem::OnItemClicked()
             // GameMode->FrontDoor = Cast<AFrontDoor>(GetWorld()->SpawnActor(FrontDoor, &DoorSpawnLocation, &DoorSpawnRotation));
             // GameMode->FrontDoor->bIsSpawned = true;
 
-            SpawnedDoor = Cast<AFrontDoor>(GetWorld()->SpawnActor(FrontDoor, &DoorSpawnLocation, &DoorSpawnRotation));
-            SpawnedDoor->bIsSpawned = true;
+            // SpawnedDoor = Cast<AFrontDoor>(GetWorld()->SpawnActor(FrontDoor, &DoorSpawnLocation, &DoorSpawnRotation));
+            // SpawnedDoor->bIsSpawned = true;
+
+            AFrontDoor::SetInstance(Cast<AFrontDoor>(GetWorld()->SpawnActor(FrontDoor, &DoorSpawnLocation, &DoorSpawnRotation)));
+            AFrontDoor::GetInstance()->bIsSpawned = true;
         }
 
         if (Item->Name.ToString() == TEXT("Dog"))

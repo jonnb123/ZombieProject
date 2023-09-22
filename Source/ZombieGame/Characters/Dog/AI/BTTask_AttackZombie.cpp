@@ -30,7 +30,7 @@ EBTNodeResult::Type UBTTask_AttackZombie::ExecuteTask(UBehaviorTreeComponent &Ow
     ACharacter *AICharacter{AIController->GetCharacter()};
     ADog *DogCharacter = Cast<ADog>(AICharacter);
 
-     FDamageEvent DamageEvent;
+    FDamageEvent DamageEvent;
 
     UAnimInstance *AnimInstance = AICharacter->GetMesh()->GetAnimInstance();
 

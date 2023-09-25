@@ -124,18 +124,6 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "State")
     bool ChangeCharacterState(ECharacterState NewState);
 
-	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Boolean)
-	// bool IsReloading = false; // left in protected as it's used in the abp
-
-	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Boolean)
-	// bool IsShooting = false; // left in protected as it's used in the abp
-
-	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Boolean)
-	// bool IsAiming = false; // left in protected as it's used in the abp
-
-	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Boolean)
-	// bool IsSwappingWeapon = false; // left in protected as it's used in the abp
-
 	// variable needs to be changed in maxspeed class use a setter
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Boolean)
 	bool HasMaxSpeed = false;

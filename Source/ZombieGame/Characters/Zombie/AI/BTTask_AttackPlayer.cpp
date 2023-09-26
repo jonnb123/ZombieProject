@@ -14,8 +14,6 @@
 UBTTask_AttackPlayer::UBTTask_AttackPlayer()
 {
     NodeName = TEXT("Attack");
-
- 
 }
 
 void UBTTask_AttackPlayer::OnAttackEnd(UAnimMontage *Montage, bool bInterrupted)

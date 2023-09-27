@@ -13,8 +13,6 @@ void ADogAIController::BeginPlay()
 {
     Super::BeginPlay();
 
-    UGameplayStatics::GetAllActorsOfClass(GetWorld(), AZombie::StaticClass(), AllZombies);
-
     if (AIBehavior != nullptr)
     {
         RunBehaviorTree(AIBehavior);
@@ -24,16 +22,6 @@ void ADogAIController::BeginPlay()
 void ADogAIController::Tick(float DeltaSeconds)
 {
     Super::Tick(DeltaSeconds);
-    if (AllZombies.Num() > 0)
-    {
-        ClosestZombie = GetClosestZombie();
-        if (ClosestZombie && ClosestZombie->GetIsZombieDead() == false)
-        {
-            GetBlackboardComponent()->SetValueAsVector(TEXT("ZombieLocation"), ClosestZombie->GetActorLocation());
-            UCharacterMovementComponent *DogMovement = Cast<UCharacterMovementComponent>(GetPawn()->GetMovementComponent());
-            DogMovement->MaxWalkSpeed = 380.f;
-        }
-    }
 
 }
 
@@ -43,26 +31,3 @@ ADogAIController::ADogAIController()
 }
 
 
-
-AZombie* ADogAIController::GetClosestZombie()
-{
-    ClosestZombie = nullptr;
-    float MinDistance = MAX_FLT;
-    FVector DogLocation = GetPawn()->GetActorLocation();
-
-
-    for (AActor* Actor : AllZombies)
-    {
-        AZombie* Zombie = Cast<AZombie>(Actor);
-        if (Zombie && !Zombie->GetIsZombieDead())
-        {
-            float Distance = FVector::Dist(Actor->GetActorLocation(), DogLocation);
-            if (Distance < MinDistance)
-            {
-                ClosestZombie = Zombie;
-                MinDistance = Distance;
-            }
-        }
-    }
-    return ClosestZombie;
-}

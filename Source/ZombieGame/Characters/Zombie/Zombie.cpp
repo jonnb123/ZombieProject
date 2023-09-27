@@ -5,6 +5,7 @@
 #include "ZombieGame/GameMode/ZombieGameMode.h"
 #include "ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h"
 #include "NiagaraFunctionLibrary.h"
+#include "AIController.h"
 
 // Sets default values
 AZombie::AZombie()
@@ -40,28 +41,28 @@ AZombie::AZombie()
 	LeftArmBoxCollisionComponent->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("lowerarm_l"));
 }
 
-float AZombie::TakeDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser)
+void AZombie::HandleDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser)
 {
 	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	if (IsDead == false)
 	{
-		DamageToApply = FMath::Min(Health, DamageToApply);
-		Health -= DamageToApply;
+		if (Health <= 0)
+		{
+			// when health is below 0
+			UE_LOG(LogTemp, Warning, TEXT("Health left %f"), Health);
+			Death();
+		}
 		// if alive
-		if (Health > 0)
+		else
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Health left %f"), Health);
-			this->PlayAnimMontage(HitMontage);
+			DamageToApply = FMath::Min(Health, DamageToApply);
+			Health -= DamageToApply;
+			PlayAnimMontage(HitMontage);
 			ZombieHitCheck = true;
-			return DamageToApply;
 		}
-		// when health is below 0
-		UE_LOG(LogTemp, Warning, TEXT("Health left %f"), Health);
-		Death();
-		this->SetActorEnableCollision(false);
-		return DamageToApply;
+		
 	}
-	return DamageToApply; 
 }
 
 // Called when the game starts or when spawned
@@ -193,12 +194,23 @@ void AZombie::Death()
 {
 	IsDead = true;
 
-	this->GetCharacterMovement()->StopMovementImmediately();
+	GetCharacterMovement()->StopMovementImmediately();
 
 	AudioComponent->SetComponentTickEnabled(false);
 	AudioComponent->Stop();
+	SetActorEnableCollision(false);
 
 	AZombieGameMode *MyMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(GetWorld())); // gets the game mode
 
 	MyMode->HandleZombieCountAndRound();
+	
+	GetMesh()->GetAnimInstance()->Montage_Stop(0.2f, HitMontage);
+
+	FTimerHandle TimerHandle;
+	GetWorldTimerManager().SetTimer(TimerHandle, this, &AZombie::DestroyZombieMesh, 3.0f, false);
+}
+
+void AZombie::DestroyZombieMesh()
+{
+	Destroy();
 }

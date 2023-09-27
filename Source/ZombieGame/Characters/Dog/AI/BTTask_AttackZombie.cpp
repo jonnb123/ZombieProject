@@ -7,6 +7,8 @@
 #include "ZombieGame/Characters/Dog/Dog.h"
 #include "AIController.h"
 #include "ZombieGame/Characters/Dog/AI/DogAIController.h"
+#include "BehaviorTree/BlackboardComponent.h"
+#include "AIController.h"
 
 UBTTask_AttackZombie::UBTTask_AttackZombie()
 {
@@ -22,8 +24,8 @@ EBTNodeResult::Type UBTTask_AttackZombie::ExecuteTask(UBehaviorTreeComponent &Ow
 
     // gets the closest zombie
     AAIController *AIController{OwnerComp.GetAIOwner()};
-    ADogAIController *DogController = Cast<ADogAIController>(AIController);
-    AZombie* Zombie = DogController->ClosestZombie;
+    UBlackboardComponent* BlackboardComponent = OwnerComp.GetBlackboardComponent();
+    AActor* ZombieActor = Cast<AActor>(BlackboardComponent->GetValueAsObject("Zombie"));
 
     // gets the dog
     const APawn *AIPawn{AIController->GetPawn()};
@@ -40,11 +42,15 @@ EBTNodeResult::Type UBTTask_AttackZombie::ExecuteTask(UBehaviorTreeComponent &Ow
         AnimInstance->OnMontageEnded.AddDynamic(this, &UBTTask_AttackZombie::OnAttackEnd);
     }
 
-    if (Zombie)
+    if (ZombieActor)
     {
         UGameplayStatics::PlaySoundAtLocation(GetWorld(), DogAttackSound, AICharacter->GetActorLocation());
         AICharacter->PlayAnimMontage(AttackMontage);
-        Zombie->TakeDamage(BiteDamage, DamageEvent, AIController, AICharacter);
+        IDamageableInterface *TheInterface = Cast<IDamageableInterface>(ZombieActor);
+        if (TheInterface)
+        {
+            TheInterface->HandleDamage(BiteDamage, DamageEvent, AIController, AICharacter);
+        }
     }
     else
     {

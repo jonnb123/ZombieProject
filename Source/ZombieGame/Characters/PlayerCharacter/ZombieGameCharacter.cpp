@@ -134,30 +134,6 @@ void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
 			EquippedWeaponCharacter = Weapons[CurrentWeaponIndex]->WeaponType;
 		}
 	}
-
-	// - Line 127 to 144: iirc, you look at the next index past your current weapon, but only 1.
-	//  So why a loop? You have an array and the current index! If you need a loop, start it fromp currentindex. Are you not handling the case of circling back?
-	// // if current weapon index is last index set it to -1
-	// for (int i = CurrentWeaponIndex + 1; i < Weapons.Num(); i++)
-	// {
-	// 	if (i > CurrentWeaponIndex)
-	// 	{
-	// 		if (Weapons[i]->IsObtained)
-	// 		{
-	// 			IsSwappingWeapon = true;
-	// 			GetWorldTimerManager().SetTimer(WeaponSwapTimerHandle, this, &AZombieGameCharacter::WeaponSwapAfterDelay, WeaponSwapDelay, false);
-	// 			Success = true;
-	// 			CurrentWeaponIndex = i;
-	// 			UE_LOG(LogTemp, Display, TEXT("Current Weapon index: %d"), CurrentWeaponIndex);
-	// 			GunMesh->SetSkeletalMesh(Weapons[CurrentWeaponIndex]->WeaponMesh);
-	// 			// Attach GunMesh to the new socket
-	// 			GunMesh->AttachToComponent(Mesh1P, FAttachmentTransformRules::SnapToTargetIncludingScale, Weapons[CurrentWeaponIndex]->WeaponSocketName);
-	// 			// This is referenced in the abp to change weapon
-	// 			EquippedWeaponCharacter = Weapons[CurrentWeaponIndex]->WeaponType;
-	// 		}
-	// 		break; // breaks out of the for loop
-	// 	}
-	// }
 }
 
 void AZombieGameCharacter::WeaponSwapAfterDelay()

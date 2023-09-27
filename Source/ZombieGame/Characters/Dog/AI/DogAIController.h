@@ -26,13 +26,4 @@ protected:
 	UPROPERTY(EditAnywhere)
 	class UBehaviorTree* AIBehavior;
 
-	AZombie* GetClosestZombie();
-
-	
-
-	TArray<AActor*> AllZombies;
-
-public:
-
-	AZombie* ClosestZombie;
 };

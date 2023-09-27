@@ -6,10 +6,11 @@
 #include "GameFramework/Character.h"
 #include "Components/AudioComponent.h"
 #include "Components/BoxComponent.h"
+#include "ZombieGame/Characters/Zombie/AI/DamageableInterface.h"
 #include "Zombie.generated.h"
 
 UCLASS()
-class ZOMBIEGAME_API AZombie : public ACharacter
+class ZOMBIEGAME_API AZombie : public ACharacter, public IDamageableInterface
 {
 	GENERATED_BODY()
 
@@ -27,7 +28,7 @@ public:
 	// Getter for IsCrawling
 	bool GetIsCrawling() const { return IsCrawling; }
 
-	virtual float TakeDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) override;
+	virtual void HandleDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) override;
 
 protected:
 	// Called when the game starts or when spawned
@@ -119,6 +120,8 @@ private:
 	bool ZombieHitCheck = false; // also used in ZombieAIController, uses getter and setter
 
 	void Death();
+
+	void DestroyZombieMesh();
 
 	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
 

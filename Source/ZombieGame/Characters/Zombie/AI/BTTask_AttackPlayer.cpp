@@ -10,6 +10,8 @@
 #include "ZombieGame/Characters/Zombie/AI/DamageableInterface.h"
 #include "ZombieGame/Widgets/ShopItem.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Blueprint/AIBlueprintHelperLibrary.h"
+
 
 UBTTask_AttackPlayer::UBTTask_AttackPlayer()
 {
@@ -28,6 +30,8 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
 
     // Stores a reference for OwnerComp for use in OnAttackEnd
     CachedOwnerComp = &OwnerComp;
+
+   
 
     // this block gets the Zombie
     AAIController *AIController{OwnerComp.GetAIOwner()};

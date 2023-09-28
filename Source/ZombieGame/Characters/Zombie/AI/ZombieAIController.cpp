@@ -27,8 +27,9 @@ void AZombieAIController::BeginPlay()
     //     FrontDoor->OnDoorSpawned.AddDynamic(this, &AZombieAIController::HandleDoorSpawned);
     // }
 
+    // Setting the grandad blackboard value needs a split second before being called, otherwise crashes
     FTimerHandle DelayHandle;
-    GetWorldTimerManager().SetTimer(DelayHandle, this, &AZombieAIController::InitializeBlackboardValue, 0.5f, false);
+    GetWorldTimerManager().SetTimer(DelayHandle, this, &AZombieAIController::InitializeGrandadBlackboardValue, 0.5f, false);
 
     if (AIPerceptionComponent != nullptr)
     {

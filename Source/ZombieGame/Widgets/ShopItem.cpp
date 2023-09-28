@@ -10,11 +10,12 @@
 #include "Kismet/GameplayStatics.h"
 #include "ZombieGame/GameMode/ZombieGameMode.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
+#include "ZombieGame/Characters/Zombie/AI/ZombieAIController.h"
+#include "BehaviorTree/BlackboardComponent.h"
 
 
 void UShopItem::NativeConstruct()
 {
-
     if (ItemButton)
     {
         ItemButton->OnClicked.AddDynamic(this, &UShopItem::OnItemClicked);
@@ -60,6 +61,8 @@ void UShopItem::OnItemClicked()
 
             AFrontDoor::SetInstance(Cast<AFrontDoor>(GetWorld()->SpawnActor(FrontDoor, &DoorSpawnLocation, &DoorSpawnRotation)));
             AFrontDoor::GetInstance()->bIsSpawned = true;
+
+            AFrontDoor::GetInstance()->OnDoorSpawned.Broadcast();
         }
 
         if (Item->Name.ToString() == TEXT("Dog"))

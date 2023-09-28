@@ -78,7 +78,10 @@ void AZombieGameMode::SpawnZombies()
         {
             SpawnPawnClass = ZombiePawnClasses[FMath::RandRange(0, ZombiePawnClasses.Num() - 1)];
         }
-
+        
+        AZombie* SpawnedZombie = Cast<AZombie>(SpawnPawnClass);
+        
+        SpawnedZombies.Add(SpawnedZombie);
         UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), SpawnPawnClass, BehaviorTree, SpawnLocation);
     }
 }

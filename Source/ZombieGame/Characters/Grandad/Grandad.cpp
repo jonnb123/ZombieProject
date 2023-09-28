@@ -19,6 +19,8 @@ AGrandad::AGrandad()
 	BoxCollisionComponent->InitBoxExtent(FVector(100.f, 100.f, 100.f));
 	BoxCollisionComponent->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
 	BoxCollisionComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+
+	
 }
 
 // Called when the game starts or when spawned
@@ -31,7 +33,10 @@ void AGrandad::BeginPlay()
 	// The only way I've found to get an exact instance of an actor spawned in the world
 	TArray<AActor *> FoundActors;
 	UGameplayStatics::GetAllActorsWithTag(GetWorld(), FName(TEXT("GrandadTag")), FoundActors);
-	GrandadInstance = Cast<AGrandad>(FoundActors[0]);
+	if (FoundActors.Num() > 0)
+	{
+		GrandadInstance = Cast<AGrandad>(FoundActors[0]);
+	}
 }
 
 void AGrandad::OnItemBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,

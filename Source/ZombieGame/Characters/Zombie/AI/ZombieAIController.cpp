@@ -19,6 +19,17 @@ void AZombieAIController::BeginPlay()
 {
     Super::BeginPlay();
 
+    // Get front door instance
+    // AFrontDoor* FrontDoor = AFrontDoor::GetInstance();
+    // if (FrontDoor)
+    // {
+    //     UE_LOG(LogTemp, Warning, TEXT("BOUND"));
+    //     FrontDoor->OnDoorSpawned.AddDynamic(this, &AZombieAIController::HandleDoorSpawned);
+    // }
+
+    FTimerHandle DelayHandle;
+    GetWorldTimerManager().SetTimer(DelayHandle, this, &AZombieAIController::InitializeBlackboardValue, 0.5f, false);
+
     if (AIPerceptionComponent != nullptr)
     {
         AIPerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AZombieAIController::EnemyDetected);
@@ -27,8 +38,6 @@ void AZombieAIController::BeginPlay()
     if (AIBehavior != nullptr)
     {
         RunBehaviorTree(AIBehavior);
-
-        APawn *PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
     }
 }
 
@@ -42,10 +51,34 @@ void AZombieAIController::EnemyDetected(AActor *Actor, FAIStimulus Stimulus)
     AZombie *ZombieCharacter = Cast<AZombie>(GetPawn());
 }
 
+void AZombieAIController::HandleDoorSpawned()
+{
+    AFrontDoor *FrontDoor = AFrontDoor::GetInstance();
+    if (FrontDoor->bIsSpawned)
+    {
+        GetBlackboardComponent()->SetValueAsVector(TEXT("DoorLocation"), FrontDoor->GetActorLocation());
+    }
+    else
+    {
+        GetBlackboardComponent()->ClearValue(TEXT("DoorLocation"));
+    }
+}
+
+void AZombieAIController::InitializeGrandadBlackboardValue()
+{
+    // Sets target as grandad, sets corresponding blackboard key.
+    AGrandad *Grandad = AGrandad::GetInstance();
+    if (Grandad)
+    {
+        GetBlackboardComponent()->SetValueAsVector(TEXT("GrandadLocation"), Grandad->GetActorLocation());
+    }
+}
+
 void AZombieAIController::Tick(float DeltaSeconds)
 {
     Super::Tick(DeltaSeconds);
 
+   
     // Casting to different PlayerCharactrer types
     APawn *PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
     ACharacter *Player = Cast<ACharacter>(PlayerPawn);
@@ -55,23 +88,16 @@ void AZombieAIController::Tick(float DeltaSeconds)
     AZombie *ZombieCharacter = Cast<AZombie>(GetPawn());
     AFireZombieBoss *FireZombieCharacter = Cast<AFireZombieBoss>(GetPawn());
 
-    // Gets grandad instance
-    AGrandad *Grandad = AGrandad::GetInstance();
-    GetBlackboardComponent()->SetValueAsVector(TEXT("GrandadLocation"), Grandad->GetActorLocation());
-    Target = Grandad;
-
-    // Get front door instance
-    AFrontDoor* FrontDoor = AFrontDoor::GetInstance();
-    if (FrontDoor && FrontDoor->bIsSpawned)
-    {
-        GetBlackboardComponent()->SetValueAsVector(TEXT("DoorLocation"), FrontDoor->GetActorLocation());
-        Target = FrontDoor;
-    }
-    if (FrontDoor && FrontDoor->bDoorOpen == true)
-    {
-        GetBlackboardComponent()->ClearValue(TEXT("DoorLocation"));
-        Target = Grandad;
-    }
+    // // Get front door instance
+    // AFrontDoor* FrontDoor = AFrontDoor::GetInstance();
+    // if (FrontDoor && FrontDoor->bIsSpawned)
+    // {
+    //     GetBlackboardComponent()->SetValueAsVector(TEXT("DoorLocation"), FrontDoor->GetActorLocation());
+    // }
+    // if (FrontDoor && FrontDoor->bDoorOpen == true)
+    // {
+    //     GetBlackboardComponent()->ClearValue(TEXT("DoorLocation"));
+    // }
 
     if (ZombieCharacter->GetIsZombieDead() == false)
     {
@@ -115,7 +141,6 @@ void AZombieAIController::Tick(float DeltaSeconds)
                 GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerLocation"), Player->GetActorLocation());
                 GetBlackboardComponent()->SetValueAsVector(TEXT("LastKnownPlayerLocation"), Player->GetActorLocation());
                 ZombieCharacter->SetZombieHitCheck(false);
-                Target = ZombieGameCharacter;
             }
 
             else if (AIPerceptionComponent->HasAnyCurrentStimulus(*Player))
@@ -131,13 +156,11 @@ void AZombieAIController::Tick(float DeltaSeconds)
                 }
                 GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerLocation"), Player->GetActorLocation());
                 GetBlackboardComponent()->SetValueAsVector(TEXT("LastKnownPlayerLocation"), Player->GetActorLocation());
-                Target = ZombieGameCharacter;
             }
             else
             {
                 ZombieCharacter->SetZombieHitCheck(false);
                 GetBlackboardComponent()->ClearValue(TEXT("PlayerLocation"));
-                Target = FrontDoor;
             }
         }
     }

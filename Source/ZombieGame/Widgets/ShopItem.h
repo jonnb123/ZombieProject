@@ -6,11 +6,14 @@
 #include "Blueprint/UserWidget.h"
 #include "Engine/DataTable.h"
 #include "ZombieGame/Characters/FrontDoor/FrontDoor.h"
+#include "ZombieGame/Characters/Zombie/AI/ZombieAIController.h"
 #include "ShopItem.generated.h"
 
 /**
  * 
  */
+
+
 
 USTRUCT(BlueprintType)
 struct FItemStructure : public FTableRowBase
@@ -102,5 +105,7 @@ protected:
 public:
 	UPROPERTY()
 	AFrontDoor* SpawnedDoor;
+
+	
 
 };

@@ -30,8 +30,16 @@ protected:
 
 	void EnemyDetected(AActor* Actor, FAIStimulus Stimulus);
 
+	UFUNCTION()
+	void HandleDoorSpawned();
+
+	UFUNCTION()
+	void InitializeGrandadBlackboardValue();
+
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Blackboard)
 	AActor* Target;
+
+	
 	
 };

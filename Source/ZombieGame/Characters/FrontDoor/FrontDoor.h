@@ -6,7 +6,12 @@
 #include "GameFramework/Actor.h"
 #include "Components/BoxComponent.h"
 #include "ZombieGame/Characters/Zombie/AI/DamageableInterface.h"
+#include "ZombieGame/Characters/Zombie/AI/ZombieAIController.h"
 #include "FrontDoor.generated.h"
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FKFOnDoorSpawned);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FKFOnDoorOpen);
+
 
 UCLASS()
 class ZOMBIEGAME_API AFrontDoor : public AActor, public IDamageableInterface
@@ -14,6 +19,16 @@ class ZOMBIEGAME_API AFrontDoor : public AActor, public IDamageableInterface
 	GENERATED_BODY()
 	
 public:	
+	UPROPERTY(BlueprintAssignable)
+	FKFOnDoorOpen OnDoorOpen;
+
+	UPROPERTY(BlueprintAssignable)
+	FKFOnDoorSpawned OnDoorSpawned;
+
+	class AZombieAIController* ZombieAIControllerRef;
+
+	void SetZombieAIController(AZombieAIController* Controller);
+
 	// Sets default values for this actor's properties
 	AFrontDoor();
 

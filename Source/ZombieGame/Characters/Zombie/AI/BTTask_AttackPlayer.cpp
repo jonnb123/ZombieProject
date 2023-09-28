@@ -31,8 +31,6 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
     // Stores a reference for OwnerComp for use in OnAttackEnd
     CachedOwnerComp = &OwnerComp;
 
-   
-
     // this block gets the Zombie
     AAIController *AIController{OwnerComp.GetAIOwner()};
     AZombieAIController *ZombieAIController = Cast<AZombieAIController>(AIController);

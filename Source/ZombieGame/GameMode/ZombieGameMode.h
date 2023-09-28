@@ -29,6 +29,13 @@ public:
 	// This function is used in Zombie.cpp, so is kept public
 	void HandleZombieCountAndRound();
 
+	// A reference to the behaviour tree for the zombies
+	UPROPERTY(EditAnywhere)
+	class UBehaviorTree* BehaviorTree;
+
+	TArray<AZombie*> SpawnedZombies;
+
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -48,10 +55,7 @@ protected:
 	UPROPERTY( EditAnywhere, BlueprintReadWrite )
 	TSubclassOf<APawn> FireZombiePawn;
 
-	// A reference to the behaviour tree for the zombies
-	UPROPERTY(EditAnywhere)
-	class UBehaviorTree* BehaviorTree;
-
+	
 	// uses a getter to be used in widget, protected so the wave can be edited in BP
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int CurrentWave = 5;

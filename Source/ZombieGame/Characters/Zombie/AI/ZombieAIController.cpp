@@ -19,13 +19,10 @@ void AZombieAIController::BeginPlay()
 {
     Super::BeginPlay();
 
-    // Get front door instance
-    // AFrontDoor* FrontDoor = AFrontDoor::GetInstance();
-    // if (FrontDoor)
-    // {
-    //     UE_LOG(LogTemp, Warning, TEXT("BOUND"));
-    //     FrontDoor->OnDoorSpawned.AddDynamic(this, &AZombieAIController::HandleDoorSpawned);
-    // }
+    // binds OnDoorSpawn delegate to update door location on spawning
+    AZombieGameMode *GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
+    GameMode->OnDoorSpawn.AddDynamic(this, &AZombieAIController::HandleDoorSpawned);
+    GameMode->OnDoorOpen.AddDynamic(this, &AZombieAIController::HandleDoorOpen);
 
     // Setting the grandad blackboard value needs a split second before being called, otherwise crashes
     FTimerHandle DelayHandle;
@@ -65,6 +62,19 @@ void AZombieAIController::HandleDoorSpawned()
     }
 }
 
+void AZombieAIController::HandleDoorOpen()
+{
+    AFrontDoor *FrontDoor = AFrontDoor::GetInstance();
+    if (FrontDoor && FrontDoor->bDoorOpen == false)
+    {
+        GetBlackboardComponent()->ClearValue(TEXT("DoorLocation"));
+    }
+    else if (FrontDoor && FrontDoor->bDoorOpen == true)
+    {
+        GetBlackboardComponent()->SetValueAsVector(TEXT("DoorLocation"), FrontDoor->GetActorLocation());
+    }
+}
+
 void AZombieAIController::InitializeGrandadBlackboardValue()
 {
     // Sets target as grandad, sets corresponding blackboard key.
@@ -79,7 +89,6 @@ void AZombieAIController::Tick(float DeltaSeconds)
 {
     Super::Tick(DeltaSeconds);
 
-   
     // Casting to different PlayerCharactrer types
     APawn *PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
     ACharacter *Player = Cast<ACharacter>(PlayerPawn);
@@ -88,17 +97,6 @@ void AZombieAIController::Tick(float DeltaSeconds)
     // Gets Zombie and Fire Zombie
     AZombie *ZombieCharacter = Cast<AZombie>(GetPawn());
     AFireZombieBoss *FireZombieCharacter = Cast<AFireZombieBoss>(GetPawn());
-
-    // // Get front door instance
-    // AFrontDoor* FrontDoor = AFrontDoor::GetInstance();
-    // if (FrontDoor && FrontDoor->bIsSpawned)
-    // {
-    //     GetBlackboardComponent()->SetValueAsVector(TEXT("DoorLocation"), FrontDoor->GetActorLocation());
-    // }
-    // if (FrontDoor && FrontDoor->bDoorOpen == true)
-    // {
-    //     GetBlackboardComponent()->ClearValue(TEXT("DoorLocation"));
-    // }
 
     if (ZombieCharacter->GetIsZombieDead() == false)
     {

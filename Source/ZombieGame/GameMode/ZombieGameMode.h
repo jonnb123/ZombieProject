@@ -8,6 +8,10 @@
 #include "ZombieGame/Characters/Zombie/Zombie.h"
 #include "ZombieGameMode.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FKFOnDoorSpawn);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FKFOnDoorOpen);
+
+
 /**
  * 
  */
@@ -17,6 +21,12 @@ class ZOMBIEGAME_API AZombieGameMode : public AGameModeBase
 	GENERATED_BODY()
 
 public:
+	UPROPERTY(BlueprintAssignable)
+	FKFOnDoorSpawn OnDoorSpawn;
+
+	UPROPERTY(BlueprintAssignable)
+	FKFOnDoorOpen OnDoorOpen;
+
 	// Getter for zombies left
 	int GetZombiesLeft() const { return ZombiesLeft; }
 

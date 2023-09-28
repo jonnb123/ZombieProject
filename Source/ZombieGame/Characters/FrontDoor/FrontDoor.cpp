@@ -5,6 +5,9 @@
 #include "ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "UMG/Public/Components/TextBlock.h"
+#include "ZombieGame/GameMode/ZombieGameMode.h"
+
+
 
 // Initialize the Singleton instance - this is done outside of any function
 AFrontDoor *AFrontDoor::FrontDoorInstance = nullptr;
@@ -71,7 +74,8 @@ void AFrontDoor::OnItemEndOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 
 void AFrontDoor::UseFrontDoor()
 {
-	OnDoorOpen.Broadcast();
+	AZombieGameMode *GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
+	GameMode->OnDoorOpen.Broadcast();
 	UE_LOG(LogTemp, Warning, TEXT("You have interacted with buy door"));
     ACharacter* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	AZombieGameCharacter* Character = Cast<AZombieGameCharacter>(PlayerCharacter);
@@ -96,7 +100,8 @@ void AFrontDoor::HandleDamage(float const DamageAmount, struct FDamageEvent cons
 	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser); // takes the damage values from the zombie in BTTask_Attack and plugs them into the base implementation of TakeDamage
 	if (Health <= 0)
 	{
-		OnDoorSpawned.Broadcast();
+		AZombieGameMode *GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
+		GameMode->OnDoorSpawn.Broadcast();
 		// when health is below 0
 		UE_LOG(LogTemp, Log, TEXT("Health left %f"), Health);
 		bIsSpawned = false;
@@ -121,10 +126,3 @@ void AFrontDoor::SetInstance(AFrontDoor* NewInstance)
 	FrontDoorInstance = NewInstance;
 }
 
-
-
-
-void AFrontDoor::SetZombieAIController(AZombieAIController* Controller)
-{
-	ZombieAIControllerRef = Controller;
-}

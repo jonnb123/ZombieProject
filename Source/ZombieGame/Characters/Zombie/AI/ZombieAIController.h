@@ -28,6 +28,7 @@ protected:
 	UPROPERTY(EditAnywhere)
 	class UBehaviorTree* AIBehavior;
 
+	UFUNCTION()
 	void EnemyDetected(AActor* Actor, FAIStimulus Stimulus);
 
 	

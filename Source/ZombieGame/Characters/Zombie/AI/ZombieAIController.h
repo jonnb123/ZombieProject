@@ -31,8 +31,6 @@ protected:
 	UFUNCTION()
 	void EnemyDetected(AActor* Actor, FAIStimulus Stimulus);
 
-	
-
 	UFUNCTION()
 	void InitializeGrandadBlackboardValue();
 

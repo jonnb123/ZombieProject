@@ -20,9 +20,12 @@ void AZombieAIController::BeginPlay()
     Super::BeginPlay();
 
     // binds OnDoorSpawn delegate to update door location on spawning
-    AZombieGameMode *GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
-    GameMode->OnDoorSpawn.AddDynamic(this, &AZombieAIController::HandleDoorSpawned);
-    GameMode->OnDoorOpen.AddDynamic(this, &AZombieAIController::HandleDoorOpen);
+    if (AZombieGameMode *GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this)))
+    {
+        GameMode->OnDoorSpawn.AddDynamic(this, &AZombieAIController::HandleDoorSpawned);
+        GameMode->OnDoorOpen.AddDynamic(this, &AZombieAIController::HandleDoorOpen);
+    }
+    
 
     // Setting the grandad blackboard value needs a split second before being called, otherwise crashes
     FTimerHandle DelayHandle;

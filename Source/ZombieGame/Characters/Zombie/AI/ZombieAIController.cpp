@@ -47,6 +47,8 @@ void AZombieAIController::EnemyDetected(AActor *Actor, FAIStimulus Stimulus)
 {
     ACharacter *Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
     AZombieGameCharacter *ZombieGameCharacter = Cast<AZombieGameCharacter>(Player);
+    AZombie *ZombieCharacter = Cast<AZombie>(GetPawn());
+    UCharacterMovementComponent *ZombieMovement = Cast<UCharacterMovementComponent>(ZombieCharacter->GetMovementComponent());
 
     if (Actor == ZombieGameCharacter)
     {
@@ -54,11 +56,13 @@ void AZombieAIController::EnemyDetected(AActor *Actor, FAIStimulus Stimulus)
         {
             UE_LOG(LogTemp, Warning, TEXT("This is working!"));
             GetBlackboardComponent()->SetValueAsObject(TEXT("PlayerCharacter"), Player);
+            ZombieMovement->MaxWalkSpeed = 300;
         }
         else if (Stimulus.WasSuccessfullySensed() == false) 
         {
             GetBlackboardComponent()->ClearValue("PlayerCharacter");
             GetBlackboardComponent()->SetValueAsVector(TEXT("LastKnownPlayerLocation"), Stimulus.StimulusLocation);
+            ZombieMovement->MaxWalkSpeed = 60;
         }
     }
 

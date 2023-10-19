@@ -79,23 +79,10 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
         }
         UGameplayStatics::PlaySoundAtLocation(GetWorld(), ZombieAttackSound, AICharacter->GetActorLocation());
 
-        // This determines whether to damage character or Grandad
-        if (IsCharacter == true)
-        {
-            ZombieAIController->Target = Player;
-        }
-        else if (IsGrandad == true)
-        {
-           ZombieAIController->Target = Grandad;
-        }
-        else if (IsDoor == true)
-        {
-            ZombieAIController->Target = FrontDoor;
-        }
-
         IDamageableInterface *TheInterface = Cast<IDamageableInterface>(ZombieAIController->Target);
         if (TheInterface)
         {
+            UE_LOG(LogTemp, Warning, TEXT("Target: %s"), *ZombieAIController->Target->GetName());
             TheInterface->HandleDamage(MeleeDamage, DamageEvent, AIController, AICharacter);
         }
     }

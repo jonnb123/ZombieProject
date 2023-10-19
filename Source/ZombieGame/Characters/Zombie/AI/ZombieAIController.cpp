@@ -25,7 +25,6 @@ void AZombieAIController::BeginPlay()
         GameMode->OnDoorSpawn.AddDynamic(this, &AZombieAIController::HandleDoorSpawned);
         GameMode->OnDoorOpen.AddDynamic(this, &AZombieAIController::HandleDoorOpen);
     }
-    
 
     // Setting the grandad blackboard value needs a split second before being called, otherwise crashes
     FTimerHandle DelayHandle;
@@ -55,14 +54,24 @@ void AZombieAIController::EnemyDetected(AActor *Actor, FAIStimulus Stimulus)
         if (Stimulus.WasSuccessfullySensed())
         {
             UE_LOG(LogTemp, Warning, TEXT("This is working!"));
+            Target = ZombieGameCharacter;
             GetBlackboardComponent()->SetValueAsObject(TEXT("PlayerCharacter"), Player);
             ZombieMovement->MaxWalkSpeed = 300;
         }
-        else if (Stimulus.WasSuccessfullySensed() == false) 
+        else if (Stimulus.WasSuccessfullySensed() == false)
         {
             GetBlackboardComponent()->ClearValue("PlayerCharacter");
             GetBlackboardComponent()->SetValueAsVector(TEXT("LastKnownPlayerLocation"), Stimulus.StimulusLocation);
             ZombieMovement->MaxWalkSpeed = 60;
+            AFrontDoor *FrontDoor = AFrontDoor::GetInstance();
+            if (FrontDoor && FrontDoor->bDoorOpen == false) // if door is closed
+            {
+                Target = FrontDoor;
+            }
+            else
+            {
+                Target = AGrandad::GetInstance();
+            }
         }
     }
 
@@ -81,23 +90,27 @@ void AZombieAIController::HandleDoorSpawned()
     if (FrontDoor->bIsSpawned)
     {
         GetBlackboardComponent()->SetValueAsVector(TEXT("DoorLocation"), FrontDoor->GetActorLocation());
+        Target = FrontDoor;
     }
     else
     {
         GetBlackboardComponent()->ClearValue(TEXT("DoorLocation"));
+        Target = AGrandad::GetInstance();
     }
 }
 
 void AZombieAIController::HandleDoorOpen()
 {
     AFrontDoor *FrontDoor = AFrontDoor::GetInstance();
-    if (FrontDoor && FrontDoor->bDoorOpen == false)
+    if (FrontDoor && FrontDoor->bDoorOpen == false) // if door is closed
     {
         GetBlackboardComponent()->ClearValue(TEXT("DoorLocation"));
+        Target = AGrandad::GetInstance();
     }
-    else if (FrontDoor && FrontDoor->bDoorOpen == true)
+    else if (FrontDoor && FrontDoor->bDoorOpen == true) // if door is open
     {
         GetBlackboardComponent()->SetValueAsVector(TEXT("DoorLocation"), FrontDoor->GetActorLocation());
+        Target = FrontDoor;
     }
 }
 
@@ -108,6 +121,7 @@ void AZombieAIController::InitializeGrandadBlackboardValue()
     if (Grandad)
     {
         GetBlackboardComponent()->SetValueAsVector(TEXT("GrandadLocation"), Grandad->GetActorLocation());
+        Target = Grandad;
     }
 }
 

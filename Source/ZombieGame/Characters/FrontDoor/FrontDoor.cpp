@@ -103,7 +103,7 @@ void AFrontDoor::HandleDamage(float const DamageAmount, struct FDamageEvent cons
 		AZombieGameMode *GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
 		GameMode->OnDoorSpawn.Broadcast();
 		// when health is below 0
-		UE_LOG(LogTemp, Log, TEXT("Health left %f"), Health);
+		UE_LOG(LogTemp, Log, TEXT("Door Destroyed, Health left %f"), Health);
 		bIsSpawned = false;
 		Destroy();
 	}
@@ -111,7 +111,7 @@ void AFrontDoor::HandleDamage(float const DamageAmount, struct FDamageEvent cons
 	{
 		DamageToApply = FMath::Min(Health, DamageToApply);
 		Health -= DamageToApply; // deducts damage from health
-		UE_LOG(LogTemp, Log, TEXT("Health left %f"), Health);
+		UE_LOG(LogTemp, Log, TEXT("Door Alive, Health left %f"), Health);
 	}
 }
 

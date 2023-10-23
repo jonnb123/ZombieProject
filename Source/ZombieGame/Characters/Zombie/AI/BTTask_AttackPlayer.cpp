@@ -58,7 +58,7 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
     UE_LOG(LogTemp, Log, TEXT("Damaging..."));
     UE_LOG(LogTemp, Log, TEXT("Name of actor: %s"), *AICharacter->GetName());
 
-    FDamageEvent DamageEvent;
+    
 
     if (AICharacter->GetName().StartsWith("BP_FireZombie"))
     {

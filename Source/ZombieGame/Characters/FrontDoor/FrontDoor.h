@@ -22,6 +22,7 @@ public:
 
 	void UseFrontDoor();
 
+	UPROPERTY(EditAnywhere)
 	int Health = 100;
 
 	bool bDestroyed = false;

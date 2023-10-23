@@ -48,6 +48,8 @@ protected:
 	UPROPERTY(EditAnywhere, Category = Blackboard)
 	bool IsDoor;
 
+	
+
 	UPROPERTY(EditAnywhere)
 	float MeleeDamage = 10;
 
@@ -65,5 +67,5 @@ protected:
 
 public:
 	
-
+	FDamageEvent DamageEvent;
 };

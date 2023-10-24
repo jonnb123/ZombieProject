@@ -101,11 +101,12 @@ void AFrontDoor::HandleDamage(float const DamageAmount, struct FDamageEvent cons
 	if (Health <= 0)
 	{
 		AZombieGameMode *GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
-		GameMode->OnDoorSpawn.Broadcast();
 		// when health is below 0
 		UE_LOG(LogTemp, Log, TEXT("Door Destroyed, Health left %f"), Health);
 		bIsSpawned = false;
 		Destroy();
+		GameMode->OnDoorSpawn.Broadcast();
+		
 	}
 	else // player is alive
 	{

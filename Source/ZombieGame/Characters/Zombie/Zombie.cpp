@@ -46,22 +46,34 @@ void AZombie::HandleDamage(float const DamageAmount, struct FDamageEvent const &
 	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	if (IsDead == false)
 	{
-		if (Health <= 0)
+		// if (Health <= 0)
+		// {
+		// 	// when health is below 0
+		// 	Death();
+		// 	UE_LOG(LogTemp, Warning, TEXT("Health left %f"), Health);
+		// }
+		// // if alive
+		// else
+		// {
+		// 	DamageToApply = FMath::Min(Health, DamageToApply);
+		// 	Health -= DamageToApply;
+		// 	PlayAnimMontage(HitMontage);
+		// 	ZombieHitCheck = true;
+		// 	UE_LOG(LogTemp, Warning, TEXT("Health left %f"), Health);
+		// }
+
+		DamageToApply = FMath::Min(Health, DamageToApply);
+		Health -= DamageToApply;
+		if (Health > 0)
 		{
-			// when health is below 0
-			UE_LOG(LogTemp, Warning, TEXT("Health left %f"), Health);
-			Death();
-		}
-		// if alive
-		else
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Health left %f"), Health);
-			DamageToApply = FMath::Min(Health, DamageToApply);
-			Health -= DamageToApply;
 			PlayAnimMontage(HitMontage);
 			ZombieHitCheck = true;
+			UE_LOG(LogTemp, Warning, TEXT("Health left %f"), Health);
 		}
-		
+		else
+		{
+			Death();
+		}
 	}
 }
 
@@ -144,7 +156,14 @@ void AZombie::HandleBodyPartOverlap(float Damage, float &LimbHealth, const FName
 {
 	FHitResult Hit;
 	FPointDamageEvent DamageEvent(Damage, Hit, FVector::ZeroVector, nullptr);
-	TakeDamage(Damage, DamageEvent, GetInstigatorController(), this);
+	// TakeDamage(Damage, DamageEvent, GetInstigatorController(), this);
+	IDamageableInterface *TheInterface = Cast<IDamageableInterface>(this);
+	if (TheInterface)
+	{
+		TheInterface->HandleDamage(Damage, DamageEvent, GetInstigatorController(), this);
+	}
+	// HandleDamage(Damage, DamageEvent, GetInstigatorController(), this);
+
 	LimbHealth -= Damage;
 	if (LimbHealth <= 0 && OppositeLimbHealth != 0)
 	{
@@ -203,7 +222,7 @@ void AZombie::Death()
 	AZombieGameMode *MyMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(GetWorld())); // gets the game mode
 
 	MyMode->HandleZombieCountAndRound();
-	
+
 	GetMesh()->GetAnimInstance()->Montage_Stop(0.2f, HitMontage);
 
 	FTimerHandle TimerHandle;

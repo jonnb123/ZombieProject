@@ -23,7 +23,6 @@ AFrontDoor::AFrontDoor()
 
 	// Create the box collision and attach it to the root
 	BoxCollisionComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollisionComponent"));
-	// BoxCollisionComponent->InitBoxExtent(FVector(100.f, 100.f, 100.f));
 	BoxCollisionComponent->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
 	BoxCollisionComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 
@@ -102,7 +101,6 @@ void AFrontDoor::HandleDamage(float const DamageAmount, struct FDamageEvent cons
 	{
 		AZombieGameMode *GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
 		// when health is below 0
-		UE_LOG(LogTemp, Log, TEXT("Door Destroyed, Health left %f"), Health);
 		bIsSpawned = false;
 		Destroy();
 		GameMode->OnDoorSpawn.Broadcast();
@@ -112,7 +110,6 @@ void AFrontDoor::HandleDamage(float const DamageAmount, struct FDamageEvent cons
 	{
 		DamageToApply = FMath::Min(Health, DamageToApply);
 		Health -= DamageToApply; // deducts damage from health
-		UE_LOG(LogTemp, Log, TEXT("Door Alive, Health left %f"), Health);
 	}
 }
 

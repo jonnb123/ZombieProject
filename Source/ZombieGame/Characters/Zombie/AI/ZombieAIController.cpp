@@ -62,7 +62,7 @@ void AZombieAIController::EnemyDetected(AActor *Actor, FAIStimulus Stimulus)
         {
             GetBlackboardComponent()->ClearValue("PlayerCharacter");
             GetBlackboardComponent()->SetValueAsVector(TEXT("LastKnownPlayerLocation"), Stimulus.StimulusLocation);
-            ZombieMovement->MaxWalkSpeed = 60;
+            // ZombieMovement->MaxWalkSpeed = 60;
             AFrontDoor *FrontDoor = AFrontDoor::GetInstance();
             if (FrontDoor && FrontDoor->bDoorOpen == false) // if door is closed
             {

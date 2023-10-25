@@ -9,6 +9,7 @@
 #include "ZombieGame/Characters/Dog/AI/DogAIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "AIController.h"
+#include "ZombieGame/Characters/Zombie/Zombie.h"
 
 UBTTask_AttackZombie::UBTTask_AttackZombie()
 {
@@ -26,6 +27,11 @@ EBTNodeResult::Type UBTTask_AttackZombie::ExecuteTask(UBehaviorTreeComponent &Ow
     AAIController *AIController{OwnerComp.GetAIOwner()};
     UBlackboardComponent* BlackboardComponent = OwnerComp.GetBlackboardComponent();
     AActor* ZombieActor = Cast<AActor>(BlackboardComponent->GetValueAsObject("Zombie"));
+    AZombie* Zombie = Cast<AZombie>(ZombieActor);
+    if (Zombie->GetIsZombieDead() == true)
+    {
+        // GetBlackboardComponent()->ClearValue(TEXT("Zombie"));
+    }
 
     // gets the dog
     const APawn *AIPawn{AIController->GetPawn()};

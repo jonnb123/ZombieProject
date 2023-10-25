@@ -225,11 +225,12 @@ void AZombie::Death()
 
 	GetMesh()->GetAnimInstance()->Montage_Stop(0.2f, HitMontage);
 
-	FTimerHandle TimerHandle;
-	GetWorldTimerManager().SetTimer(TimerHandle, this, &AZombie::DestroyZombieMesh, 3.0f, false);
+	
+	// FTimerHandle TimerHandle;
+	// GetWorldTimerManager().SetTimer(TimerHandle, this, &AZombie::DestroyZombieMesh, 3.0f, false);
 }
 
 void AZombie::DestroyZombieMesh()
 {
-	Destroy();
+	// Destroy();
 }

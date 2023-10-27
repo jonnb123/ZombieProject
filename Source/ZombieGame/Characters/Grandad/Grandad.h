@@ -57,8 +57,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<int32> Inventory;
 
-	
-
 
 private:
 	// Sets default values for this character's properties

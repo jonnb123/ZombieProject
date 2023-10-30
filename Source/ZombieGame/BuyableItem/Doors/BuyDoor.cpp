@@ -18,6 +18,7 @@ void ABuyDoor::UseBuyableItem()
 	AZombieGameCharacter* Character = Cast<AZombieGameCharacter>(PlayerCharacter);
 	if (Character->GetPoints() >= 100 && !bDoorRotated) // set the points to be 2000
 	{
+        Character->SetPoints(Character->GetPoints() - 100);
         FRotator NewRotation = DoorMesh->GetRelativeRotation();
         NewRotation.Yaw += 90.0f; // Rotate by 90 degrees around the Z-axis
         DoorMesh->SetRelativeRotation(NewRotation);

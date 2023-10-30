@@ -7,7 +7,7 @@
 
 UBTTask_MoveSpeed::UBTTask_MoveSpeed()
 {
-    NodeName = TEXT("Change speed of zombie");
+    NodeName = TEXT("Change character speed");
 }
 
 EBTNodeResult::Type UBTTask_MoveSpeed::ExecuteTask(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory)
@@ -27,12 +27,19 @@ EBTNodeResult::Type UBTTask_MoveSpeed::ExecuteTask(UBehaviorTreeComponent &Owner
 
         return EBTNodeResult::Succeeded;
     }
-    else
+
+
+    else // for the zombie and the dog
     {
-        UCharacterMovementComponent *ZombieMovement = Cast<UCharacterMovementComponent>(AIPawn->GetMovementComponent());
-
-        ZombieMovement->MaxWalkSpeed = 60;
-
+        UCharacterMovementComponent *CharacterMovement = Cast<UCharacterMovementComponent>(AIPawn->GetMovementComponent());
+        if (CharacterMovement->MaxWalkSpeed == 60)
+        {
+            CharacterMovement->MaxWalkSpeed = 300;
+        }
+        else
+        {
+            CharacterMovement->MaxWalkSpeed = 60;
+        }
         return EBTNodeResult::Succeeded;
     }
 }

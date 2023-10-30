@@ -56,7 +56,7 @@ void AZombieAIController::EnemyDetected(AActor *Actor, FAIStimulus Stimulus)
             UE_LOG(LogTemp, Warning, TEXT("This is working!"));
             Target = ZombieGameCharacter;
             GetBlackboardComponent()->SetValueAsObject(TEXT("PlayerCharacter"), Player);
-            ZombieMovement->MaxWalkSpeed = 300;
+            // ZombieMovement->MaxWalkSpeed = 300;
         }
         else if (Stimulus.WasSuccessfullySensed() == false)
         {

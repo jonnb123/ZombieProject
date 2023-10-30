@@ -104,17 +104,17 @@ void AZombieGameMode::WaveIncrement()
     }
     else
     {
-        // Once all zombies are killed in the round, a 5-second timer will start.
-        FTimerHandle ZombieDestructionTimerHandle;
-        GetWorld()->GetTimerManager().SetTimer(
-            ZombieDestructionTimerHandle, [this]()
-            {
-                for (TActorIterator<AZombie> ZombieItr(GetWorld()); ZombieItr; ++ZombieItr)
-                {
-                    AZombie* Zombie = *ZombieItr;
-                    Zombie->Destroy();
-                } },
-            5.0f, false);
+        // // Once all zombies are killed in the round, a 5-second timer will start.
+        // FTimerHandle ZombieDestructionTimerHandle;
+        // GetWorld()->GetTimerManager().SetTimer(
+        //     ZombieDestructionTimerHandle, [this]()
+        //     {
+        //         for (TActorIterator<AZombie> ZombieItr(GetWorld()); ZombieItr; ++ZombieItr)
+        //         {
+        //             AZombie* Zombie = *ZombieItr;
+        //             Zombie->Destroy();
+        //         } },
+        //     5.0f, false);
 
         // Sets a timer of 10 seconds for both HandleWaveStart
         FTimerHandle RoundStartTimerHandle;

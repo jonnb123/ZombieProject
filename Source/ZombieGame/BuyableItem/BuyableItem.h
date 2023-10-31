@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ZombieGame/Characters/Turret/Turret.h"
+#include "Components/BoxComponent.h"
 #include "BuyableItem.generated.h"
 
 UCLASS()

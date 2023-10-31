@@ -67,7 +67,7 @@ void UShopItem::OnItemClicked()
 
         if (Item->Name.ToString() == TEXT("Turret") && TurretComplete == false)
         {
-            AActor *Turret = GetWorld()->SpawnActor(TurretClass, &TurretSpawnLocation, &TurretSpawnRotation);
+            // AActor *Turret = GetWorld()->SpawnActor(TurretClass, &TurretSpawnLocation, &TurretSpawnRotation);
         }
     }
 }

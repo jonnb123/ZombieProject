@@ -3,48 +3,54 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ZombieGame/Characters/Zombie/Zombie.h"
+#include "GameFramework/Pawn.h"
+#include "Perception/PawnSensingComponent.h"
 #include "Turret.generated.h"
 
-
 UCLASS()
-class ZOMBIEGAME_API ATurret : public AActor
+class ZOMBIEGAME_API ATurret : public APawn
 {
 	GENERATED_BODY()
-	
-protected:
 
+
+protected:
+	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditAnywhere)
+    USceneComponent* DefaultSceneRoot;
+
+	UPROPERTY(EditAnywhere)
+    UStaticMeshComponent* BaseMesh;
+
+	UPROPERTY(EditAnywhere)
+    UStaticMeshComponent* TowerMesh;
+
+	UPROPERTY(EditAnywhere)
+    UStaticMeshComponent* GunMesh;
+
+	UPROPERTY(EditAnywhere)
+    UStaticMeshComponent* BarrelMeshOne;
+
+	UPROPERTY(EditAnywhere)
+    UStaticMeshComponent* BarrelMeshTwo;
+
+	UPROPERTY(EditAnywhere)
+    USceneComponent* BulletSpawnOne;
+
+	UPROPERTY(EditAnywhere)
+    USceneComponent* BulletSpawnTwo;
+
+	UPROPERTY(EditAnywhere)
+	UPawnSensingComponent* PawnSensingComponent;
+
+private:	
+	UFUNCTION()
+	void OnSeePawn(APawn* Pawn);
+
+
+public:
+	// Sets default values for this pawn's properties
 	ATurret();
-
-	virtual void Tick(float DeltaTime) override;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
-	TSubclassOf<AActor> ProjectileBlueprint;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UStaticMeshComponent* GunMesh;
-
-	UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent* TurretMesh;
-
-private:
-	
-	void CheckFireCondition();
-	void Fire();
-
-	AZombie* GetClosestZombie();
-
-	TArray<AActor*> Zombies;
-
-	UPROPERTY(EditDefaultsOnly)
-	float TurretFireRate;
-
-	UPROPERTY(EditDefaultsOnly)
-	float FireRange;
-
-	UPROPERTY(EditDefaultsOnly)
-	float Health;
 
 };

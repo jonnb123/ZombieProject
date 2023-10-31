@@ -8,6 +8,7 @@
 #include "ZombieGame/Characters/FrontDoor/FrontDoor.h"
 #include "ZombieGame/Widgets/MainWidget.h"
 #include "ZombieGame/Characters/Zombie/AI/DamageableInterface.h"
+#include "GameFramework/Character.h"
 #include "ZombieGameCharacter.generated.h"
 
 class USkeletalMesh;

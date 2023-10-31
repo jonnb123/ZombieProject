@@ -53,11 +53,6 @@ void UShopItem::OnItemClicked()
         if (Item->Name.ToString() == TEXT("Front Door"))
         {
             AZombieGameMode *GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
-            // GameMode->FrontDoor = Cast<AFrontDoor>(GetWorld()->SpawnActor(FrontDoor, &DoorSpawnLocation, &DoorSpawnRotation));
-            // GameMode->FrontDoor->bIsSpawned = true;
-
-            // SpawnedDoor = Cast<AFrontDoor>(GetWorld()->SpawnActor(FrontDoor, &DoorSpawnLocation, &DoorSpawnRotation));
-            // SpawnedDoor->bIsSpawned = true;
 
             AFrontDoor::SetInstance(Cast<AFrontDoor>(GetWorld()->SpawnActor(FrontDoor, &DoorSpawnLocation, &DoorSpawnRotation)));
             AFrontDoor::GetInstance()->bIsSpawned = true;
@@ -68,6 +63,11 @@ void UShopItem::OnItemClicked()
         if (Item->Name.ToString() == TEXT("Dog"))
         {
             UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), DogPawn, BehaviorTree, DogSpawnLocation);
+        }
+
+        if (Item->Name.ToString() == TEXT("Turret") && TurretComplete == false)
+        {
+            AActor *Turret = GetWorld()->SpawnActor(TurretClass, &TurretSpawnLocation, &TurretSpawnRotation);
         }
     }
 }

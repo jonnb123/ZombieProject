@@ -7,13 +7,12 @@
 #include "Engine/DataTable.h"
 #include "ZombieGame/Characters/FrontDoor/FrontDoor.h"
 #include "ZombieGame/Characters/Zombie/AI/ZombieAIController.h"
+#include "ZombieGame/Characters/Turret/Turret.h"
 #include "ShopItem.generated.h"
 
 /**
- * 
+ *
  */
-
-
 
 USTRUCT(BlueprintType)
 struct FItemStructure : public FTableRowBase
@@ -27,12 +26,8 @@ struct FItemStructure : public FTableRowBase
 	int32 Cost;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UTexture2D* Thumbnail;
-
-	
-
+	UTexture2D *Thumbnail;
 };
-
 
 UCLASS()
 class ZOMBIEGAME_API UShopItem : public UUserWidget
@@ -41,7 +36,7 @@ class ZOMBIEGAME_API UShopItem : public UUserWidget
 
 private:
 	// Vertical Box
-	
+
 	UPROPERTY(meta = (BindWidget))
 	class UVerticalBox *ItemVerticalBox;
 
@@ -70,7 +65,7 @@ private:
 
 	// Data Table
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	class UDataTable* ItemDataTable;
+	class UDataTable *ItemDataTable;
 
 	// native construct
 	void NativeConstruct() override;
@@ -79,9 +74,11 @@ private:
 	UFUNCTION(BlueprintCallable)
 	void OnItemClicked();
 
-	FItemStructure* Item;
+	FItemStructure *Item;
 
 	bool bIsOwned = false;
+
+	bool TurretComplete = false;
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -93,19 +90,26 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FRotator DoorSpawnRotation;
 
-	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<APawn> DogPawn;
 
 	UPROPERTY(EditAnywhere)
-	class UBehaviorTree* BehaviorTree;
+	class UBehaviorTree *BehaviorTree;
 
 	UPROPERTY(EditAnywhere)
 	FVector DogSpawnLocation;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector TurretSpawnLocation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FRotator TurretSpawnRotation;
+
+	// The class of the turret that will be spawned
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<ATurret> TurretClass;
+
 public:
 	UPROPERTY()
-	AFrontDoor* SpawnedDoor;
-
-	
-
+	AFrontDoor *SpawnedDoor;
 };

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Perception/PawnSensingComponent.h"
+#include "ZombieGame/BuyableItem/Weapons/Projectiles/ZombieGameProjectile.h"
 #include "Turret.generated.h"
 
 UCLASS()
@@ -33,16 +34,14 @@ protected:
     UStaticMeshComponent* BarrelMeshOne;
 
 	UPROPERTY(EditAnywhere)
-    UStaticMeshComponent* BarrelMeshTwo;
-
-	UPROPERTY(EditAnywhere)
     USceneComponent* BulletSpawnOne;
 
 	UPROPERTY(EditAnywhere)
-    USceneComponent* BulletSpawnTwo;
-
-	UPROPERTY(EditAnywhere)
 	UPawnSensingComponent* PawnSensingComponent;
+
+	// needed in ZombieGameCharacter
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+	TSubclassOf<AZombieGameProjectile> ProjectileClass;
 
 private:	
 	UFUNCTION()

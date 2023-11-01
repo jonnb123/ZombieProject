@@ -3,11 +3,11 @@
 #include "ZombieGame/Characters/Turret/Turret.h"
 #include "ZombieGame/Characters/Zombie/Zombie.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 
 // Sets default values
 ATurret::ATurret()
 {
-
 	DefaultSceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("DefaultSceneRoot"));
 	DefaultSceneRoot->SetupAttachment(RootComponent);
 
@@ -23,14 +23,8 @@ ATurret::ATurret()
 	BarrelMeshOne = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Barrel Mesh One"));
 	BarrelMeshOne->SetupAttachment(GunMesh);
 
-	BarrelMeshTwo = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Barrel Mesh Two"));
-	BarrelMeshTwo->SetupAttachment(GunMesh);
-
 	BulletSpawnOne = CreateDefaultSubobject<USceneComponent>(TEXT("Bullet Spawn One"));
 	BulletSpawnOne->SetupAttachment(BarrelMeshOne);
-
-	BulletSpawnTwo = CreateDefaultSubobject<USceneComponent>(TEXT("Bullet Spawn Two"));
-	BulletSpawnTwo->SetupAttachment(BarrelMeshTwo);
 
 	PawnSensingComponent = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensingComponent"));
 }
@@ -62,6 +56,17 @@ void ATurret::OnSeePawn(APawn *Pawn)
 		FRotator InterpValue = UKismetMathLibrary::RInterpTo(TurretRotation, LookAtRotation, GetWorld()->GetDeltaSeconds(), 100.0);
 
 		// REMEMBER: PITCH (y), YAW (z), ROLL (x)
-		SetActorRotation(FRotator(0,InterpValue.Yaw,0));
+		SetActorRotation(FRotator(0, InterpValue.Yaw, 0));
+
+		FActorSpawnParameters ActorSpawnParams;
+		ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		FVector ProjectileDirection = BulletSpawnOne->GetComponentRotation().Vector();
+
+		AZombieGameProjectile* Projectile = GetWorld()->SpawnActor<AZombieGameProjectile>(ProjectileClass, BulletSpawnOne->GetComponentLocation(), BulletSpawnOne->GetComponentRotation(), ActorSpawnParams);
+		
+		// Projectile->GetProjectileMovement()->InitialSpeed = ProjectileDirection.Size() * Projectile->GetProjectileMovement()->MaxSpeed;
+		// Projectile->GetProjectileMovement()->InitialSpeed = ProjectileDirection.Size() * Projectile->GetProjectileMovement()->MaxSpeed;
+		// Projectile->GetProjectileMovement()->Velocity = ProjectileDirection * Projectile->GetProjectileMovement()->InitialSpeed;
+    	// Projectile->GetProjectileMovement()->Activate();  
 	}
 }

@@ -31,25 +31,28 @@ protected:
     UStaticMeshComponent* GunMesh;
 
 	UPROPERTY(EditAnywhere)
-    UStaticMeshComponent* BarrelMeshOne;
+    UStaticMeshComponent* BarrelMesh;
 
-	UPROPERTY(EditAnywhere)
-    USceneComponent* BulletSpawnOne;
+	
 
 	UPROPERTY(EditAnywhere)
 	UPawnSensingComponent* PawnSensingComponent;
 
-	// needed in ZombieGameCharacter
-	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
-	TSubclassOf<AZombieGameProjectile> ProjectileClass;
+	
 
 private:	
-	UFUNCTION()
-	void OnSeePawn(APawn* Pawn);
+	// UFUNCTION()
+	// void OnSeePawn(APawn* Pawn);
 
 
 public:
 	// Sets default values for this pawn's properties
 	ATurret();
 
+	// needed in ZombieGameCharacter
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+	TSubclassOf<AZombieGameProjectile> ProjectileClass;
+
+	UPROPERTY(EditAnywhere)
+    USceneComponent* BulletSpawn;
 };

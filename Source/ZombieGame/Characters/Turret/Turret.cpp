@@ -20,53 +20,20 @@ ATurret::ATurret()
 	GunMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Gun Mesh"));
 	GunMesh->SetupAttachment(TowerMesh);
 
-	BarrelMeshOne = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Barrel Mesh One"));
-	BarrelMeshOne->SetupAttachment(GunMesh);
+	BarrelMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Barrel Mesh"));
+	BarrelMesh->SetupAttachment(GunMesh);
 
-	BulletSpawnOne = CreateDefaultSubobject<USceneComponent>(TEXT("Bullet Spawn One"));
-	BulletSpawnOne->SetupAttachment(BarrelMeshOne);
+	BulletSpawn = CreateDefaultSubobject<USceneComponent>(TEXT("Bullet Spawn"));
+	BulletSpawn->SetupAttachment(BarrelMesh);
 
-	PawnSensingComponent = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensingComponent"));
+	// PawnSensingComponent = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensingComponent"));
 }
 
 // Called when the game starts or when spawned
 void ATurret::BeginPlay()
 {
 	Super::BeginPlay();
-	PawnSensingComponent->OnSeePawn.AddDynamic(this, &ATurret::OnSeePawn);
+	// PawnSensingComponent->OnSeePawn.AddDynamic(this, &ATurret::OnSeePawn);
 }
 
-void ATurret::OnSeePawn(APawn *Pawn)
-{
-	UE_LOG(LogTemp, Warning, TEXT("HELLO HI HELP"));
 
-	AZombie *Zombie = Cast<AZombie>(Pawn);
-
-	if (Zombie)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("WELCOME TO HELL MOTHERFUCKER"));
-
-		FVector ZombieLocation = Zombie->GetActorLocation();
-
-		FVector TurretLocation = GetActorLocation();
-		FRotator TurretRotation = GetActorRotation();
-
-		FRotator LookAtRotation = UKismetMathLibrary::FindLookAtRotation(TurretLocation, ZombieLocation);
-
-		FRotator InterpValue = UKismetMathLibrary::RInterpTo(TurretRotation, LookAtRotation, GetWorld()->GetDeltaSeconds(), 100.0);
-
-		// REMEMBER: PITCH (y), YAW (z), ROLL (x)
-		SetActorRotation(FRotator(0, InterpValue.Yaw, 0));
-
-		FActorSpawnParameters ActorSpawnParams;
-		ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-		FVector ProjectileDirection = BulletSpawnOne->GetComponentRotation().Vector();
-
-		AZombieGameProjectile* Projectile = GetWorld()->SpawnActor<AZombieGameProjectile>(ProjectileClass, BulletSpawnOne->GetComponentLocation(), BulletSpawnOne->GetComponentRotation(), ActorSpawnParams);
-		
-		// Projectile->GetProjectileMovement()->InitialSpeed = ProjectileDirection.Size() * Projectile->GetProjectileMovement()->MaxSpeed;
-		// Projectile->GetProjectileMovement()->InitialSpeed = ProjectileDirection.Size() * Projectile->GetProjectileMovement()->MaxSpeed;
-		// Projectile->GetProjectileMovement()->Velocity = ProjectileDirection * Projectile->GetProjectileMovement()->InitialSpeed;
-    	// Projectile->GetProjectileMovement()->Activate();  
-	}
-}

@@ -46,22 +46,6 @@ void AZombie::HandleDamage(float const DamageAmount, struct FDamageEvent const &
 	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	if (IsDead == false)
 	{
-		// if (Health <= 0)
-		// {
-		// 	// when health is below 0
-		// 	Death();
-		// 	UE_LOG(LogTemp, Warning, TEXT("Health left %f"), Health);
-		// }
-		// // if alive
-		// else
-		// {
-		// 	DamageToApply = FMath::Min(Health, DamageToApply);
-		// 	Health -= DamageToApply;
-		// 	PlayAnimMontage(HitMontage);
-		// 	ZombieHitCheck = true;
-		// 	UE_LOG(LogTemp, Warning, TEXT("Health left %f"), Health);
-		// }
-
 		DamageToApply = FMath::Min(Health, DamageToApply);
 		Health -= DamageToApply;
 		if (Health > 0)

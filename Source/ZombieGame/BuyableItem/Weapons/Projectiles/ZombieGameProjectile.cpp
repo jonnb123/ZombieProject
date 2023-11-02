@@ -33,6 +33,6 @@ AZombieGameProjectile::AZombieGameProjectile()
 
 void AZombieGameProjectile::OnHit(UPrimitiveComponent *HitComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit)
 {
-	// Destroy();
+	Destroy();
 	UE_LOG(LogTemp, Warning, TEXT("PROJECTILE HIT"));
 }

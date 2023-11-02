@@ -7,7 +7,7 @@
 #include "Engine/DataTable.h"
 #include "ZombieGame/Characters/FrontDoor/FrontDoor.h"
 #include "ZombieGame/Characters/Zombie/AI/ZombieAIController.h"
-// #include "ZombieGame/Characters/Turret/Turret.h"
+#include "ZombieGame/Characters/Turret/Turret.h"
 #include "ShopItem.generated.h"
 
 /**
@@ -106,8 +106,8 @@ protected:
 	FRotator TurretSpawnRotation;
 
 	// The class of the turret that will be spawned
-	// UPROPERTY(EditAnywhere)
-	// TSubclassOf<ATurret> TurretClass;
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<ATurret> TurretClass;
 
 public:
 	UPROPERTY()

@@ -36,13 +36,13 @@ void UBTTask_FireAtZombie::ZombieQueryResult(TSharedPtr<FEnvQueryResult> Result)
         if (ClosestZombie)
         {
             FVector ZombieLocation = ClosestZombie->GetActorLocation();
-            FVector TurretLocation = TurretPawn->GetActorLocation();
-            FRotator TurretRotation = TurretPawn->GetActorRotation();
+            FVector TurretLocation = Turret->GetActorLocation();
+            FRotator TurretRotation = Turret->GetActorRotation();
             FRotator LookAtRotation = UKismetMathLibrary::FindLookAtRotation(TurretLocation, ZombieLocation);
 
             FRotator InterpValue = UKismetMathLibrary::RInterpTo(TurretRotation, LookAtRotation, GetWorld()->GetDeltaSeconds(), 100.0);
             // REMEMBER: PITCH (y), YAW (z), ROLL (x)
-            AIController->GetPawn()->SetActorRotation(FRotator(0, InterpValue.Yaw, 0));
+            Turret->SetActorRotation(FRotator(0, InterpValue.Yaw, 0));
 
             FActorSpawnParameters ActorSpawnParams;
             ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;

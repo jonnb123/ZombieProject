@@ -6,6 +6,7 @@
 #include "ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h"
 #include "NiagaraFunctionLibrary.h"
 #include "AIController.h"
+#include "Components/SkeletalMeshComponent.h"
 
 // Sets default values
 AZombie::AZombie()
@@ -73,6 +74,7 @@ void AZombie::BeginPlay()
 	RightLegBoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AZombie::OnRightLegBoxBeginOverlap);
 	TorsoBoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AZombie::OnTorsoBoxBeginOverlap);
 	LeftLegBoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AZombie::OnLeftLegBoxBeginOverlap);
+	GetMesh()->OnComponentHit.AddDynamic(this, &AZombie::OnMeshHit);
 }
 
 void AZombie::OnHeadBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
@@ -123,6 +125,13 @@ void AZombie::OnLeftLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent,
 	{
 		HandleBodyPartOverlap(Projectile->LegDamage, LegHealth, TEXT("calf_r"), TEXT("calf_l"), OtherActor, OverlappedComponent, NoOppositeLimb);
 	}
+}
+
+void AZombie::OnMeshHit(UPrimitiveComponent *HitComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Zombie mesh hit"));
+	// 	UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), )
+	OtherComp->DestroyComponent();
 }
 
 void AZombie::OnTorsoBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
@@ -209,7 +218,6 @@ void AZombie::Death()
 
 	GetMesh()->GetAnimInstance()->Montage_Stop(0.2f, HitMontage);
 
-	
 	FTimerHandle TimerHandle;
 	GetWorldTimerManager().SetTimer(TimerHandle, this, &AZombie::DestroyZombieMesh, 2.0f, false);
 }

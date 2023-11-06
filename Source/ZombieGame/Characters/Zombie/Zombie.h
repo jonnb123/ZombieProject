@@ -93,10 +93,10 @@ protected:
 
 private:
 	// Declare a common function to handle body part overlap
-    void HandleBodyPartOverlap(float Damage, float& LimbHealth, const FName& BoneToRemoveOne, const FName &BoneToRemoveTwo, AActor* OtherActor, UPrimitiveComponent* OverlappedComponent, float &OppositeLimbHealth);
+	void HandleBodyPartOverlap(float Damage, float &LimbHealth, const FName &BoneToRemoveOne, const FName &BoneToRemoveTwo, AActor *OtherActor, UPrimitiveComponent *OverlappedComponent, float &OppositeLimbHealth);
 
 	// On begin overlap functions, DO NOT DELETE UFUNCTION IT'S ESSENTIAL
-	UFUNCTION() 
+	UFUNCTION()
 	void OnHeadBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
 							   int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
 	UFUNCTION()
@@ -115,8 +115,17 @@ private:
 	UFUNCTION()
 	void OnLeftLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
 								  int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
+
+	UFUNCTION()
+	void OnMeshHit(
+		UPrimitiveComponent *HitComponent, // The component that was hit
+		AActor *OtherActor,				   // The actor that hit the component
+		UPrimitiveComponent *OtherComp,	   // The other component involved in the collision
+		FVector NormalImpulse,			   // The impulse applied for the hit
+		const FHitResult &Hit			   // Information about the hit, including impact point and normal
+	);
 	// Functions
-	
+
 	bool ZombieHitCheck = false; // also used in ZombieAIController, uses getter and setter
 
 	void Death();
@@ -124,7 +133,4 @@ private:
 	void DestroyZombieMesh();
 
 	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
-
-	
-
 };

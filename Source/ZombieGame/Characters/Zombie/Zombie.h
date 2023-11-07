@@ -7,6 +7,7 @@
 #include "Components/AudioComponent.h"
 #include "Components/BoxComponent.h"
 #include "ZombieGame/Characters/Zombie/AI/DamageableInterface.h"
+#include "NiagaraSystem.h"
 #include "Zombie.generated.h"
 
 UCLASS()
@@ -90,6 +91,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, Category = Health)
 	float NoOppositeLimb = -1; // placeholder for when component such as head doesn't have an opposite limb
+
+	UPROPERTY(EditAnywhere, Category = VFX)
+	UNiagaraSystem* ZombieImpactVFX;
 
 private:
 	// Declare a common function to handle body part overlap

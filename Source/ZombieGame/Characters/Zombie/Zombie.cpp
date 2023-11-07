@@ -130,7 +130,7 @@ void AZombie::OnLeftLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent,
 void AZombie::OnMeshHit(UPrimitiveComponent *HitComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Zombie mesh hit"));
-	// 	UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), )
+	UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), ZombieImpactVFX, Hit.Location);
 	OtherComp->DestroyComponent();
 }
 

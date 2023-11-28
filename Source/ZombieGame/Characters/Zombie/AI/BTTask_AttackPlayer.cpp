@@ -38,6 +38,9 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
     ACharacter *AICharacter{AIController->GetCharacter()};
     AZombie *ZombieCharacter = Cast<AZombie>(AICharacter);
 
+    // make sure zombie is dead before attacking.
+    if (ZombieCharacter->GetIsZombieDead()) return EBTNodeResult::Aborted;
+
     // gets the character
     ACharacter *Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 
@@ -67,7 +70,7 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
 
         Player->TakeDamage(FireMeleeDamage, DamageEvent, AIController, AICharacter);
     }
-    else
+    else // if normal zombie
     {
         if (ZombieCharacter->GetIsCrawling() == false)
         {

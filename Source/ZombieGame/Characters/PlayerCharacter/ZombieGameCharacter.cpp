@@ -75,11 +75,6 @@ void AZombieGameCharacter::HandleDamage(float const DamageAmount, struct FDamage
 			// this basically plays the ReloadCalcAndPlayAnimations once the animation is complete.
 			GetWorldTimerManager().SetTimer(HealthRegenTimerHandle, HealthRegenTimerDelegate, HealthRegenDuration, true);
 		}
-		// else
-		// {
-		// 	check(MainWidgetInstance != nullptr);
-		// 	MainWidgetInstance->ShowBloodOverlay();
-		// }
 		DamageToApply = FMath::Min(Health, DamageToApply);
 		Health -= DamageToApply; // deducts damage from health
 		UE_LOG(LogTemp, Log, TEXT("Health left %f"), Health);
@@ -332,9 +327,8 @@ void AZombieGameCharacter::StartReload()
 	{
 		if (ChangeCharacterState(ECharacterState::Reloading))
 		{
-
-			float MontageDuration = Weapons[CurrentWeaponIndex]->WeaponReloadMontage->GetPlayLength();
-			float TimerDuration = MontageDuration - 0.2; // Skip the last 0.2second
+			const float MontageDuration = Weapons[CurrentWeaponIndex]->WeaponReloadMontage->GetPlayLength();
+			const float TimerDuration = MontageDuration - 0.2; // Skip the last 0.2second
 			GunMesh->PlayAnimation(Weapons[CurrentWeaponIndex]->WeaponReloadMontage, false);
 			// A delegate is created and is binded to the member function.
 			FTimerDelegate TimerDelegate;

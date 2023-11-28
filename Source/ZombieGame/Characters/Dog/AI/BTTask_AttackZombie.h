@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "BehaviorTree/Tasks/BTTask_BlackboardBase.h"
 #include "Sound/SoundCue.h"
+#include "EnvironmentQuery/EnvQueryTypes.h"
 #include "BTTask_AttackZombie.generated.h"
 
 /**
@@ -21,7 +22,7 @@ protected:
 	UBehaviorTreeComponent *CachedOwnerComp; // Member variable to store OwnerComp
 
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory) override;
-
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	class UAnimMontage *AttackMontage;
 
@@ -33,4 +34,8 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	float BiteDamage = 20;
+
+	AAIController* AIController;
+
+	AActor* ZombieActor;
 };

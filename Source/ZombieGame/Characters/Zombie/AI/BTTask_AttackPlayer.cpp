@@ -33,10 +33,10 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
 
     // this block gets the Zombie
     AAIController *AIController{OwnerComp.GetAIOwner()};
-    AZombieAIController *ZombieAIController = Cast<AZombieAIController>(AIController);
+    const AZombieAIController *ZombieAIController = Cast<AZombieAIController>(AIController);
     const APawn *AIPawn{AIController->GetPawn()};
     ACharacter *AICharacter{AIController->GetCharacter()};
-    AZombie *ZombieCharacter = Cast<AZombie>(AICharacter);
+    const AZombie *ZombieCharacter = Cast<AZombie>(AICharacter);
 
     // make sure zombie is dead before attacking.
     if (ZombieCharacter->GetIsZombieDead()) return EBTNodeResult::Aborted;
@@ -51,8 +51,7 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
     AFrontDoor *FrontDoor = AFrontDoor::GetInstance();
 
     // Gets the Animation Instance and if it has ended play OnAttackEnd
-    UAnimInstance *AnimInstance = AICharacter->GetMesh()->GetAnimInstance();
-    if (AnimInstance)
+    if (UAnimInstance *AnimInstance = AICharacter->GetMesh()->GetAnimInstance())
     {
         // Bind a delegate function to the OnMontageEnded event
         AnimInstance->OnMontageEnded.AddDynamic(this, &UBTTask_AttackPlayer::OnAttackEnd);
@@ -60,9 +59,7 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
 
     UE_LOG(LogTemp, Log, TEXT("Damaging..."));
     UE_LOG(LogTemp, Log, TEXT("Name of actor: %s"), *AICharacter->GetName());
-
     
-
     if (AICharacter->GetName().StartsWith("BP_FireZombie"))
     {
         AICharacter->PlayAnimMontage(AttackMontage);

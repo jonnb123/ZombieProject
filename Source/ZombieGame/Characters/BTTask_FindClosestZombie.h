@@ -7,24 +7,27 @@
 #include "EnvironmentQuery/EnvQuery.h"
 #include "EnvironmentQuery/EnvQueryTypes.h"
 #include "AIController.h"
-#include "BTTask_FireAtZombie.generated.h"
+#include "BTTask_FindClosestZombie.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class ZOMBIEGAME_API UBTTask_FireAtZombie : public UBTTask_BlackboardBase
+class ZOMBIEGAME_API UBTTask_FindClosestZombie : public UBTTask_BlackboardBase
 {
 	GENERATED_BODY()
+
 protected:
-	UBTTask_FireAtZombie();
+	UBTTask_FindClosestZombie();
 
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory) override;
 
-	UPROPERTY(EditAnywhere, Category = "AI")
-    UEnvQuery *FindZombieEQS;
-
 	UBehaviorTreeComponent *CachedOwnerComp; // Member variable to store OwnerComp
 
+	UPROPERTY(EditAnywhere, Category = "AI")
+	UEnvQuery *FindZombieEQS;
+
+	void ZombieQueryResult(TSharedPtr<FEnvQueryResult> Result);
+	
 	AAIController* AIController;
 };

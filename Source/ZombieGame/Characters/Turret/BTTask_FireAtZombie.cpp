@@ -2,6 +2,7 @@
 
 #include "ZombieGame/Characters/Turret/BTTask_FireAtZombie.h"
 #include "ZombieGame/Characters/Zombie/Zombie.h"
+#include "BehaviorTree/BlackboardComponent.h"
 #include "EnvironmentQuery/EnvQueryManager.h"
 #include "ZombieGame/Characters/Turret/Turret.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -15,39 +16,34 @@ EBTNodeResult::Type UBTTask_FireAtZombie::ExecuteTask(UBehaviorTreeComponent &Ow
 {
     Super::ExecuteTask(OwnerComp, NodeMemory);
 
-    // Stores a reference for OwnerComp for use in OnAttackEnd
-    CachedOwnerComp = &OwnerComp;
-    AIController = Cast<AAIController>(OwnerComp.GetAIOwner());
+    // // Stores a reference for OwnerComp for use in OnAttackEnd
+    // CachedOwnerComp = &OwnerComp;
+    // AIController = Cast<AAIController>(OwnerComp.GetAIOwner());
 
-    FEnvQueryRequest HidingSpotQueryRequest = FEnvQueryRequest(FindZombieEQS, AIController->GetPawn());
-    HidingSpotQueryRequest.Execute(EEnvQueryRunMode::SingleResult, this, &UBTTask_FireAtZombie::ZombieQueryResult);
-    return EBTNodeResult::Succeeded;
-}
+    AIController = OwnerComp.GetAIOwner();
+    
+    const UBlackboardComponent* BlackboardComponent = OwnerComp.GetBlackboardComponent();
+    AActor* ZombieActor = Cast<AActor>(BlackboardComponent->GetValueAsObject("Zombie"));
+    const AZombie* Zombie = Cast<AZombie>(ZombieActor);
 
-void UBTTask_FireAtZombie::ZombieQueryResult(TSharedPtr<FEnvQueryResult> Result)
-{
-    if (Result->IsSuccessful())
+    if (Zombie)
     {
-        AActor *PreferredActor = Result->GetItemAsActor(0);
-        AZombie *ClosestZombie = Cast<AZombie>(PreferredActor);
         APawn* TurretPawn = AIController->GetPawn();
         ATurret* Turret = Cast<ATurret>(TurretPawn);
-
-        if (ClosestZombie)
-        {
-            FVector ZombieLocation = ClosestZombie->GetActorLocation();
-            FVector TurretLocation = Turret->GetActorLocation();
-            FRotator TurretRotation = Turret->GetActorRotation();
-            FRotator LookAtRotation = UKismetMathLibrary::FindLookAtRotation(TurretLocation, ZombieLocation);
-
-            FRotator InterpValue = UKismetMathLibrary::RInterpTo(TurretRotation, LookAtRotation, GetWorld()->GetDeltaSeconds(), 100.0);
-            // REMEMBER: PITCH (y), YAW (z), ROLL (x)
-            Turret->SetActorRotation(FRotator(0, InterpValue.Yaw, 0));
-
-            FActorSpawnParameters ActorSpawnParams;
-            ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-            FVector ProjectileDirection = Turret->BulletSpawn->GetComponentRotation().Vector();
-            AZombieGameProjectile *Projectile = GetWorld()->SpawnActor<AZombieGameProjectile>(Turret->ProjectileClass, Turret->BulletSpawn->GetComponentLocation(), Turret->BulletSpawn->GetComponentRotation(), ActorSpawnParams);
-        }
+        FVector ZombieLocation = Zombie->GetActorLocation();
+        FVector TurretLocation = Turret->GetActorLocation();
+        FRotator TurretRotation = Turret->GetActorRotation();
+        FRotator LookAtRotation = UKismetMathLibrary::FindLookAtRotation(TurretLocation, ZombieLocation);
+        
+        FRotator InterpValue = UKismetMathLibrary::RInterpTo(TurretRotation, LookAtRotation, GetWorld()->GetDeltaSeconds(), 100.0);
+        // REMEMBER: PITCH (y), YAW (z), ROLL (x)
+        Turret->SetActorRotation(FRotator(0, InterpValue.Yaw, 0));
+        
+        FActorSpawnParameters ActorSpawnParams;
+        ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+        FVector ProjectileDirection = Turret->BulletSpawn->GetComponentRotation().Vector();
+        AZombieGameProjectile *Projectile = GetWorld()->SpawnActor<AZombieGameProjectile>(Turret->ProjectileClass, Turret->BulletSpawn->GetComponentLocation(), Turret->BulletSpawn->GetComponentRotation(), ActorSpawnParams);
     }
+    
+    return EBTNodeResult::Succeeded;
 }

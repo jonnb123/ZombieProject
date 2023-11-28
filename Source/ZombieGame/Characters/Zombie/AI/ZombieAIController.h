@@ -18,8 +18,6 @@ class ZOMBIEGAME_API AZombieAIController : public AAIController
 protected:
 	virtual void BeginPlay() override;
 
-	virtual void Tick(float DeltaSeconds) override;
-
 	AZombieAIController();
 
 	UPROPERTY(VisibleAnywhere, Category="AI", meta=(AllowPrivateAccess="true"))

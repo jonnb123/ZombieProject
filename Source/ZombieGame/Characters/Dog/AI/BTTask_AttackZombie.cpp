@@ -6,9 +6,9 @@
 #include "ZombieGame/GameMode/ZombieGameMode.h"
 #include "ZombieGame/Characters/Dog/Dog.h"
 #include "AIController.h"
-#include "ZombieGame/Characters/Dog/AI/DogAIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "AIController.h"
+#include "EnvironmentQuery/EnvQueryManager.h"
 #include "ZombieGame/Characters/Zombie/Zombie.h"
 
 UBTTask_AttackZombie::UBTTask_AttackZombie()
@@ -22,27 +22,17 @@ EBTNodeResult::Type UBTTask_AttackZombie::ExecuteTask(UBehaviorTreeComponent &Ow
 
     // Stores a reference for OwnerComp for use in OnAttackEnd
     CachedOwnerComp = &OwnerComp;
-
-    // gets the closest zombie
-    AAIController *AIController{OwnerComp.GetAIOwner()};
-    UBlackboardComponent* BlackboardComponent = OwnerComp.GetBlackboardComponent();
-    AActor* ZombieActor = Cast<AActor>(BlackboardComponent->GetValueAsObject("Zombie"));
-    AZombie* Zombie = Cast<AZombie>(ZombieActor);
-    if (Zombie->GetIsZombieDead() == true)
-    {
-        // GetBlackboardComponent()->ClearValue(TEXT("Zombie"));
-    }
-
-    // gets the dog
-    const APawn *AIPawn{AIController->GetPawn()};
-    ACharacter *AICharacter{AIController->GetCharacter()};
-    ADog *DogCharacter = Cast<ADog>(AICharacter);
-
-    FDamageEvent DamageEvent;
-
-    UAnimInstance *AnimInstance = AICharacter->GetMesh()->GetAnimInstance();
-
-    if (AnimInstance)
+    
+    AIController = OwnerComp.GetAIOwner();
+    
+    const UBlackboardComponent* BlackboardComponent = OwnerComp.GetBlackboardComponent();
+    ZombieActor = Cast<AActor>(BlackboardComponent->GetValueAsObject("Zombie"));
+    const AZombie* Zombie = Cast<AZombie>(ZombieActor);
+    
+    // get the character
+    ACharacter *AICharacter = AIController->GetCharacter();
+    
+    if (UAnimInstance *AnimInstance = AICharacter->GetMesh()->GetAnimInstance())
     {
         // Bind a delegate function to the OnMontageEnded event
         AnimInstance->OnMontageEnded.AddDynamic(this, &UBTTask_AttackZombie::OnAttackEnd);
@@ -52,10 +42,10 @@ EBTNodeResult::Type UBTTask_AttackZombie::ExecuteTask(UBehaviorTreeComponent &Ow
     {
         UGameplayStatics::PlaySoundAtLocation(GetWorld(), DogAttackSound, AICharacter->GetActorLocation());
         AICharacter->PlayAnimMontage(AttackMontage);
-        IDamageableInterface *TheInterface = Cast<IDamageableInterface>(ZombieActor);
-        if (TheInterface)
+        if (IDamageableInterface *TheInterface = Cast<IDamageableInterface>(ZombieActor))
         {
-            TheInterface->HandleDamage(BiteDamage, DamageEvent, AIController, AICharacter);
+            FDamageEvent DamageEvent;
+            TheInterface->HandleDamage(BiteDamage, DamageEvent, AIController, ZombieActor);
         }
     }
     else
@@ -65,8 +55,10 @@ EBTNodeResult::Type UBTTask_AttackZombie::ExecuteTask(UBehaviorTreeComponent &Ow
     return EBTNodeResult::InProgress;
 }
 
+
 void UBTTask_AttackZombie::OnAttackEnd(UAnimMontage *Montage, bool bInterrupted)
 {
     UE_LOG(LogTemp, Warning, TEXT("DOG IS ATTACKING"));
+    
     FinishLatentTask(*CachedOwnerComp, EBTNodeResult::Succeeded);
 }

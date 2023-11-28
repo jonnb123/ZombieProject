@@ -74,14 +74,6 @@ void AZombieAIController::EnemyDetected(AActor *Actor, FAIStimulus Stimulus)
             }
         }
     }
-
-    // UE_LOG(LogTemp, Warning, TEXT("PERCEPTION UPDATED"));
-    // AZombieGameCharacter *Player = Cast<AZombieGameCharacter>(Actor);
-    // GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerLocation"), Player->GetActorLocation());
-    // if (Player == nullptr)
-    //     return;
-
-    // AZombie *ZombieCharacter = Cast<AZombie>(GetPawn());
 }
 
 void AZombieAIController::HandleDoorSpawned()
@@ -124,87 +116,3 @@ void AZombieAIController::InitializeGrandadBlackboardValue()
     }
 }
 
-void AZombieAIController::Tick(float DeltaSeconds)
-{
-    Super::Tick(DeltaSeconds);
-
-    // // Casting to different PlayerCharactrer types
-    // APawn *PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-    // ACharacter *Player = Cast<ACharacter>(PlayerPawn);
-    // AZombieGameCharacter *ZombieGameCharacter = Cast<AZombieGameCharacter>(PlayerPawn);
-
-    // // Gets Zombie and Fire Zombie
-    // AZombie *ZombieCharacter = Cast<AZombie>(GetPawn());
-    // AFireZombieBoss *FireZombieCharacter = Cast<AFireZombieBoss>(GetPawn());
-
-    // if (ZombieCharacter->GetIsZombieDead() == false)
-    // {
-    //     UE_LOG(LogTemp, Log, TEXT("Name of actor: %s"), *ZombieCharacter->GetName());
-    //     if (ZombieCharacter->GetName().StartsWith("BP_FireZombie")) // if it's a fire boss zombie
-    //     {
-    //         UCharacterMovementComponent *FireZombieMovement = Cast<UCharacterMovementComponent>(FireZombieCharacter->GetMovementComponent());
-    //         if (ZombieCharacter->GetZombieHitCheck() == true)
-    //         {
-    //             FireZombieMovement->MaxWalkSpeed = 600;
-    //             GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerLocation"), Player->GetActorLocation());
-    //             GetBlackboardComponent()->SetValueAsVector(TEXT("LastKnownPlayerLocation"), Player->GetActorLocation());
-    //             ZombieCharacter->SetZombieHitCheck(false);
-    //         }
-    //         else if (AIPerceptionComponent->HasAnyCurrentStimulus(*Player))
-    //         {
-    //             UE_LOG(LogTemp, Log, TEXT("Is fire zombie"));
-    //             FireZombieMovement->MaxWalkSpeed = 600;
-    //             GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerLocation"), Player->GetActorLocation());
-    //             GetBlackboardComponent()->SetValueAsVector(TEXT("LastKnownPlayerLocation"), Player->GetActorLocation());
-    //         }
-    //         else
-    //         {
-    //             ZombieCharacter->SetZombieHitCheck(false);
-    //             GetBlackboardComponent()->ClearValue(TEXT("PlayerLocation"));
-    //         }
-    //     }
-    //     else // if it's a normal zombie
-    //     {
-    //         UCharacterMovementComponent *ZombieMovement = Cast<UCharacterMovementComponent>(ZombieCharacter->GetMovementComponent());
-    //         if (ZombieCharacter->GetZombieHitCheck() == true)
-    //         {
-    //             if (ZombieCharacter->GetIsCrawling() == false)
-    //             {
-    //                 ZombieMovement->MaxWalkSpeed = 300;
-    //             }
-    //             else
-    //             {
-    //                 ZombieMovement->MaxWalkSpeed = 60;
-    //             }
-    //             GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerLocation"), Player->GetActorLocation());
-    //             GetBlackboardComponent()->SetValueAsVector(TEXT("LastKnownPlayerLocation"), Player->GetActorLocation());
-    //             ZombieCharacter->SetZombieHitCheck(false);
-    //         }
-
-    //         else if (AIPerceptionComponent->HasAnyCurrentStimulus(*Player))
-    //         {
-    //             UE_LOG(LogTemp, Log, TEXT("Is normal zombie"));
-    //             if (ZombieCharacter->GetIsCrawling() == false)
-    //             {
-    //                 ZombieMovement->MaxWalkSpeed = 300;
-    //             }
-    //             else
-    //             {
-    //                 ZombieMovement->MaxWalkSpeed = 60;
-    //             }
-    //             GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerLocation"), Player->GetActorLocation());
-    //             GetBlackboardComponent()->SetValueAsVector(TEXT("LastKnownPlayerLocation"), Player->GetActorLocation());
-    //         }
-    //         else
-    //         {
-    //             ZombieCharacter->SetZombieHitCheck(false);
-    //             GetBlackboardComponent()->ClearValue(TEXT("PlayerLocation"));
-    //         }
-    //     }
-    // }
-    // else
-    // {
-    //     this->UnPossess(); // Unpossess to stop the AI
-    //     this->Destroy();   // Destroy the controller
-    // }
-}

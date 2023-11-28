@@ -7,6 +7,8 @@
 #include "NiagaraFunctionLibrary.h"
 #include "AIController.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Perception/AIPerceptionStimuliSourceComponent.h"
+#include "Perception/AISense_Sight.h"
 
 
 // Sets default values
@@ -209,6 +211,13 @@ void AZombie::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
 
 void AZombie::Death()
 {
+	// AI can no longer detect the zombie upon death
+	if (UAIPerceptionStimuliSourceComponent* StimuliSourceComponent = FindComponentByClass<UAIPerceptionStimuliSourceComponent>())
+	{
+		// Unregister from the Sight sense
+		StimuliSourceComponent->UnregisterFromSense(UAISense_Sight::StaticClass());
+	}
+	
 	IsDead = true;
 
 	GetCharacterMovement()->StopMovementImmediately();

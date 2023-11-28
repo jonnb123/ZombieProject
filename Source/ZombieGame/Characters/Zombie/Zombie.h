@@ -8,7 +8,10 @@
 #include "Components/BoxComponent.h"
 #include "ZombieGame/Characters/Zombie/AI/DamageableInterface.h"
 #include "NiagaraSystem.h"
+#include "Perception/AIPerceptionTypes.h"
 #include "Zombie.generated.h"
+
+
 
 UCLASS()
 class ZOMBIEGAME_API AZombie : public ACharacter, public IDamageableInterface

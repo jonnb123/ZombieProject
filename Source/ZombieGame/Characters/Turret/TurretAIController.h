@@ -34,18 +34,9 @@ protected:
 
 	UFUNCTION()
 	void EnemyDetected(AActor* Actor, FAIStimulus Stimulus);
+	
 
 	UPROPERTY(EditAnywhere, Category = "AI")
     UEnvQuery *FindZombieEQS;
-
-	void ZombieQueryResult(TSharedPtr<FEnvQueryResult> Result);
-
-	// UPROPERTY(VisibleAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
-	// UPawnSensingComponent *PawnSensingComponent;
-
-	// UFUNCTION()
-	// void CanSeeEnemy(APawn* SeenPawn);
-
-private:
 	
 };

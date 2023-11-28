@@ -132,7 +132,7 @@ void AZombieGameMode::HandleWaveStart()
     SpawnAmmo();
 
     ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-    AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+    const AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
    
     if (Character->MainWidgetInstance)
     {

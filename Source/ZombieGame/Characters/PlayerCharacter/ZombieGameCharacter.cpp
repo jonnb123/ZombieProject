@@ -36,7 +36,7 @@ AZombieGameCharacter::AZombieGameCharacter()
 	Mesh1P->bCastDynamicShadow = false;
 	Mesh1P->CastShadow = false;
 	// Attach GunMeshNEW to Mesh1P using a specific socket name
-	FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, true);
+	const FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, true);
 	GunMesh->AttachToComponent(Mesh1P, AttachmentRules, TEXT("PistolSocket"));
 
 	// Initialize the WeaponAmmoArray with default values
@@ -63,23 +63,23 @@ void AZombieGameCharacter::HandleDamage(float const DamageAmount, struct FDamage
 	else // player is alive
 	{
 		// removing health regen and blood overlay for test
-		if (Health <= 0.9f * MaxHealth)
+		if (Health <= 0.5f * MaxHealth)
+		{
+			check(MainWidgetInstance != nullptr);
+			MainWidgetInstance->ShowBloodOverlay();
+		}
+		else if (Health <= 1.0f * MaxHealth)
 		{
 			// HealthRegenTimer();
 			HealthRegenTimerDelegate.BindUObject(this, &AZombieGameCharacter::RegenerateHealth);
 			// this basically plays the ReloadCalcAndPlayAnimations once the animation is complete.
 			GetWorldTimerManager().SetTimer(HealthRegenTimerHandle, HealthRegenTimerDelegate, HealthRegenDuration, true);
 		}
-		if (Health <= 0.5f * MaxHealth)
-		{
-			check(MainWidgetInstance != nullptr);
-			MainWidgetInstance->ShowBloodOverlay();
-		}
-		else
-		{
-			check(MainWidgetInstance != nullptr);
-			MainWidgetInstance->ShowBloodOverlay();
-		}
+		// else
+		// {
+		// 	check(MainWidgetInstance != nullptr);
+		// 	MainWidgetInstance->ShowBloodOverlay();
+		// }
 		DamageToApply = FMath::Min(Health, DamageToApply);
 		Health -= DamageToApply; // deducts damage from health
 		UE_LOG(LogTemp, Log, TEXT("Health left %f"), Health);

@@ -8,6 +8,7 @@
 #include "AIController.h"
 #include "Components/SkeletalMeshComponent.h"
 
+
 // Sets default values
 AZombie::AZombie()
 {
@@ -40,6 +41,10 @@ AZombie::AZombie()
 	LeftArmBoxCollisionComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("LeftArmBoxCollisionComponent"));
 	LeftArmBoxCollisionComponent->SetupAttachment(GetMesh());
 	LeftArmBoxCollisionComponent->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("lowerarm_l"));
+
+	
+	UCharacterMovementComponent *ZombieMovement = Cast<UCharacterMovementComponent>(GetMovementComponent());
+	ZombieMovement->MaxWalkSpeed = 300.f;
 }
 
 void AZombie::HandleDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser)

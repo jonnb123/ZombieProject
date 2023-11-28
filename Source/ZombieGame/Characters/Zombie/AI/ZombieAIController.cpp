@@ -46,7 +46,7 @@ void AZombieAIController::EnemyDetected(AActor *Actor, FAIStimulus Stimulus)
 {
     ACharacter *Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
     AZombieGameCharacter *ZombieGameCharacter = Cast<AZombieGameCharacter>(Player);
-    AZombie *ZombieCharacter = Cast<AZombie>(GetPawn());
+    const AZombie *ZombieCharacter = Cast<AZombie>(GetPawn());
     UCharacterMovementComponent *ZombieMovement = Cast<UCharacterMovementComponent>(ZombieCharacter->GetMovementComponent());
 
     if (Actor == ZombieGameCharacter)
@@ -55,8 +55,8 @@ void AZombieAIController::EnemyDetected(AActor *Actor, FAIStimulus Stimulus)
         {
             UE_LOG(LogTemp, Warning, TEXT("This is working!"));
             Target = ZombieGameCharacter;
+            GetBlackboardComponent()->ClearValue("LastKnownPlayerLocation");
             GetBlackboardComponent()->SetValueAsObject(TEXT("PlayerCharacter"), Player);
-            // ZombieMovement->MaxWalkSpeed = 300;
         }
         else if (Stimulus.WasSuccessfullySensed() == false)
         {
@@ -117,8 +117,7 @@ void AZombieAIController::HandleDoorOpen()
 void AZombieAIController::InitializeGrandadBlackboardValue()
 {
     // Sets target as grandad, sets corresponding blackboard key.
-    AGrandad *Grandad = AGrandad::GetInstance();
-    if (Grandad)
+    if (AGrandad *Grandad = AGrandad::GetInstance())
     {
         GetBlackboardComponent()->SetValueAsVector(TEXT("GrandadLocation"), Grandad->GetActorLocation());
         Target = Grandad;

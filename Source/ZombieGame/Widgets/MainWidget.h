@@ -44,16 +44,18 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void HideBloodEffect();
 
+	// Images
+
+	UPROPERTY(meta = (BindWidget))
+	class UImage *Crosshair;
+
 private:
 	// Canvas Panel
 
 	UPROPERTY(meta = (BindWidget))
 	class UCanvasPanel *CanvasPanel;
 
-	// Images
-
-	UPROPERTY(meta = (BindWidget))
-	class UImage *Crosshair;
+	
 
 	UPROPERTY(meta = (BindWidget))
 	class UImage *BloodOverlay;

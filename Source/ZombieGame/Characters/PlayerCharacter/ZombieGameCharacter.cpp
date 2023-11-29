@@ -3,6 +3,7 @@
 #include "ZombieGameCharacter.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/Image.h"
 #include "Kismet/GameplayStatics.h"
 
 AZombieGameCharacter::AZombieGameCharacter()
@@ -230,8 +231,7 @@ void AZombieGameCharacter::ZoomIn()
 {
 	if (ChangeCharacterState(ECharacterState::Aiming))
 	{
-		MainWidgetInstance->RemoveFromParent();
-
+		MainWidgetInstance->Crosshair->SetVisibility(ESlateVisibility::Hidden);
 		if (HasMaxSpeed)
 		{
 			GetCharacterMovement()->MaxWalkSpeed = 400.0f;
@@ -247,8 +247,8 @@ void AZombieGameCharacter::ZoomOut()
 {
 	if (ChangeCharacterState(ECharacterState::Idle))
 	{
-		MainWidgetInstance->AddToViewport();
-
+		MainWidgetInstance->Crosshair->SetVisibility(ESlateVisibility::Visible);
+		
 		if (HasMaxSpeed)
 		{
 			GetCharacterMovement()->MaxWalkSpeed = 1200.0f;
@@ -270,10 +270,10 @@ void AZombieGameCharacter::Fire()
 		GunMesh->PlayAnimation(Weapons[CurrentWeaponIndex]->WeaponFireMontage, false);
 
 		// Location and Rotation
-		APlayerController *PlayerController = Cast<APlayerController>(GetController());
+		const APlayerController *PlayerController = Cast<APlayerController>(GetController());
 		const FRotator SpawnRotation = PlayerController->PlayerCameraManager->GetCameraRotation();
 		// Added a fire socket where the bullet will come from
-		FVector MuzzleLocation = GunMesh->GetSocketLocation(TEXT("FireSocket"));
+		const FVector MuzzleLocation = GunMesh->GetSocketLocation(TEXT("FireSocket"));
 
 		// Set Spawn Collision
 		FActorSpawnParameters ActorSpawnParams;
@@ -350,7 +350,7 @@ void AZombieGameCharacter::RefillAmmo()
 	{
 		// current ammo is the current ammo in the clip
 		// Needed ammo is the ammount of ammo needed to make a full clip
-		int NeededAmmo = Weapons[CurrentWeaponIndex]->MaxWeaponClipSize - Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo;
+		const int NeededAmmo = Weapons[CurrentWeaponIndex]->MaxWeaponClipSize - Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo;
 		if (Weapons[CurrentWeaponIndex]->TotalWeaponAmmo >= NeededAmmo)
 		{
 			Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo = Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo + NeededAmmo; // adds the ammo needed for a full clip

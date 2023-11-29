@@ -8,13 +8,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c9b0ce35-a396-4102-b699-f4dc77eb016b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/CharacterStates.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/CharacterStates.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/ReloadingState.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/ReloadingState.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/SwappingWeaponState.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/SwappingWeaponState.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ZombieGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ZombieGame/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/BP_FirstPersonCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/BP_FirstPersonCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Character/Animations/FPSAnim_ABP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Character/Animations/FPSAnim_ABP.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Maps/ZombieMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Maps/ZombieMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Zombie/ZombieBPs/BP_ZombieM01_Custom.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Zombie/ZombieBPs/BP_ZombieM01_Custom.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/Projectiles/ZombieGameProjectile.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/Projectiles/ZombieGameProjectile.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Materials/M_AssetPlatform.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Materials/M_AssetPlatform.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ZombieGame/GameMode/ZombieGameMode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/GameMode/ZombieGameMode.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Widgets/MainWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Widgets/MainWidget.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,64 +32,21 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/AimingState.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/IdleState.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/IdleState.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/ReloadingState.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/SwappingWeaponState.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/ZombieGame/Widgets/MainWidget.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://E:/Epic Games/UE_5.2/Engine/Source/Developer/GraphColor/Private/graphColorVertices.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://E:/Epic Games/UE_5.2/Engine/Source/Developer/GraphColor/Private/graphColorVertices.private.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://E:/Epic Games/UE_5.2/Engine/Source/Developer/GraphColor/Private/graphColorVertices_Extensions.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://E:/Epic Games/UE_5.2/Engine/Source/Runtime/Engine/Private/Components/CharacterMovementComponent.cpp" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="Toolset" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -190,7 +154,14 @@
       <workItem from="1701181683402" duration="3219000" />
       <workItem from="1701185211400" duration="522000" />
       <workItem from="1701186024930" duration="4998000" />
-      <workItem from="1701255515693" duration="2416000" />
+      <workItem from="1701255515693" duration="12829000" />
+      <workItem from="1701271846884" duration="5590000" />
+      <workItem from="1701277731700" duration="2482000" />
+      <workItem from="1701280277575" duration="4013000" />
+      <workItem from="1701284340468" duration="5898000" />
+      <workItem from="1701292387436" duration="453000" />
+      <workItem from="1701292916505" duration="1145000" />
+      <workItem from="1701294152175" duration="4109000" />
     </task>
     <servers />
   </component>

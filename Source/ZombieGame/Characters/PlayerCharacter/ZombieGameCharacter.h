@@ -49,11 +49,14 @@ public:
 	float GetCharacterHealth() const { return Health; }
 	void SetCharacterHealth(float NewValue) { Health = NewValue; }
 
+	
+
 	// Points get/set
 	int GetPoints() const { return Points; }
 	void SetPoints(float NewValue) { Points = NewValue; }
 
 	// Setter for HasMaxSpeed variable
+	bool GetHasMaxSpeed() const { return HasMaxSpeed; }
 	void SetHasMaxSpeed(bool NewValue) { HasMaxSpeed = NewValue; }
 
 	// Setter for MaxHealth
@@ -91,6 +94,9 @@ public:
 
 protected:
 	virtual void BeginPlay();
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class UCharacterStates* CurrentStateInstance;
 
 	/** Pawn mesh: 1st person view (arms; seen only by self) */
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Mesh)

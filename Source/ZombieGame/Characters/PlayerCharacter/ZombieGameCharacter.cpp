@@ -5,6 +5,10 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/Image.h"
 #include "Kismet/GameplayStatics.h"
+#include "States/AimingState.h"
+#include "States/IdleState.h"
+#include "States/ReloadingState.h"
+#include "States/SwappingWeaponState.h"
 
 AZombieGameCharacter::AZombieGameCharacter()
 {
@@ -50,11 +54,17 @@ void AZombieGameCharacter::BeginPlay()
 	Super::BeginPlay();
 	MainWidgetInstance = CreateWidget<UMainWidget>(GetWorld(), WidgetClass);
 	MainWidgetInstance->AddToViewport();
+
+	CurrentStateInstance = NewObject<UIdleState>(this);
+	CurrentStateInstance->EnterState(this);
 }
 
-void AZombieGameCharacter::HandleDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) // this is called in BTTask_Attack.cpp
+void AZombieGameCharacter::HandleDamage(float const DamageAmount, struct FDamageEvent const& DamageEvent,
+                                        class AController* EventInstigator,
+                                        AActor* DamageCauser) // this is called in BTTask_Attack.cpp
 {
-	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser); // takes the damage values from the zombie in BTTask_Attack and plugs them into the base implementation of TakeDamage
+	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	// takes the damage values from the zombie in BTTask_Attack and plugs them into the base implementation of TakeDamage
 	if (Health <= 0)
 	{
 		// when health is below 0
@@ -74,7 +84,8 @@ void AZombieGameCharacter::HandleDamage(float const DamageAmount, struct FDamage
 			// HealthRegenTimer();
 			HealthRegenTimerDelegate.BindUObject(this, &AZombieGameCharacter::RegenerateHealth);
 			// this basically plays the ReloadCalcAndPlayAnimations once the animation is complete.
-			GetWorldTimerManager().SetTimer(HealthRegenTimerHandle, HealthRegenTimerDelegate, HealthRegenDuration, true);
+			GetWorldTimerManager().SetTimer(HealthRegenTimerHandle, HealthRegenTimerDelegate, HealthRegenDuration,
+			                                true);
 		}
 		DamageToApply = FMath::Min(Health, DamageToApply);
 		Health -= DamageToApply; // deducts damage from health
@@ -86,7 +97,7 @@ void AZombieGameCharacter::HandleCharacterDeath()
 {
 	IsDead = true;
 	MainWidgetInstance->ShowDeathWindow();
-	APlayerController *PlayerController = Cast<APlayerController>(GetController());
+	APlayerController* PlayerController = Cast<APlayerController>(GetController());
 	GetCharacterMovement()->StopMovementImmediately();
 	PlayerController->SetInputMode(FInputModeUIOnly());
 	PlayerController->bShowMouseCursor = true;
@@ -95,46 +106,56 @@ void AZombieGameCharacter::HandleCharacterDeath()
 
 void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
 {
-	if (ChangeCharacterState(ECharacterState::SwappingWeapon))
+	// if (ChangeCharacterState(ECharacterState::SwappingWeapon))
+	// {
+	CurrentStateInstance = NewObject<USwappingWeaponState>(this);
+	CurrentStateInstance->EnterState(this);
+	GetWorldTimerManager().ClearTimer(ReloadTimerHandle);
+	// if the user switches weapon whilst reloading, the reload animation will not carry over to the next weapon.
+	bool Success = false;
+
+	for (int i = 0; i < Weapons.Num(); i++)
 	{
-		GetWorldTimerManager().ClearTimer(ReloadTimerHandle); // if the user switches weapon whilst reloading, the reload animation will not carry over to the next weapon.
-		bool Success = false;
-
-		for (int i = 0; i < Weapons.Num(); i++)
+		if (i > CurrentWeaponIndex)
 		{
-			if (i > CurrentWeaponIndex)
+			if (Weapons[i]->IsObtained)
 			{
-				if (Weapons[i]->IsObtained)
-				{
-					GetWorldTimerManager().SetTimer(WeaponSwapTimerHandle, this, &AZombieGameCharacter::WeaponSwapAfterDelay, WeaponSwapDelay, false);
-					Success = true;
-					CurrentWeaponIndex = i;
-					UE_LOG(LogTemp, Display, TEXT("Current Weapon index: %d"), CurrentWeaponIndex);
-					GunMesh->SetSkeletalMesh(Weapons[CurrentWeaponIndex]->WeaponMesh);
-					// Attach GunMesh to the new socket
-					GunMesh->AttachToComponent(Mesh1P, FAttachmentTransformRules::SnapToTargetIncludingScale, Weapons[CurrentWeaponIndex]->WeaponSocketName);
-					// This is referenced in the abp to change weapon
-					EquippedWeaponCharacter = Weapons[CurrentWeaponIndex]->WeaponType;
-				}
-				break; // breaks out of the for loop
+				GetWorldTimerManager().SetTimer(WeaponSwapTimerHandle, this,
+				                                &AZombieGameCharacter::WeaponSwapAfterDelay, WeaponSwapDelay,
+				                                false);
+				Success = true;
+				CurrentWeaponIndex = i;
+				UE_LOG(LogTemp, Display, TEXT("Current Weapon index: %d"), CurrentWeaponIndex);
+				GunMesh->SetSkeletalMesh(Weapons[CurrentWeaponIndex]->WeaponMesh);
+				// Attach GunMesh to the new socket
+				GunMesh->AttachToComponent(Mesh1P, FAttachmentTransformRules::SnapToTargetIncludingScale,
+				                           Weapons[CurrentWeaponIndex]->WeaponSocketName);
+				// This is referenced in the abp to change weapon
+				EquippedWeaponCharacter = Weapons[CurrentWeaponIndex]->WeaponType;
 			}
-		}
-
-		if (!Success) // for the pistol
-		{
-			CurrentWeaponIndex = 0;
-			UE_LOG(LogTemp, Display, TEXT("Current Weapon index: %d"), CurrentWeaponIndex);
-			ChangeCharacterState(ECharacterState::Idle);
-			GunMesh->SetSkeletalMesh(Weapons[CurrentWeaponIndex]->WeaponMesh);
-			GunMesh->AttachToComponent(Mesh1P, FAttachmentTransformRules::SnapToTargetIncludingScale, Weapons[CurrentWeaponIndex]->WeaponSocketName);
-			EquippedWeaponCharacter = Weapons[CurrentWeaponIndex]->WeaponType;
+			break; // breaks out of the for loop
 		}
 	}
+
+	if (!Success) // for the pistol
+	{
+		CurrentWeaponIndex = 0;
+		UE_LOG(LogTemp, Display, TEXT("Current Weapon index: %d"), CurrentWeaponIndex);
+		CurrentStateInstance = NewObject<UIdleState>(this);
+		CurrentStateInstance->EnterState(this);
+		// ChangeCharacterState(ECharacterState::Idle);
+		GunMesh->SetSkeletalMesh(Weapons[CurrentWeaponIndex]->WeaponMesh);
+		GunMesh->AttachToComponent(Mesh1P, FAttachmentTransformRules::SnapToTargetIncludingScale,
+		                           Weapons[CurrentWeaponIndex]->WeaponSocketName);
+		EquippedWeaponCharacter = Weapons[CurrentWeaponIndex]->WeaponType;
+	}
+	// }
 }
 
 void AZombieGameCharacter::WeaponSwapAfterDelay()
 {
-	ChangeCharacterState(ECharacterState::Idle);
+	CurrentStateInstance = NewObject<UIdleState>(this);
+	CurrentStateInstance->EnterState(this);
 }
 
 void AZombieGameCharacter::MaxAmmo()
@@ -158,7 +179,7 @@ void AZombieGameCharacter::OnInteractingPressed()
 	}
 }
 
-void AZombieGameCharacter::SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent)
+void AZombieGameCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	// Set up gameplay key bindings
 	check(PlayerInputComponent);
@@ -182,7 +203,8 @@ void AZombieGameCharacter::SetupPlayerInputComponent(class UInputComponent *Play
 	PlayerInputComponent->BindAction("Aim", IE_Released, this, &AZombieGameCharacter::ZoomOut);
 
 	// Bind weapon switch events
-	PlayerInputComponent->BindAction("SwitchWeapon", IE_Pressed, this, &AZombieGameCharacter::SwitchToNextPrimaryWeapon);
+	PlayerInputComponent->BindAction("SwitchWeapon", IE_Pressed, this,
+	                                 &AZombieGameCharacter::SwitchToNextPrimaryWeapon);
 
 	// Bind movement events
 	PlayerInputComponent->BindAxis("Move Forward / Backward", this, &AZombieGameCharacter::MoveForward);
@@ -229,59 +251,44 @@ void AZombieGameCharacter::LookUpAtRate(float Rate)
 
 void AZombieGameCharacter::ZoomIn()
 {
-	if (ChangeCharacterState(ECharacterState::Aiming))
-	{
-		MainWidgetInstance->Crosshair->SetVisibility(ESlateVisibility::Hidden);
-		if (HasMaxSpeed)
-		{
-			GetCharacterMovement()->MaxWalkSpeed = 400.0f;
-		}
-		else
-		{
-			GetCharacterMovement()->MaxWalkSpeed = 200.f;
-		}
-	}
+	if (CurrentStateInstance->IsA<UReloadingState>()) return;
+
+	CurrentStateInstance = NewObject<UAimingState>(this);
+	CurrentStateInstance->EnterState(this);
 }
 
 void AZombieGameCharacter::ZoomOut()
 {
-	if (ChangeCharacterState(ECharacterState::Idle))
-	{
-		MainWidgetInstance->Crosshair->SetVisibility(ESlateVisibility::Visible);
-		
-		if (HasMaxSpeed)
-		{
-			GetCharacterMovement()->MaxWalkSpeed = 1200.0f;
-		}
-		else
-		{
-			GetCharacterMovement()->MaxWalkSpeed = 600.0f;
-		}
-	}
+	CurrentStateInstance = NewObject<UIdleState>(this);
+	CurrentStateInstance->EnterState(this);
 }
 
 void AZombieGameCharacter::Fire()
 {
 	UE_LOG(LogTemp, Log, TEXT("Current ammo: %d"), Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo);
-
+	
 	if (Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo > 0)
 	{
 		Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo--;
 		GunMesh->PlayAnimation(Weapons[CurrentWeaponIndex]->WeaponFireMontage, false);
 
 		// Location and Rotation
-		const APlayerController *PlayerController = Cast<APlayerController>(GetController());
+		const APlayerController* PlayerController = Cast<APlayerController>(GetController());
 		const FRotator SpawnRotation = PlayerController->PlayerCameraManager->GetCameraRotation();
 		// Added a fire socket where the bullet will come from
 		const FVector MuzzleLocation = GunMesh->GetSocketLocation(TEXT("FireSocket"));
 
 		// Set Spawn Collision
 		FActorSpawnParameters ActorSpawnParams;
-		ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
+		ActorSpawnParams.SpawnCollisionHandlingOverride =
+			ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
 
 		// Spawn the projectile at the muzzle
-		GetWorld()->SpawnActor<AZombieGameProjectile>(Weapons[CurrentWeaponIndex]->ProjectileClass, MuzzleLocation, SpawnRotation, ActorSpawnParams);
-		GetWorld()->GetTimerManager().SetTimer(FireTimerHandle, this, &AZombieGameCharacter::Fire, Weapons[CurrentWeaponIndex]->WeaponFireRate, false); // to make the weapon fully auto
+		GetWorld()->SpawnActor<AZombieGameProjectile>(Weapons[CurrentWeaponIndex]->ProjectileClass, MuzzleLocation,
+		                                              SpawnRotation, ActorSpawnParams);
+		GetWorld()->GetTimerManager().SetTimer(FireTimerHandle, this, &AZombieGameCharacter::Fire,
+		                                       Weapons[CurrentWeaponIndex]->WeaponFireRate,
+		                                       false); // to make the weapon fully auto
 	}
 	else
 	{
@@ -292,57 +299,43 @@ void AZombieGameCharacter::Fire()
 
 void AZombieGameCharacter::StartFiring() // rename
 {
-	if (ChangeCharacterState(ECharacterState::AimFiring))
-	{
-		Fire();
-	}
-	else if (ChangeCharacterState(ECharacterState::Firing))
-	{
-		Fire();
-	}
-
+	if (CurrentStateInstance->IsA<UReloadingState>() || CurrentStateInstance->IsA<USwappingWeaponState>()) return;
+	Fire();
 }
 
 void AZombieGameCharacter::StopFiring()
 {
-	if (CurrentState == ECharacterState::Reloading)
-	{
-		GetWorldTimerManager().ClearTimer(FireTimerHandle);
-	}
-
-	else if (ChangeCharacterState(ECharacterState::Aiming))
-	{
-		GetWorldTimerManager().ClearTimer(FireTimerHandle);
-	}
-
-	else if (ChangeCharacterState(ECharacterState::Idle))
-	{
-		GetWorldTimerManager().ClearTimer(FireTimerHandle);
-	}
+	if (CurrentStateInstance->IsA<UReloadingState>() || CurrentStateInstance->IsA<USwappingWeaponState>()) return;
+	GetWorldTimerManager().ClearTimer(FireTimerHandle);
 }
 
 void AZombieGameCharacter::StartReload()
 {
-	if (Weapons[CurrentWeaponIndex]->TotalWeaponAmmo != 0 && Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo != Weapons[CurrentWeaponIndex]->MaxWeaponClipSize)
+	if (Weapons[CurrentWeaponIndex]->TotalWeaponAmmo != 0 && Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo != Weapons[
+		CurrentWeaponIndex]->MaxWeaponClipSize)
 	{
-		if (ChangeCharacterState(ECharacterState::Reloading))
-		{
-			const float MontageDuration = Weapons[CurrentWeaponIndex]->WeaponReloadMontage->GetPlayLength();
-			const float TimerDuration = MontageDuration - 0.2; // Skip the last 0.2second
-			GunMesh->PlayAnimation(Weapons[CurrentWeaponIndex]->WeaponReloadMontage, false);
-			// A delegate is created and is binded to the member function.
-			FTimerDelegate TimerDelegate;
-			TimerDelegate.BindUObject(this, &AZombieGameCharacter::RefillAmmo);
-			// this basically plays the ReloadCalcAndPlayAnimations once the animation is complete.
-			GetWorldTimerManager().SetTimer(ReloadTimerHandle, TimerDelegate, TimerDuration, false);
-		}
+		// if (ChangeCharacterState(ECharacterState::Reloading))
+		// {
+		if (CurrentStateInstance->IsA<UReloadingState>()) return;
+		CurrentStateInstance = NewObject<UReloadingState>(this);
+		CurrentStateInstance->EnterState(this);
+		const float MontageDuration = Weapons[CurrentWeaponIndex]->WeaponReloadMontage->GetPlayLength();
+		const float TimerDuration = MontageDuration - 0.2; // Skip the last 0.2second
+		GunMesh->PlayAnimation(Weapons[CurrentWeaponIndex]->WeaponReloadMontage, false);
+		// A delegate is created and is binded to the member function.
+		FTimerDelegate TimerDelegate;
+		TimerDelegate.BindUObject(this, &AZombieGameCharacter::RefillAmmo);
+		// this basically plays the ReloadCalcAndPlayAnimations once the animation is complete.
+		GetWorldTimerManager().SetTimer(ReloadTimerHandle, TimerDelegate, TimerDuration, false);
+		// }
 	}
 }
 
 void AZombieGameCharacter::RefillAmmo()
 {
 	UE_LOG(LogTemp, Log, TEXT("Switching Mags!"));
-	if (Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo == Weapons[CurrentWeaponIndex]->MaxWeaponClipSize || Weapons[CurrentWeaponIndex]->TotalWeaponAmmo <= 0)
+	if (Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo == Weapons[CurrentWeaponIndex]->MaxWeaponClipSize || Weapons[
+		CurrentWeaponIndex]->TotalWeaponAmmo <= 0)
 	{
 		// if the CurrentWeaponAmmo in the weapon is at the max clip size or is less than or the gun has no reserve ammo
 	}
@@ -350,20 +343,25 @@ void AZombieGameCharacter::RefillAmmo()
 	{
 		// current ammo is the current ammo in the clip
 		// Needed ammo is the ammount of ammo needed to make a full clip
-		const int NeededAmmo = Weapons[CurrentWeaponIndex]->MaxWeaponClipSize - Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo;
+		const int NeededAmmo = Weapons[CurrentWeaponIndex]->MaxWeaponClipSize - Weapons[CurrentWeaponIndex]->
+			CurrentWeaponAmmo;
 		if (Weapons[CurrentWeaponIndex]->TotalWeaponAmmo >= NeededAmmo)
 		{
-			Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo = Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo + NeededAmmo; // adds the ammo needed for a full clip
-			Weapons[CurrentWeaponIndex]->TotalWeaponAmmo = Weapons[CurrentWeaponIndex]->TotalWeaponAmmo - NeededAmmo;	  // deducts ammo added to clip
+			Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo = Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo +
+				NeededAmmo; // adds the ammo needed for a full clip
+			Weapons[CurrentWeaponIndex]->TotalWeaponAmmo = Weapons[CurrentWeaponIndex]->TotalWeaponAmmo - NeededAmmo;
+			// deducts ammo added to clip
 		}
 		else if (Weapons[CurrentWeaponIndex]->TotalWeaponAmmo > 0) // if the ammo amount is less than the needed ammo
 		{
-			Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo = Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo + Weapons[CurrentWeaponIndex]->TotalWeaponAmmo;
+			Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo = Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo + Weapons[
+				CurrentWeaponIndex]->TotalWeaponAmmo;
 			Weapons[CurrentWeaponIndex]->TotalWeaponAmmo = 0;
 		}
 	}
 	AmmoArray[CurrentWeaponIndex] = Weapons[CurrentWeaponIndex]->TotalWeaponAmmo;
-	ChangeCharacterState(ECharacterState::Idle);
+	CurrentStateInstance = NewObject<UIdleState>(this);
+	CurrentStateInstance->EnterState(this);
 }
 
 void AZombieGameCharacter::RegenerateHealth()
@@ -393,7 +391,8 @@ bool AZombieGameCharacter::ChangeCharacterState(ECharacterState NewState)
 		CanChange = true; // Allow transitioning to Idle state from any state
 		break;
 	case ECharacterState::Firing:
-		CanChange = ((CurrentState == ECharacterState::Idle || CurrentState == ECharacterState::Aiming) && (CurrentState != ECharacterState::Reloading));
+		CanChange = ((CurrentState == ECharacterState::Idle || CurrentState == ECharacterState::Aiming) && (CurrentState
+			!= ECharacterState::Reloading));
 		break;
 	case ECharacterState::SwappingWeapon:
 		CanChange = true;

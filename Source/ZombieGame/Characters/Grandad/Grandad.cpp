@@ -40,13 +40,13 @@ void AGrandad::BeginPlay()
 void AGrandad::OnItemBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
 								  int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
-	UE_LOG(LogTemp, Log, TEXT("OVERLAPPING WITH GRANDAD"));
-	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
-	APlayerController *PlayerController = Cast<APlayerController>(Character->GetController());
-
+	
 	if (OtherActor->IsA<AZombieGameCharacter>())
 	{
+		UE_LOG(LogTemp, Log, TEXT("OVERLAPPING WITH GRANDAD"));
+		ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+		AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+		APlayerController *PlayerController = Cast<APlayerController>(Character->GetController());
 		// PlayerController->SetViewTargetWithBlend(this, 2.0);
 
 		if (MainWidgetInstance)

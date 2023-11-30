@@ -8,20 +8,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c9b0ce35-a396-4102-b699-f4dc77eb016b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/CharacterStates.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/CharacterStates.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/ReloadingState.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/ReloadingState.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/SwappingWeaponState.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/SwappingWeaponState.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ZombieGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ZombieGame/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/BP_FirstPersonCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/BP_FirstPersonCharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Character/Animations/FPSAnim_ABP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Character/Animations/FPSAnim_ABP.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Maps/ZombieMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Maps/ZombieMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Materials/M_AssetPlatform.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Materials/M_AssetPlatform.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Shapes/Shape_Cone.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Shapes/Shape_Cone.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/ReloadingState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/ReloadingState.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/ReloadingState.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/ReloadingState.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/SwappingWeaponState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/SwappingWeaponState.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/SwappingWeaponState.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/SwappingWeaponState.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/GameMode/ZombieGameMode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/GameMode/ZombieGameMode.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,6 +156,8 @@
       <workItem from="1701292387436" duration="453000" />
       <workItem from="1701292916505" duration="1145000" />
       <workItem from="1701294152175" duration="4109000" />
+      <workItem from="1701335089113" duration="4972000" />
+      <workItem from="1701340204075" duration="370000" />
     </task>
     <servers />
   </component>

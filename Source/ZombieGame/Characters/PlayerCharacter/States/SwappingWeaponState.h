@@ -19,4 +19,10 @@ public:
 	virtual void EnterState(AZombieGameCharacter* Character) override ;
 
 	virtual void ExitState(AZombieGameCharacter* Character) override;
+
+	// weapon swap delay timer
+	const float WeaponSwapDelay = 0.7;
+	FTimerHandle WeaponSwapTimerHandle; // Not used with delegate
+
+	void WeaponSwapAfterDelay(AZombieGameCharacter* Character);
 };

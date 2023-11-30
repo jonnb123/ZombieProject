@@ -20,4 +20,6 @@ public:
 	virtual void EnterState(AZombieGameCharacter* Character) override ;
 
 	virtual void ExitState(AZombieGameCharacter* Character) override;
+
+	void RefillAmmo(AZombieGameCharacter* Character);
 };

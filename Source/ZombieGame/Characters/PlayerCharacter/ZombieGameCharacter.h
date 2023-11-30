@@ -92,20 +92,32 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	TArray<ABaseWeapon *> Weapons; // used in other classes
 
-protected:
-	virtual void BeginPlay();
-	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UCharacterStates* CurrentStateInstance;
 
-	/** Pawn mesh: 1st person view (arms; seen only by self) */
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Mesh)
-	USkeletalMeshComponent *Mesh1P;
+	// reload timer
+	FTimerHandle ReloadTimerHandle;
+
+	// weapon swap delay timer
+	const float WeaponSwapDelay = 0.7;
+	FTimerHandle WeaponSwapTimerHandle; // Not used with delegate
 
 	/** Pawn mesh: 1st person view (arms; seen only by self) */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Mesh)
 	USkeletalMeshComponent *GunMesh;
 
+	/** Pawn mesh: 1st person view (arms; seen only by self) */
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Mesh)
+	USkeletalMeshComponent *Mesh1P;
+
+	TArray<int> AmmoArray; // Array of ammo for weapons
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	EWeaponType EquippedWeaponCharacter; 
+
+protected:
+	virtual void BeginPlay();
+	
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Camera)
 	float TurnRateGamepad = 45.f;
@@ -121,15 +133,12 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Sound)
 	USoundBase *OutOfAmmoSound; // left in protected as the sound is set in blueprint
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-	EWeaponType EquippedWeaponCharacter; // left in protected as it's used in the abp
+	
 
 	// This variable tracks the players current state
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State")
 	ECharacterState CurrentState = ECharacterState::Idle;
-
-	UFUNCTION(BlueprintCallable, Category = "State")
-    bool ChangeCharacterState(ECharacterState NewState);
+	
 
 	// variable needs to be changed in maxspeed class use a setter
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Boolean)
@@ -169,15 +178,10 @@ private:
 
 	// starts timer, if completed will call
 	void StartReload();
-
-	void RefillAmmo(); // This is called after the reloadmontage is over inside StartReload
-
-	void OnInteractingPressed();
-
-	void WeaponSwapAfterDelay();
-
 	
 
+	void OnInteractingPressed();
+	
 	void RegenerateHealth();
 
 	// The virtual here shows that I intend to override the function, it overrides the virtual function from the base class, i.e. APawn
@@ -187,21 +191,14 @@ private:
 
 	// The time for this is the fire-rate of the weapon, used in the weapon classes
 	FTimerHandle FireTimerHandle; // Not used with delegate
-
-	// reload timer is used locally
-	FTimerHandle ReloadTimerHandle;
-
-	// weapon swap delay timer
-	const float WeaponSwapDelay = 0.7;
-	FTimerHandle WeaponSwapTimerHandle; // Not used with delegate
-
+	
 	// health regen timer
 	FTimerDelegate HealthRegenTimerDelegate;
 	FTimerHandle HealthRegenTimerHandle;
 	const float HealthRegenDuration = 5.0;
 
-	// // variables
-	TArray<int> AmmoArray; // Array of ammo for weapons
+	// variables
+	
 
 	EWeaponType CurrentWeaponID;
 

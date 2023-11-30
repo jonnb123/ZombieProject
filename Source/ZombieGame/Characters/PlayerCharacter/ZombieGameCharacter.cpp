@@ -3,9 +3,8 @@
 #include "ZombieGameCharacter.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "Kismet/GameplayStatics.h"
 #include "States/AimingState.h"
-#include "States\IdleFireState.h"
+#include "States/FireState.h"
 #include "States/IdleState.h"
 #include "States/ReloadingState.h"
 #include "States/SwappingWeaponState.h"
@@ -59,78 +58,6 @@ void AZombieGameCharacter::BeginPlay()
 	TryStateInstance->TryEnterState(this);
 }
 
-void AZombieGameCharacter::HandleDamage(float const DamageAmount, struct FDamageEvent const& DamageEvent,
-                                        class AController* EventInstigator,
-                                        AActor* DamageCauser) // this is called in BTTask_Attack.cpp
-{
-	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
-	// takes the damage values from the zombie in BTTask_Attack and plugs them into the base implementation of TakeDamage
-	if (Health <= 0)
-	{
-		// when health is below 0
-		UE_LOG(LogTemp, Log, TEXT("Health left %f"), Health);
-		HandleCharacterDeath();
-	}
-	else // player is alive
-	{
-		// removing health regen and blood overlay for test
-		if (Health <= 0.5f * MaxHealth)
-		{
-			check(MainWidgetInstance != nullptr);
-			MainWidgetInstance->ShowBloodOverlay();
-		}
-		else if (Health <= 1.0f * MaxHealth)
-		{
-			// HealthRegenTimer();
-			HealthRegenTimerDelegate.BindUObject(this, &AZombieGameCharacter::RegenerateHealth);
-			// this basically plays the ReloadCalcAndPlayAnimations once the animation is complete.
-			GetWorldTimerManager().SetTimer(HealthRegenTimerHandle, HealthRegenTimerDelegate, HealthRegenDuration,
-			                                true);
-		}
-		DamageToApply = FMath::Min(Health, DamageToApply);
-		Health -= DamageToApply; // deducts damage from health
-		UE_LOG(LogTemp, Log, TEXT("Health left %f"), Health);
-	}
-}
-
-void AZombieGameCharacter::HandleCharacterDeath()
-{
-	IsDead = true;
-	MainWidgetInstance->ShowDeathWindow();
-	APlayerController* PlayerController = Cast<APlayerController>(GetController());
-	GetCharacterMovement()->StopMovementImmediately();
-	PlayerController->SetInputMode(FInputModeUIOnly());
-	PlayerController->bShowMouseCursor = true;
-	SetActorEnableCollision(false);
-}
-
-void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
-{
-	TryStateInstance = NewObject<USwappingWeaponState>(this);
-	TryStateInstance->TryEnterState(this);
-}
-
-void AZombieGameCharacter::MaxAmmo()
-{
-	for (int i = 0; i < Weapons.Num(); i++)
-	{
-		Weapons[i]->TotalWeaponAmmo = Weapons[i]->MaxWeaponAmmo;
-	}
-}
-
-void AZombieGameCharacter::OnInteractingPressed()
-{
-	if (OverlappingBuyableItem)
-	{
-		OverlappingBuyableItem->UseBuyableItem();
-	}
-
-	if (OverlappingFrontDoor)
-	{
-		OverlappingFrontDoor->UseFrontDoor();
-	}
-}
-
 void AZombieGameCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	// Set up gameplay key bindings
@@ -169,6 +96,19 @@ void AZombieGameCharacter::SetupPlayerInputComponent(class UInputComponent* Play
 	PlayerInputComponent->BindAxis("Look Up / Down Mouse", this, &APawn::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("Turn Right / Left Gamepad", this, &AZombieGameCharacter::TurnAtRate);
 	PlayerInputComponent->BindAxis("Look Up / Down Gamepad", this, &AZombieGameCharacter::LookUpAtRate);
+}
+
+void AZombieGameCharacter::OnInteractingPressed()
+{
+	if (OverlappingBuyableItem)
+	{
+		OverlappingBuyableItem->UseBuyableItem();
+	}
+
+	if (OverlappingFrontDoor)
+	{
+		OverlappingFrontDoor->UseFrontDoor();
+	}
 }
 
 void AZombieGameCharacter::MoveForward(float Value)
@@ -213,60 +153,16 @@ void AZombieGameCharacter::ZoomOut()
 	TryStateInstance->TryExitState(this);
 }
 
-void AZombieGameCharacter::Fire()
-{
-	UE_LOG(LogTemp, Log, TEXT("Current ammo: %d"), Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo);
-
-	if (Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo > 0)
-	{
-		Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo--;
-		GunMesh->PlayAnimation(Weapons[CurrentWeaponIndex]->WeaponFireMontage, false);
-
-		// Location and Rotation
-		const APlayerController* PlayerController = Cast<APlayerController>(GetController());
-		const FRotator SpawnRotation = PlayerController->PlayerCameraManager->GetCameraRotation();
-		// Added a fire socket where the bullet will come from
-		const FVector MuzzleLocation = GunMesh->GetSocketLocation(TEXT("FireSocket"));
-
-		// Set Spawn Collision
-		FActorSpawnParameters ActorSpawnParams;
-		ActorSpawnParams.SpawnCollisionHandlingOverride =
-			ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
-
-		// Spawn the projectile at the muzzle
-		GetWorld()->SpawnActor<AZombieGameProjectile>(Weapons[CurrentWeaponIndex]->ProjectileClass, MuzzleLocation,
-		                                              SpawnRotation, ActorSpawnParams);
-		GetWorld()->GetTimerManager().SetTimer(FireTimerHandle, this, &AZombieGameCharacter::Fire,
-		                                       Weapons[CurrentWeaponIndex]->WeaponFireRate,
-		                                       false); // to make the weapon fully auto
-	}
-	else
-	{
-		// if we don't have any ammo in the gun, make a click noise
-		UGameplayStatics::PlaySoundAtLocation(this, OutOfAmmoSound, this->GetActorLocation());
-	}
-}
-
 void AZombieGameCharacter::StartFiring() // rename
 {
-	if (CurrentStateInstance->IsA<UReloadingState>() || CurrentStateInstance->IsA<USwappingWeaponState>()) return;
-	if (CurrentStateInstance->IsA<UIdleState>())
-	{
-		// This is for the ABP to go from idle to fire
-		CurrentStateInstance = NewObject<UIdleFireState>(this);
-	}
-	Fire();
+	TryStateInstance = NewObject<UFireState>(this);
+	TryStateInstance->TryEnterState(this);
 }
 
 void AZombieGameCharacter::StopFiring()
 {
-	if (CurrentStateInstance->IsA<UReloadingState>() || CurrentStateInstance->IsA<USwappingWeaponState>()) return;
-	if (CurrentStateInstance->IsA<UIdleFireState>())
-	{
-		CurrentStateInstance = NewObject<UIdleState>(this);
-		CurrentStateInstance->EnterState(this);
-	}
-	GetWorldTimerManager().ClearTimer(FireTimerHandle);
+	TryStateInstance = NewObject<UFireState>(this);
+	TryStateInstance->TryExitState(this);
 }
 
 void AZombieGameCharacter::StartReload()
@@ -275,6 +171,65 @@ void AZombieGameCharacter::StartReload()
 	TryStateInstance->TryEnterState(this);
 }
 
+void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
+{
+	TryStateInstance = NewObject<USwappingWeaponState>(this);
+	TryStateInstance->TryEnterState(this);
+}
+
+void AZombieGameCharacter::MaxAmmo()
+{
+	for (int i = 0; i < Weapons.Num(); i++)
+	{
+		Weapons[i]->TotalWeaponAmmo = Weapons[i]->MaxWeaponAmmo;
+	}
+}
+
+void AZombieGameCharacter::HandleCharacterDeath()
+{
+	IsDead = true;
+	MainWidgetInstance->ShowDeathWindow();
+	APlayerController* PlayerController = Cast<APlayerController>(GetController());
+	GetCharacterMovement()->StopMovementImmediately();
+	PlayerController->SetInputMode(FInputModeUIOnly());
+	PlayerController->bShowMouseCursor = true;
+	SetActorEnableCollision(false);
+}
+
+
+void AZombieGameCharacter::HandleDamage(float const DamageAmount, struct FDamageEvent const& DamageEvent,
+										class AController* EventInstigator,
+										AActor* DamageCauser) // this is called in BTTask_Attack.cpp
+{
+	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	// takes the damage values from the zombie in BTTask_Attack and plugs them into the base implementation of TakeDamage
+	if (Health <= 0)
+	{
+		// when health is below 0
+		UE_LOG(LogTemp, Log, TEXT("Health left %f"), Health);
+		HandleCharacterDeath();
+	}
+	else // player is alive
+		{
+		// removing health regen and blood overlay for test
+		if (Health <= 0.5f * MaxHealth)
+		{
+			check(MainWidgetInstance != nullptr);
+			MainWidgetInstance->ShowBloodOverlay();
+		}
+		else if (Health <= 1.0f * MaxHealth)
+		{
+			// HealthRegenTimer();
+			HealthRegenTimerDelegate.BindUObject(this, &AZombieGameCharacter::RegenerateHealth);
+			// this basically plays the ReloadCalcAndPlayAnimations once the animation is complete.
+			GetWorldTimerManager().SetTimer(HealthRegenTimerHandle, HealthRegenTimerDelegate, HealthRegenDuration,
+											true);
+		}
+		DamageToApply = FMath::Min(Health, DamageToApply);
+		Health -= DamageToApply; // deducts damage from health
+		UE_LOG(LogTemp, Log, TEXT("Health left %f"), Health);
+		}
+}
 
 void AZombieGameCharacter::RegenerateHealth()
 {

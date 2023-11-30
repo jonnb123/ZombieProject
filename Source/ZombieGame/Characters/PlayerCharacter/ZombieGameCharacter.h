@@ -17,20 +17,6 @@ class USoundBase;
 class UNiagaraSystem;
 class UMaterialInterface;
 
-// careful changing the ordering, as abp relies on the int of the enum
-UENUM(BlueprintType)
-enum class ECharacterState : uint8
-{
-	Idle,
-	SwappingWeapon,
-	Aiming,
-	Firing,
-	Reloading,
-	AimFiring
-};
-
-// add a change state function
-
 UCLASS(config = Game)
 class AZombieGameCharacter : public ACharacter, public IDamageableInterface
 {
@@ -48,9 +34,7 @@ public:
 	// Character Health get/set
 	float GetCharacterHealth() const { return Health; }
 	void SetCharacterHealth(float NewValue) { Health = NewValue; }
-
 	
-
 	// Points get/set
 	int GetPoints() const { return Points; }
 	void SetPoints(float NewValue) { Points = NewValue; }
@@ -92,18 +76,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	TArray<ABaseWeapon *> Weapons; // used in other classes
 
+	// the current state
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UCharacterStates* CurrentStateInstance;
-
+	
+	// The state you're trying to change to
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UCharacterStates* TryStateInstance;
-	
-	// reload timer
-	FTimerHandle ReloadTimerHandle;
-
-	// weapon swap delay timer
-	const float WeaponSwapDelay = 0.7;
-	FTimerHandle WeaponSwapTimerHandle; // Not used with delegate
 
 	/** Pawn mesh: 1st person view (arms; seen only by self) */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Mesh)
@@ -116,7 +95,11 @@ public:
 	TArray<int> AmmoArray; // Array of ammo for weapons
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-	EWeaponType EquippedWeaponCharacter; 
+	EWeaponType EquippedWeaponCharacter;
+
+	/** Sound to play each time we fire */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Sound)
+	USoundBase *OutOfAmmoSound; // left in protected as the sound is set in blueprint
 
 protected:
 	virtual void BeginPlay();
@@ -131,17 +114,6 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	UCameraComponent *AnimationCameraComponent;
-
-	/** Sound to play each time we fire */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Sound)
-	USoundBase *OutOfAmmoSound; // left in protected as the sound is set in blueprint
-
-	
-
-	// This variable tracks the players current state
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State")
-	ECharacterState CurrentState = ECharacterState::Idle;
-	
 
 	// variable needs to be changed in maxspeed class use a setter
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Boolean)
@@ -173,8 +145,6 @@ private:
 
 	void ZoomOut();
 
-	void Fire();
-
 	void StartFiring();
 
 	void StopFiring();
@@ -182,7 +152,6 @@ private:
 	// starts timer, if completed will call
 	void StartReload();
 	
-
 	void OnInteractingPressed();
 	
 	void RegenerateHealth();
@@ -191,9 +160,6 @@ private:
 	virtual void HandleDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) override;
 
 	// Timers
-
-	// The time for this is the fire-rate of the weapon, used in the weapon classes
-	FTimerHandle FireTimerHandle; // Not used with delegate
 	
 	// health regen timer
 	FTimerDelegate HealthRegenTimerDelegate;

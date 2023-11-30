@@ -3,10 +3,11 @@
 
 #include "SwappingWeaponState.h"
 #include "IdleState.h"
+#include "ReloadingState.h"
 
 void USwappingWeaponState::EnterState(AZombieGameCharacter* Character)
 {
-	Character->GetWorldTimerManager().ClearTimer(Character->ReloadTimerHandle);
+	// Character->GetWorldTimerManager().ClearTimer(Character->ReloadTimerHandle);
 	// if the user switches weapon whilst reloading, the reload animation will not carry over to the next weapon.
 	bool Success = false;
 
@@ -47,6 +48,7 @@ void USwappingWeaponState::EnterState(AZombieGameCharacter* Character)
 
 void USwappingWeaponState::TryEnterState(AZombieGameCharacter* Character)
 {
+	if (Character->CurrentStateInstance->IsA<UReloadingState>()) return;
 	Character->CurrentStateInstance = NewObject<USwappingWeaponState>(Character);
 	Character->CurrentStateInstance->EnterState(Character);
 }

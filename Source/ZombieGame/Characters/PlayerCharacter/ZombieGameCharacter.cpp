@@ -5,6 +5,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "States/AimingState.h"
+#include "States\IdleFireState.h"
 #include "States/IdleState.h"
 #include "States/ReloadingState.h"
 #include "States/SwappingWeaponState.h"
@@ -54,8 +55,8 @@ void AZombieGameCharacter::BeginPlay()
 	MainWidgetInstance = CreateWidget<UMainWidget>(GetWorld(), WidgetClass);
 	MainWidgetInstance->AddToViewport();
 
-	CurrentStateInstance = NewObject<UIdleState>(this);
-	CurrentStateInstance->EnterState(this);
+	TryStateInstance = NewObject<UIdleState>(this);
+	TryStateInstance->TryEnterState(this);
 }
 
 void AZombieGameCharacter::HandleDamage(float const DamageAmount, struct FDamageEvent const& DamageEvent,
@@ -105,8 +106,8 @@ void AZombieGameCharacter::HandleCharacterDeath()
 
 void AZombieGameCharacter::SwitchToNextPrimaryWeapon()
 {
-	CurrentStateInstance = NewObject<USwappingWeaponState>(this);
-	CurrentStateInstance->EnterState(this);
+	TryStateInstance = NewObject<USwappingWeaponState>(this);
+	TryStateInstance->TryEnterState(this);
 }
 
 void AZombieGameCharacter::MaxAmmo()
@@ -202,17 +203,14 @@ void AZombieGameCharacter::LookUpAtRate(float Rate)
 
 void AZombieGameCharacter::ZoomIn()
 {
-	if (CurrentStateInstance->IsA<UReloadingState>()) return;
-
-	CurrentStateInstance = NewObject<UAimingState>(this);
-	CurrentStateInstance->EnterState(this);
+	TryStateInstance = NewObject<UAimingState>(this);
+	TryStateInstance->TryEnterState(this);
 }
 
 void AZombieGameCharacter::ZoomOut()
 {
-	if (!(CurrentStateInstance->IsA<UAimingState>())) return;
-	CurrentStateInstance = NewObject<UIdleState>(this);
-	CurrentStateInstance->EnterState(this);
+	TryStateInstance = NewObject<UAimingState>(this);
+	TryStateInstance->TryExitState(this);
 }
 
 void AZombieGameCharacter::Fire()
@@ -252,24 +250,29 @@ void AZombieGameCharacter::Fire()
 void AZombieGameCharacter::StartFiring() // rename
 {
 	if (CurrentStateInstance->IsA<UReloadingState>() || CurrentStateInstance->IsA<USwappingWeaponState>()) return;
+	if (CurrentStateInstance->IsA<UIdleState>())
+	{
+		// This is for the ABP to go from idle to fire
+		CurrentStateInstance = NewObject<UIdleFireState>(this);
+	}
 	Fire();
 }
 
 void AZombieGameCharacter::StopFiring()
 {
 	if (CurrentStateInstance->IsA<UReloadingState>() || CurrentStateInstance->IsA<USwappingWeaponState>()) return;
+	if (CurrentStateInstance->IsA<UIdleFireState>())
+	{
+		CurrentStateInstance = NewObject<UIdleState>(this);
+		CurrentStateInstance->EnterState(this);
+	}
 	GetWorldTimerManager().ClearTimer(FireTimerHandle);
 }
 
 void AZombieGameCharacter::StartReload()
 {
-	if (Weapons[CurrentWeaponIndex]->TotalWeaponAmmo != 0 && Weapons[CurrentWeaponIndex]->CurrentWeaponAmmo != Weapons[
-		CurrentWeaponIndex]->MaxWeaponClipSize)
-	{
-		if (CurrentStateInstance->IsA<UReloadingState>() || CurrentStateInstance->IsA<UAimingState>()) return;
-		CurrentStateInstance = NewObject<UReloadingState>(this);
-		CurrentStateInstance->EnterState(this);
-	}
+	TryStateInstance = NewObject<UReloadingState>(this);
+	TryStateInstance->TryEnterState(this);
 }
 
 

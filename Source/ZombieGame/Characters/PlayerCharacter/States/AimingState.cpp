@@ -3,10 +3,13 @@
 
 #include "AimingState.h"
 
+#include "IdleState.h"
+#include "ReloadingState.h"
 #include "Components/Image.h"
 
 void UAimingState::EnterState(AZombieGameCharacter* Character)
 {
+	// Can enter this state as not reloading
 	UE_LOG(LogTemp, Display, TEXT("Aiming Now!!!"));
 
 	Character->MainWidgetInstance->Crosshair->SetVisibility(ESlateVisibility::Hidden);
@@ -20,7 +23,19 @@ void UAimingState::EnterState(AZombieGameCharacter* Character)
 	}
 }
 
-void UAimingState::ExitState(AZombieGameCharacter* Character)
+void UAimingState::TryEnterState(AZombieGameCharacter* Character)
 {
-	
+	if (Character->CurrentStateInstance->IsA<UReloadingState>()) return;
+	Character->CurrentStateInstance = NewObject<UAimingState>(Character);
+	EnterState(Character);
 }
+
+void UAimingState::TryExitState(AZombieGameCharacter* Character)
+{
+	if (!(Character->CurrentStateInstance->IsA<UAimingState>())) return;
+	Character->CurrentStateInstance = NewObject<UIdleState>(Character);
+	Character->CurrentStateInstance->EnterState(Character);
+}
+
+
+

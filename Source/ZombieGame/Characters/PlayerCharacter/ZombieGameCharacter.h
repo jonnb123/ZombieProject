@@ -95,6 +95,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UCharacterStates* CurrentStateInstance;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class UCharacterStates* TryStateInstance;
+	
 	// reload timer
 	FTimerHandle ReloadTimerHandle;
 

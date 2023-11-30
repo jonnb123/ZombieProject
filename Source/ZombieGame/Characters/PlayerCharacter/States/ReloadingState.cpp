@@ -3,6 +3,7 @@
 
 #include "ReloadingState.h"
 #include "AimingState.h"
+#include "IdleFireState.h"
 #include "IdleState.h"
 
 void UReloadingState::EnterState(AZombieGameCharacter* Character)
@@ -16,6 +17,23 @@ void UReloadingState::EnterState(AZombieGameCharacter* Character)
 	// A delegate is created and is bound to the member function.
 	const FTimerDelegate ReloadDelegate = FTimerDelegate::CreateUObject(this, &UReloadingState::RefillAmmo, Character);
 	Character->GetWorldTimerManager().SetTimer(ReloadTimerHandle, ReloadDelegate, WeaponReloadDelay, false);
+}
+
+void UReloadingState::TryEnterState(AZombieGameCharacter* Character)
+{
+	if (Character->Weapons[Character->CurrentWeaponIndex]->TotalWeaponAmmo != 0 && Character->Weapons[Character->CurrentWeaponIndex]->CurrentWeaponAmmo != Character->Weapons[
+		Character->CurrentWeaponIndex]->MaxWeaponClipSize)
+	{
+		if (Character->CurrentStateInstance->IsA<UReloadingState>() || Character->CurrentStateInstance->IsA<UAimingState>() || Character->CurrentStateInstance->IsA<UIdleFireState>()) return;
+		Character->CurrentStateInstance = NewObject<UReloadingState>(Character);
+		Character->CurrentStateInstance->EnterState(Character);
+	}
+}
+
+void UReloadingState::TryExitState(AZombieGameCharacter* Character)
+{
+	Character->CurrentStateInstance = NewObject<UIdleState>(Character);
+	Character->CurrentStateInstance->EnterState(Character);
 }
 
 
@@ -54,10 +72,8 @@ void UReloadingState::RefillAmmo(AZombieGameCharacter* Character)
 		}
 	}
 	Character->AmmoArray[Character->CurrentWeaponIndex] = Character->Weapons[Character->CurrentWeaponIndex]->TotalWeaponAmmo;
-	Character->CurrentStateInstance = NewObject<UIdleState>(Character);
-	Character->CurrentStateInstance->EnterState(Character);
+	Character->CurrentStateInstance->TryExitState(Character);
+	// Character->CurrentStateInstance = NewObject<UIdleState>(Character);
+	// Character->CurrentStateInstance->EnterState(Character);
 }
 
-void UReloadingState::ExitState(AZombieGameCharacter* Character)
-{
-}

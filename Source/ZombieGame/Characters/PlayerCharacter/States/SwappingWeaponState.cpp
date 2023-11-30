@@ -1,7 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "IdleState.h"
+
 #include "SwappingWeaponState.h"
+#include "IdleState.h"
 
 void USwappingWeaponState::EnterState(AZombieGameCharacter* Character)
 {
@@ -44,12 +45,22 @@ void USwappingWeaponState::EnterState(AZombieGameCharacter* Character)
 		}
 }
 
-void USwappingWeaponState::WeaponSwapAfterDelay(AZombieGameCharacter* Character)
+void USwappingWeaponState::TryEnterState(AZombieGameCharacter* Character)
+{
+	Character->CurrentStateInstance = NewObject<USwappingWeaponState>(Character);
+	Character->CurrentStateInstance->EnterState(Character);
+}
+
+void USwappingWeaponState::TryExitState(AZombieGameCharacter* Character)
 {
 	Character->CurrentStateInstance = NewObject<UIdleState>(Character);
 	Character->CurrentStateInstance->EnterState(Character);
 }
 
-void USwappingWeaponState::ExitState(AZombieGameCharacter* Character)
+void USwappingWeaponState::WeaponSwapAfterDelay(AZombieGameCharacter* Character)
 {
+	Character->CurrentStateInstance->TryExitState(Character);
+	// Character->CurrentStateInstance = NewObject<UIdleState>(Character);
+	// Character->CurrentStateInstance->EnterState(Character);
 }
+

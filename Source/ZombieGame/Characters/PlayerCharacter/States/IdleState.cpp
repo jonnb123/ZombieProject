@@ -6,6 +6,7 @@
 
 void UIdleState::EnterState(AZombieGameCharacter* Character)
 {
+	// can enter idle from any state
 	UE_LOG(LogTemp, Display, TEXT("Entering idle state"));
 	
 	Character->MainWidgetInstance->Crosshair->SetVisibility(ESlateVisibility::Visible);
@@ -20,7 +21,9 @@ void UIdleState::EnterState(AZombieGameCharacter* Character)
 	}
 }
 
-void UIdleState::ExitState(AZombieGameCharacter* Character)
+void UIdleState::TryEnterState(AZombieGameCharacter* Character)
 {
-	
+	Character->CurrentStateInstance = NewObject<UIdleState>(Character);
+	Character->CurrentStateInstance->EnterState(Character);
 }
+

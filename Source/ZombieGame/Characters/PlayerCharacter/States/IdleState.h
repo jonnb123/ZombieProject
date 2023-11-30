@@ -15,9 +15,11 @@ class ZOMBIEGAME_API UIdleState : public UCharacterStates
 {
 	GENERATED_BODY()
 
-public:	
+protected:	
 	
 	virtual void EnterState(AZombieGameCharacter* Character) override ;
 
-	virtual void ExitState(AZombieGameCharacter* Character) override;
+	virtual void TryEnterState(AZombieGameCharacter* Character) override;
+
+	
 };

@@ -16,9 +16,11 @@ class ZOMBIEGAME_API UCharacterStates : public UObject
 	GENERATED_BODY()
 
 public:
-	// pure virtual functions
+	// pure functions
 	virtual void EnterState(AZombieGameCharacter* Character);
 
-	virtual void ExitState(AZombieGameCharacter* Character);
-	
+	virtual void TryEnterState(AZombieGameCharacter* Character);
+
+	virtual void TryExitState(AZombieGameCharacter* Character);
+
 };

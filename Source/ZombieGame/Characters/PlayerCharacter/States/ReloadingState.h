@@ -15,11 +15,15 @@ class ZOMBIEGAME_API UReloadingState : public UCharacterStates
 {
 	GENERATED_BODY()
 
-public:	
+protected:	
 	
 	virtual void EnterState(AZombieGameCharacter* Character) override ;
 
-	virtual void ExitState(AZombieGameCharacter* Character) override;
+	virtual void TryEnterState(AZombieGameCharacter* Character) override;
+
+
+	virtual void TryExitState(AZombieGameCharacter* Character) override;
+
 
 	void RefillAmmo(AZombieGameCharacter* Character);
 };

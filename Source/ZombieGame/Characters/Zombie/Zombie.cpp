@@ -89,8 +89,7 @@ void AZombie::BeginPlay()
 void AZombie::OnHeadBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
 									int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
-	AZombieGameProjectile *Projectile = Cast<AZombieGameProjectile>(OtherActor);
-	if (Projectile)
+	if (AZombieGameProjectile *Projectile = Cast<AZombieGameProjectile>(OtherActor))
 	{
 		HandleBodyPartOverlap(Projectile->HeadDamage, HeadHealth, TEXT("head"), TEXT("NONE"), OtherActor, OverlappedComponent, NoOppositeLimb);
 		ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
@@ -102,8 +101,7 @@ void AZombie::OnHeadBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AA
 void AZombie::OnRightArmBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
 										int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
-	AZombieGameProjectile *Projectile = Cast<AZombieGameProjectile>(OtherActor);
-	if (Projectile)
+	if (AZombieGameProjectile *Projectile = Cast<AZombieGameProjectile>(OtherActor))
 	{
 		HandleBodyPartOverlap(Projectile->ArmDamage, RightArmHealth, TEXT("lowerarm_r"), TEXT("NONE"), OtherActor, OverlappedComponent, LeftArmHealth);
 		ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
@@ -115,8 +113,7 @@ void AZombie::OnRightArmBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent
 void AZombie::OnLeftArmBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
 									   int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
-	AZombieGameProjectile *Projectile = Cast<AZombieGameProjectile>(OtherActor);
-	if (Projectile)
+	if (AZombieGameProjectile *Projectile = Cast<AZombieGameProjectile>(OtherActor))
 	{
 		HandleBodyPartOverlap(Projectile->ArmDamage, LeftArmHealth, TEXT("lowerarm_l"), TEXT("NONE"), OtherActor, OverlappedComponent, RightArmHealth);
 		ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
@@ -128,8 +125,7 @@ void AZombie::OnLeftArmBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent,
 void AZombie::OnRightLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
 										int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
-	AZombieGameProjectile *Projectile = Cast<AZombieGameProjectile>(OtherActor);
-	if (Projectile)
+	if (AZombieGameProjectile *Projectile = Cast<AZombieGameProjectile>(OtherActor))
 	{
 		HandleBodyPartOverlap(Projectile->LegDamage, LegHealth, TEXT("calf_r"), TEXT("calf_l"), OtherActor, OverlappedComponent, NoOppositeLimb);
 		ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
@@ -141,8 +137,7 @@ void AZombie::OnRightLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent
 void AZombie::OnLeftLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
 									   int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
-	AZombieGameProjectile *Projectile = Cast<AZombieGameProjectile>(OtherActor);
-	if (Projectile)
+	if (AZombieGameProjectile *Projectile = Cast<AZombieGameProjectile>(OtherActor))
 	{
 		HandleBodyPartOverlap(Projectile->LegDamage, LegHealth, TEXT("calf_r"), TEXT("calf_l"), OtherActor, OverlappedComponent, NoOppositeLimb);
 		ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
@@ -154,8 +149,7 @@ void AZombie::OnLeftLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent,
 void AZombie::OnTorsoBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
 									 int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
-	AZombieGameProjectile *Projectile = Cast<AZombieGameProjectile>(OtherActor);
-	if (Projectile)
+	if (AZombieGameProjectile *Projectile = Cast<AZombieGameProjectile>(OtherActor))
 	{
 		// not removing any limb here
 		HandleBodyPartOverlap(Projectile->TorsoDamage, TorsoHealth, TEXT("NONE"), TEXT("NONE"), OtherActor, OverlappedComponent, NoOppositeLimb);

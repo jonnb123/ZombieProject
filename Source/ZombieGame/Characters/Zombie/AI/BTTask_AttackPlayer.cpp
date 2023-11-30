@@ -34,7 +34,7 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
     // this block gets the Zombie
     AAIController *AIController{OwnerComp.GetAIOwner()};
     const AZombieAIController *ZombieAIController = Cast<AZombieAIController>(AIController);
-    const APawn *AIPawn{AIController->GetPawn()};
+    
     ACharacter *AICharacter{AIController->GetCharacter()};
     const AZombie *ZombieCharacter = Cast<AZombie>(AICharacter);
 
@@ -43,12 +43,6 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
 
     // gets the character
     ACharacter *Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-
-    // get grandad
-    AGrandad *Grandad = AGrandad::GetInstance();
-
-    // Get front door
-    AFrontDoor *FrontDoor = AFrontDoor::GetInstance();
 
     // Gets the Animation Instance and if it has ended play OnAttackEnd
     if (UAnimInstance *AnimInstance = AICharacter->GetMesh()->GetAnimInstance())
@@ -59,13 +53,18 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
 
     UE_LOG(LogTemp, Log, TEXT("Damaging..."));
     UE_LOG(LogTemp, Log, TEXT("Name of actor: %s"), *AICharacter->GetName());
+
+    IDamageableInterface *TheInterface = Cast<IDamageableInterface>(ZombieAIController->Target);
     
     if (AICharacter->GetName().StartsWith("BP_FireZombie"))
     {
         AICharacter->PlayAnimMontage(AttackMontage);
         UGameplayStatics::PlaySoundAtLocation(GetWorld(), FireZombieAttackSound, AICharacter->GetActorLocation());
 
-        Player->TakeDamage(FireMeleeDamage, DamageEvent, AIController, AICharacter);
+        if (TheInterface)
+        {
+            TheInterface->HandleDamage(FireMeleeDamage, DamageEvent, AIController, AICharacter);
+        }
     }
     else // if normal zombie
     {
@@ -79,7 +78,6 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
         }
         UGameplayStatics::PlaySoundAtLocation(GetWorld(), ZombieAttackSound, AICharacter->GetActorLocation());
 
-        IDamageableInterface *TheInterface = Cast<IDamageableInterface>(ZombieAIController->Target);
         if (TheInterface)
         {
             UE_LOG(LogTemp, Warning, TEXT("Target: %s"), *ZombieAIController->Target->GetName());

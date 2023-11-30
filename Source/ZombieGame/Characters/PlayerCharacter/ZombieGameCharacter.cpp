@@ -203,6 +203,10 @@ void AZombieGameCharacter::HandleDamage(float const DamageAmount, struct FDamage
 {
 	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	// takes the damage values from the zombie in BTTask_Attack and plugs them into the base implementation of TakeDamage
+	DamageToApply = FMath::Min(Health, DamageToApply);
+	Health -= DamageToApply; // deducts damage from health
+	UE_LOG(LogTemp, Log, TEXT("Health left %f"), Health);
+	
 	if (Health <= 0)
 	{
 		// when health is below 0
@@ -225,9 +229,7 @@ void AZombieGameCharacter::HandleDamage(float const DamageAmount, struct FDamage
 			GetWorldTimerManager().SetTimer(HealthRegenTimerHandle, HealthRegenTimerDelegate, HealthRegenDuration,
 											true);
 		}
-		DamageToApply = FMath::Min(Health, DamageToApply);
-		Health -= DamageToApply; // deducts damage from health
-		UE_LOG(LogTemp, Log, TEXT("Health left %f"), Health);
+		
 		}
 }
 

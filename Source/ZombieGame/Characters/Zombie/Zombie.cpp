@@ -47,6 +47,8 @@ AZombie::AZombie()
 	
 	UCharacterMovementComponent *ZombieMovement = Cast<UCharacterMovementComponent>(GetMovementComponent());
 	ZombieMovement->MaxWalkSpeed = 300.f;
+
+	Health = MaxHealth;
 }
 
 void AZombie::HandleDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser)
@@ -91,6 +93,9 @@ void AZombie::OnHeadBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AA
 	if (Projectile)
 	{
 		HandleBodyPartOverlap(Projectile->HeadDamage, HeadHealth, TEXT("head"), TEXT("NONE"), OtherActor, OverlappedComponent, NoOppositeLimb);
+		ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+		AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+		Character->SetPoints(Character->GetPoints() + 100);
 	}
 }
 
@@ -101,6 +106,9 @@ void AZombie::OnRightArmBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent
 	if (Projectile)
 	{
 		HandleBodyPartOverlap(Projectile->ArmDamage, RightArmHealth, TEXT("lowerarm_r"), TEXT("NONE"), OtherActor, OverlappedComponent, LeftArmHealth);
+		ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+		AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+		Character->SetPoints(Character->GetPoints() + 50);
 	}
 }
 
@@ -111,6 +119,9 @@ void AZombie::OnLeftArmBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent,
 	if (Projectile)
 	{
 		HandleBodyPartOverlap(Projectile->ArmDamage, LeftArmHealth, TEXT("lowerarm_l"), TEXT("NONE"), OtherActor, OverlappedComponent, RightArmHealth);
+		ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+		AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+		Character->SetPoints(Character->GetPoints() + 50);
 	}
 }
 
@@ -121,6 +132,9 @@ void AZombie::OnRightLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent
 	if (Projectile)
 	{
 		HandleBodyPartOverlap(Projectile->LegDamage, LegHealth, TEXT("calf_r"), TEXT("calf_l"), OtherActor, OverlappedComponent, NoOppositeLimb);
+		ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+		AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+		Character->SetPoints(Character->GetPoints() + 50);
 	}
 }
 
@@ -131,14 +145,10 @@ void AZombie::OnLeftLegBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent,
 	if (Projectile)
 	{
 		HandleBodyPartOverlap(Projectile->LegDamage, LegHealth, TEXT("calf_r"), TEXT("calf_l"), OtherActor, OverlappedComponent, NoOppositeLimb);
+		ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+		AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+		Character->SetPoints(Character->GetPoints() + 50);
 	}
-}
-
-void AZombie::OnMeshHit(UPrimitiveComponent *HitComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit)
-{
-	UE_LOG(LogTemp, Warning, TEXT("Zombie mesh hit"));
-	UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), ZombieImpactVFX, Hit.Location);
-	// OtherComp->DestroyComponent();
 }
 
 void AZombie::OnTorsoBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
@@ -149,8 +159,20 @@ void AZombie::OnTorsoBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, A
 	{
 		// not removing any limb here
 		HandleBodyPartOverlap(Projectile->TorsoDamage, TorsoHealth, TEXT("NONE"), TEXT("NONE"), OtherActor, OverlappedComponent, NoOppositeLimb);
+		ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+		AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+		Character->SetPoints(Character->GetPoints() + 50);
 	}
 }
+
+void AZombie::OnMeshHit(UPrimitiveComponent *HitComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Zombie mesh hit"));
+	UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), ZombieImpactVFX, Hit.Location);
+	// OtherComp->DestroyComponent();
+}
+
+
 
 void AZombie::HandleBodyPartOverlap(float Damage, float &LimbHealth, const FName &BoneToRemoveOne, const FName &BoneToRemoveTwo, AActor *OtherActor, UPrimitiveComponent *OverlappedComponent, float &OppositeLimbHealth)
 {

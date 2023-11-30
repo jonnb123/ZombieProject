@@ -10,10 +10,13 @@
     <list default="true" id="c9b0ce35-a396-4102-b699-f4dc77eb016b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ZombieGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ZombieGame/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Maps/ZombieMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Maps/ZombieMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Zombie/Animations/ZombieAnim_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Zombie/Animations/ZombieAnim_BP.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Zombie/ZombieBPs/BP_FireZombieBoss.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Zombie/ZombieBPs/BP_FireZombieBoss.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Zombie/ZombieBPs/BP_ZombieM01_Custom.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Zombie/ZombieBPs/BP_ZombieM01_Custom.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Architecture/Floor_400x400.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Architecture/Floor_400x400.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/Zombie/FireZombieBoss.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/Zombie/FireZombieBoss.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/Zombie/FireZombieBoss.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/Zombie/FireZombieBoss.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/Zombie/Zombie.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/Zombie/Zombie.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/Zombie/Zombie.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/Zombie/Zombie.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +35,9 @@
     <setting file="file://$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/ZombieGame/Widgets/MainWidget.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://E:/Epic Games/UE_5.2/Engine/Source/Developer/GraphColor/Private/graph.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://E:/Epic Games/UE_5.2/Engine/Source/Developer/GraphColor/Private/graphColorVertices.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://E:/Epic Games/UE_5.2/Engine/Source/Developer/GraphColor/Private/graphColorVertices.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://E:/Epic Games/UE_5.2/Engine/Source/Developer/GraphColor/Private/graphColorVertices.private.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://E:/Epic Games/UE_5.2/Engine/Source/Developer/GraphColor/Private/graphColorVertices_Extensions.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://E:/Epic Games/UE_5.2/Engine/Source/Runtime/Engine/Private/Components/CharacterMovementComponent.cpp" root0="SKIP_HIGHLIGHTING" />
@@ -158,7 +163,9 @@
       <workItem from="1701340204075" duration="7323000" />
       <workItem from="1701350885788" duration="4585000" />
       <workItem from="1701356275468" duration="200000" />
-      <workItem from="1701356704338" duration="1839000" />
+      <workItem from="1701356704338" duration="3078000" />
+      <workItem from="1701359869999" duration="347000" />
+      <workItem from="1701360381546" duration="427000" />
     </task>
     <servers />
   </component>

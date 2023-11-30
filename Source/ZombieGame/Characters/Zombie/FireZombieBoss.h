@@ -13,5 +13,6 @@ UCLASS()
 class ZOMBIEGAME_API AFireZombieBoss : public AZombie
 {
 	GENERATED_BODY()
-	
+
+	AFireZombieBoss();
 };

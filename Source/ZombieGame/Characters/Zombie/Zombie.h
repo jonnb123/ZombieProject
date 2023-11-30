@@ -71,25 +71,25 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	bool IsCrawling = false; // used in abp and zombieaicontroller, and BTTastk_Attack only need a getter
 
-	UPROPERTY(VisibleAnywhere, Category = Health)
+	UPROPERTY(EditAnywhere, Category = Health)
 	float MaxHealth = 100;
 
-	UPROPERTY(VisibleAnywhere, Category = Health)
+	UPROPERTY(EditAnywhere, Category = Health)
 	float Health = 100;
 
-	UPROPERTY(VisibleAnywhere, Category = Health)
+	UPROPERTY(EditAnywhere, Category = Health)
 	float HeadHealth = 100;
 
-	UPROPERTY(VisibleAnywhere, Category = Health)
+	UPROPERTY(EditAnywhere, Category = Health)
 	float TorsoHealth = 100;
 
-	UPROPERTY(VisibleAnywhere, Category = Health)
+	UPROPERTY(EditAnywhere, Category = Health)
 	float LeftArmHealth = 50;
 
-	UPROPERTY(VisibleAnywhere, Category = Health)
+	UPROPERTY(EditAnywhere, Category = Health)
 	float RightArmHealth = 50;
 
-	UPROPERTY(VisibleAnywhere, Category = Health)
+	UPROPERTY(EditAnywhere, Category = Health)
 	float LegHealth = 50;
 
 	UPROPERTY(VisibleAnywhere, Category = Health)

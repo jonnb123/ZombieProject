@@ -138,7 +138,7 @@ void AZombie::OnMeshHit(UPrimitiveComponent *HitComponent, AActor *OtherActor, U
 {
 	UE_LOG(LogTemp, Warning, TEXT("Zombie mesh hit"));
 	UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), ZombieImpactVFX, Hit.Location);
-	OtherComp->DestroyComponent();
+	// OtherComp->DestroyComponent();
 }
 
 void AZombie::OnTorsoBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
@@ -211,6 +211,8 @@ void AZombie::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
 
 void AZombie::Death()
 {
+	UE_LOG(LogTemp, Warning, TEXT("ZOMBIE DEAD "));
+
 	// AI can no longer detect the zombie upon death
 	if (UAIPerceptionStimuliSourceComponent* StimuliSourceComponent = FindComponentByClass<UAIPerceptionStimuliSourceComponent>())
 	{

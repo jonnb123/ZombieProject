@@ -8,14 +8,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c9b0ce35-a396-4102-b699-f4dc77eb016b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/FireState.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/FireState.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ZombieGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ZombieGame/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Blueprints/Blueprint_CeilingLight.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Blueprints/Blueprint_CeilingLight.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Particles/P_Ambient_Dust.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Particles/P_Ambient_Dust.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/SwappingWeaponState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/SwappingWeaponState.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Maps/ZombieMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Maps/ZombieMap.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Zombie/Animations/ZombieAnim_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Zombie/Animations/ZombieAnim_BP.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Zombie/ZombieBPs/BP_FireZombieBoss.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Zombie/ZombieBPs/BP_FireZombieBoss.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Zombie/ZombieBPs/BP_ZombieM01_Custom.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Zombie/ZombieBPs/BP_ZombieM01_Custom.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/Zombie/Zombie.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/Zombie/Zombie.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -160,6 +158,7 @@
       <workItem from="1701340204075" duration="7323000" />
       <workItem from="1701350885788" duration="4585000" />
       <workItem from="1701356275468" duration="200000" />
+      <workItem from="1701356704338" duration="1839000" />
     </task>
     <servers />
   </component>

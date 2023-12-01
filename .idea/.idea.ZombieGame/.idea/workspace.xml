@@ -9,10 +9,19 @@
   <component name="ChangeListManager">
     <list default="true" id="c9b0ce35-a396-4102-b699-f4dc77eb016b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ZombieGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ZombieGame/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/BP_FirstPersonCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/BP_FirstPersonCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/PerkMachines/BP_ExtendedMag.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/PerkMachines/BP_ExtendedMag.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/PerkMachines/BP_FullyAuto.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/PerkMachines/BP_FullyAuto.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/PerkMachines/BP_HealthJuice.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/PerkMachines/BP_HealthJuice.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/PerkMachines/BP_MaxSpeed.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/PerkMachines/BP_MaxSpeed.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/Turret/BP_Turret.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/Turret/BP_Turret.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/Weapons/BP_Shotguns.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/Weapons/BP_Shotguns.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Maps/ZombieMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Maps/ZombieMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Widgets/ItemDataTable.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Widgets/ItemDataTable.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/PerkMachines/ExtendedMag.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/PerkMachines/ExtendedMag.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/PerkMachines/FullyAuto.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/PerkMachines/FullyAuto.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/PerkMachines/HealthJuice.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/PerkMachines/HealthJuice.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/PerkMachines/MaxSpeed.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/PerkMachines/MaxSpeed.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/ReloadingState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/ReloadingState.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Widgets/ShopItem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Widgets/ShopItem.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,7 +196,7 @@
       <workItem from="1701438210443" duration="1803000" />
       <workItem from="1701440178053" duration="2077000" />
       <workItem from="1701443414281" duration="2880000" />
-      <workItem from="1701446418407" duration="3508000" />
+      <workItem from="1701446418407" duration="5479000" />
     </task>
     <servers />
   </component>

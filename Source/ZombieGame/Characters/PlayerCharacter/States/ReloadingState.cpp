@@ -106,22 +106,6 @@ void UReloadingState::RefillAmmo(AZombieGameCharacter* Character)
 						ShopItem->ItemButton->SetBackgroundColor(FLinearColor::Gray);
 					}
 				}
-
-				// if (ShopItem->Item->Name.ToString() == TEXT("Pistol Ammo"))
-				// {
-				// 	ShopItem->bIsOwned = false;
-				// 	ShopItem->ItemButton->SetBackgroundColor(FLinearColor::Gray);
-				// }
-				// if (ShopItem->Item->Name.ToString() == TEXT("Assault Rifle Ammo"))
-				// {
-				// 	ShopItem->bIsOwned = false;
-				// 	ShopItem->ItemButton->SetBackgroundColor(FLinearColor::Gray);
-				// }
-				// if (ShopItem->Item->Name.ToString() == TEXT("Shotgun Ammo"))
-				// {
-				// 	ShopItem->bIsOwned = false;
-				// 	ShopItem->ItemButton->SetBackgroundColor(FLinearColor::Gray);
-				// }
 			}
 		}
 	}

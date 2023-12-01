@@ -10,67 +10,92 @@
 #include "Kismet/GameplayStatics.h"
 #include "ZombieGame/GameMode/ZombieGameMode.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
-#include "ZombieGame/Characters/Zombie/AI/ZombieAIController.h"
-#include "BehaviorTree/BlackboardComponent.h"
 
 
 void UShopItem::NativeConstruct()
 {
-    if (ItemButton)
-    {
-        ItemButton->OnClicked.AddDynamic(this, &UShopItem::OnItemClicked);
-    }
+	if (ItemButton)
+	{
+		ItemButton->OnClicked.AddDynamic(this, &UShopItem::OnItemClicked);
+	}
 
-    AGrandad *Grandad = AGrandad::GetInstance();
-    int ItemID = Grandad->ShopWidgetInstance->ItemID;
-    if (ItemID >= 0)
-    {
-        FString ItemIDAsString = FString::FromInt(ItemID);
-        static const FString ContextString(TEXT("Item Name Context"));
-        Item = ItemDataTable->FindRow<FItemStructure>(FName(ItemIDAsString), ContextString, true);
-        ItemNameText->SetText(Item->Name);
-        ItemPriceText->SetText(FText::FromString(FString::FromInt(Item->Cost)));
-        ItemImage->SetBrushFromTexture(Item->Thumbnail);
-    }
-    else
-    {
-        ItemNameText->SetText(FText::FromString(""));
-        ItemPriceText->SetText(FText::FromString(""));
-        ItemButton->SetVisibility(ESlateVisibility::Hidden);
-    }
+	const AGrandad* Grandad = AGrandad::GetInstance();
+	const int ItemID = Grandad->ShopWidgetInstance->ItemID;
+	if (ItemID >= 0)
+	{
+		FString ItemIDAsString = FString::FromInt(ItemID);
+		static const FString ContextString(TEXT("Item Name Context"));
+		Item = ItemDataTable->FindRow<FItemStructure>(FName(ItemIDAsString), ContextString, true);
+		ItemNameText->SetText(Item->Name);
+		ItemPriceText->SetText(FText::FromString(FString::FromInt(Item->Cost)));
+		ItemImage->SetBrushFromTexture(Item->Thumbnail);
+
+		if (Item->Name.ToString() == TEXT("Pistol Ammo"))
+		{
+			bIsOwned = true;
+		}
+		if (bIsOwned == true)
+		{
+			ItemButton->SetBackgroundColor(FLinearColor::Red);
+		}
+	}
+	else
+	{
+		ItemNameText->SetText(FText::FromString(""));
+		ItemPriceText->SetText(FText::FromString(""));
+		ItemButton->SetVisibility(ESlateVisibility::Hidden);
+	}
 }
 
 void UShopItem::OnItemClicked()
 {
-    ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-    AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
-    
-    if (Character->GetPoints() >= Item->Cost && bIsOwned == false)
-    {
-        Character->SetPoints(Character->GetPoints() - Item->Cost);
-        bIsOwned = true;
-        ItemButton->SetBackgroundColor(FLinearColor::Red);
-        if (Item->Name.ToString() == TEXT("Front Door"))
-        {
-            AZombieGameMode *GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
+	ACharacter* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	AZombieGameCharacter* Character = Cast<AZombieGameCharacter>(PlayerCharacter);
 
-            AFrontDoor::SetInstance(Cast<AFrontDoor>(GetWorld()->SpawnActor(FrontDoor, &DoorSpawnLocation, &DoorSpawnRotation)));
-            AFrontDoor::GetInstance()->bIsSpawned = true;
+	if (Character->GetPoints() >= Item->Cost && bIsOwned == false)
+	{
+		Character->SetPoints(Character->GetPoints() - Item->Cost);
+		bIsOwned = true;
+		ItemButton->SetBackgroundColor(FLinearColor::Red);
+		
+		if (Item->Name.ToString() == TEXT("Front Door"))
+		{
+			const AZombieGameMode* GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
 
-            GameMode->OnDoorSpawn.Broadcast();
-        }
+			AFrontDoor::SetInstance(
+				Cast<AFrontDoor>(GetWorld()->SpawnActor(FrontDoor, &DoorSpawnLocation, &DoorSpawnRotation)));
+			AFrontDoor::GetInstance()->bIsSpawned = true;
+			GameMode->OnDoorSpawn.Broadcast();
+		}
 
-        if (Item->Name.ToString() == TEXT("Dog"))
-        {
-            UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), DogPawn, BehaviorTree, DogSpawnLocation);
-        }
+		if (Item->Name.ToString() == TEXT("Dog"))
+		{
+			UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), DogPawn, BehaviorTree, DogSpawnLocation);
+		}
 
-        if (Item->Name.ToString() == TEXT("Turret") && TurretComplete == false)
-        {
-            FActorSpawnParameters ActorSpawnParams;
-            ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-            AActor *Turret = GetWorld()->SpawnActor(TurretClass, &TurretSpawnLocation, &TurretSpawnRotation, ActorSpawnParams);
-        }
-    }
+		if (Item->Name.ToString() == TEXT("Turret") && TurretComplete == false)
+		{
+			FActorSpawnParameters ActorSpawnParams;
+			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+			AActor* Turret = GetWorld()->SpawnActor(TurretClass, &TurretSpawnLocation, &TurretSpawnRotation,
+			                                        ActorSpawnParams);
+		}
+
+		// for the pistol
+		ABaseWeapon* Pistol = nullptr;
+		for (ABaseWeapon* Weapon : Character->Weapons)
+		{
+			if (Weapon->WeaponType == EWeaponType::E_Pistol)
+			{
+				Pistol = Weapon;
+			}
+		}
+		
+		if (Item->Name.ToString() == TEXT("Pistol Ammo") && Pistol->TotalWeaponAmmo != Pistol->MaxWeaponAmmo)
+		{
+			Pistol->TotalWeaponAmmo = Pistol->MaxWeaponAmmo;
+		}
+	}
 }
+
 

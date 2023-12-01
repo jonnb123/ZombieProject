@@ -47,19 +47,22 @@ void AGrandad::OnItemBeginOverlap(UPrimitiveComponent *OverlappedComponent, AAct
 		ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 		AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
 		APlayerController *PlayerController = Cast<APlayerController>(Character->GetController());
-		// PlayerController->SetViewTargetWithBlend(this, 2.0);
 
 		if (MainWidgetInstance)
 		{
 			MainWidgetInstance->RemoveFromParent();
 		}
 
-		ShopWidgetInstance = CreateWidget<UShopWidget>(GetWorld(), ShopWidgetClass);
-		ShopWidgetInstance->AddToViewport();
+		if (!ShopWidgetInstance)
+		{
+			ShopWidgetInstance = CreateWidget<UShopWidget>(GetWorld(), ShopWidgetClass);
+			ShopWidgetInstance->AddToViewport();
+		}
+		ShopWidgetInstance->SetVisibility(ESlateVisibility::Visible);
+		
 		PlayerController->SetInputMode(FInputModeUIOnly());
 		PlayerController->bShowMouseCursor = true;
 		Character->GetCharacterMovement()->MaxWalkSpeed = 0;
-		// Character->GetCharacterMovement()->StopMovementImmediately();
 		
 	}
 }

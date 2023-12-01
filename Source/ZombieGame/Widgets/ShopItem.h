@@ -55,8 +55,7 @@ private:
 
 	// Button
 
-	UPROPERTY(meta = (BindWidget))
-	class UButton *ItemButton;
+	
 
 	// Image
 
@@ -74,13 +73,14 @@ private:
 	UFUNCTION(BlueprintCallable)
 	void OnItemClicked();
 
-	FItemStructure *Item;
-
-	bool bIsOwned = false;
+	
 
 	bool TurretComplete = false;
 
+	
+
 protected:
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<AFrontDoor> FrontDoor;
 
@@ -112,4 +112,11 @@ protected:
 public:
 	UPROPERTY()
 	AFrontDoor *SpawnedDoor;
+
+	FItemStructure *Item;
+
+	bool bIsOwned = false;
+
+	UPROPERTY(meta = (BindWidget))
+	class UButton *ItemButton;
 };

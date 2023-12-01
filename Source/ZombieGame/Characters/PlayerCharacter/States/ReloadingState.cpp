@@ -5,6 +5,8 @@
 #include "AimingState.h"
 #include "IdleFireState.h"
 #include "IdleState.h"
+#include "Components/Button.h"
+#include "ZombieGame/Characters/Grandad/Grandad.h"
 
 void UReloadingState::EnterState(AZombieGameCharacter* Character)
 {
@@ -71,9 +73,24 @@ void UReloadingState::RefillAmmo(AZombieGameCharacter* Character)
 			Character->Weapons[Character->CurrentWeaponIndex]->TotalWeaponAmmo = 0;
 		}
 	}
+	const AGrandad *Grandad = AGrandad::GetInstance();
+	if (UShopWidget* ShopWidgetInstance = Grandad->ShopWidgetInstance)
+	{
+		for (UShopItem* ShopItem : Grandad->ShopWidgetInstance->ShopItems)
+		{
+			if (ShopItem && ShopItem->Item && ShopItem->ItemButton)
+			{
+				if (ShopItem->Item->Name.ToString() == TEXT("Pistol Ammo"))
+				{
+					ShopItem->bIsOwned = false;
+					ShopItem->ItemButton->SetBackgroundColor(FLinearColor::Gray);
+				}
+			}
+		}
+	}
+	
+	
 	Character->AmmoArray[Character->CurrentWeaponIndex] = Character->Weapons[Character->CurrentWeaponIndex]->TotalWeaponAmmo;
 	Character->CurrentStateInstance->TryExitState(Character);
-	// Character->CurrentStateInstance = NewObject<UIdleState>(Character);
-	// Character->CurrentStateInstance->EnterState(Character);
 }
 

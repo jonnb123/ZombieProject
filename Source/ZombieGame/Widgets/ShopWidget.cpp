@@ -38,13 +38,11 @@ void UShopWidget::OnExitClicked()
     ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
     AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
     APlayerController* PlayerController = Cast<APlayerController>(Character->GetController());
-
-    Character->SetActorHiddenInGame(false);
-    // PlayerController->SetViewTargetWithBlend(PlayerController, 2.0);
+    
     PlayerController->SetInputMode(FInputModeGameOnly());
     Character->GetCharacterMovement()->MaxWalkSpeed = 600;
     PlayerController->bShowMouseCursor = false;
-    RemoveFromParent();
+    SetVisibility(ESlateVisibility::Hidden);
 }
 
 void UShopWidget::FetchItem(int Index)

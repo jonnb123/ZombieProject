@@ -24,6 +24,10 @@ protected:
 
 	virtual void TryExitState(AZombieGameCharacter* Character) override;
 
-	// The time for this is the fire-rate of the weapon, used in the weapon classes
-	FTimerHandle FireTimerHandle; // Not used with delegate
+	// // The time for this is the fire-rate of the weapon, used in the weapon classes
+	// FTimerHandle FireTimerHandle; // Not used with delegate
+	//
+	// FTimerDelegate FireDelegate;
+
+	bool bIsFiring = false;
 };

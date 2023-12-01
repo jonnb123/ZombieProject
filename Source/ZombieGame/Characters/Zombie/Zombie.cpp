@@ -21,34 +21,50 @@ AZombie::AZombie()
 	AudioComponent->SetupAttachment(RootComponent);
 
 	HeadBoxCollisionComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("HeadBoxCollisionComponent"));
-	HeadBoxCollisionComponent->SetupAttachment(GetMesh());
-	HeadBoxCollisionComponent->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("head"));
+	HeadBoxCollisionComponent->SetupAttachment(GetMesh(), TEXT("head"));
+	// HeadBoxCollisionComponent->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("head"));
 
 	TorsoBoxCollisionComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("TorsoBoxCollisionComponent"));
-	TorsoBoxCollisionComponent->SetupAttachment(GetMesh());
-	TorsoBoxCollisionComponent->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("spine_01"));
+	TorsoBoxCollisionComponent->SetupAttachment(GetMesh(), TEXT("spine_01"));
+	// TorsoBoxCollisionComponent->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("spine_01"));
 
 	RightLegBoxCollisionComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("RightLegBoxCollisionComponent"));
-	RightLegBoxCollisionComponent->SetupAttachment(GetMesh());
-	RightLegBoxCollisionComponent->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("calf_r"));
+	RightLegBoxCollisionComponent->SetupAttachment(GetMesh(), TEXT("calf_r"));
+	// RightLegBoxCollisionComponent->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("calf_r"));
 
 	RightArmBoxCollisionComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("RightArmBoxCollisionComponent"));
-	RightArmBoxCollisionComponent->SetupAttachment(GetMesh());
-	RightArmBoxCollisionComponent->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("lowerarm_r"));
+	RightArmBoxCollisionComponent->SetupAttachment(GetMesh(), TEXT("lowerarm_r"));
+	// RightArmBoxCollisionComponent->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("lowerarm_r"));
 
 	LeftLegBoxCollisionComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("LeftLegBoxCollisionComponent"));
-	LeftLegBoxCollisionComponent->SetupAttachment(GetMesh());
-	LeftLegBoxCollisionComponent->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("calf_l"));
+	LeftLegBoxCollisionComponent->SetupAttachment(GetMesh(), TEXT("calf_l"));
+	// LeftLegBoxCollisionComponent->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("calf_l"));
 
 	LeftArmBoxCollisionComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("LeftArmBoxCollisionComponent"));
-	LeftArmBoxCollisionComponent->SetupAttachment(GetMesh());
-	LeftArmBoxCollisionComponent->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("lowerarm_l"));
+	LeftArmBoxCollisionComponent->SetupAttachment(GetMesh(), TEXT("lowerarm_l"));
+	// LeftArmBoxCollisionComponent->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("lowerarm_l"));
 
 	
 	UCharacterMovementComponent *ZombieMovement = Cast<UCharacterMovementComponent>(GetMovementComponent());
 	ZombieMovement->MaxWalkSpeed = 300.f;
 
 	Health = MaxHealth;
+}
+
+// Called when the game starts or when spawned
+void AZombie::BeginPlay()
+{
+	Super::BeginPlay();
+
+	// Bind the OnBoxBeginOverlap function to the OnComponentBeginOverlap event
+	RightArmBoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AZombie::OnRightArmBoxBeginOverlap);
+	LeftArmBoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AZombie::OnLeftArmBoxBeginOverlap);
+	HeadBoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AZombie::OnHeadBoxBeginOverlap);
+	RightLegBoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AZombie::OnRightLegBoxBeginOverlap);
+	TorsoBoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AZombie::OnTorsoBoxBeginOverlap);
+	LeftLegBoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AZombie::OnLeftLegBoxBeginOverlap);
+	GetMesh()->OnComponentHit.AddDynamic(this, &AZombie::OnMeshHit);
+
 }
 
 void AZombie::HandleDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser)
@@ -71,20 +87,7 @@ void AZombie::HandleDamage(float const DamageAmount, struct FDamageEvent const &
 	}
 }
 
-// Called when the game starts or when spawned
-void AZombie::BeginPlay()
-{
-	Super::BeginPlay();
 
-	// Bind the OnBoxBeginOverlap function to the OnComponentBeginOverlap event
-	RightArmBoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AZombie::OnRightArmBoxBeginOverlap);
-	LeftArmBoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AZombie::OnLeftArmBoxBeginOverlap);
-	HeadBoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AZombie::OnHeadBoxBeginOverlap);
-	RightLegBoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AZombie::OnRightLegBoxBeginOverlap);
-	TorsoBoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AZombie::OnTorsoBoxBeginOverlap);
-	LeftLegBoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AZombie::OnLeftLegBoxBeginOverlap);
-	GetMesh()->OnComponentHit.AddDynamic(this, &AZombie::OnMeshHit);
-}
 
 void AZombie::OnHeadBoxBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,
 									int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)

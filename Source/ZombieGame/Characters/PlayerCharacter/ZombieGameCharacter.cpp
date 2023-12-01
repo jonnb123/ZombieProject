@@ -39,10 +39,13 @@ AZombieGameCharacter::AZombieGameCharacter()
 	GunMesh->SetupAttachment(Mesh1P);
 	Mesh1P->bCastDynamicShadow = false;
 	Mesh1P->CastShadow = false;
-	// Attach GunMeshNEW to Mesh1P using a specific socket name
-	const FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, true);
-	GunMesh->AttachToComponent(Mesh1P, AttachmentRules, TEXT("PistolSocket"));
 
+	// // Attach GunMeshNEW to Mesh1P using a specific socket name
+	// const FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, true);
+	// GunMesh->AttachToComponent(Mesh1P, AttachmentRules, TEXT("PistolSocket"));
+	GunMesh->SetupAttachment(Mesh1P, TEXT("PistolSocket"));
+
+	
 	// Initialize the WeaponAmmoArray with default values
 	AmmoArray.Init(0, static_cast<int>(EWeaponType::E_Size));
 }
@@ -53,7 +56,7 @@ void AZombieGameCharacter::BeginPlay()
 	Super::BeginPlay();
 	MainWidgetInstance = CreateWidget<UMainWidget>(GetWorld(), WidgetClass);
 	MainWidgetInstance->AddToViewport();
-
+	
 	TryStateInstance = NewObject<UIdleState>(this);
 	TryStateInstance->TryEnterState(this);
 }

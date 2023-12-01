@@ -101,6 +101,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Sound)
 	USoundBase *OutOfAmmoSound; // left in protected as the sound is set in blueprint
 
+	// The time for this is the fire-rate of the weapon, used in the weapon classes
+	FTimerHandle FireTimerHandle; // Not used with delegate
+
+	FTimerDelegate FireDelegate;
+
 protected:
 	virtual void BeginPlay();
 	

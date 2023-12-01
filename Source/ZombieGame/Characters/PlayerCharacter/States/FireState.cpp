@@ -54,11 +54,17 @@ void UFireState::Fire(AZombieGameCharacter* Character)
 			Character->Weapons[Character->CurrentWeaponIndex]->ProjectileClass, MuzzleLocation,
 			SpawnRotation, ActorSpawnParams);
 
-		// A delegate is created and is bound to the member function.
-		const FTimerDelegate ReloadDelegate = FTimerDelegate::CreateUObject(this, &UFireState::Fire, Character);
-		Character->GetWorldTimerManager().SetTimer(FireTimerHandle, ReloadDelegate,
-		                                           Character->Weapons[Character->CurrentWeaponIndex]->WeaponFireRate,
-		                                           false);
+		if (!bIsFiring)
+		{
+			bIsFiring = true;
+			// A delegate is created and is bound to the member function.
+			Character->FireDelegate = FTimerDelegate::CreateUObject(this, &UFireState::Fire, Character);
+			
+			Character->GetWorldTimerManager().SetTimer(Character->FireTimerHandle, Character->FireDelegate,
+													   Character->Weapons[Character->CurrentWeaponIndex]->WeaponFireRate,
+													   true);
+		}
+		
 	}
 	else
 	{
@@ -69,11 +75,13 @@ void UFireState::Fire(AZombieGameCharacter* Character)
 
 void UFireState::TryExitState(AZombieGameCharacter* Character)
 {
+	bIsFiring = false;
+	Character->GetWorldTimerManager().ClearTimer(Character->FireTimerHandle);
 	if (Character->CurrentStateInstance->IsA<UReloadingState>() || Character->CurrentStateInstance->IsA<USwappingWeaponState>()) return;
 	if (Character->CurrentStateInstance->IsA<UIdleFireState>())
 	{
 		Character->CurrentStateInstance = NewObject<UIdleState>(Character);
 		Character->CurrentStateInstance->EnterState(Character);
 	}
-	Character->GetWorldTimerManager().ClearTimer(FireTimerHandle);
+	
 }

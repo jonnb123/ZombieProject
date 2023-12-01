@@ -35,6 +35,13 @@ void AGrandad::BeginPlay()
 	{
 		GrandadInstance = Cast<AGrandad>(FoundActors[0]);
 	}
+
+	if (!ShopWidgetInstance)
+	{
+		ShopWidgetInstance = CreateWidget<UShopWidget>(GetWorld(), ShopWidgetClass);
+		ShopWidgetInstance->AddToViewport();
+		ShopWidgetInstance->SetVisibility(ESlateVisibility::Hidden);
+	}
 }
 
 void AGrandad::OnItemBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp,

@@ -16,9 +16,9 @@ void ABuyDoor::UseBuyableItem()
     UE_LOG(LogTemp, Warning, TEXT("You have interacted with buy door"));
     ACharacter* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	AZombieGameCharacter* Character = Cast<AZombieGameCharacter>(PlayerCharacter);
-	if (Character->GetPoints() >= 100 && !bDoorRotated) // set the points to be 2000
+	if (Character->GetPoints()  >= FCString::Atoi(*ItemPrice) && !bDoorRotated) // set the points to be 2000
 	{
-        Character->SetPoints(Character->GetPoints() - 100);
+        Character->SetPoints(Character->GetPoints() - FCString::Atoi(*ItemPrice));
         FRotator NewRotation = DoorMesh->GetRelativeRotation();
         NewRotation.Yaw += 90.0f; // Rotate by 90 degrees around the Z-axis
         DoorMesh->SetRelativeRotation(NewRotation);

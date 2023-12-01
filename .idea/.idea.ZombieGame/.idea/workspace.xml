@@ -9,32 +9,17 @@
   <component name="ChangeListManager">
     <list default="true" id="c9b0ce35-a396-4102-b699-f4dc77eb016b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ZombieGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ZombieGame/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultGame.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultGame.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Parts/P_E_BloodSplash_Decal_02.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Parts/P_E_BloodSplash_Decal_02.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Parts/P_E_Blood_HitAndSmoke.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Parts/P_E_Blood_HitAndSmoke.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Parts/P_E_Blood_HitAndSmoke_02.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Parts/P_E_Blood_HitAndSmoke_02.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Parts/P_E_Blood_Smoke.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Parts/P_E_Blood_Smoke.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Parts/P_E_Blood_SmokeDroplets_02.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Parts/P_E_Blood_SmokeDroplets_02.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Parts/P_E_Burst_BloodSplash.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Parts/P_E_Burst_BloodSplash.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Parts/P_E_Burst_BloodSplash_02.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Parts/P_E_Burst_BloodSplash_02.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Systems/P_Ground_Splash_Decal.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Systems/P_Ground_Splash_Decal.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Systems/Stylized/P_Bleeding_Stylized_01.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Systems/Stylized/P_Bleeding_Stylized_01.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Systems/Stylized/P_Bleeding_Stylized_02.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Systems/Stylized/P_Bleeding_Stylized_02.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Systems/Stylized/P_SplashBurst_Hit_Metal_Stylized.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Systems/Stylized/P_SplashBurst_Hit_Metal_Stylized.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Systems/Stylized/P_SplashWithBurst_Hit_Stylized.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Systems/Stylized/P_SplashWithBurst_Hit_Stylized.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Systems/Stylized/P_Splash_Decal_Stylized.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Systems/Stylized/P_Splash_Decal_Stylized.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Systems/Stylized/P_Splash_Hit_Metal_Stylized.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Systems/Stylized/P_Splash_Hit_Metal_Stylized.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Systems/Stylized/P_Splash_Hit_Stylized.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Systems/Stylized/P_Splash_Hit_Stylized.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Systems/Stylized/P_Splash_Stylized.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blood_VFX_Pack/Particles/Systems/Stylized/P_Splash_Stylized.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/BP_FirstPersonCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/BP_FirstPersonCharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/BP_ZombieGameMode.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/BP_ZombieGameMode.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Character/Animations/FPSAnim_ABP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Character/Animations/FPSAnim_ABP.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/Doors/BP_BuyDoor.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/Doors/BP_BuyDoor.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/PerkMachines/BP_ExtendedMag.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/PerkMachines/BP_ExtendedMag.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/PerkMachines/BP_FullyAuto.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/PerkMachines/BP_FullyAuto.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/PerkMachines/BP_HealthJuice.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/PerkMachines/BP_HealthJuice.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/PerkMachines/BP_MaxSpeed.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/PerkMachines/BP_MaxSpeed.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/Weapons/BP_AssaultRifles.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/Weapons/BP_AssaultRifles.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/Weapons/BP_Shotguns.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/Weapons/BP_Shotguns.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Maps/ZombieMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Maps/ZombieMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/FireState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/FireState.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/FireState.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/FireState.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/Zombie/Zombie.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/Zombie/Zombie.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Widgets/ItemDataTable.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Widgets/ItemDataTable.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Doors/BuyDoor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Doors/BuyDoor.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ZombieGame/GameMode/ZombieGameMode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/GameMode/ZombieGameMode.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -407,6 +392,7 @@
       <workItem from="1701424056456" duration="2948000" />
       <workItem from="1701427120800" duration="3097000" />
       <workItem from="1701430336956" duration="1508000" />
+      <workItem from="1701431867318" duration="1633000" />
     </task>
     <servers />
   </component>

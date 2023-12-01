@@ -15,7 +15,7 @@ void AZombieGameMode::BeginPlay()
 
 void AZombieGameMode::StartGame()
 {
-    // SpawnZombies();
+    SpawnZombies();
 }
 
 void AZombieGameMode::SpawnZombies()
@@ -23,9 +23,6 @@ void AZombieGameMode::SpawnZombies()
     // these are all values to make up a box in the level for the zombies to spawn
     FVector const MinBounds = FVector(-40870.0, 392000.0, -379670.0);
     FVector const MaxBounds = FVector(-63790.000000, 409560.0, -378590.0);
-    FVector const CenterPoint = FVector(-53220.0, 400780.0, -378590.0);
-    float const CenterPointZ = -373777.0;
-    float const HalfLength = FVector::Dist(CenterPoint, MinBounds);
 
     ZombiePawnClasses = {ZombiePawn1, ZombiePawn2, ZombiePawn3, ZombiePawn4};
 

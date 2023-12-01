@@ -23,10 +23,12 @@ void UReloadingState::EnterState(AZombieGameCharacter* Character)
 
 void UReloadingState::TryEnterState(AZombieGameCharacter* Character)
 {
-	if (Character->Weapons[Character->CurrentWeaponIndex]->TotalWeaponAmmo != 0 && Character->Weapons[Character->CurrentWeaponIndex]->CurrentWeaponAmmo != Character->Weapons[
+	if (Character->Weapons[Character->CurrentWeaponIndex]->TotalWeaponAmmo != 0 && Character->Weapons[Character->
+		CurrentWeaponIndex]->CurrentWeaponAmmo != Character->Weapons[
 		Character->CurrentWeaponIndex]->MaxWeaponClipSize)
 	{
-		if (Character->CurrentStateInstance->IsA<UReloadingState>() || Character->CurrentStateInstance->IsA<UAimingState>() || Character->CurrentStateInstance->IsA<UIdleFireState>()) return;
+		if (Character->CurrentStateInstance->IsA<UReloadingState>() || Character->CurrentStateInstance->IsA<
+			UAimingState>() || Character->CurrentStateInstance->IsA<UIdleFireState>()) return;
 		Character->CurrentStateInstance = NewObject<UReloadingState>(Character);
 		Character->CurrentStateInstance->EnterState(Character);
 	}
@@ -73,24 +75,58 @@ void UReloadingState::RefillAmmo(AZombieGameCharacter* Character)
 			Character->Weapons[Character->CurrentWeaponIndex]->TotalWeaponAmmo = 0;
 		}
 	}
-	const AGrandad *Grandad = AGrandad::GetInstance();
-	if (UShopWidget* ShopWidgetInstance = Grandad->ShopWidgetInstance)
+	const AGrandad* Grandad = AGrandad::GetInstance();
+	if (Grandad->ShopWidgetInstance)
 	{
 		for (UShopItem* ShopItem : Grandad->ShopWidgetInstance->ShopItems)
 		{
 			if (ShopItem && ShopItem->Item && ShopItem->ItemButton)
 			{
-				if (ShopItem->Item->Name.ToString() == TEXT("Pistol Ammo"))
+				if (Character->Weapons[Character->CurrentWeaponIndex]->WeaponType == EWeaponType::E_Pistol)
 				{
-					ShopItem->bIsOwned = false;
-					ShopItem->ItemButton->SetBackgroundColor(FLinearColor::Gray);
+					if (ShopItem->Item->Name.ToString() == TEXT("Pistol Ammo"))
+					{
+						ShopItem->bIsOwned = false;
+						ShopItem->ItemButton->SetBackgroundColor(FLinearColor::Gray);
+					}
 				}
+				else if (Character->Weapons[Character->CurrentWeaponIndex]->WeaponType == EWeaponType::E_AssaultRifle)
+				{
+					if (ShopItem->Item->Name.ToString() == TEXT("Assault Rifle Ammo"))
+					{
+						ShopItem->bIsOwned = false;
+						ShopItem->ItemButton->SetBackgroundColor(FLinearColor::Gray);
+					}
+				}
+				else if (Character->Weapons[Character->CurrentWeaponIndex]->WeaponType == EWeaponType::E_Shotgun)
+				{
+					if (ShopItem->Item->Name.ToString() == TEXT("Shotgun Ammo"))
+					{
+						ShopItem->bIsOwned = false;
+						ShopItem->ItemButton->SetBackgroundColor(FLinearColor::Gray);
+					}
+				}
+
+				// if (ShopItem->Item->Name.ToString() == TEXT("Pistol Ammo"))
+				// {
+				// 	ShopItem->bIsOwned = false;
+				// 	ShopItem->ItemButton->SetBackgroundColor(FLinearColor::Gray);
+				// }
+				// if (ShopItem->Item->Name.ToString() == TEXT("Assault Rifle Ammo"))
+				// {
+				// 	ShopItem->bIsOwned = false;
+				// 	ShopItem->ItemButton->SetBackgroundColor(FLinearColor::Gray);
+				// }
+				// if (ShopItem->Item->Name.ToString() == TEXT("Shotgun Ammo"))
+				// {
+				// 	ShopItem->bIsOwned = false;
+				// 	ShopItem->ItemButton->SetBackgroundColor(FLinearColor::Gray);
+				// }
 			}
 		}
 	}
-	
-	
-	Character->AmmoArray[Character->CurrentWeaponIndex] = Character->Weapons[Character->CurrentWeaponIndex]->TotalWeaponAmmo;
+
+	Character->AmmoArray[Character->CurrentWeaponIndex] = Character->Weapons[Character->CurrentWeaponIndex]->
+		TotalWeaponAmmo;
 	Character->CurrentStateInstance->TryExitState(Character);
 }
-

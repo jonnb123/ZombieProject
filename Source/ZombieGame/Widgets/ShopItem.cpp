@@ -30,7 +30,7 @@ void UShopItem::NativeConstruct()
 		ItemPriceText->SetText(FText::FromString(FString::FromInt(Item->Cost)));
 		ItemImage->SetBrushFromTexture(Item->Thumbnail);
 
-		if (Item->Name.ToString() == TEXT("Pistol Ammo"))
+		if (Item->Name.ToString() == TEXT("Pistol Ammo") || Item->Name.ToString() == TEXT("Assault Rifle Ammo") || Item->Name.ToString() == TEXT("Shotgun Ammo"))
 		{
 			bIsOwned = true;
 		}
@@ -81,19 +81,40 @@ void UShopItem::OnItemClicked()
 			                                        ActorSpawnParams);
 		}
 
-		// for the pistol
+		// Accessing player weapons
 		ABaseWeapon* Pistol = nullptr;
+		ABaseWeapon* AssaultRilfe = nullptr;
+		ABaseWeapon* Shotgun = nullptr;
+		
 		for (ABaseWeapon* Weapon : Character->Weapons)
 		{
 			if (Weapon->WeaponType == EWeaponType::E_Pistol)
 			{
 				Pistol = Weapon;
 			}
+			if (Weapon->WeaponType == EWeaponType::E_AssaultRifle)
+			{
+				AssaultRilfe = Weapon;
+			}
+			if (Weapon->WeaponType == EWeaponType::E_Shotgun)
+			{
+				Shotgun = Weapon;
+			}
 		}
 		
 		if (Item->Name.ToString() == TEXT("Pistol Ammo") && Pistol->TotalWeaponAmmo != Pistol->MaxWeaponAmmo)
 		{
 			Pistol->TotalWeaponAmmo = Pistol->MaxWeaponAmmo;
+		}
+
+		if (Item->Name.ToString() == TEXT("Assault Rifle Ammo") && AssaultRilfe->TotalWeaponAmmo != AssaultRilfe->MaxWeaponAmmo)
+		{
+			AssaultRilfe->TotalWeaponAmmo = AssaultRilfe->MaxWeaponAmmo;
+		}
+		
+		if (Item->Name.ToString() == TEXT("Shotgun Ammo") && Shotgun->TotalWeaponAmmo != Shotgun->MaxWeaponAmmo)
+		{
+			Shotgun->TotalWeaponAmmo = Shotgun->MaxWeaponAmmo;
 		}
 	}
 }

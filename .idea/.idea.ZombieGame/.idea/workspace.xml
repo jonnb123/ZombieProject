@@ -8,8 +8,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c9b0ce35-a396-4102-b699-f4dc77eb016b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ZombieGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ZombieGame/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/BP_FirstPersonCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/BP_FirstPersonCharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/Grandad/Grandad.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/Grandad/Grandad.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Maps/ZombieMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Maps/ZombieMap.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/GameMode/ZombieGameMode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/GameMode/ZombieGameMode.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,7 +186,8 @@
       <workItem from="1701438210443" duration="1803000" />
       <workItem from="1701440178053" duration="2077000" />
       <workItem from="1701443414281" duration="2880000" />
-      <workItem from="1701446418407" duration="5842000" />
+      <workItem from="1701446418407" duration="6480000" />
+      <workItem from="1701551191250" duration="1176000" />
     </task>
     <servers />
   </component>

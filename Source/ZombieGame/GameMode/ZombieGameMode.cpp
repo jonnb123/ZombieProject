@@ -55,7 +55,7 @@ void AZombieGameMode::SpawnZombies()
             {
                 if (SweepResult.GetComponent() && SweepResult.GetComponent()->IsA<UStaticMeshComponent>())
                 {
-                    continue; // if the sweep hits something like a tree, i.e. invalid
+                    // don't spawn
                 }
                 else
                 {

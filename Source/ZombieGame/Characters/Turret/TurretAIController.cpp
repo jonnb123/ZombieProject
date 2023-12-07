@@ -37,14 +37,11 @@ void ATurretAIController::EnemyDetected(AActor *Actor, FAIStimulus Stimulus)
         if (Stimulus.WasSuccessfullySensed())
         {
             Zombies.Add(Zombie);
-            // Zombie->OnZombieDestroyed.AddDynamic(this, &ATurretAIController::ZombieDeath);
         }
         else if (Stimulus.WasSuccessfullySensed() == false)
         {
-            // Zombie->OnZombieDestroyed.AddDynamic(this, &ATurretAIController::ZombieDeath);
             Zombies.Remove(Zombie);
         }
-        // Update CanSeeZombies based on the number of sensed zombies.
         GetBlackboardComponent()->SetValueAsBool(TEXT("CanSeeZombies"), Zombies.Num() > 0);
     }
 }

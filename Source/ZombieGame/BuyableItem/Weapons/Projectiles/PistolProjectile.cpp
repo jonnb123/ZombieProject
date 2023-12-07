@@ -11,3 +11,13 @@ APistolProjectile::APistolProjectile()
     LegDamage = 10;
     ArmDamage = 10;
 }
+
+
+
+
+
+
+
+
+
+

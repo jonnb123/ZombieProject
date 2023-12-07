@@ -11,3 +11,10 @@ AARProjectile::AARProjectile()
     LegDamage = 10;
     ArmDamage = 10;
 }
+
+
+
+
+
+
+

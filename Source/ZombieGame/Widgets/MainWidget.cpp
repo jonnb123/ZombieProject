@@ -45,7 +45,8 @@ FText UMainWidget::UpdateWaveText()
 	AZombieGameMode* GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
 	if (GameMode)
 	{
-		FString Text = FString::Printf(TEXT("Wave %d/%d"), GameMode->GetCurrentWave(), GameMode->GetMaxWaves());
+		// FString Text = FString::Printf(TEXT("Wave %d/%d"), GameMode->GetCurrentWave(), GameMode->GetMaxWaves());
+		FString Text = FString::Printf(TEXT("%d"), GameMode->GetCurrentWave());
 		return FText::FromString(Text);
 	}
 	else

@@ -45,7 +45,7 @@ AZombieGameCharacter::AZombieGameCharacter()
 	// GunMesh->AttachToComponent(Mesh1P, AttachmentRules, TEXT("PistolSocket"));
 	GunMesh->SetupAttachment(Mesh1P, TEXT("PistolSocket"));
 
-	
+
 	// Initialize the WeaponAmmoArray with default values
 	AmmoArray.Init(0, static_cast<int>(EWeaponType::E_Size));
 }
@@ -56,7 +56,7 @@ void AZombieGameCharacter::BeginPlay()
 	Super::BeginPlay();
 	MainWidgetInstance = CreateWidget<UMainWidget>(GetWorld(), WidgetClass);
 	MainWidgetInstance->AddToViewport();
-	
+
 	TryStateInstance = NewObject<UIdleState>(this);
 	TryStateInstance->TryEnterState(this);
 }
@@ -201,15 +201,15 @@ void AZombieGameCharacter::HandleCharacterDeath()
 
 
 void AZombieGameCharacter::HandleDamage(float const DamageAmount, struct FDamageEvent const& DamageEvent,
-										class AController* EventInstigator,
-										AActor* DamageCauser) // this is called in BTTask_Attack.cpp
+                                        class AController* EventInstigator,
+                                        AActor* DamageCauser) // this is called in BTTask_Attack.cpp
 {
 	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	// takes the damage values from the zombie in BTTask_Attack and plugs them into the base implementation of TakeDamage
 	DamageToApply = FMath::Min(Health, DamageToApply);
 	Health -= DamageToApply; // deducts damage from health
 	UE_LOG(LogTemp, Log, TEXT("Health left %f"), Health);
-	
+
 	if (Health <= 0)
 	{
 		// when health is below 0
@@ -217,7 +217,7 @@ void AZombieGameCharacter::HandleDamage(float const DamageAmount, struct FDamage
 		HandleCharacterDeath();
 	}
 	else // player is alive
-		{
+	{
 		// removing health regen and blood overlay for test
 		if (Health <= 0.5f * MaxHealth)
 		{
@@ -226,14 +226,11 @@ void AZombieGameCharacter::HandleDamage(float const DamageAmount, struct FDamage
 		}
 		else if (Health <= 1.0f * MaxHealth)
 		{
-			// HealthRegenTimer();
 			HealthRegenTimerDelegate.BindUObject(this, &AZombieGameCharacter::RegenerateHealth);
-			// this basically plays the ReloadCalcAndPlayAnimations once the animation is complete.
 			GetWorldTimerManager().SetTimer(HealthRegenTimerHandle, HealthRegenTimerDelegate, HealthRegenDuration,
-											true);
+			                                true);
 		}
-		
-		}
+	}
 }
 
 void AZombieGameCharacter::RegenerateHealth()

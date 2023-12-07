@@ -175,13 +175,11 @@ void AZombie::HandleBodyPartOverlap(float Damage, float &LimbHealth, const FName
 {
 	FHitResult Hit;
 	FPointDamageEvent DamageEvent(Damage, Hit, FVector::ZeroVector, nullptr);
-	// TakeDamage(Damage, DamageEvent, GetInstigatorController(), this);
 	IDamageableInterface *TheInterface = Cast<IDamageableInterface>(this);
 	if (TheInterface)
 	{
 		TheInterface->HandleDamage(Damage, DamageEvent, GetInstigatorController(), this);
 	}
-	// HandleDamage(Damage, DamageEvent, GetInstigatorController(), this);
 
 	LimbHealth -= Damage;
 	if (LimbHealth <= 0 && OppositeLimbHealth != 0)

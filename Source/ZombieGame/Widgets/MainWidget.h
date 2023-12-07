@@ -65,8 +65,8 @@ private:
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock *WaveText;
 
-	UPROPERTY(meta = (BindWidget))
-	class UTextBlock *ZombiesLeftText;
+	// UPROPERTY(meta = (BindWidget))
+	// class UTextBlock *ZombiesLeftText;
 
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock *WaveStartingText;

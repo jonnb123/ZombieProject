@@ -38,22 +38,17 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
     ACharacter *AICharacter{AIController->GetCharacter()};
     const AZombie *ZombieCharacter = Cast<AZombie>(AICharacter);
 
+    UE_LOG(LogTemp, Log, TEXT("Damaging Actor: %s"), *AICharacter->GetName());
+
     // make sure zombie is dead before attacking.
     if (ZombieCharacter->GetIsZombieDead()) return EBTNodeResult::Aborted;
-
-    // gets the character
-    ACharacter *Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 
     // Gets the Animation Instance and if it has ended play OnAttackEnd
     if (UAnimInstance *AnimInstance = AICharacter->GetMesh()->GetAnimInstance())
     {
-        // Bind a delegate function to the OnMontageEnded event
         AnimInstance->OnMontageEnded.AddDynamic(this, &UBTTask_AttackPlayer::OnAttackEnd);
     }
-
-    UE_LOG(LogTemp, Log, TEXT("Damaging..."));
-    UE_LOG(LogTemp, Log, TEXT("Name of actor: %s"), *AICharacter->GetName());
-
+    
     IDamageableInterface *TheInterface = Cast<IDamageableInterface>(ZombieAIController->Target);
     
     if (AICharacter->GetName().StartsWith("BP_FireZombie"))
@@ -83,6 +78,8 @@ EBTNodeResult::Type UBTTask_AttackPlayer::ExecuteTask(UBehaviorTreeComponent &Ow
             UE_LOG(LogTemp, Warning, TEXT("Target: %s"), *ZombieAIController->Target->GetName());
             TheInterface->HandleDamage(MeleeDamage, DamageEvent, AIController, AICharacter);
         }
+
+        
     }
 
     return EBTNodeResult::InProgress;

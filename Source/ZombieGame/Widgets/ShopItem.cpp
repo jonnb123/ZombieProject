@@ -23,7 +23,7 @@ void UShopItem::NativeConstruct()
 	const int ItemID = Grandad->ShopWidgetInstance->ItemID;
 	if (ItemID >= 0)
 	{
-		FString ItemIDAsString = FString::FromInt(ItemID);
+		const FString ItemIDAsString = FString::FromInt(ItemID);
 		static const FString ContextString(TEXT("Item Name Context"));
 		Item = ItemDataTable->FindRow<FItemStructure>(FName(ItemIDAsString), ContextString, true);
 		ItemNameText->SetText(Item->Name);

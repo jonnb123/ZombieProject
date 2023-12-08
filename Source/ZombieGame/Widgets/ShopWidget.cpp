@@ -18,9 +18,6 @@ void UShopWidget::NativeConstruct()
         ExitButton->OnClicked.AddDynamic(this, &UShopWidget::OnExitClicked);
     }
 
-    ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-    AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
-
     for (int i = 0; i <= 7; i++)
     {
         FetchItem(i);

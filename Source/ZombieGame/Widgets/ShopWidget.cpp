@@ -5,9 +5,7 @@
 #include "UMG/Public/Components/UniformGridPanel.h"
 #include "Kismet/GameplayStatics.h"
 #include "UMG/Public/Components/Button.h"
-#include "Camera/CameraComponent.h"
 #include "ZombieGame/Characters/Grandad/Grandad.h"
-
 
 void UShopWidget::NativeConstruct()
 {
@@ -33,7 +31,7 @@ void UShopWidget::NativeConstruct()
 void UShopWidget::OnExitClicked()
 {
     ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-    AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+    const AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
     APlayerController* PlayerController = Cast<APlayerController>(Character->GetController());
     
     PlayerController->SetInputMode(FInputModeGameOnly());

@@ -42,11 +42,9 @@ void UMainWidget::NativeConstruct()
 
 FText UMainWidget::UpdateWaveText()
 {
-	AZombieGameMode* GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
-	if (GameMode)
+	if (const AZombieGameMode* GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this)))
 	{
-		// FString Text = FString::Printf(TEXT("Wave %d/%d"), GameMode->GetCurrentWave(), GameMode->GetMaxWaves());
-		FString Text = FString::Printf(TEXT("%d"), GameMode->GetCurrentWave());
+		const FString Text = FString::Printf(TEXT("%d"), GameMode->GetCurrentWave());
 		return FText::FromString(Text);
 	}
 	else
@@ -59,8 +57,7 @@ FText UMainWidget::UpdateWaveText()
 float UMainWidget::UpdateHealthBar()
 {
 	ACharacter* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-	AZombieGameCharacter* Character = Cast<AZombieGameCharacter>(PlayerCharacter);
-	if (Character)
+	if (const AZombieGameCharacter* Character = Cast<AZombieGameCharacter>(PlayerCharacter))
 	{
 		return Character->GetCharacterHealth() * 0.01;
 	}
@@ -73,8 +70,7 @@ float UMainWidget::UpdateHealthBar()
 float UMainWidget::UpdateHJHealthBar()
 {
 	ACharacter* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-	AZombieGameCharacter* Character = Cast<AZombieGameCharacter>(PlayerCharacter);
-	if (Character)
+	if (const AZombieGameCharacter* Character = Cast<AZombieGameCharacter>(PlayerCharacter))
 	{
 		return Character->GetCharacterHealth() * 0.005;
 	}
@@ -86,10 +82,9 @@ float UMainWidget::UpdateHJHealthBar()
 
 FText UMainWidget::UpdateZombiesRemaining()
 {
-	AZombieGameMode* GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
-	if (GameMode)
+	if (const AZombieGameMode* GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this)))
 	{
-		FString Text = FString::Printf(TEXT("Zombies Left: %d"), GameMode->GetZombiesLeft());
+		const FString Text = FString::Printf(TEXT("Zombies Left: %d"), GameMode->GetZombiesLeft());
 		return FText::FromString(Text);
 	}
 	else
@@ -101,40 +96,20 @@ FText UMainWidget::UpdateZombiesRemaining()
 
 FText UMainWidget::UpdateAmmunition()
 {
-	// if (ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))
-	// {
-	//     if (AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter))
-	//     {
-	//         if (ABaseWeapon *CurrentWeapon = Character->Weapons[Character->CurrentWeaponIndex])
-	//         {
-	//             FString Text = FString::Printf(TEXT("%d/%d"), CurrentWeapon->CurrentWeaponAmmo, CurrentWeapon->TotalWeaponAmmo);
-	//             return FText::FromString(Text);
-	//         }
-	//         else
-	//         {
-	//             // If GameMode is nullptr, return "N/A"
-	//             return FText::FromString("N/A");
-	//         }
-	//     }
-	// }
-
 	if (ACharacter* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))
 	{
 		AZombieGameCharacter* Character = Cast<AZombieGameCharacter>(PlayerCharacter);
 
 		if (Character && Character->Weapons.Num() > 0 && Character->CurrentWeaponIndex < Character->Weapons.Num())
 		{
-			ABaseWeapon* CurrentWeapon = Character->Weapons[Character->CurrentWeaponIndex];
-
-			if (CurrentWeapon)
+			if (const ABaseWeapon* CurrentWeapon = Character->Weapons[Character->CurrentWeaponIndex])
 			{
-				FString Text = FString::Printf(TEXT("%d/%d"), CurrentWeapon->CurrentWeaponAmmo,
-				                               CurrentWeapon->TotalWeaponAmmo);
+				const FString Text = FString::Printf(TEXT("%d/%d"), CurrentWeapon->CurrentWeaponAmmo,
+				                                     CurrentWeapon->TotalWeaponAmmo);
 				return FText::FromString(Text);
 			}
 		}
 	}
-
 	// If any check fails, return a default value or handle the case appropriately
 	return FText::FromString("N/A");
 }
@@ -143,9 +118,9 @@ FText UMainWidget::UpdateCharacterPoints()
 {
 	if (ACharacter* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))
 	{
-		if (AZombieGameCharacter* Character = Cast<AZombieGameCharacter>(PlayerCharacter))
+		if (const AZombieGameCharacter* Character = Cast<AZombieGameCharacter>(PlayerCharacter))
 		{
-			FString Text = FString::Printf(TEXT("%d"), Character->GetPoints());
+			const FString Text = FString::Printf(TEXT("%d"), Character->GetPoints());
 			return FText::FromString(Text);
 		}
 	}
@@ -159,7 +134,7 @@ FText UMainWidget::UpdatePlayerWeaponName()
 	{
 		if (AZombieGameCharacter* Character = Cast<AZombieGameCharacter>(PlayerCharacter))
 		{
-			FString WeaponName = Character->Weapons[Character->CurrentWeaponIndex]->Name;
+			const FString WeaponName = Character->Weapons[Character->CurrentWeaponIndex]->Name;
 			return FText::FromString(WeaponName);
 		}
 	}
@@ -169,8 +144,8 @@ FText UMainWidget::UpdatePlayerWeaponName()
 
 void UMainWidget::ShowWaveStart(int CurrentWave)
 {
-	FString Text = FString::Printf(TEXT("Wave %d Starting!"), CurrentWave);
-	FText TextToSet = FText::FromString(Text);
+	const FString Text = FString::Printf(TEXT("Wave %d Starting!"), CurrentWave);
+	const FText TextToSet = FText::FromString(Text);
 	WaveStartingText->SetText(TextToSet);
 	WaveStartingBox->SetVisibility(ESlateVisibility::Visible);
 	PlayAnimationForward(WaveAnimation);
@@ -218,8 +193,7 @@ void UMainWidget::OnRetryClicked()
 
 	ACharacter* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	AZombieGameCharacter* Character = Cast<AZombieGameCharacter>(PlayerCharacter);
-	APlayerController* PlayerController = Cast<APlayerController>(Character->GetController());
-	if (PlayerController)
+	if (APlayerController* PlayerController = Cast<APlayerController>(Character->GetController()))
 	{
 		PlayerController->Possess(Character);
 		PlayerController->SetInputMode(FInputModeGameOnly());

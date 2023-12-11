@@ -173,7 +173,6 @@ private:
 
 	// variables
 	
-
 	EWeaponType CurrentWeaponID;
 
 	bool IsDead = false;

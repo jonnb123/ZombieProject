@@ -9,10 +9,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c9b0ce35-a396-4102-b699-f4dc77eb016b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ZombieGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ZombieGame/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Widgets/MainWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Widgets/MainWidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Widgets/ShopWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Widgets/ShopWidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/ZombieGame.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/ZombieGame.Build.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +59,7 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "C++ Project.ZombieGame.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
@@ -204,6 +201,7 @@
       <workItem from="1702287776018" duration="8728000" />
       <workItem from="1702310576459" duration="2491000" />
       <workItem from="1702313729747" duration="542000" />
+      <workItem from="1702372557415" duration="1689000" />
     </task>
     <servers />
   </component>

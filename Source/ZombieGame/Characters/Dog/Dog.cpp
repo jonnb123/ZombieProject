@@ -32,3 +32,9 @@ void ADog::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+void ADog::HandleBuyItem()
+{
+	UE_LOG(LogTemp, Log, TEXT("Bought a DOG bruh"));
+
+}
+

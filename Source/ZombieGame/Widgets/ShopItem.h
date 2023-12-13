@@ -27,6 +27,10 @@ struct FItemStructure : public FTableRowBase
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UTexture2D *Thumbnail;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<AActor> Actor;
+	
 };
 
 UCLASS()

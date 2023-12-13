@@ -4,10 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "ZombieGame/Widgets/BuyableItemInterface.h"
 #include "Dog.generated.h"
 
 UCLASS()
-class ZOMBIEGAME_API ADog : public ACharacter
+class ZOMBIEGAME_API ADog : public ACharacter, public IBuyableItemInterface
 {
 	GENERATED_BODY()
 
@@ -25,5 +26,7 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	virtual void HandleBuyItem() override;
 
 };

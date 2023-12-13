@@ -113,6 +113,25 @@ void AFrontDoor::HandleDamage(float const DamageAmount, struct FDamageEvent cons
 	}
 }
 
+void AFrontDoor::HandleBuyItem()
+{
+	UE_LOG(LogTemp, Log, TEXT("Bought a door bruh"));
+
+	
+	// if (FrontDoor)
+	// {
+	// 	GetWorld()->SpawnActor(FrontDoor, &DoorSpawnLocation, &DoorSpawnRotation);
+	// }
+	//
+	// bIsSpawned = true;
+	//
+	// if (AZombieGameMode* GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this)))
+	// {
+	// 	GameMode->OnDoorSpawn.Broadcast();
+	// }
+	
+}
+
 AFrontDoor* AFrontDoor::GetInstance()
 {
 	return FrontDoorInstance;	

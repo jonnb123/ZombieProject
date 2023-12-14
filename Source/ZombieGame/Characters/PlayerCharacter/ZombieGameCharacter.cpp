@@ -39,10 +39,7 @@ AZombieGameCharacter::AZombieGameCharacter()
 	GunMesh->SetupAttachment(Mesh1P);
 	Mesh1P->bCastDynamicShadow = false;
 	Mesh1P->CastShadow = false;
-
-	// // Attach GunMeshNEW to Mesh1P using a specific socket name
-	// const FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, true);
-	// GunMesh->AttachToComponent(Mesh1P, AttachmentRules, TEXT("PistolSocket"));
+	
 	GunMesh->SetupAttachment(Mesh1P, TEXT("PistolSocket"));
 
 
@@ -103,6 +100,7 @@ void AZombieGameCharacter::SetupPlayerInputComponent(class UInputComponent* Play
 
 void AZombieGameCharacter::OnInteractingPressed()
 {
+	// for the items to be purchased
 	if (OverlappingBuyableItem)
 	{
 		if (IBuyableItemInterface* TheInterface = Cast<IBuyableItemInterface>(OverlappingBuyableItem))
@@ -111,7 +109,8 @@ void AZombieGameCharacter::OnInteractingPressed()
 		}
 	}
 
-	if (OverlappingFrontDoor)
+	// for the front door after it's purchased to open and close
+	if (OverlappingFrontDoor) 
 	{
 		OverlappingFrontDoor->UseFrontDoor();
 	}

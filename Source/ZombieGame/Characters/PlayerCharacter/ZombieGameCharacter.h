@@ -55,9 +55,13 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void MaxAmmo(); // used in bp_baseammo
 
+	// // Get a reference to the buyable item being overlapped
+	// UPROPERTY(EditAnywhere, Category = "References")
+	// ABuyableItem *OverlappingBuyableItem; // needs to be accessed in other classes
+
 	// Get a reference to the buyable item being overlapped
 	UPROPERTY(EditAnywhere, Category = "References")
-	ABuyableItem *OverlappingBuyableItem; // needs to be accessed in other classes
+	AActor *OverlappingBuyableItem; // needs to be accessed in other classes
 
 	// Get a reference to the buyable item being overlapped
 	UPROPERTY(EditAnywhere, Category = "References")

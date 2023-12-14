@@ -9,37 +9,12 @@
   <component name="ChangeListManager">
     <list default="true" id="c9b0ce35-a396-4102-b699-f4dc77eb016b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ZombieGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ZombieGame/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/Weapons/BP_AssaultRifles.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/Weapons/BP_AssaultRifles.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/Weapons/BP_Pistol.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/Weapons/BP_Pistol.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/Weapons/BP_Shotguns.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/Weapons/BP_Shotguns.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Maps/ZombieMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Maps/ZombieMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Widgets/ItemDataTable.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Widgets/ItemDataTable.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Architecture/Floor_400x400.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Architecture/Floor_400x400.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Blueprints/Blueprint_CeilingLight.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Blueprints/Blueprint_CeilingLight.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/BuyableItem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/BuyableItem.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/PerkMachines/ExtendedMag.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/PerkMachines/ExtendedMag.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/PerkMachines/ExtendedMag.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/PerkMachines/ExtendedMag.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/PerkMachines/FullyAuto.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/PerkMachines/FullyAuto.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/PerkMachines/FullyAuto.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/PerkMachines/FullyAuto.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/PerkMachines/HealthJuice.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/PerkMachines/HealthJuice.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/PerkMachines/HealthJuice.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/PerkMachines/HealthJuice.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/PerkMachines/MaxSpeed.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/PerkMachines/MaxSpeed.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/PerkMachines/MaxSpeed.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/PerkMachines/MaxSpeed.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/AssaultRifle.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/AssaultRifle.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/AssaultRifle.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/AssaultRifle.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/BaseWeapon.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/BaseWeapon.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/BaseWeapon.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/BaseWeapon.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/Pistol.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/Pistol.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/Pistol.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/Pistol.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/Projectiles/ARProjectile.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/Projectiles/ARProjectile.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/Projectiles/ARProjectile.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/Projectiles/ARProjectile.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/Projectiles/PistolProjectile.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/Projectiles/PistolProjectile.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/Projectiles/PistolProjectile.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/Projectiles/PistolProjectile.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/Projectiles/ShotgunProjectile.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/Projectiles/ShotgunProjectile.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/Projectiles/ShotgunProjectile.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/Projectiles/ShotgunProjectile.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/Shotgun.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/Shotgun.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/Shotgun.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/Shotgun.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Doors/BuyDoor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Doors/BuyDoor.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Doors/BuyDoor.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Doors/BuyDoor.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/FrontDoor/FrontDoor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/FrontDoor/FrontDoor.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -240,7 +215,7 @@
       <workItem from="1702552838301" duration="3389000" />
       <workItem from="1702556384182" duration="8883000" />
       <workItem from="1702565616714" duration="5451000" />
-      <workItem from="1702577191486" duration="975000" />
+      <workItem from="1702577191486" duration="2652000" />
     </task>
     <servers />
   </component>

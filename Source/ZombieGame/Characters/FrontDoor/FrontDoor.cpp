@@ -116,8 +116,6 @@ void AFrontDoor::HandleDamage(float const DamageAmount, struct FDamageEvent cons
 
 void AFrontDoor::HandleBuyItem()
 {
-	UE_LOG(LogTemp, Log, TEXT("Bought a door bruh"));
-
 	const AZombieGameMode* GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
 
 	SetInstance(Cast<AFrontDoor>(GetWorld()->SpawnActor(FrontDoor, &DoorSpawnLocation, &DoorSpawnRotation)));

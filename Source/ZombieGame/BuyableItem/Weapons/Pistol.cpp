@@ -1,0 +1,41 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+
+#include "Pistol.h"
+
+#include "Kismet/GameplayStatics.h"
+#include "ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h"
+
+
+// Sets default values
+APistol::APistol()
+{
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
+}
+
+// Called when the game starts or when spawned
+void APistol::BeginPlay()
+{
+	Super::BeginPlay();
+}
+
+// Called every frame
+void APistol::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+}
+
+void APistol::HandleBuyItem()
+{
+	ACharacter* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	AZombieGameCharacter* Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+
+	for (ABaseWeapon* Weapon : Character->Weapons)
+	{
+		if (Weapon->WeaponType == EWeaponType::E_Pistol)
+		{
+			Weapon->TotalWeaponAmmo = Weapon->MaxWeaponAmmo;
+		}
+	}
+}

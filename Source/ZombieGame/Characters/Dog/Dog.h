@@ -29,4 +29,15 @@ public:
 
 	virtual void HandleBuyItem() override;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<APawn> DogPawn;
+
+	UPROPERTY(EditAnywhere)
+	class UBehaviorTree *BehaviorTree;
+
+	UPROPERTY(EditAnywhere)
+	FVector DogSpawnLocation;
+
+	
+
 };

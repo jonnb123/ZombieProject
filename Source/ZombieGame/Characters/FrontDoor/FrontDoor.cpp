@@ -8,14 +8,13 @@
 #include "ZombieGame/GameMode/ZombieGameMode.h"
 
 
-
 // Initialize the Singleton instance - this is done outside of any function
-AFrontDoor *AFrontDoor::FrontDoorInstance = nullptr;
+AFrontDoor* AFrontDoor::FrontDoorInstance = nullptr;
 
 // Sets default values
 AFrontDoor::AFrontDoor()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	_RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root Component"));
@@ -28,24 +27,24 @@ AFrontDoor::AFrontDoor()
 
 	DoorMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Door Mesh"));
 	DoorMesh->SetupAttachment(RootComponent);
-
-}	
+}
 
 // Called when the game starts or when spawned
 void AFrontDoor::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	BoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AFrontDoor::OnItemBeginOverlap);
 	BoxCollisionComponent->OnComponentEndOverlap.AddDynamic(this, &AFrontDoor::OnItemEndOverlap);
 }
 
-void AFrontDoor::OnItemBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-						   int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void AFrontDoor::OnItemBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+                                    UPrimitiveComponent* OtherComp,
+                                    int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	UE_LOG(LogTemp, Log, TEXT("OVERLAPPING FRONT DOOR"));
-	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+	ACharacter* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	AZombieGameCharacter* Character = Cast<AZombieGameCharacter>(PlayerCharacter);
 	if (OtherActor && OtherActor->IsA<AZombieGameCharacter>())
 	{
 		if (Character->MainWidgetInstance)
@@ -61,10 +60,11 @@ void AFrontDoor::OnItemBeginOverlap(UPrimitiveComponent* OverlappedComponent, AA
 	}
 }
 
-void AFrontDoor::OnItemEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+void AFrontDoor::OnItemEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+                                  UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+	ACharacter* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	AZombieGameCharacter* Character = Cast<AZombieGameCharacter>(PlayerCharacter);
 	if (Character->MainWidgetInstance)
 	{
 		Character->MainWidgetInstance->EquipItemText->SetVisibility(ESlateVisibility::Hidden);
@@ -73,38 +73,39 @@ void AFrontDoor::OnItemEndOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 
 void AFrontDoor::UseFrontDoor()
 {
-	AZombieGameMode *GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
+	AZombieGameMode* GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
 	GameMode->OnDoorOpen.Broadcast();
 	UE_LOG(LogTemp, Warning, TEXT("You have interacted with buy door"));
-    ACharacter* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	ACharacter* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	AZombieGameCharacter* Character = Cast<AZombieGameCharacter>(PlayerCharacter);
 	if (!bDoorOpen) // set the points to be 2000
 	{
-        FRotator NewRotation = DoorMesh->GetRelativeRotation();
-        NewRotation.Yaw += 90.0f; // Rotate by 90 degrees around the Z-axis
-        DoorMesh->SetRelativeRotation(NewRotation);
-        bDoorOpen = true;
+		FRotator NewRotation = DoorMesh->GetRelativeRotation();
+		NewRotation.Yaw += 90.0f; // Rotate by 90 degrees around the Z-axis
+		DoorMesh->SetRelativeRotation(NewRotation);
+		bDoorOpen = true;
 	}
-    else 
-    {
-        FRotator NewRotation = DoorMesh->GetRelativeRotation();
-        NewRotation.Yaw -= 90.0f; // Rotate by 90 degrees around the Z-axis
-        DoorMesh->SetRelativeRotation(NewRotation);
-        bDoorOpen = false;
-    }
+	else
+	{
+		FRotator NewRotation = DoorMesh->GetRelativeRotation();
+		NewRotation.Yaw -= 90.0f; // Rotate by 90 degrees around the Z-axis
+		DoorMesh->SetRelativeRotation(NewRotation);
+		bDoorOpen = false;
+	}
 }
 
-void AFrontDoor::HandleDamage(float const DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser)
+void AFrontDoor::HandleDamage(float const DamageAmount, struct FDamageEvent const& DamageEvent,
+                              class AController* EventInstigator, AActor* DamageCauser)
 {
-	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser); // takes the damage values from the zombie in BTTask_Attack and plugs them into the base implementation of TakeDamage
+	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	// takes the damage values from the zombie in BTTask_Attack and plugs them into the base implementation of TakeDamage
 	if (Health <= 0)
 	{
-		AZombieGameMode *GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
+		AZombieGameMode* GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
 		// when health is below 0
 		bIsSpawned = false;
 		Destroy();
 		GameMode->OnDoorSpawn.Broadcast();
-		
 	}
 	else // player is alive
 	{
@@ -117,24 +118,16 @@ void AFrontDoor::HandleBuyItem()
 {
 	UE_LOG(LogTemp, Log, TEXT("Bought a door bruh"));
 
-	
-	// if (FrontDoor)
-	// {
-	// 	GetWorld()->SpawnActor(FrontDoor, &DoorSpawnLocation, &DoorSpawnRotation);
-	// }
-	//
-	// bIsSpawned = true;
-	//
-	// if (AZombieGameMode* GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this)))
-	// {
-	// 	GameMode->OnDoorSpawn.Broadcast();
-	// }
-	
+	const AZombieGameMode* GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
+
+	SetInstance(Cast<AFrontDoor>(GetWorld()->SpawnActor(FrontDoor, &DoorSpawnLocation, &DoorSpawnRotation)));
+	GetInstance()->bIsSpawned = true;
+	GameMode->OnDoorSpawn.Broadcast();
 }
 
 AFrontDoor* AFrontDoor::GetInstance()
 {
-	return FrontDoorInstance;	
+	return FrontDoorInstance;
 }
 
 
@@ -142,4 +135,3 @@ void AFrontDoor::SetInstance(AFrontDoor* NewInstance)
 {
 	FrontDoorInstance = NewInstance;
 }
-

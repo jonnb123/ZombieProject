@@ -8,21 +8,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c9b0ce35-a396-4102-b699-f4dc77eb016b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Source/ZombieGame/Widgets/BuyableItemInterface.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ZombieGame/Widgets/BuyableItemInterface.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ZombieGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ZombieGame/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/BP_FirstPersonCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/BP_FirstPersonCharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/Doors/BP_FrontDoor.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/Doors/BP_FrontDoor.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Dog/BP_Dog.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Dog/BP_Dog.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Maps/ZombieMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Maps/ZombieMap.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Widgets/ItemDataTable.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Widgets/ItemDataTable.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/StarterContent/Particles/P_Ambient_Dust.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Particles/P_Ambient_Dust.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/Dog/Dog.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/Dog/Dog.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/Dog/Dog.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/Dog/Dog.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/FrontDoor/FrontDoor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/FrontDoor/FrontDoor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/FrontDoor/FrontDoor.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/FrontDoor/FrontDoor.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Widgets/ShopItem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Widgets/ShopItem.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Widgets/ShopItem.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Widgets/ShopItem.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,25 +66,6 @@
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="cidr-memory-view://5" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/ZombieGame/BuyableItem/BuyableItem.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/ZombieGame/Characters/Grandad/Grandad.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/States/AimingState.h" root0="FORCE_HIGHLIGHTING" />
@@ -129,7 +104,7 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "C++ Project.ZombieGame.executor": "Run",
+    "C++ Project.ZombieGame.executor": "Debug",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
@@ -275,6 +250,9 @@
       <workItem from="1702460428680" duration="6268000" />
       <workItem from="1702485922541" duration="838000" />
       <workItem from="1702486875007" duration="3908000" />
+      <workItem from="1702547224322" duration="5470000" />
+      <workItem from="1702552838301" duration="3389000" />
+      <workItem from="1702556384182" duration="7921000" />
     </task>
     <servers />
   </component>

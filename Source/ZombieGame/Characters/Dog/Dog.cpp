@@ -3,6 +3,8 @@
 
 #include "ZombieGame/Characters/Dog/Dog.h"
 
+#include "Blueprint/AIBlueprintHelperLibrary.h"
+
 // Sets default values
 ADog::ADog()
 {
@@ -35,6 +37,8 @@ void ADog::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void ADog::HandleBuyItem()
 {
 	UE_LOG(LogTemp, Log, TEXT("Bought a DOG bruh"));
-
+	UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), DogPawn, BehaviorTree, DogSpawnLocation);
 }
+
+
 

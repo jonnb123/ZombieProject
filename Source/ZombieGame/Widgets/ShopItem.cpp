@@ -58,45 +58,15 @@ void UShopItem::OnItemClicked()
 		Character->SetPoints(Character->GetPoints() - Item->Cost);
 		bIsOwned = true;
 		ItemButton->SetBackgroundColor(FLinearColor::Red);
-
-		AActor* NewInstance = NewObject<AActor>(GetTransientPackage(), Item->Actor);
+		
+		AActor* NewInstance = GetWorld()->SpawnActor<AActor>(Item->Actor, FVector::ZeroVector, FRotator::ZeroRotator);
+		
 		if (IBuyableItemInterface* TheInterface = Cast<IBuyableItemInterface>(NewInstance))
 		{
 			TheInterface->HandleBuyItem();
 		}
 
-		// if (AActor* Actor = Cast<AActor>(Item->Actor))
-		// {
-		// 	if (IBuyableItemInterface *TheInterface = Cast<IBuyableItemInterface>(Actor))
-		// 	{
-		// 		TheInterface->HandleBuyItem();
-		// 	}	
-		// }
-
-
-		// if (Item->Name.ToString() == TEXT("Front Door"))
-		// {
-		// 	const AZombieGameMode* GameMode = Cast<AZombieGameMode>(UGameplayStatics::GetGameMode(this));
-		//
-		// 	AFrontDoor::SetInstance(
-		// 		Cast<AFrontDoor>(GetWorld()->SpawnActor(FrontDoor, &DoorSpawnLocation, &DoorSpawnRotation)));
-		// 	AFrontDoor::GetInstance()->bIsSpawned = true;
-		// 	GameMode->OnDoorSpawn.Broadcast();
-		// }
-
-		// 	if (Item->Name.ToString() == TEXT("Dog"))
-		// 	{
-		// 		UAIBlueprintHelperLibrary::SpawnAIFromClass(GetWorld(), DogPawn, BehaviorTree, DogSpawnLocation);
-		// 	}
-		//
-		// 	if (Item->Name.ToString() == TEXT("Turret") && TurretComplete == false)
-		// 	{
-		// 		FActorSpawnParameters ActorSpawnParams;
-		// 		ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-		// 		AActor* Turret = GetWorld()->SpawnActor(TurretClass, &TurretSpawnLocation, &TurretSpawnRotation,
-		// 		                                        ActorSpawnParams);
-		// 	}
-		//
+		
 		// 	// Accessing player weapons
 		// 	ABaseWeapon* Pistol = nullptr;
 		// 	ABaseWeapon* AssaultRilfe = nullptr;

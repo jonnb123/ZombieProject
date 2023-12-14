@@ -4,7 +4,7 @@
 #include "ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h"
 #include "Kismet/GameplayStatics.h"
 
-void AMaxSpeed::UseBuyableItem()
+void AMaxSpeed::HandleBuyItem()
 {
     UE_LOG(LogTemp, Warning, TEXT("You have interacted with Max Speed"));
     ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
@@ -17,4 +17,6 @@ void AMaxSpeed::UseBuyableItem()
         PlayConsumeAnimation();
     }
 }
+
+
 

@@ -4,9 +4,9 @@
 #include "ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h"
 #include "Kismet/GameplayStatics.h"
 
-void AExtendedMag::UseBuyableItem()
+void AExtendedMag::HandleBuyItem()
 {
-    UE_LOG(LogTemp, Warning, TEXT("You have interacted with fully auto"));
+	UE_LOG(LogTemp, Warning, TEXT("You have interacted with fully auto"));
 	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
 	

@@ -4,17 +4,21 @@
 
 #include "CoreMinimal.h"
 #include "PerkMachine.h"
+#include "ZombieGame/Widgets/BuyableItemInterface.h"
 #include "MaxSpeed.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class ZOMBIEGAME_API AMaxSpeed : public APerkMachine
+class ZOMBIEGAME_API AMaxSpeed : public APerkMachine, public IBuyableItemInterface
 {
 	GENERATED_BODY()
+public:
+	virtual void HandleBuyItem() override;
+
 	
 private:
-	void UseBuyableItem() override;
+	
 
 };

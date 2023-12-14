@@ -27,17 +27,5 @@ void AAssaultRifle::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void AAssaultRifle::HandleBuyItem()
-{
-	ACharacter* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-	AZombieGameCharacter* Character = Cast<AZombieGameCharacter>(PlayerCharacter);
 
-	for (ABaseWeapon* Weapon : Character->Weapons)
-	{
-		if (Weapon->WeaponType == EWeaponType::E_AssaultRifle)
-		{
-			Weapon->TotalWeaponAmmo = Weapon->MaxWeaponAmmo;
-		}
-	}
-}
 

@@ -4,19 +4,21 @@
 
 #include "CoreMinimal.h"
 #include "PerkMachine.h"
+#include "ZombieGame/Widgets/BuyableItemInterface.h"
 #include "ExtendedMag.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class ZOMBIEGAME_API AExtendedMag : public APerkMachine
+class ZOMBIEGAME_API AExtendedMag : public APerkMachine, public IBuyableItemInterface
 {
 	GENERATED_BODY()
-	
-private:
-	void UseBuyableItem() override;
 
+public:
+	virtual void HandleBuyItem() override;
+
+private:
 	void ExtendMagazine();
 
 	bool ExtendedMagComplete;

@@ -4,16 +4,19 @@
 
 #include "CoreMinimal.h"
 #include "ZombieGameProjectile.h"
+#include "ZombieGame/Widgets/BuyableItemInterface.h"
 #include "ShotgunProjectile.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class ZOMBIEGAME_API AShotgunProjectile : public AZombieGameProjectile
+class ZOMBIEGAME_API AShotgunProjectile : public AZombieGameProjectile, public IBuyableItemInterface
 {
 	GENERATED_BODY()
 
 public:
 	AShotgunProjectile();
+
+	virtual void HandleBuyItem() override;
 };

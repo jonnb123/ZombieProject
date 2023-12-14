@@ -105,7 +105,10 @@ void AZombieGameCharacter::OnInteractingPressed()
 {
 	if (OverlappingBuyableItem)
 	{
-		OverlappingBuyableItem->UseBuyableItem();
+		if (IBuyableItemInterface* TheInterface = Cast<IBuyableItemInterface>(OverlappingBuyableItem))
+		{
+			TheInterface->HandleBuyItem();
+		}
 	}
 
 	if (OverlappingFrontDoor)

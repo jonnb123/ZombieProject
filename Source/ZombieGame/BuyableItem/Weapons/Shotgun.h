@@ -8,7 +8,7 @@
 #include "Shotgun.generated.h"
 
 UCLASS()
-class ZOMBIEGAME_API AShotgun : public ABaseWeapon, public IBuyableItemInterface
+class ZOMBIEGAME_API AShotgun : public ABaseWeapon
 {
 	GENERATED_BODY()
 
@@ -23,6 +23,5 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	virtual void HandleBuyItem() override;
+	
 };

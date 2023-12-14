@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "ZombieGame/BuyableItem/BuyableItem.h"
 #include "ZombieGame/BuyableItem/Weapons/Projectiles/ZombieGameProjectile.h"
+#include "ZombieGame/Widgets/BuyableItemInterface.h"
 #include "BaseWeapon.generated.h"
 
 
@@ -19,7 +20,7 @@ enum class EWeaponType : uint8
 };
 
 UCLASS()
-class ZOMBIEGAME_API ABaseWeapon : public ABuyableItem
+class ZOMBIEGAME_API ABaseWeapon : public ABuyableItem, public IBuyableItemInterface
 {
 	GENERATED_BODY()
 	
@@ -72,7 +73,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
 	UAnimMontage* WeaponReloadMontage;
 	
-
+	virtual void HandleBuyItem() override;
 protected:
 	void UseBuyableItem() override;
 

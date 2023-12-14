@@ -51,6 +51,7 @@ void ABuyableItem::OnItemEndOverlap(UPrimitiveComponent *OverlappedComponent, AA
 {
 	ACharacter *PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	AZombieGameCharacter *Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+	Character->OverlappingBuyableItem = nullptr;
 	if (Character->MainWidgetInstance)
 	{
 		Character->MainWidgetInstance->EquipItemText->SetVisibility(ESlateVisibility::Hidden);

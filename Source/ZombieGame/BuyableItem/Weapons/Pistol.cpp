@@ -25,17 +25,3 @@ void APistol::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
-
-void APistol::HandleBuyItem()
-{
-	ACharacter* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-	AZombieGameCharacter* Character = Cast<AZombieGameCharacter>(PlayerCharacter);
-
-	for (ABaseWeapon* Weapon : Character->Weapons)
-	{
-		if (Weapon->WeaponType == EWeaponType::E_Pistol)
-		{
-			Weapon->TotalWeaponAmmo = Weapon->MaxWeaponAmmo;
-		}
-	}
-}

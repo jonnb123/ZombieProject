@@ -60,11 +60,20 @@ void UShopItem::OnItemClicked()
 		ItemButton->SetBackgroundColor(FLinearColor::Red);
 		
 		AActor* NewInstance = GetWorld()->SpawnActor<AActor>(Item->Actor, FVector::ZeroVector, FRotator::ZeroRotator);
-		
 		if (IBuyableItemInterface* TheInterface = Cast<IBuyableItemInterface>(NewInstance))
 		{
 			TheInterface->HandleBuyItem();
 		}
 		
 	}
+}
+
+void UShopItem::HandleItemPurchase()
+{
+	// ACharacter* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	// AZombieGameCharacter* Character = Cast<AZombieGameCharacter>(PlayerCharacter);
+	//
+	// Character->SetPoints(Character->GetPoints() - Item->Cost);
+	// bIsOwned = true;
+	// ItemButton->SetBackgroundColor(FLinearColor::Red);
 }

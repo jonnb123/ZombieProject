@@ -40,6 +40,10 @@ void UShopWidget::OnExitClicked()
     SetVisibility(ESlateVisibility::Hidden);
 }
 
+void UShopWidget::OnUndoClicked()
+{
+}
+
 void UShopWidget::FetchItem(int Index)
 {
     AGrandad* Grandad = AGrandad::GetInstance();

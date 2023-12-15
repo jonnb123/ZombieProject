@@ -43,10 +43,16 @@ private:
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock *ExitText;
 
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock *UndoText;
+
 	// Button
 
 	UPROPERTY(meta = (BindWidget))
 	class UButton *ExitButton;
+
+	UPROPERTY(meta = (BindWidget))
+	class UButton *UndoButton;
 
 	// Grid Panel
 
@@ -59,6 +65,9 @@ private:
 
 	UFUNCTION(BlueprintCallable)
 	void OnExitClicked();
+
+	UFUNCTION(BlueprintCallable)
+	void OnUndoClicked();
 
 	UFUNCTION()
 	void FetchItem(int Index);

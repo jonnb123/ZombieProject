@@ -75,6 +75,6 @@ public:
 	
 	virtual void HandleBuyItem() override;
 protected:
-	void UseBuyableItem() override;
+	
 
 };

@@ -77,11 +77,8 @@ private:
 	UFUNCTION(BlueprintCallable)
 	void OnItemClicked();
 
-	
-
 	bool TurretComplete = false;
 
-	
 
 protected:
 
@@ -123,4 +120,6 @@ public:
 
 	UPROPERTY(meta = (BindWidget))
 	class UButton *ItemButton;
+
+	void HandleItemPurchase();
 };

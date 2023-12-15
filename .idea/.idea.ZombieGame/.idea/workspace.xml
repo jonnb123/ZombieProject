@@ -8,13 +8,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c9b0ce35-a396-4102-b699-f4dc77eb016b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Source/ZombieGame/Widgets/BuyCommand.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ZombieGame/Widgets/BuyCommand.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ZombieGame/Widgets/Command.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ZombieGame/Widgets/Command.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ZombieGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ZombieGame/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Maps/ZombieMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Maps/ZombieMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Doors/BuyDoor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Doors/BuyDoor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Doors/BuyDoor.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Doors/BuyDoor.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/FrontDoor/FrontDoor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/FrontDoor/FrontDoor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/PlayerCharacter/ZombieGameCharacter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Widgets/ShopUI_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Widgets/ShopUI_BP.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Blueprints/Blueprint_CeilingLight.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Blueprints/Blueprint_CeilingLight.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/BaseWeapon.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/BaseWeapon.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/BaseWeapon.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/BaseWeapon.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Widgets/ShopItem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Widgets/ShopItem.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Widgets/ShopItem.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Widgets/ShopItem.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Widgets/ShopWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Widgets/ShopWidget.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Widgets/ShopWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Widgets/ShopWidget.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -216,6 +223,7 @@
       <workItem from="1702556384182" duration="8883000" />
       <workItem from="1702565616714" duration="5451000" />
       <workItem from="1702577191486" duration="2652000" />
+      <workItem from="1702632269232" duration="6332000" />
     </task>
     <servers />
   </component>

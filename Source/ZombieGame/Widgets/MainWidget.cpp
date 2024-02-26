@@ -74,10 +74,7 @@ float UMainWidget::UpdateHJHealthBar()
 	{
 		return Character->GetCharacterHealth() * 0.005;
 	}
-	else
-	{
-		return 0.f;
-	}
+	return 0.f;
 }
 
 FText UMainWidget::UpdateZombiesRemaining()
@@ -87,11 +84,8 @@ FText UMainWidget::UpdateZombiesRemaining()
 		const FString Text = FString::Printf(TEXT("Zombies Left: %d"), GameMode->GetZombiesLeft());
 		return FText::FromString(Text);
 	}
-	else
-	{
-		// If GameMode is nullptr, return "N/A"
-		return FText::FromString("N/A");
-	}
+	// If GameMode is nullptr, return "N/A"
+	return FText::FromString("N/A");
 }
 
 FText UMainWidget::UpdateAmmunition()

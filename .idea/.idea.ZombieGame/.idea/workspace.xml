@@ -8,20 +8,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c9b0ce35-a396-4102-b699-f4dc77eb016b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Source/ZombieGame/Widgets/BuyCommand.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ZombieGame/Widgets/BuyCommand.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ZombieGame/Widgets/Command.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ZombieGame/Widgets/Command.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ZombieGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ZombieGame/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Maps/ZombieMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Maps/ZombieMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Widgets/ShopUI_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Widgets/ShopUI_BP.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Blueprints/Blueprint_CeilingLight.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Blueprints/Blueprint_CeilingLight.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/BaseWeapon.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/BaseWeapon.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/BaseWeapon.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/BuyableItem/Weapons/BaseWeapon.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Widgets/ShopItem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Widgets/ShopItem.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Widgets/ShopItem.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Widgets/ShopItem.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Widgets/ShopWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Widgets/ShopWidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Widgets/ShopWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Widgets/ShopWidget.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/BP_ZombieGameMode.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/BP_ZombieGameMode.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Characters/Zombie/AI/ZombieAIController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Characters/Zombie/AI/ZombieAIController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/GameMode/ZombieGameMode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/GameMode/ZombieGameMode.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ZombieGame/Widgets/MainWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ZombieGame/Widgets/MainWidget.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +74,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.Mappings&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;web.server&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -223,7 +214,13 @@
       <workItem from="1702556384182" duration="8883000" />
       <workItem from="1702565616714" duration="5451000" />
       <workItem from="1702577191486" duration="2652000" />
-      <workItem from="1702632269232" duration="6332000" />
+      <workItem from="1702632269232" duration="6515000" />
+      <workItem from="1702890634856" duration="1593000" />
+      <workItem from="1705323985040" duration="673000" />
+      <workItem from="1705338112190" duration="41000" />
+      <workItem from="1706790467757" duration="4221000" />
+      <workItem from="1708611584004" duration="1104000" />
+      <workItem from="1708939698819" duration="3003000" />
     </task>
     <servers />
   </component>

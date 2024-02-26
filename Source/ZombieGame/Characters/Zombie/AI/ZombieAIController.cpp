@@ -47,7 +47,7 @@ void AZombieAIController::EnemyDetected(AActor *Actor, FAIStimulus Stimulus)
     ACharacter *Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
     AZombieGameCharacter *ZombieGameCharacter = Cast<AZombieGameCharacter>(Player);
 
-    if (Actor == ZombieGameCharacter)
+    if (Actor == Player)
     {
         if (Stimulus.WasSuccessfullySensed())
         {
